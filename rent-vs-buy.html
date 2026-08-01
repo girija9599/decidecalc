@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rent vs Buy House Calculator — Should You Rent or Buy? | DecideCalc</title>
+  <meta name="description" content="India-first rent vs buy calculator. Compare the 10-year true cost of renting versus buying a home — including EMIs, property appreciation, rent hikes & opportunity cost.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/rent-vs-buy.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Rent vs Buy</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Rent vs Buy House</h1><div class="sub">10-year cost comparison</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label>Property Price</label>
+            <div class="range-out"><span class="range-val" id="out-price">₹80,00,000</span></div>
+            <input type="range" id="price" min="1000000" max="50000000" step="100000" value="8000000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Down Payment</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="down" type="number" value="1600000"></div></div>
+            <div class="field"><label>Home Loan Rate (%)</label><input class="input" id="loanRate" type="number" value="8.5" step="0.1"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Loan Tenure (years)</label><input class="input" id="tenure" type="number" value="20"></div>
+            <div class="field"><label>Property Appreciation (%)</label><input class="input" id="apprec" type="number" value="6" step="0.5"></div>
+          </div>
+          <div class="divider"></div>
+          <div class="field">
+            <label>Current Monthly Rent (for similar home)</label>
+            <div class="range-out"><span class="range-val" id="out-rent">₹25,000</span></div>
+            <input type="range" id="rent" min="5000" max="200000" step="500" value="25000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Annual Rent Hike (%)</label><input class="input" id="rentHike" type="number" value="8" step="0.5"></div>
+            <div class="field"><label>Alt. Investment Return (%)</label><input class="input" id="altReturn" type="number" value="11" step="0.5"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Compare</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:10px">Recommendation after 10 years</div>
+          <span class="signal green" id="signal">RENT IS BETTER</span>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rBuyNet">₹1.2 Cr</div><div class="k">Buy · Net Worth</div></div>
+          <div class="result-stat"><div class="v" id="rRentNet">₹1.3 Cr</div><div class="k">Rent + Invest · Net Worth</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="cmpChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The trade-off</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How to decide: rent vs buy</h2>
+      <p class="mt-2">This isn't just "EMI vs rent". The real comparison is <b>net worth after the period</b>:</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Buy path:</b> pay down payment + EMIs + maintenance. Your asset is the appreciated property minus the remaining loan.</li>
+        <li><b>Rent path:</b> pay rent (rising yearly) + invest the savings (down payment + monthly EMI-rent gap) at your alternative return.</li>
+        <li>If property appreciation beats your alt investment rate, buying usually wins. If not, renting + investing often wins.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Rule of thumb:</b> if annual rent &lt; 3% of property price (rental yield), renting is typically cheaper. Above ~4%, buying looks better.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'rent-vs-buy', faqs: [
+      { q: 'When does buying make more sense?', a: 'When property appreciation is high (>8%), you plan to stay 7+ years, and the EMI is affordable. Emotional stability of ownership also matters.' },
+      { q: 'When is renting better?', a: 'When you may relocate within 5 years, when rents are low relative to property price (low rental yield), or when you can invest the difference at higher returns.' },
+      { q: 'Is property guaranteed to appreciate?', a: 'No. Indian real estate has had long flat stretches (2014–2019). Location matters enormously — tier-1 city cores appreciate faster than distant suburbs.' },
+      { q: 'What costs does this ignore?', a: 'Stamp duty/registration (~5-7%), maintenance, property tax, interior work, and broker fees. These can add 10%+ to the true buy cost.' },
+      { q: 'Should I buy my first home to live in?', a: 'If it\'s your primary residence and you\'ll stay 10+ years, the emotional and stability value often justifies buying even if pure math favours renting.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('scale');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      const price = DC.fnum(document.getElementById('price').value);
+      const down = DC.fnum(document.getElementById('down').value);
+      const loanRate = DC.fnum(document.getElementById('loanRate').value) / 100;
+      const tenure = DC.fnum(document.getElementById('tenure').value);
+      const apprec = DC.fnum(document.getElementById('apprec').value) / 100;
+      const rent0 = DC.fnum(document.getElementById('rent').value);
+      const rentHike = DC.fnum(document.getElementById('rentHike').value) / 100;
+      const altRet = DC.fnum(document.getElementById('altReturn').value) / 100;
+      const years = 10;
+
+      const loanP = Math.max(0, price - down);
+      const r = loanRate / 12; const n = tenure * 12;
+      const emi = loanP ? loanP * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : 0;
+      const mAlt = altRet / 12;
+
+      // ---- BUY path ----
+      let loanBal = loanP;
+      let buyInv = down; // sunk into down payment (no separate investment)
+      for (let y = 1; y <= years; y++) {
+        for (let m = 0; m < 12; m++) {
+          const intr = loanBal * r; const prin = Math.min(loanBal, emi - intr);
+          loanBal -= prin;
+        }
+      }
+      const propertyVal = price * Math.pow(1 + apprec, years);
+      const buyNet = propertyVal - Math.max(0, loanBal);
+
+      // ---- RENT path ----
+      // invest down payment upfront + monthly (emi - rent) gap
+      let rentInv = down;
+      let rent = rent0;
+      for (let y = 1; y <= years; y++) {
+        for (let m = 0; m < 12; m++) {
+          rentInv = rentInv * (1 + mAlt) + Math.max(0, emi - rent);
+        }
+        rent = rent * (1 + rentHike);
+      }
+      const rentNet = rentInv;
+
+      document.getElementById('rBuyNet').textContent = DC.compact(buyNet);
+      document.getElementById('rRentNet').textContent = DC.compact(rentNet);
+
+      const diff = rentNet - buyNet;
+      const sig = document.getElementById('signal');
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (diff > 0) {
+        sig.className = 'signal green'; sig.textContent = 'RENT + INVEST WINS';
+        title.textContent = 'Renting is better by ' + DC.compact(Math.abs(diff));
+        txt.textContent = 'Over ' + years + ' years, renting and investing the difference builds ~' + DC.compact(Math.abs(diff)) + ' more net worth. But this assumes disciplined investing — if you\'d spend the gap instead, buying forces savings.';
+      } else {
+        sig.className = 'signal yellow'; sig.textContent = 'BUYING WINS';
+        title.textContent = 'Buying is better by ' + DC.compact(Math.abs(diff));
+        txt.textContent = 'Given ' + DC.pct(apprec * 100) + ' property appreciation vs ' + DC.pct(altRet * 100) + ' investment returns, owning builds ~' + DC.compact(Math.abs(diff)) + ' more. Plus you own a home. Strong case to buy if you\'ll stay put.';
+      }
+
+      // chart - cumulative net worth each year
+      const labels = [], buySer = [], rentSer = [];
+      let lb = loanP, ri = down, rr = rent0;
+      for (let y = 1; y <= years; y++) {
+        for (let m = 0; m < 12; m++) { const intr = lb * r; const prin = Math.min(lb, emi - intr); lb -= prin; }
+        const pv = price * Math.pow(1 + apprec, y);
+        buySer.push(Math.round(pv - Math.max(0, lb)));
+        for (let m = 0; m < 12; m++) { ri = ri * (1 + mAlt) + Math.max(0, emi - rr); }
+        rr = rr * (1 + rentHike);
+        rentSer.push(Math.round(ri));
+        labels.push('Yr ' + y);
+      }
+      DC.makeChart('cmpChart', {
+        type: 'bar',
+        data: { labels: labels, datasets: [
+          { label: 'Buy (net worth)', data: buySer, backgroundColor: '#1B3A6B', borderRadius: 6 },
+          { label: 'Rent + Invest', data: rentSer, backgroundColor: '#00C2A8', borderRadius: 6 }
+        ]},
+        options: { scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } }, plugins: { tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['price','down','loanRate','tenure','apprec','rent','rentHike','altReturn'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Rent vs Buy: ' + document.getElementById('signal').textContent + ' — ' + document.getElementById('recoTitle').textContent + '. Decide yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Rent vs Buy result:\n' + document.getElementById('signal').textContent + '\n' + document.getElementById('recoTitle').textContent); });
+  </script>
+</body>
+</html>

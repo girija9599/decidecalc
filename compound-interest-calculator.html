@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compound Interest Calculator — Grow Your Savings | DecideCalc</title>
+  <meta name="description" content="Free compound interest calculator. See exactly how a one-time savings grows with monthly, quarterly or yearly compounding. India-first.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/compound-interest-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Compound Interest Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Compound Interest Calculator</h1><div class="sub">One-time savings · compounding growth</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label>Principal Amount</label>
+            <div class="range-out"><span class="range-val" id="out-principal">₹1,00,000</span></div>
+            <input type="range" id="principal" min="1000" max="10000000" step="1000" value="100000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field">
+            <label>Expected Return Rate (% per year)</label>
+            <div class="range-out"><span class="range-val" id="out-rate">8%</span></div>
+            <input type="range" id="rate" min="1" max="30" step="0.25" value="8" data-suffix="%" data-dec="2">
+          </div>
+          <div class="field">
+            <label>Time Period</label>
+            <div class="range-out"><span class="range-val" id="out-years">10 years</span></div>
+            <input type="range" id="years" min="1" max="40" step="1" value="10" data-suffix=" years" data-dec="0">
+          </div>
+          <div class="field">
+            <label>Compounding Frequency</label>
+            <input type="hidden" name="freq" value="12">
+            <div class="segmented" id="freq" data-target="freq">
+              <button type="button" data-val="1">Yearly</button>
+              <button type="button" data-val="2">Half-yearly</button>
+              <button type="button" data-val="4">Quarterly</button>
+              <button type="button" data-val="12" class="active">Monthly</button>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="big" id="rTotal">₹2,21,964</div>
+          <div class="lbl">Total Value</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rPrincipal">₹1,00,000</div><div class="k">Principal</div></div>
+          <div class="result-stat"><div class="v" id="rInterest">₹1,21,964</div><div class="k">Interest Earned</div></div>
+          <div class="result-stat"><div class="v" id="rMult">2.2x</div><div class="k">Growth Multiple</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="ciChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco">
+          <span class="ric" id="recoIc"></span>
+          <div><h4 id="recoTitle">Power of compounding</h4><p id="recoText">Compounding more frequently slightly increases your returns. Time matters more than rate — staying invested longer has a bigger impact than chasing a higher rate.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How compound interest works</h2>
+      <p class="mt-2">Compound interest earns interest on your interest. The formula is:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> A = P × (1 + r/n)<sup>n·t</sup>, where P = principal, r = annual rate, n = compounding periods per year, t = years.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Longer > higher rate.</b> 8% for 20 years hugely beats 15% for 5 years.</li>
+        <li><b>Compounding frequency helps, but slightly.</b> Monthly vs yearly at 8% adds ~0.07% per year.</li>
+        <li><b>Reinvest interest.</b> Withdrawing interest kills compounding.</li>
+      </ul>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'compound-interest-calculator', faqs: [
+      { q: 'What is compound interest?', a: 'Interest calculated on both the principal and the accumulated interest of prior periods. It makes savings grow faster than simple (flat) interest.' },
+      { q: 'Does compounding frequency matter?', a: 'Yes — the more frequent the compounding, the slightly higher your final value. Monthly beats yearly for the same rate.' },
+      { q: 'Is the return rate guaranteed?', a: 'No. Use 7–9% for FDs/bonds and 10–12% for equity over long periods. Higher rates over short horizons are unreliable.' },
+      { q: 'How is this different from SIP?', a: 'This calculator is for one-time (lump sum) savings. For monthly contributions, use the SIP Returns Calculator.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('trending');
+    document.getElementById('recoIc').innerHTML = DC.icon('sparkle');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    let freq = 12;
+    document.getElementById('freq').addEventListener('segment:change', function (e) {
+      freq = Number(e.detail.value);
+      compute();
+    });
+    function compute() {
+      const p = DC.fnum(document.getElementById('principal').value);
+      const r = DC.fnum(document.getElementById('rate').value) / 100;
+      const t = DC.fnum(document.getElementById('years').value);
+      const n = freq > 0 ? freq : 1;
+      const total = p * Math.pow(1 + r / n, n * t);
+      const interest = total - p;
+      document.getElementById('rTotal').textContent = DC.compact(total);
+      document.getElementById('rPrincipal').textContent = DC.compact(p);
+      document.getElementById('rInterest').textContent = DC.compact(interest);
+      document.getElementById('rMult').textContent = (total / p).toFixed(1) + 'x';
+
+      // Yearly projection labels & totals
+      const labels = [], principal = [], value = [];
+      for (let y = 1; y <= t; y++) {
+        labels.push('Yr ' + y);
+        principal.push(Math.round(p));
+        value.push(Math.round(p * Math.pow(1 + r / n, n * y)));
+      }
+      DC.makeChart('ciChart', {
+        type: 'line',
+        data: { labels: labels, datasets: [
+          { label: 'Principal', data: principal, borderColor: '#0F1533', backgroundColor: 'rgba(15,21,51,.08)', fill: true, tension: .3, borderWidth: 2, pointRadius: 0 },
+          { label: 'Value', data: value, borderColor: '#3B82F6', backgroundColor: 'rgba(59,130,246,.15)', fill: true, tension: .35, borderWidth: 2.5, pointRadius: 0 }
+        ]},
+        options: { scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } }, plugins: { tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (t >= 15) { title.textContent = 'Time did the heavy lifting ⏳'; txt.textContent = 'Over ' + t + ' years your principal grew to ' + DC.compact(total) + ' — about ' + (total/p).toFixed(1) + 'x. Few things beat starting early.'; }
+      else if (r >= 12) { title.textContent = 'Strong growth rate 🚀'; txt.textContent = 'At ' + DC.fnum(document.getElementById('rate').value) + '% your savings grow to ' + DC.compact(total) + '. If this is an equity-linked investment, keep a long horizon to ride out volatility.'; }
+      else { title.textContent = 'Power of compounding ✨'; txt.textContent = 'Your savings grow to ' + DC.compact(total) + ' — interest earned (' + DC.compact(interest) + ') exceeds the principal. Try a longer period to see compounding take off.'; }
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['principal','rate','years'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('A ₹' + DC.fnum(document.getElementById('principal').value).toLocaleString('en-IN') + ' one-time saving grows to ' + document.getElementById('rTotal').textContent + ' — plan yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Total Value: ' + document.getElementById('rTotal').textContent + '\nPrincipal: ' + document.getElementById('rPrincipal').textContent + '\nInterest: ' + document.getElementById('rInterest').textContent); });
+  </script>
+</body>
+</html>

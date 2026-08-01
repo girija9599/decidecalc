@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pregnancy Due Date Calculator — EDD from LMP | DecideCalc</title>
+  <meta name="description" content="India pregnancy due date calculator. Enter your Last Menstrual Period (LMP) date & cycle length to get EDD, gestational week, 1st & 2nd trimester milestones.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/pregnancy-due-date.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-life">Life Planning</a><span class="sep">/</span><span>Pregnancy Due Date</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Pregnancy Due Date</h1><div class="sub">Naegele\'s Rule · EDD from LMP</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>First day of last menstrual period (LMP)</label><input class="input" id="lmp" type="date"></div>
+          <div class="field-row">
+            <div class="field"><label>Average cycle length (days)</label><input class="input" id="cycle" type="number" value="28" min="21" max="45"></div>
+            <div class="field"><label>Or conception date (if known)</label><input class="input" id="conception" type="date"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Due Date</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rEdd">—</div><div class="lbl">Estimated Due Date</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rWeek">—</div><div class="k">Pregnancy week</div></div>
+          <div class="result-stat"><div class="v" id="rDays">—</div><div class="k">Days along</div></div>
+          <div class="result-stat"><div class="v" id="rTrim">—</div><div class="k">Trimester</div></div>
+          <div class="result-stat"><div class="v" id="rLeft">—</div><div class="k">Days to go</div></div>
+        </div>
+        <ul class="breakdown mt-3" style="padding:0 6px;list-style:none">
+          <li><b>End of 1st trimester:</b> <span id="rT1" style="color:var(--accent-600)">—</span></li>
+          <li><b>Anomaly scan (~wk 20):</b> <span id="rTScan" style="color:var(--accent-600)">—</span></li>
+          <li><b>3rd trimester starts:</b> <span id="rT3" style="color:var(--accent-600)">—</span></li>
+        </ul>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">What to do next</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <div class="calc-ad-layout">
+      <div style="flex:1;min-width:0;">
+        <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+        <section class="mt-4 card reveal" style="max-width:none">
+          <h2>How EDD is computed</h2>
+          <p class="mt-2"><b>Naegele's Rule</b>: EDD = LMP + 280 days (40 weeks). Adjusted for longer/shorter cycles: add/subtract the difference from 28 days. If you know your exact conception date, EDD = conception + 266 days.</p>
+          <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+            <li>Pregnancy is measured in weeks + days (0w0d → 42w0d).</li>
+            <li>Full term: 39–40 weeks. Late term: 41 weeks. Post-term: >42 weeks (labour usually induced).</li>
+            <li>±2 weeks variation is normal — only ~5% babies arrived on the exact EDD.</li>
+          </ul>
+          <div class="note mt-2"><span id="fIcon"></span><div><b>India tip:</b> register at your nearest Anganwadi/ANM sub-centre for PMVVY (₹5,000) and Janani Suraksha Yojana. Free institutional delivery + JSY cash assistance are available at government hospitals.</div></div>
+        </section>
+      </div>
+      <div class="ad-slot" data-slot="sidebar"></div>
+    </div>
+    <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    DC.page = { slug: 'pregnancy-due-date', faqs: [
+      { q: 'How accurate is the EDD?', a: 'Within ±10 days for most — a first-trimester ultrasound gives the most precise EDD (CRL measurement). Your doctor may revise the due date after the dating scan.' },
+      { q: 'Do IVF/IVF-ICSI dates differ?', a: 'For IVF use the egg retrieval or IUI date as your conception date; EDD = that date + 266 days. Don\'t use LMP if your cycle was irregular or seeded by hormones.' },
+      { q: 'My cycle is 35 days — does that change my due date?', a: 'Yes. Naegele\'s rule assumes 28-day cycles; for 35-day cycles add 7 days (35-28 = 7) to your computed EDD. This tool does that automatically from your cycle length.' },
+      { q: 'When can I take a home pregnancy test?', a: 'From the first day of a missed period (around 14 days after conception). Earlier testing may give a false negative. Blood tests can detect HCG from 10 days post-conception.' },
+      { q: 'Is the EDD fixed or can it change?', a: 'It may change after the dating ultrasound (especially 1st trimester CRL) — a difference of up to 7 days is routine before 14 weeks. After 14 weeks the EDD is normally kept to avoid masking growth issues.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('baby');
+    document.getElementById('recoIc').innerHTML = DC.icon('heart');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function fmt(d) { return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); }
+    function stripTime(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+    function addDays(d, n) { const x = stripTime(d); x.setDate(x.getDate() + Math.round(n)); return x; }
+
+    function compute() {
+      const lmpVal = document.getElementById('lmp').value;
+      const conVal = document.getElementById('conception').value;
+      const cycle = DC.fnum(document.getElementById('cycle').value);
+      let edd, base, today = stripTime(new Date());
+
+      if (conVal) {
+        const con = new Date(conVal);
+        base = addDays(con, -14); // gestational age is clinically dated from the LMP-equivalent
+        edd = addDays(con, 266);
+      } else if (lmpVal) {
+        base = new Date(lmpVal);
+        const adj = 280 + (cycle - 28); // longer cycle shifts EDD later
+        edd = addDays(base, adj);
+      } else {
+        document.getElementById('rEdd').textContent = '—';
+        document.getElementById('recoTitle').textContent = 'Enter your dates';
+        document.getElementById('recoText').textContent = 'Type your LMP date (or conception date if known) to estimate your due date and current pregnancy week.';
+        return;
+      }
+
+      const daysAlong = Math.max(0, (today - stripTime(base)) / 86400000);
+      const weeks = Math.floor(daysAlong / 7); const days = Math.round(daysAlong % 7);
+      const trimester = weeks < 13 ? 'First (1-13 wk)' : weeks < 28 ? 'Second (14-27 wk)' : 'Third (28-40 wk)';
+      const left = Math.round((stripTime(edd) - today) / 86400000);
+      document.getElementById('rEdd').textContent = fmt(edd);
+      document.getElementById('rWeek').textContent = Math.min(weeks, 42) + ' wk';
+      document.getElementById('rDays').textContent = Math.min(weeks * 7 + days, 294) + ' d';
+      document.getElementById('rTrim').textContent = trimester;
+      document.getElementById('rLeft').textContent = left + ' d';
+      document.getElementById('rT1').textContent = fmt(addDays(base, 91));
+      document.getElementById('rTScan').textContent = fmt(addDays(base, 140));
+      document.getElementById('rT3').textContent = fmt(addDays(base, 196));
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (left < 0) { title.textContent = 'Past your EDD — contact your doctor'; txt.textContent = 'You\'re ' + Math.abs(weeks - 40) + ' week(s) past your due date. Stay calm; most govt protocols wait till 41 weeks before inducing, but a check-up is recommended now.'; }
+      else if (weeks < 13) { title.textContent = 'Book your first antenatal visit now'; txt.textContent = 'Schedule the dating ultrasound (8-10 wk), start/folic acid + iron, register at your govt centre for PMVVY/JSY benefits, and avoid self-medication and raw foods.'; }
+      else if (weeks < 28) { title.textContent = 'Anomaly scan + glucose test ahead'; txt.textContent = 'Around week 18-22 you\'ll get the TIFFA/anomaly scan, and the gestational diabetes (GCT/OGTT) check around wk 24-28. Continue iron + calcium supplements and moderate exercise.'; }
+      else { title.textContent = 'Pack your bag, watch movements'; txt.textContent = 'Third trimester — track daily fetal movement (10 kicks in 2 hrs after a meal), keep your delivery bag ready, and decide on hospital + birth companion under PMJAY/JSY/PMMVY.'; }
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['lmp','cycle','conception'].forEach(function (id){ document.getElementById(id).addEventListener('input', compute); document.getElementById(id).addEventListener('change', compute); });
+    // Default LMP = today - 14 days for demo
+    if (!document.getElementById('lmp').value) {
+      const d = new Date(); d.setDate(d.getDate() - 14); const iso = d.toISOString().slice(0,10); document.getElementById('lmp').value = iso;
+    }
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { const v = document.getElementById('rEdd').textContent; if (v==='—'){ DC.toast('Enter LMP first','error'); return;} DC.shareWhatsApp('My due date is ' + v + ' — I\'m ' + document.getElementById('rWeek').textContent + ' pregnant. Calculate yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { const v = document.getElementById('rEdd').textContent; if (v==='—'){ DC.toast('Enter LMP first','error'); return;} DC.copyResult('Pregnancy Due Date\nEDD: ' + v + '\nWeek: ' + document.getElementById('rWeek').textContent + '\nTrimester: ' + document.getElementById('rTrim').textContent); });
+  </script>
+</body>
+</html>

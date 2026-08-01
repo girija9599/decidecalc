@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Loan Eligibility Calculator — How Much Loan Can You Get? | DecideCalc</title>
+  <meta name="description" content="Indian home loan eligibility calculator. Enter monthly income, EMIs & tenure to find your maximum eligible home loan amount (FOIR based).">
+  <link rel="canonical" href="https://decidecalc.com/calculators/home-loan-eligibility.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Home Loan Eligibility</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Home Loan Eligibility</h1><div class="sub">Max loan amount on your income</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Net monthly income (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-inc">₹80,000</span></div>
+            <input type="range" id="inc" min="15000" max="1500000" step="1000" value="80000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Existing EMIs (₹/month)</label><input class="input" id="emi" type="number" value="0" min="0"></div>
+            <div class="field"><label>Co-applicant income (₹/month)</label><input class="input" id="co" type="number" value="0" min="0"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Interest rate (% / yr)</label><input class="input" id="rate" type="number" value="8.5" step="0.1"></div>
+            <div class="field"><label>Loan tenure (years)</label><input class="input" id="tenure" type="number" value="20" min="1" max="30"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Check Eligibility</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="big" id="rElig">₹0</div>
+          <div class="lbl">Maximum eligible home loan</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rEmi">₹0</div><div class="k">Resulting EMI</div></div>
+          <div class="result-stat"><div class="v" id="rFo">0%</div><div class="k">FOIR used</div></div>
+          <div class="result-stat"><div class="v" id="rInc">₹0</div><div class="k">Income considered</div></div>
+          <div class="result-stat"><div class="v" id="rAff">₹0</div><div class="k">Affordable property</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="eligChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Eligibility snapshot</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <div class="calc-ad-layout">
+      <div style="flex:1;min-width:0;">
+        <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+        <section class="mt-4 card reveal" style="max-width:none">
+          <h2>How banks compute eligibility</h2>
+          <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+            <li><b>FOIR</b>: Fixed Obligations to Income Ratio — most banks cap total EMIs at 50-55% of net income. Lower obligations → higher eligibility.</li>
+            <li>Eligible EMI = (50% × income) − existing EMIs. Co-applicant income lifts the pool.</li>
+            <li>Loan amount = EMI × [{(1+r)ⁿ − 1} / {r × (1+r)ⁿ}], reversed from the EMI formula.</li>
+            <li>Banks also factor credit score (CIBIL > 750 preferred), age (≤ retirement at end of tenure) and property value (LTV 80-90%).</li>
+          </ul>
+          <div class="note mt-2"><span id="fIcon"></span><div><b>LTV tip:</b> specified property value also caps the loan at 75-90% (LTV). If income supports more than the LTV amount, the bank funds the lower of the two.</div></div>
+        </section>
+      </div>
+      <div class="ad-slot" data-slot="sidebar"></div>
+    </div>
+    <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    DC.page = { slug: 'home-loan-eligibility', faqs: [
+      { q: 'What is FOIR and why does it matter?', a: 'Fixed Obligations to Income Ratio is the share of your monthly income that goes to fixed EMIs. Banks keep it under ~50% — any future EMI must fit inside the remaining headroom.' },
+      { q: 'Can a co-applicant raise my loan amount?', a: 'Yes — Spouse, parent or sibling earning income boosts the income pool and the allowed EMI, lifting the eligible loan amount by 50-100% depending on relative income.' },
+      { q: 'Does my CIBIL score affect eligibility?', a: 'A score above 750 is normally required; below 700 may reduce eligible amount or raise the rate by 0.1-0.5%. Settle pending EMIs and keep credit utilization under 30% to improve elig before applying.' },
+      { q: 'Why is my loan lesser than what this tool shows?', a: 'Banks apply LTV caps (75-90% of property value), age limits and their own FOIR thresholds (40-55%). This calculator is a pre-qualification estimate; final sanction can differ.' },
+      { q: 'Does overtime, bonus or rental count as income?', a: 'Stable rental and bonus averaging are accepted by most banks. Pure overtime/commission income is often discounted by 20-30% as non-recurring. Disclose honest figures; banks verify via bank statements.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function emiToLoan(emi, annualRate, months) {
+      const r = annualRate / 12 / 100;
+      if (r === 0) return emi * months;
+      return emi * (Math.pow(1 + r, months) - 1) / (r * Math.pow(1 + r, months));
+    }
+
+    function compute() {
+      const inc = DC.fnum(document.getElementById('inc').value);
+      const emi = DC.fnum(document.getElementById('emi').value);
+      const co  = DC.fnum(document.getElementById('co').value);
+      const rate = DC.fnum(document.getElementById('rate').value);
+      const yrs = DC.fnum(document.getElementById('tenure').value);
+      const months = yrs * 12;
+
+      const totalInc = inc + co;
+      const maxFo = 0.50; // 50% FOIR
+      const availEmi = Math.max(0, totalInc * maxFo - emi);
+      const loan = availEmi > 0 ? emiToLoan(availEmi, rate, months) : 0;
+      const foirUsed = totalInc > 0 ? Math.round((emi + availEmi) / totalInc * 100) : 0;
+      // affordable property assuming 80% LTV (loan = 80% of property)
+      const affordableProperty = loan / 0.80;
+
+      document.getElementById('rElig').textContent = DC.compact(loan);
+      document.getElementById('rEmi').textContent = DC.inr(Math.round(availEmi));
+      document.getElementById('rFo').textContent = (totalInc > 0 ? Math.min(100, foirUsed) : 0) + '%';
+      document.getElementById('rInc').textContent = DC.compact(totalInc);
+      document.getElementById('rAff').textContent = DC.compact(affordableProperty);
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (availEmi <= 0) {
+        title.textContent = 'Existing EMIs exhaust eligibility';
+        txt.textContent = 'Your current EMIs already occupy more than 50% of your income. Prepay or close one before a fresh home loan, or add an earning co-applicant to reopen eligibility.';
+      } else if (co > 0) {
+        title.textContent = 'Co-applicant boosts loan';
+        txt.textContent = 'You qualify for ' + DC.compact(loan) + ' with a ₹' + co.toLocaleString('en-IN') + ' co-applicant. Compare 3 banks — even a 0.25% rate gap changes sanctioned amount meaningfully.';
+      } else {
+        title.textContent = 'Reasonable eligibility';
+        txt.textContent = 'Sole applicant fits ' + DC.compact(loan) + ' at ' + rate + '% over ' + yrs + ' years. Add a spouse parent as co-applicant to scale this up further.';
+      }
+
+      DC.makeChart('eligChart', {
+        type: 'doughnut',
+        data: { labels: ['Eligible loan', 'Down payment (~20% LTV)'], datasets: [{ data: [loan, Math.max(0, affordableProperty - loan)], backgroundColor: ['#1B3A6B', '#00C2A8'], borderWidth: 0, hoverOffset: 8 }] },
+        options: { cutout: '62%', plugins: { tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['inc','emi','co','rate','tenure'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', compute); el.addEventListener('change', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Home loan eligibility: ' + document.getElementById('rElig').textContent + ', EMI ' + document.getElementById('rEmi').textContent + ' — try DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Home Loan Eligibility\nEligible loan: ' + document.getElementById('rElig').textContent + '\nResulting EMI: ' + document.getElementById('rEmi').textContent + '\nAffordable property (~80% LTV): ' + document.getElementById('rAff').textContent); });
+  </script>
+</body>
+</html>

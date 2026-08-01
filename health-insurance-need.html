@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Insurance Need Calculator — How Much Cover? | DecideCalc</title>
+  <meta name="description" content="Free India-first health insurance calculator. Find how much health cover you actually need based on age, family, city tier, lifestyle & medical inflation.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/health-insurance-need.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>Health Insurance Need</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Health Insurance Need</h1><div class="sub">Right cover · right price</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field"><label>Your Age</label><input class="input" id="age" type="number" value="35"></div>
+            <div class="field"><label>City Tier</label>
+              <select class="select" id="tier"><option value="1">Tier 1 (metro)</option><option value="2" selected>Tier 2</option><option value="3">Tier 3</option></select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Family Members to Cover</label><input class="input" id="members" type="number" value="4" min="1"></div>
+            <div class="field"><label>Oldest Member's Age</label><input class="input" id="oldest" type="number" value="60"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Existing Cover (employer/other)</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="existing" type="number" value="300000"></div></div>
+            <div class="field"><label>Annual Household Income</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="income" type="number" value="1200000"></div></div>
+          </div>
+          <div class="field"><label>Pre-existing conditions?</label>
+            <select class="select" id="conditions">
+              <option value="0" selected>None</option>
+              <option value="1">Mild (BP, thyroid)</option>
+              <option value="2">Moderate (diabetes, cardiac history)</option>
+              <option value="3">Serious (cancer, major cardiac)</option>
+            </select>
+          </div>
+          <div class="field"><label>Lifestyle</label>
+            <select class="select" id="lifestyle">
+              <option value="0">Very healthy (exercise, no smoking)</option>
+              <option value="0" selected>Average</option>
+              <option value="1">Smoker / sedentary</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Cover Needed</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:8px">Recommended cover</div>
+          <div class="big" id="rCover">₹15 L</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rBase">₹10 L</div><div class="k">Base Need</div></div>
+          <div class="result-stat"><div class="v" id="rAdditional">₹5 L</div><div class="k">Top-up Suggested</div></div>
+          <div class="result-stat"><div class="v" id="rPremium">₹18,000</div><div class="k">Est. Annual Premium</div></div>
+          <div class="result-stat"><div class="v" id="rIncome">10%</div><div class="k">Cover vs Income</div></div>
+        </div>
+        <div style="text-align:center;margin-top:6px"><span class="signal green" id="signal">ADEQUATE</span></div>
+        <div class="chart-wrap"><canvas id="covChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Your plan</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How we size your health cover</h2>
+      <p class="mt-2">Indian medical inflation runs 12-15% a year — double general inflation. A single serious hospitalization can cost ₹5-15 lakh in a metro today, and double that in 5 years. Our model factors:</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>City tier</b> — metro hospital costs are 2-3× tier-3.</li>
+        <li><b>Family size & oldest member</b> — older members cost more.</li>
+        <li><b>Pre-existing conditions</b> — add buffer for known risks.</li>
+        <li><b>5-year inflation projection</b> — cover that's enough today won't be in 2028.</li>
+        <li><b>Existing employer cover</b> — useful but disappears if you switch jobs.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Pro tip:</b> a base policy of ₹10-15L plus a ₹50-100L super top-up (deductible = base) gives massive cover at a fraction of the cost. This is the smartest structure.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'health-insurance-need', faqs: [
+      { q: 'How much health insurance do I really need?', a: 'For a family of 4 in a metro, ₹15-25 lakh is a sensible base. Add a super top-up of ₹50L-1Cr for catastrophic protection. The exact number depends on city tier and family profile.' },
+      { q: 'Is employer health insurance enough?', a: 'Usually no. Employer cover (typically ₹3-5L) is too low for serious illness and vanishes when you switch or retire. Always have your own personal policy.' },
+      { q: 'What is a super top-up?', a: 'A super top-up kicks in once your total claims in a year cross a "deductible" (usually equal to your base policy). It offers huge cover (₹50L-1Cr) very cheaply because you self-insure small amounts.' },
+      { q: 'Should I buy individual or family floater?', a: 'Family floater is cheaper and flexible for younger families. If members vary widely in age (e.g., 65-year-old parents + young kids), separate policies for seniors may be wiser.' },
+      { q: 'When should I buy health insurance?', a: 'Now. Premiums rise with age and pre-existing conditions develop over time. Buying in your 20s-30s locks in lower premiums and completes waiting periods while you\'re healthy.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('shield');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const age = DC.fnum(document.getElementById('age').value);
+      const tier = parseInt(document.getElementById('tier').value, 10);
+      const members = DC.fnum(document.getElementById('members').value);
+      const oldest = DC.fnum(document.getElementById('oldest').value);
+      const existing = DC.fnum(document.getElementById('existing').value);
+      const income = DC.fnum(document.getElementById('income').value);
+      const conditions = parseInt(document.getElementById('conditions').value, 10);
+      const lifestyle = parseInt(document.getElementById('lifestyle').value, 10);
+
+      // base lakh by tier
+      const tierBase = [15, 10, 6][tier - 1]; // lakh
+      let baseL = tierBase * Math.max(1, members / 2); // per 2 members
+      // age factor
+      if (oldest >= 60) baseL *= 1.4; else if (oldest >= 50) baseL *= 1.2;
+      if (age >= 45) baseL *= 1.15;
+      // conditions
+      baseL *= (1 + conditions * 0.25);
+      baseL *= (1 + lifestyle * 0.15);
+      baseL = Math.max(5, Math.round(baseL));
+
+      // 5-year inflation buffer
+      const futureL = baseL * Math.pow(1.13, 5);
+      const totalNeedL = Math.round(futureL);
+      const additionalL = Math.max(0, totalNeedL - existing / 100000);
+
+      // premium estimate (rough ₹ per lakh of cover, varies)
+      const premRate = 120 + age * 4 + conditions * 80; // ₹ per L
+      const premium = Math.round(totalNeedL * premRate);
+
+      document.getElementById('rCover').textContent = DC.compact(totalNeedL * 100000);
+      document.getElementById('rBase').textContent = DC.compact(baseL * 100000);
+      document.getElementById('rAdditional').textContent = DC.compact(additionalL * 100000);
+      document.getElementById('rPremium').textContent = DC.inr(premium);
+      document.getElementById('rIncome').textContent = Math.round(totalNeedL * 100000 / income * 100) + '%';
+
+      const sig = document.getElementById('signal'), title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      const gap = additionalL;
+      if (existing / 100000 >= totalNeedL) { sig.className = 'signal green'; sig.textContent = 'WELL COVERED'; title.textContent = 'You\'re well protected'; txt.textContent = 'Your existing cover (' + DC.compact(existing) + ') meets the recommended ' + DC.compact(totalNeedL * 100000) + '. Just ensure it\'s personal (not just employer) and renew on time.'; }
+      else if (gap <= 5) { sig.className = 'signal yellow'; sig.textContent = 'SLIGHTLY UNDER'; title.textContent = 'Small top-up recommended'; txt.textContent = 'Add about ' + DC.compact(gap * 100000) + ' more cover to reach the recommended ' + DC.compact(totalNeedL * 100000) + '. A base + super top-up structure keeps this affordable.'; }
+      else { sig.className = 'signal red'; sig.textContent = 'UNDERINSURED'; title.textContent = 'Significant gap — act now'; txt.textContent = 'You\'re short by ' + DC.compact(gap * 100000) + '. Without it, one serious illness could wipe out years of savings. Buy a ' + DC.compact(baseL * 100000) + ' base policy + a ₹50L-1Cr super top-up this month.'; }
+
+      DC.makeChart('covChart', {
+        type: 'doughnut',
+        data: { labels: ['Existing Cover', 'Additional Needed'], datasets: [{ data: [existing / 100000, Math.max(0, gap)], backgroundColor: ['#1B3A6B', '#00C2A8'], borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '60%', plugins: { tooltip: { callbacks: { label: function (c) { return c.label + ': ₹' + c.raw + ' L'; } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['age','tier','members','oldest','existing','income','conditions','lifestyle'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', compute); el.addEventListener('change', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My recommended health cover is ' + document.getElementById('rCover').textContent + ' — check yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Health Insurance Need:\nRecommended cover: ' + document.getElementById('rCover').textContent + '\n' + document.getElementById('recoTitle').textContent); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gratuity Calculator — How Much Gratuity Will You Get? | DecideCalc</title>
+  <meta name="description" content="India gratuity calculator (Payment of Gratuity Act 1972). Enter salary & service years to compute tax-free gratuity eligibility at retirement/resignation.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/gratuity-calculator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Gratuity Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Gratuity Calculator</h1><div class="sub">Payment of Gratuity Act 1972</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Last drawn basic salary + DA (₹/month)</label>
+            <div class="range-out"><span class="range-val" id="out-sal">₹50,000</span></div>
+            <input type="range" id="sal" min="5000" max="500000" step="500" value="50000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field"><label>Years of service (must be 5+ for eligibility)</label>
+            <div class="range-out"><span class="range-val" id="out-yrs">12 years</span></div>
+            <input type="range" id="yrs" min="0" max="40" step="0.5" value="12" data-suffix=" years" data-dec="1">
+          </div>
+          <div class="field"><label>Are you covered under the Gratuity Act (most private + govt)?</label>
+            <div class="segmented" data-target="covered"><button data-val="yes" class="active">Yes</button><button data-val="no">No</button></div>
+            <input type="hidden" name="covered" value="yes"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Gratuity</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rGrat">₹0</div><div class="lbl">Gratuity payable</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rTax">₹0</div><div class="k">Tax-free portion</div></div>
+          <div class="result-stat"><div class="v" id="rTx" style="color:var(--accent-600)">₹0</div><div class="k">Taxable portion</div></div>
+          <div class="result-stat"><div class="v" id="rYrs">—</div><div class="k">Years counted</div></div>
+          <div class="result-stat"><div class="v" id="rMon">15 days</div><div class="k">Per year basis</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="gratChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Eligibility</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <div class="calc-ad-layout">
+      <div style="flex:1;min-width:0;">
+        <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+        <section class="mt-4 card reveal" style="max-width:none">
+          <h2>How gratuity is calculated</h2>
+          <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+            <li><b>Covered by Gratuity Act</b>: Gratuity = (Last basic + DA) ÷ 26 × 15 × years of service. Years > 6 months counted as a full year.</li>
+            <li><b>Not covered</b>: same formula, but use 15-day basis on a 30-day month and use actual completed years (no rounding).</li>
+            <li><b>Cap</b>: maximum tax-free gratuity is ₹20 lakh (post-2019 amendment). Above that is taxable at your slab.</li>
+            <li><b>Minimum service</b>: 5 continuous years (or 4 yrs 240 days, per Supreme Court interpretation). Enabled after retirement, resignation, disablement or death.</li>
+          </ul>
+          <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> take gratuity to its true cap — for higher earners the actual entitle-able amount above ₹20L is still paid by employer but taxed federally.</div></div>
+        </section>
+      </div>
+      <div class="ad-slot" data-slot="sidebar"></div>
+    </div>
+    <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    DC.page = { slug: 'gratuity-calculator', faqs: [
+      { q: 'What is the minimum period to qualify for gratuity?', a: 'Five continuous years of service — or 4 years and 240 working days, per Supreme Court rulings. Disablement and death don\'t require any minimum.' },
+      { q: 'Is the gratuity fully tax-free?', a: 'Up to ₹20 lakh is tax-free (raised from ₹10L in 2019). Anything above that is taxable at your slab rate. Private employees not covered by the Act have a separate ₹10L tax exemption limit.' },
+      { q: 'Will my employer round up partial years?', a: 'Covered organisations round any year > 6 months to a full year. If you serve 11 yrs 7 months, it counts as 12 — pass that benefit on to your claim via your last working day.' },
+      { q: 'How long should it take for an employer to pay gratuity?', a: 'By law within 30 days of becoming payable. Beyond that the employer owes simple interest for delay — usually at bank rate.' },
+      { q: 'Does fixed monthly salary include HRA or only basic?', a: 'Gratuity uses Basic + Dearness Allowance (DA) only. HRA, conveyance, special allowance and performance bonuses are excluded — always confirm via your last payslip/salary structure.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('money');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const sal = DC.fnum(document.getElementById('sal').value);
+      const yrsRaw = DC.fnum(document.getElementById('yrs').value);
+      const covered = document.querySelector('[name="covered"]').value === 'yes';
+      // rounding for covered mode: any part-year > .5 → next full year
+      let yrs;
+      if (covered) { const whole = Math.floor(yrsRaw); const frac = yrsRaw - whole; yrs = frac > 0.5 ? whole + 1 : whole; if (yrsRaw === 0) yrs = 0; }
+      else { yrs = Math.floor(yrsRaw); }
+      const daysBase = covered ? 26 : 30;
+      const grat = (sal / daysBase) * 15 * yrs;
+      const cap = 2000000;
+      const taxFree = Math.min(grat, cap);
+      const taxable = Math.max(0, grat - cap);
+
+      document.getElementById('rGrat').textContent = DC.inr(Math.round(grat));
+      document.getElementById('rTax').textContent = DC.inr(Math.round(taxFree));
+      document.getElementById('rTx').textContent = DC.inr(Math.round(taxable));
+      document.getElementById('rYrs').textContent = yrs + ' yrs';
+      document.getElementById('rMon').textContent = '15/26 month';
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (yrs < 5) { title.textContent = 'Not yet eligible'; txt.textContent = 'Less than 5 yrs of service — gratuity pays only on death/disablement at this stage. Plan to complete 5+ yrs to qualify.'; }
+      else if (taxable > 0) { title.textContent = 'Portion exceeds tax-free cap'; txt.textContent = '₹' + Math.round(taxFree).toLocaleString('en-IN') + ' is tax-free (₹20L cap). The remaining ' + DC.inr(Math.round(taxable)) + ' is taxable at your slab — make sure payroll taxes it correctly at exit.'; }
+      else { title.textContent = 'Fully tax-free'; txt.textContent = 'Your gratuity of ' + DC.inr(Math.round(grat)) + ' is below the ₹20L cap and fully exempt. Quote Form I to HR before your exit to receive within 30 days'; }
+
+      DC.makeChart('gratChart', {
+        type: 'doughnut',
+        data: { labels: ['Tax-free (≤ ₹20L)', 'Taxable'], datasets: [{ data: [taxFree, taxable], backgroundColor: ['#1B3A6B', '#FF7A45'], borderWidth: 0, hoverOffset: 8 }] },
+        options: { cutout: '62%', plugins: { tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.inr(Math.round(c.raw)); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('sal').addEventListener('input', compute);
+    document.getElementById('yrs').addEventListener('input', compute);
+    document.querySelectorAll('.segmented button').forEach(function (b){ b.addEventListener('click', function () { setTimeout(compute, 50); }); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Gratuity: ' + document.getElementById('rGrat').textContent + ', tax-free ' + document.getElementById('rTax').textContent + ' — via DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Gratuity\nTotal: ' + document.getElementById('rGrat').textContent + '\nTax-free: ' + document.getElementById('rTax').textContent + '\nTaxable: ' + document.getElementById('rTx').textContent); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary Hike Negotiator — Fair Hike % + Script | DecideCalc</title>
+  <meta name="description" content="Find the fair salary hike % you should ask for based on role, city, experience & company type. Get a ready-to-use negotiation script and benchmark data.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/salary-hike-negotiator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-career">Career & Salary</a><span class="sep">/</span><span>Salary Hike Negotiator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Salary Hike Negotiator</h1><div class="sub">Fair hike % + negotiation script</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Current CTC (annual)</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="ctc" type="number" value="1200000"></div></div>
+          <div class="field-row">
+            <div class="field"><label>Experience (years)</label><input class="input" id="exp" type="number" value="5"></div>
+            <div class="field"><label>City Tier</label>
+              <select class="select" id="tier">
+                <option value="1">Tier 1 (Bangalore, Mumbai, Delhi, Hyderabad)</option>
+                <option value="2">Tier 2 (Pune, Chennai, Ahmedabad, Kochi)</option>
+                <option value="3">Tier 3 / Remote</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Company Type</label>
+              <select class="select" id="ctype">
+                <option value="startup">Startup</option>
+                <option value="product">Product company</option>
+                <option value="service">Service / IT services</option>
+                <option value="mnc" selected>MNC / Global capability centre</option>
+                <option value="gov">Government / PSU</option>
+              </select>
+            </div>
+            <div class="field"><label>Performance (last rating)</label>
+              <select class="select" id="perf">
+                <option value="top">Top performer (top 10%)</option>
+                <option value="good" selected>Good (meets/exceeds)</option>
+                <option value="avg">Average</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Reason for hike</label>
+            <select class="select" id="reason">
+              <option value="annual">Annual appraisal (internal)</option>
+              <option value="switch" selected>Job switch (new offer)</option>
+              <option value="promo">Promotion</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Fair Hike</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:8px">Recommended hike range</div>
+          <div class="big" id="rHike">25–35%</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rMin">₹15.0 L</div><div class="k">Minimum Target</div></div>
+          <div class="result-stat"><div class="v" id="rMax">₹16.2 L</div><div class="k">Stretch Target</div></div>
+        </div>
+        <div style="margin-top:18px;background:var(--card-2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+          <div style="font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px"><span id="mic"></span>Your negotiation script</div>
+          <div id="script" style="font-size:.92rem;color:var(--text-soft);line-height:1.7;font-style:italic"></div>
+        </div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy script</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Negotiation tips</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>India salary hike benchmarks (2026)</h2>
+      <p class="mt-2">Typical hike ranges by situation. These are averages — your specific skills, domain and demand matter.</p>
+      <table class="breakdown mt-2">
+        <thead><tr><th>Situation</th><th class="num">Typical Hike</th></tr></thead>
+        <tbody>
+          <tr><td>Annual appraisal (average performer)</td><td class="num">8–12%</td></tr>
+          <tr><td>Annual appraisal (top performer)</td><td class="num">15–25%</td></tr>
+          <tr><td>Job switch (lateral)</td><td class="num">20–30%</td></tr>
+          <tr><td>Job switch (with counter-offer)</td><td class="num">30–50%</td></tr>
+          <tr><td>Promotion</td><td class="num">15–25%</td></tr>
+          <tr><td>Product company / GCC switch</td><td class="num">30–60%</td></tr>
+        </tbody>
+      </table>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Negotiation truth:</b> the first number offered is almost never the best. 70% of people who negotiate get more. Always anchor high with data.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'salary-hike-negotiator', faqs: [
+      { q: 'What is a fair hike when switching jobs?', a: '20-30% is the standard lateral switch hike in India. Top performers moving to product companies/GCCs can command 30-50%. Below 20%, switching is rarely worth it.' },
+      { q: 'Should I reveal my current CTC?', a: 'Try not to. Anchor on your expected range instead. If forced, quote your CTC + expected together and emphasise market rate for the role.' },
+      { q: 'How do I counter an offer?', a: 'Thank them, express strong interest, then present your number with reasoning (market data, your impact, competing offers). Always negotiate on total CTC, not just base.' },
+      { q: 'Is a counter-offer from my current employer worth accepting?', a: 'Usually no — statistics show ~70% of people who accept counter-offers leave within 18 months anyway, often due to the same unresolved issues. Take it only if the issues were purely financial.' },
+      { q: 'What components should I negotiate?', a: 'Base salary, joining bonus, ESOPs/RSUs, variable pay, remote flexibility, and learning budget. Base has the highest long-term impact (compounds each year).' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('trending');
+    document.getElementById('mic').innerHTML = DC.icon('star');
+    document.getElementById('recoIc').innerHTML = DC.icon('sparkle');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      const ctc = DC.fnum(document.getElementById('ctc').value);
+      const exp = DC.fnum(document.getElementById('exp').value);
+      const tier = document.getElementById('tier').value;
+      const ctype = document.getElementById('ctype').value;
+      const perf = document.getElementById('perf').value;
+      const reason = document.getElementById('reason').value;
+
+      // base hike %
+      let base = 10;
+      if (reason === 'switch') base = 25;
+      else if (reason === 'promo') base = 20;
+      else base = perf === 'top' ? 18 : perf === 'good' ? 12 : 8;
+
+      // modifiers
+      const mod = [];
+      if (ctype === 'product' || ctype === 'mnc') { base += 8; mod.push('top-tier employer'); }
+      if (ctype === 'startup') { base += 4; mod.push('startup (ESOP upside)'); }
+      if (ctype === 'service') { base -= 5; }
+      if (ctype === 'gov') { base -= 10; }
+      if (perf === 'top') { base += 5; mod.push('top performer'); }
+      if (tier === '1') base += 3;
+      if (tier === '3') base -= 4;
+      if (exp >= 3 && exp <= 8) { base += 4; mod.push('peak-demand experience'); }
+      if (exp > 12) base -= 3;
+
+      base = Math.max(8, Math.min(60, base));
+      const lo = Math.round(base - 3), hi = Math.round(base + 5);
+
+      document.getElementById('rHike').textContent = lo + '–' + hi + '%';
+      document.getElementById('rMin').textContent = DC.compact(ctc * (1 + lo / 100));
+      document.getElementById('rMax').textContent = DC.compact(ctc * (1 + hi / 100));
+
+      const minCTC = ctc * (1 + lo / 100), maxCTC = ctc * (1 + hi / 100);
+      const why = mod.length ? ' given your ' + mod.join(', ') : '';
+      document.getElementById('script').textContent =
+        '"Thank you so much for the offer — I\'m genuinely excited about this role and the team. Based on my ' + exp + ' years of experience, my strong track record, and current market benchmarks for similar roles' + why + ', I was hoping we could land closer to ' + DC.compact(maxCTC) + '. I\'m flexible on the structure — happy to split between base and joining bonus or ESOPs if that helps. Can we work towards a number around ' + DC.compact(minCTC) + ' to ' + DC.compact(maxCTC) + '?"';
+
+      document.getElementById('recoTitle').textContent = 'Anchor at ' + hi + '%, settle above ' + lo + '%';
+      document.getElementById('recoText').textContent = 'Always ask for the top of your range first. Quote your number confidently, then stay silent — let them respond. Have 1-2 concrete achievements ready (metrics, impact) to justify it.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['ctc','exp','tier','ctype','perf','reason'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); document.getElementById(id).addEventListener('change', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Fair hike for me: ' + document.getElementById('rHike').textContent + ' — find yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult(document.getElementById('script').textContent); });
+  </script>
+</body>
+</html>

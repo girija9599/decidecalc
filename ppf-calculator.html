@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPF Calculator — 15-Year PPF Maturity & Returns | DecideCalc</title>
+  <meta name="description" content="India PPF calculator. ₹1.5L yearly, 7.1% interest, EEE tax status — see maturity value, year-wise balance and withdrawal rules at year 7 and 15.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/ppf-calculator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>PPF Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>PPF Calculator</h1><div class="sub">15-yr maturity · EEE tax status</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Annual investment (₹) — max ₹1.5 L</label>
+            <div class="range-out"><span class="range-val" id="out-amt">₹1,50,000</span></div>
+            <input type="range" id="amt" min="500" max="150000" step="500" value="150000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Interest rate (% / yr)</label><input class="input" id="rate" type="number" value="7.1" step="0.1"></div>
+            <div class="field"><label>Tenure (years, max 50)</label><input class="input" id="yrs" type="number" value="15" min="15" max="50"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Maturity</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMat">₹0</div><div class="lbl">Maturity value</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInv">₹0</div><div class="k">Total invested</div></div>
+          <div class="result-stat"><div class="v" id="rInt" style="color:var(--accent-600)">₹0</div><div class="k">Interest earned</div></div>
+          <div class="result-stat"><div class="v" id="rYrs">15 yrs</div><div class="k">Locked horizon</div></div>
+          <div class="result-stat"><div class="v" id="rTax">₹0</div><div class="k">Tax saved (30%)</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="ppfChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">EEE — tax-free at every step</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <div class="calc-ad-layout">
+      <div style="flex:1;min-width:0;">
+        <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+        <section class="mt-4 card reveal" style="max-width:none">
+          <h2>PPF rules at a glance</h2>
+          <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+            <li><b>Tenure</b>: 15 years, extend indefinitely in 5-year blocks (with/without contributions).</li>
+            <li><b>Deposit</b>: ₹500-₹1.5 lakh/year (max also gets full 80C tax benefit).</li>
+            <li><b>Tax</b>: Exempt-Exempt-Exempt — deduction at deposit, no tax on interest, no tax at maturity.</li>
+            <li><b>Withdrawal</b>: 1st withdrawal after 6th financial year (up to 50% of balance at end of 4 yrs prior). Loan permitted from 3rd to 6th year.</li>
+          </ul>
+          <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> deposit between Apr 1 and 5th of any month to get an extra month's interest, since interest is calculated on the lowest balance between 5th and month-end.</div></div>
+        </section>
+      </div>
+      <div class="ad-slot" data-slot="sidebar"></div>
+    </div>
+    <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    DC.page = { slug: 'ppf-calculator', faqs: [
+      { q: 'Is PPF interest taxable?', a: 'No. PPF is EEE (Exempt-Exempt-Exempt) — you get 80C deduction on deposit, no tax on the interest earned each year and the maturity amount is tax-free.' },
+      { q: 'Can I deposit more than ₹1.5 lakh a year?', a: 'You can, but the interest on the excess and any 80C deduction above ₹1.5L is not allowed. Best practice is to keep it within the annual cap.' },
+      { q: 'How often is the interest rate revised?', a: 'PPF rates are reset every quarter by the Ministry of Finance based on the G-sec yield. This calculator uses a single rate for simplicity — revisit if rates change.' },
+      { q: 'What happens at year 15 if I need money?', a: 'You can withdraw 100% of the balance including interest, or extend (with/without further deposits) in 5-year blocks. Withdrawal ability of 60% can be exercised during extension.' },
+      { q: 'Is an NRI allowed to keep a PPF account?', a: 'An NRI cannot open a new PPF account. Existing accounts continue until maturity — but cannot be extended once you become an NRI.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('piggy');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const annual = Math.min(150000, Math.max(500, DC.fnum(document.getElementById('amt').value)));
+      const rate = DC.fnum(document.getElementById('rate').value);
+      const yrs = Math.min(50, Math.max(15, DC.fnum(document.getElementById('yrs').value)));
+      // interest credited at year-end (notional), contributions at start of year
+      let bal = 0, invested = 0, curve = [];
+      for (let y = 1; y <= yrs; y++) { bal += annual; invested += annual; bal *= (1 + rate / 100); curve.push(bal); }
+      const interest = bal - invested;
+      const simpleTax = annual * 0.30 * 15;
+
+      document.getElementById('rMat').textContent = DC.compact(bal);
+      document.getElementById('rInv').textContent = DC.compact(invested);
+      document.getElementById('rInt').textContent = DC.compact(interest);
+      document.getElementById('rYrs').textContent = yrs + ' yrs';
+      document.getElementById('rTax').textContent = DC.compact(simpleTax);
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      title.textContent = 'EEE — tax-free maturity';
+      txt.textContent = yrs > 15 ? 'After 15 yrs extend in 5-yr blocks; you can also stop contributing and still earn interest. Run with 20-yr horizon to see the power of tax-free compounding.' : '15 years EEE locks in tax-free compounding. Maximise ₹1.5L/yr (esp Apr-early) — the 7.1% interest + ₹3.6+L tax saved add up to a debt-beating guaranteed return.';
+
+      DC.makeChart('ppfChart', {
+        type: 'line',
+        data: { labels: curve.map(function (_, i) { return 'Yr ' + (i + 1); }), datasets: [{ label: 'PPF balance', data: curve, borderColor: '#1B3A6B', backgroundColor: 'rgba(0,194,168,.12)', tension: .35, fill: true }] },
+        options: { plugins: { tooltip: { callbacks: { label: function (c) { return 'Balance: ' + DC.compact(c.raw); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amt','rate','yrs'].forEach(function (id){ const el=document.getElementById(id); el.addEventListener('input', compute); el.addEventListener('change', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('PPF calc: maturity ' + document.getElementById('rMat').textContent + ', interest ' + document.getElementById('rInt').textContent + ' — try DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('PPF Results\nInvested: ' + document.getElementById('rInv').textContent + '\nInterest: ' + document.getElementById('rInt').textContent + '\nMaturity: ' + document.getElementById('rMat').textContent + '\nEstimated 30% tax saved (15 yrs): ' + document.getElementById('rTax').textContent); });
+  </script>
+</body>
+</html>
