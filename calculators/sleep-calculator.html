@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Calculator — When to Sleep / Wake Based on REM Cycles | DecideCalc</title>
+  <meta name="description" content="Free sleep cycle calculator. Pick when you need to wake up, get ideal bedtimes at 90-minute REM cycle boundaries. Or pick bedtime to get ideal wake times.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/sleep-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>Sleep Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Sleep Calculator</h1><div class="sub">90-minute REM cycle math</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="mode" value="wake">
+          <div class="segmented" id="mode" data-target="mode">
+            <button type="button" data-value="wake" class="active">I need to wake at …</button>
+            <button type="button" data-value="sleep">I'm going to sleep at …</button>
+          </div>
+          <div class="field" style="margin-top:14px"><label id="timeLabel">Wake-up time</label>
+            <input class="input" id="time" type="time" value="06:30">
+          </div>
+          <div class="field"><label>Time to fall asleep (minutes)</label>
+            <div class="range-out"><span class="range-val" id="out-lat">15 min</span></div>
+            <input type="range" id="lat" min="0" max="60" step="5" value="15">
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Ideal Times</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">ideal bedtime</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rOpt1">—</div><div class="k" id="k1">6 cycles (9 hr)</div></div>
+          <div class="result-stat"><div class="v" id="rOpt2">—</div><div class="k" id="k2">5 cycles (7.5 hr)</div></div>
+          <div class="result-stat"><div class="v" id="rOpt3">—</div><div class="k" id="k3">4 cycles (6 hr)</div></div>
+          <div class="result-stat"><div class="v" id="rOpt4">—</div><div class="k" id="k4">3 cycles (4.5 hr)</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The 90-minute REM cycle driver</h4><p id="recoText">Sleep oscillates between light/deep/REM every ~90 minutes. Waking mid-cycle (especially during deep sleep) causes the groggy "sleep inertia" feeling; waking at cycle-boundary feels natural. 5-6 cycles per night is the sweet spot for most adults.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Sleep quality, not just quantity</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Consistency &gt; cycle math:</b> fixed bedtime ±15 min matters more than hitting exact cycles</li>
+        <li><b>Blue-light cutoff:</b> 60 min before bed</li>
+        <li><b>Caffeine half-life:</b> 6 hrs — last coffee by 2-4 pm for a 10 pm bedtime</li>
+        <li><b>Weekend catching-up:</b> ±30 min only — major swing feels like jet lag</li>
+        <li><b>Naps:</b> 20 min power-nap or 90 min full-cycle — never 45 min (mid-cycle grogginess)</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Age-based sleep needs (CDC):</b> 18-60 yrs → 7+, 61-64 → 7-9, 65+ → 7-8. Individual variation real — some thrive on 6, others need 9. Use the calculator as a starting framework.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'sleep-calculator', faqs: [
+      { q: 'Why exactly 90 minutes per cycle?', a: 'It\'s the population average — individual cycles range 70-120 minutes. The 90-min framework is a planning aid, not a biological constant. Use it as a starting point and adjust based on how you feel waking.' },
+      { q: 'Does this work for kids/teens?', a: 'Kids have shorter cycles (60 min at age 5, growing toward 90 by teens) and need more total cycles (8-10). This tool is calibrated for adults; for kids use age-specific guidelines (9-12 hrs for school-age).' },
+      { q: 'What about polyphasic sleep schedules?', a: 'Uberman, Everyman and other polyphasic schedules work for a tiny fraction of people during short adaptation windows and usually fail long-term. We don\'t model these — the vast majority of sleep scientists recommend consolidated single-block sleep.' },
+      { q: 'Is REM more important than deep sleep?', a: 'Both matter. Deep (slow-wave) sleep restores the body; REM consolidates memory and emotional processing. Heavy exercisers need more deep sleep; heavy cognitive/emotional work benefits more from REM. Cycle-boundary waking maximises the chance you finish whichever phase you\'ll naturally end on.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('moon');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let mode = 'wake';
+    document.getElementById('mode').addEventListener('segment:change', function(e){
+      mode = e.detail.value;
+      document.getElementById('timeLabel').textContent = mode === 'wake' ? 'Wake-up time' : 'Bedtime';
+      document.getElementById('rLbl').textContent = mode === 'wake' ? 'ideal bedtime' : 'ideal wake time';
+      compute();
+    });
+
+    function fmt(minutesFromMidnight) {
+      let m = ((minutesFromMidnight % 1440) + 1440) % 1440;
+      const h = Math.floor(m / 60), mm = m % 60;
+      const am = h < 12;
+      let hh = h % 12; if (hh === 0) hh = 12;
+      return hh + ':' + String(mm).padStart(2,'0') + ' ' + (am ? 'AM' : 'PM');
+    }
+    function compute() {
+      const tStr = document.getElementById('time').value || '06:30';
+      const lat = Math.max(0, DC.fnum(document.getElementById('lat').value));
+      document.getElementById('out-lat').textContent = lat + ' min';
+      const [h, m] = tStr.split(':').map(Number);
+      const tMin = h * 60 + m;
+
+      // 6/5/4/3 cycles × 90 min each
+      const opts = [6, 5, 4, 3].map(cyc => cyc * 90);
+      const labels = ['6 cycles (9 hr)', '5 cycles (7.5 hr)', '4 cycles (6 hr)', '3 cycles (4.5 hr)'];
+      ['k1','k2','k3','k4'].forEach((id, i) => document.getElementById(id).textContent = labels[i]);
+
+      const results = mode === 'wake'
+        ? opts.map(mins => tMin - mins - lat)   // subtract cycles & latency
+        : opts.map(mins => tMin + mins + lat);  // add cycles & latency
+      ['rOpt1','rOpt2','rOpt3','rOpt4'].forEach((id, i) => {
+        document.getElementById(id).textContent = fmt(results[i]);
+      });
+      document.getElementById('rMain').textContent = fmt(results[1]);   // 5 cycles is the best default
+      document.getElementById('rLbl').textContent = mode === 'wake'
+        ? 'best bedtime (5 cycles)'
+        : 'best wake time (5 cycles)';
+
+      let title, text;
+      if (lat > 30) {
+        title = 'Your sleep latency is unusually long';
+        text = 'Most adults fall asleep in 10-20 min. Consistently >30 min may indicate poor sleep hygiene, late caffeine, or screen light. Try the 4-7-8 breathing technique or earlier screen cutoff.';
+      } else if (lat < 5) {
+        title = 'Falling asleep instantly may signal sleep debt';
+        text = '<5-min latency is sometimes a marker of chronic sleep deprivation rather than great sleep. Consider if you\'re accumulating debt that catches up on weekends.';
+      } else {
+        title = 'Normal sleep latency';
+        text = '10-20 min to fall asleep is the healthy range — your cycle math is pegged correctly.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['time','lat'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('Ideal time: ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult('Sleep schedule: ' + document.getElementById('rOpt1').textContent + ' (9h) | ' + document.getElementById('rOpt2').textContent + ' (7.5h) | ' + document.getElementById('rOpt3').textContent + ' (6h)'); });
+  </script>
+</body>
+</html>

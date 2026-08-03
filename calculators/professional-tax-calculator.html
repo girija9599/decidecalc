@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Tax Calculator — State-wise Monthly P-Tax 2025-26 | DecideCalc</title>
+  <meta name="description" content="Free Professional Tax calculator for Indian state-wise slabs. Maharashtra, Karnataka, West Bengal, Andhra Pradesh, Telangana, Gujarat — instant monthly and annual P-Tax.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/professional-tax-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Professional Tax</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Professional Tax Calculator</h1><div class="sub">State-wise monthly deduction</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>State (P-Tax applicable)</label>
+            <select class="input" id="state">
+              <option value="mh" selected>Maharashtra</option>
+              <option value="ka">Karnataka</option>
+              <option value="wb">West Bengal</option>
+              <option value="ap">Andhra Pradesh</option>
+              <option value="ts">Telangana</option>
+              <option value="gj">Gujarat (Ahmedabad/Surat/Vadodara/Rajkot)</option>
+              <option value="mp">Madhya Pradesh</option>
+              <option value="as">Assam</option>
+              <option value="od">Odisha</option>
+              <option value="ke">Kerala</option>
+              <option value="tn">Tamil Nadu (recently reintroduced)</option>
+              <option value="none">Other states — no P-Tax</option>
+            </select>
+          </div>
+          <div class="field"><label>Monthly gross salary (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-sal">₹50,000</span></div>
+            <input type="range" id="sal" min="0" max="500000" step="1000" value="50000" data-prefix="₹">
+          </div>
+          <input type="hidden" name="month" value="11">
+          <div class="segmented" id="month" data-target="month">
+            <button type="button" data-value="nov">November (Maharashtra)</button>
+            <button type="button" data-value="feb">February (Odisha)</button>
+            <button type="button" data-value="other" class="active">Other months</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate P-Tax</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Monthly P-Tax</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rMonthly">—</div><div class="k">This month</div></div>
+          <div class="result-stat"><div class="v" id="rAnnual">—</div><div class="k">Annual (12 months)</div></div>
+          <div class="result-stat"><div class="v" id="rSlab">—</div><div class="k">Slab applied</div></div>
+          <div class="result-stat"><div class="v" id="rPct">—</div><div class="k">% of gross salary</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">P-Tax is deductible from income tax</h4><p id="recoText">Professional Tax paid is fully deductible from your taxable income under Section 16(iii). So ₹2,500 annual P-Tax actually costs you only ₹1,750 if you're in the 30% bracket (saves ₹750 tax).</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>P-Tax around India (snapshot 2025)</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Maharashtra:</b> ₹200/month (>₹25K); November special ₹300 (paid as catch-up)</li>
+        <li><b>Karnataka:</b> ₹200/month (>₹25K); ₹0 below that</li>
+        <li><b>West Bengal:</b> ₹0-200/month tiered, capped at ₹2,500/yr statutory max</li>
+        <li><b>Gujarat:</b> only 4 corporation cities levy it, ₹2,400/yr cap</li>
+        <li><b>No P-Tax:</b> Delhi, Mumbai-resident non-salaried, Haryana, Rajasthan, UP</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Constitutional cap:</b> Article 276 caps Professional Tax at ₹2,500/year per person — no state can exceed this. Most states have plateaued at this ceiling for salaried professionals.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'professional-tax-calculator', faqs: [
+      { q: 'My salary is below the slab — do I still pay?', a: 'No. Below the minimum slab (which varies: ₹7.5K in MH, ₹25K in KA) there is zero P-Tax. The calculator accurately returns ₹0 if you\'re under the floor.' },
+      { q: 'Why does Maharashtra charge ₹300 in November?', a: 'Maharashtra\'s schedule has 11 months at ₹200 + November at ₹300 — totals ₹2,500 (the legal cap). It\'s just an accounting rule, not a rate increase.' },
+      { q: 'I work remotely for a Mumbai employer but live in Jaipur — who charges P-Tax?', a: 'P-Tax follows the state of your WORK_LOCATION, not employer HQ. If your official place of work is Jaipur, Rajasthan — no P-Tax even if the employer is registered in Maharashtra. But employers typically deduct based on registered office — incorrect deductions can be claimed back with relocation proof.' },
+      { q: 'Is P-Tax applicable to freelancers?', a: 'Yes — most states levy P-Tax on self-employed professionals too (doctors, lawyers, CAs, freelancers) but via a separate annual return and payment, not salary deduction. Rates are typically ₹2,500/year flat across the board.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('percent');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    // P-Tax slabs per state (monthly gross, monthly P-Tax) — 2025 reference rates
+    const SLABS = {
+      mh: { note: 'Maharashtra — Nov special ₹300',
+            tiers: [{upto: 7500, fee: 0}, {upto: 10000, fee: 175}, {upto: Infinity, fee: 200}],
+            novOverride: 300,
+            annualCap: 2500 },
+      ka: { note: 'Karnataka',
+            tiers: [{upto: 24999, fee: 0}, {upto: Infinity, fee: 200}],
+            annualCap: 2400 },
+      wb: { note: 'West Bengal tiered',
+            tiers: [{upto: 10000, fee: 0}, {upto: 15000, fee: 110}, {upto: 25000, fee: 130}, {upto: 40000, fee: 150}, {upto: Infinity, fee: 200}],
+            annualCap: 2500 },
+      ap: { note: 'Andhra Pradesh',
+            tiers: [{upto: 15000, fee: 0}, {upto: 20000, fee: 150}, {upto: Infinity, fee: 200}],
+            annualCap: 2400 },
+      ts: { note: 'Telangana',
+            tiers: [{upto: 15000, fee: 0}, {upto: 20000, fee: 150}, {upto: Infinity, fee: 200}],
+            annualCap: 2400 },
+      gj: { note: 'Gujarat (4 cities)',
+            tiers: [{upto: 5999, fee: 0}, {upto: 8999, fee: 80}, {upto: 11999, fee: 150}, {upto: Infinity, fee: 200}],
+            annualCap: 2400 },
+      mp: { note: 'Madhya Pradesh',
+            tiers: [{upto: 22666, fee: 0}, {upto: 33332, fee: 208}, {upto: Infinity, fee: 208}],
+            annualCap: 2500 },
+      as: { note: 'Assam',
+            tiers: [{upto: 10000, fee: 0}, {upto: 15000, fee: 150}, {upto: 25000, fee: 180}, {upto: Infinity, fee: 200}],
+            annualCap: 2500 },
+      od: { note: 'Odisha',
+            tiers: [{upto: 13304, fee: 0}, {upto: 25000, fee: 125}, {upto: Infinity, fee: 200}],
+            annualCap: 2400,
+            febOverride: 300 },
+      ke: { note: 'Kerala (half-yearly)',
+            halfYearly: [{upto: 11999, fee: 0}, {upto: 20999, fee: 120}, {upto: 29999, fee: 180}, {upto: 44999, fee: 300}, {upto: 59999, fee: 450}, {upto: 74999, fee: 600}, {upto: 99999, fee: 750}, {upto: Infinity, fee: 1250}],
+            annualCap: 2500 },
+      tn: { note: 'Tamil Nadu half-yearly',
+            halfYearly: [{upto: 21000, fee: 0}, {upto: 30000, fee: 130}, {upto: 45000, fee: 315}, {upto: 60000, fee: 690}, {upto: 75000, fee: 1025}, {upto: Infinity, fee: 1250}],
+            annualCap: 2500 },
+      none: { note: 'No P-Tax', tiers: [{upto: Infinity, fee: 0}], annualCap: 0 }
+    };
+
+    let monthType = 'other';
+    const monthControl = document.getElementById('month');
+    monthControl.addEventListener('segment:change', function(e){
+      monthType = e.detail.value;
+      compute();
+    });
+    // Retain a direct click path for this stateful result, including older cached core.js files.
+    monthControl.querySelectorAll('button').forEach(function(button) {
+      button.addEventListener('click', function() {
+        monthType = button.getAttribute('data-value');
+        compute();
+      });
+    });
+
+    function lookupFee(cfg, monthlyGross) {
+      const tiers = cfg.tiers || cfg.halfYearly;
+      if (cfg.halfYearly) {
+        // Half-yearly slabs: gross × 6
+        const annualized = monthlyGross * 6;
+        for (const t of tiers) if (annualized <= t.upto) return t.fee / 6;   // monthly equivalent
+        return 0;
+      }
+      for (const t of tiers) if (monthlyGross <= t.upto) return t.fee;
+      return 0;
+    }
+
+    function compute() {
+      const state = document.getElementById('state').value;
+      const sal = Math.max(0, DC.fnum(document.getElementById('sal').value));
+      document.getElementById('out-sal').textContent = DC.compact(sal);
+      const cfg = SLABS[state];
+      if (sal <= 0 || state === 'none') {
+        ['rMain','rMonthly','rAnnual','rSlab','rPct'].forEach(function(id){document.getElementById(id).textContent = state === 'none' ? '₹0' : '—';});
+        return;
+      }
+      let fee = lookupFee(cfg, sal);
+      // Apply a state-specific special-month amount only in that month's selector.
+      const specialMonth = (monthType === 'nov' && cfg.novOverride) ||
+        (monthType === 'feb' && cfg.febOverride);
+      if (specialMonth) fee = specialMonth;
+      const annual = Math.min(fee * 12, cfg.annualCap);
+
+      document.getElementById('rMain').textContent = DC.inr(Math.round(fee));
+      document.getElementById('rLbl').textContent = 'P-Tax this month' + (specialMonth ? ' (special-month amount applied)' : '');
+      document.getElementById('rMonthly').textContent = DC.inr(Math.round(fee));
+      document.getElementById('rAnnual').textContent = DC.inr(Math.round(annual));
+      document.getElementById('rSlab').textContent = cfg.note;
+      document.getElementById('rPct').textContent = sal > 0 ? (fee/sal*100).toFixed(3) + '%' : '—';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['sal','state'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('P-Tax: ' + document.getElementById('rMain').textContent + '/mo (' + document.getElementById('rAnnual').textContent + '/yr) — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult('Monthly P-Tax: ' + document.getElementById('rMonthly').textContent + ' | Annual: ' + document.getElementById('rAnnual').textContent + ' | Slab: ' + document.getElementById('rSlab').textContent); });
+  </script>
+</body>
+</html>

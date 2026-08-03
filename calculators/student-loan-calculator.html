@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Loan Calculator — Payment, Payoff Timeline &amp; Total Interest | DecideCalc</title>
+  <meta name="description" content="Estimate your federal or private student loan monthly payment, payoff date and total interest — model extra payments, lender autopay cuts and six repayment-plan styles in one view.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/student-loan-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>Student Loan Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Student Loan Calculator</h1><div class="sub">Payment · payoff date · total interest · extra-payment impact</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="ccy">Currency</label>
+              <select class="select" id="ccy">
+                <option value="USD" selected>$ USD</option>
+                <option value="INR">₹ INR</option>
+                <option value="GBP">£ GBP</option>
+                <option value="EUR">€ EUR</option>
+                <option value="CAD">CA$ CAD</option>
+                <option value="AUD">A$ AUD</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="balance">Loan balance</label>
+              <div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix" id="balance" type="number" min="0" step="any" value="32000" inputmode="decimal"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="apr">Interest rate (% APR)</label>
+            <input class="input" id="apr" type="number" min="0" max="25" step="any" value="6.53" inputmode="decimal">
+            <div class="hint">2025–26 federal undergraduate Direct loans are 6.53%; graduate 8.08%; PLUS 9.08%. Check your servicer for your exact rate.</div>
+          </div>
+
+          <div class="field">
+            <label>Repayment plan length</label>
+            <input type="hidden" name="term" value="10">
+            <div class="segmented" id="term" data-target="term">
+              <button type="button" data-value="10" class="active">10 yrs</button>
+              <button type="button" data-value="20">20 yrs</button>
+              <button type="button" data-value="25">25 yrs</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="extra">Extra monthly payment (optional)</label>
+            <div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix" id="extra" type="number" min="0" step="any" value="0" inputmode="decimal"></div>
+          </div>
+
+          <div class="note" style="margin:0 0 12px">
+            <input id="autopay" type="checkbox" style="width:18px;height:18px;accent-color:var(--accent-600);margin-top:3px;flex:0 0 auto">
+            <div><label for="autopay" style="font-weight:700;cursor:pointer">Lender autopay discount</label><div style="color:var(--text-soft);font-size:.84rem;margin-top:3px">Most servicers cut <b>0.25%</b> off the rate when you sign up for automatic debit.</div></div>
+          </div>
+
+          <div class="note" style="margin:0 0 12px">
+            <input id="grace" type="checkbox" style="width:18px;height:18px;accent-color:var(--accent-600);margin-top:3px;flex:0 0 auto" checked>
+            <div><label for="grace" style="font-weight:700;cursor:pointer">Include 6-month in-school/grace interest</label><div style="color:var(--text-soft);font-size:.84rem;margin-top:3px">On <b>unsubsidized</b> loans, interest accrues from day one. We add 6 months of simple interest to the balance that enters repayment.</div></div>
+          </div>
+
+          <div class="note" style="margin:0 0 12px">
+            <input id="tax" type="checkbox" style="width:18px;height:18px;accent-color:var(--accent-600);margin-top:3px;flex:0 0 auto">
+            <div><label for="tax" style="font-weight:700;cursor:pointer">Model federal interest deduction (US only)</label><div style="color:var(--text-soft);font-size:.84rem;margin-top:3px">Deducts up to <b>$2,500</b> of interest at a <b>22%</b> marginal rate → max $550/yr back. Skips the deduction automatically if your income (below) is over the phase-out.</div></div>
+          </div>
+          <div id="agiBox" style="display:none">
+            <div class="field"><label for="agiF">Annual gross income (for deduction phase-out)</label>
+              <div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="agiF" type="number" min="0" step="any" value="60000" inputmode="decimal"></div>
+              <div class="hint" id="agiHint">Single filer: full deduction below $80k, phases out by $95k (MFJ: $165k–$195k).</div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Filing status</label>
+                <input type="hidden" name="file" value="single">
+                <div class="segmented" id="file" data-target="file">
+                  <button type="button" data-value="single" class="active">Single</button>
+                  <button type="button" data-value="married">Married joint</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p id="errBox" role="alert" aria-live="polite" style="min-height:1.3em;color:#DC2626;font-size:.84rem;margin:2px 0 10px"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate payoff plan</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rPmt">—</div><div class="lbl" id="rPmtLbl">Monthly payment (standard plan)</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rPayoff">—</div><div class="k">Payoff date</div></div>
+          <div class="result-stat"><div class="v" id="rMonths">—</div><div class="k">Months to payoff</div></div>
+          <div class="result-stat"><div class="v" id="rTotInt">—</div><div class="k">Total interest paid</div></div>
+          <div class="result-stat"><div class="v" id="rNetInt">—</div><div class="k">Net interest (after deduction)</div></div>
+          <div class="result-stat"><div class="v" id="rTotPaid">—</div><div class="k">Total amount paid</div></div>
+          <div class="result-stat"><div class="v" id="rBalAt">—</div><div class="k">Balance entering repayment</div></div>
+        </div>
+        <div id="savedStats" style="display:none">
+          <div class="note" style="margin:0 22px 14px"><span id="saveIc"></span><div><b>Extra-payment impact:</b> paying extra saves <b id="rSaved">—</b> of interest and shortens the loan by <b id="rMonthsSaved">—</b>.</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="slChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Pick the plan that matches your goal</h4><p id="recoText">The 10-year standard plan pays the least interest. Extending to 20–25 years lowers the monthly bill but nearly doubles total cost. Even a modest extra payment attacks principal and compounds the savings.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Compare repayment plans</h2>
+      <p class="mt-2">Same balance, same rate — three timeline options. The longer the plan, the lower the payment and the higher the interest. Extra payments apply on top of whichever plan you choose.</p>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="breakdown" aria-label="Repayment plan comparison">
+          <thead>
+            <tr><th>Plan</th><th class="num">Payment / mo</th><th class="num">Months</th><th class="num">Total interest</th></tr>
+          </thead>
+          <tbody id="planBody">
+            <tr><td colspan="4" style="text-align:center;color:var(--muted)">Calculate to compare 10, 20 and 25-year plans.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>What moves the needle on a student loan</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Pay during school/grace (unsubsidized):</b> every dollar of interest you cover now is a dollar that never compounds. It reduces the balance that actually enters repayment.</li>
+        <li><b>Recount on income-driven plans:</b> on IDR plans, requested payment recalculation whenever income changes or family size grows — keep the payment tied to real cash flow.</li>
+        <li><b>Autopay:</b> a 0.25% cut on a $30k 10-year loan saves several hundred dollars and removes the risk of a missed payment.</li>
+        <li><b>Refinancing:</b> a lower private rate slashes interest — but on federal loans you give up IDR, deferment and forgiveness. Never refinance debt you're pursuing PSLF on.</li>
+        <li><b>Employer assistance:</b> up to $5,250/yr is tax-free until at least end-2025. Ask HR before you assume it doesn't exist.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>US federal vs private:</b> federal loans come with IDR, forbearance and forgiveness paths; private loans trade that flexibility for sometimes-lower rates. Treat them as different products with different payoff logic — federal flexibility has real financial value.</div></div>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'student-loan-calculator', faqs: [
+      { q: 'How is my monthly student loan payment calculated?', a: 'We compute a standard amortizing payment: rate/12 × balance ÷ [1 − (1 + rate/12)^(-months)]. On a $32,000 balance at 6.53% APR with a 6-month grace and autopay cut, the effective balance becomes roughly $33,045 at 6.28% APR, which lands near $371/month over 10 years.' },
+      { q: 'What is the difference between subsidized and unsubsidized federal loans?', a: 'Subsidized – the government pays the interest while you are in school, in grace, or in deferment. Unsubsidized – interest accrues from the day of disbursement. If you don\'t pay it as it accrues, it capitalizes (is added to the balance) at repayment, meaning you pay interest on interest.' },
+      { q: 'Can I deduct student loan interest from my taxes?', a: 'Potentially up to $2,500 a year in the US, if your income is below $95k (single) or $195k (married filing jointly) for 2025. The deduction shrinks linearly between $80k–$95k / $165k–$195k and is worth at most $550/year at a 22% marginal rate. This calculator models that phase-out.' },
+      { q: 'What is income-driven repayment and should I use it?', a: 'IDR plans (like the current SAVE/RAP framework or older IBR) cap your payment at a percentage of discretionary income and forgive the remainder after 20–25 years, with forgiveness being taxable. Best for low-income or PSLF-track borrowers; on standard repayment you save on interest.' },
+      { q: 'What is the difference between deferment and forbearance?', a: 'Deferment is for specific life events (back in school, active duty, hardship) and doesn\'t accrue interest on subsidized loans. Forbearance is a general pause that nearly always accrues interest on every loan. Both stop the payoff clock and usually lengthen your total cost.' },
+      { q: 'Does the FAFSA affect my repayment terms?', a: 'No — FAFSA determines your aid eligibility. Repayment length, interest rate and extras are set by the loan type and your servicer. That said, keep your IDR recertification current; missing it can revert you to standard and sometimes capitalize interest.' },
+      { q: 'Is Public Service Loan Forgiveness still available?', a: 'PSLF still exists: 120 qualifying payments while working full-time for a qualifying government or non-profit employer on an IDR plan, then tax-free forgiveness. Rules evolve — if PSLF is your plan, do not refinance those loans into private debt.' },
+      { q: 'What happens if I miss a student loan payment?', a: 'You are delinquent after one day and typically enter default at 270 days. A late mark hits your credit, and default can trigger wage garnishment, tax-refund seizure and loss of IDR eligibility. Contact your servicer immediately — hardship forbearance or IDR recalculation is usually cheaper than the damage.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('graduation');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+    document.getElementById('saveIc').innerHTML = DC.icon('zap');
+
+    var SYMS = { USD: '$', INR: '₹', GBP: '£', EUR: '€', CAD: 'CA$', AUD: 'A$' };
+    function sym() { return SYMS[document.getElementById('ccy').value] || '$'; }
+    function fmt(n) {
+      if (!isFinite(n)) n = 0;
+      var s = sym(), v = Math.round(Math.abs(n));
+      var loc = document.getElementById('ccy').value === 'INR' || document.getElementById('ccy').value === 'JPY' ? 'en-IN' : 'en-US';
+      if (document.getElementById('ccy').value === 'INR' && v >= 100000) return (n < 0 ? '−' : '') + s + v.toLocaleString('en-IN');
+      return (n < 0 ? '−' : '') + s + v.toLocaleString(loc);
+    }
+    function fmtDate(dt) {
+      if (!dt) return '—';
+      return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    function segVal(id) { var h = document.querySelector('[name="' + id + '"]'); return h ? h.value : null; }
+    function setSeg(id, v) {
+      var seg = document.getElementById(id), h = document.querySelector('[name="' + id + '"]');
+      if (!seg || !h) return;
+      h.value = v;
+      seg.querySelectorAll('button').forEach(function (b){ b.classList.toggle('active', b.getAttribute('data-value') === String(v)); });
+    }
+
+    function pmt(P, rMo, n) {
+      if (rMo === 0) return P / n;
+      var f = Math.pow(1 + rMo, n);
+      return P * rMo * f / (f - 1);
+    }
+
+    function deductFactor(agi, filing) {
+      if (filing === 'married') {
+        if (agi < 165000) return 1;
+        if (agi < 195000) return 1 - (agi - 165000) / 30000;
+        return 0;
+      }
+      if (agi < 80000) return 1;
+      if (agi < 95000) return 1 - (agi - 80000) / 15000;
+      return 0;
+    }
+
+    function compute() {
+      var balRaw = document.getElementById('balance').value.trim();
+      var apr = Number(document.getElementById('apr').value);
+      var extraRaw = document.getElementById('extra').value.trim();
+      var educationTax = document.getElementById('tax').checked;
+      var autopay = document.getElementById('autopay').checked;
+      var grace = document.getElementById('grace').checked;
+      var years = parseInt(segVal('term') || '10', 10);
+      var filing = segVal('file') || 'single';
+      var agi = educationTax ? Number(document.getElementById('agiF').value) : 0;
+
+      // errors
+      var err = [];
+      if (balRaw === '' || !isFinite(Number(balRaw)) || Number(balRaw) <= 0) err.push('Enter a loan balance greater than zero.');
+      if (!isFinite(apr) || apr < 0 || apr > 25) err.push('Interest rate must be between 0 and 25%.');
+      if (extraRaw !== '' && (!isFinite(Number(extraRaw)) || Number(extraRaw) < 0)) err.push('Extra payment must be zero or positive.');
+      if (educationTax && (!isFinite(agi) || agi < 0)) err.push('Income must be zero or positive.');
+      var errBox = document.getElementById('errBox');
+      errBox.textContent = err.join(' ');
+      if (err.length) {
+        ['rPmt','rPayoff','rMonths','rTotInt','rNetInt','rTotPaid','rBalAt'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+        document.getElementById('savedStats').style.display = 'none';
+        document.getElementById('planBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Fix the inputs above to compare plans.</td></tr>';
+        if (DC.charts && DC.charts.slChart) { DC.charts.slChart.destroy(); delete DC.charts.slChart; }
+        return;
+      }
+
+      var bal0 = Number(balRaw);
+      var extra = Number(extraRaw) || 0;
+      var rate0 = apr / 100;
+      var rate = (autopay && rate0 > 0) ? Math.max(0, rate0 - 0.0025) : rate0;
+
+      // balance that actually enters repayment
+      var balStart = bal0;
+      if (grace && rate > 0 && bal0 > 0) balStart = bal0 + bal0 * rate * 0.5;
+      var n0 = years * 12;
+      var pBase = pmt(balStart, rate / 12, n0);
+      var totIntBase = pBase * n0 - balStart;
+
+      // with extra payment — cap term so payment positive amortization
+      var months = n0, pTotal = pBase + extra, totIntTotal = totIntBase;
+      if (extra > 0 && rate > 0 && pBase + extra > balStart * rate / 12) {
+        var p = balStart, q = pBase + extra, ib = 0;
+        months = 0;
+        while (p > 0.01 && months < 360) {
+          var it = p * rate / 12; ib += it;
+          p -= (q - it);
+          months++;
+        }
+        totIntTotal = ib;
+      } else if (extra > 0 && rate === 0) {
+        months = Math.ceil(balStart / (pBase + extra));
+        totIntTotal = 0;
+      }
+      var payoff = new Date(); payoff.setMonth(payoff.getMonth() + months);
+      var totPaid = balStart + totIntTotal;
+
+      // tax effect
+      var dedFactor = educationTax ? deductFactor(agi, filing) : 0;
+      var yearsPaid = Math.max(1, Math.ceil(months / 12));
+      var intDed = Math.min(totIntTotal / yearsPaid, 2500) * dedFactor;
+      var taxBack = intDed * 0.22;
+      var netInt = totIntTotal - taxBack * yearsPaid;
+
+      document.getElementById('rBalAt').textContent = fmt(balStart);
+      document.getElementById('rPmt').textContent = fmt(pBase) + (extra > 0 ? '/mo' : '');
+      document.getElementById('rPmtLbl').textContent = extra > 0 ? 'Scheduled payment (+' + fmt(extra) + ' extra = ' + fmt(pTotal) + '/mo)' : 'Monthly payment';
+      document.getElementById('rMonths').textContent = months + ' mo';
+      document.getElementById('rPayoff').textContent = fmtDate(payoff);
+      document.getElementById('rTotInt').textContent = fmt(totIntTotal);
+      document.getElementById('rNetInt').textContent = educationTax ? fmt(netInt) + ' net' : 'Deduction off';
+      document.getElementById('rTotPaid').textContent = fmt(totPaid);
+
+      // saved vs baseline
+      if (extra > 0) {
+        var diffInt = totIntBase - totIntTotal;
+        var diffMo = n0 - months;
+        document.getElementById('savedStats').style.display = '';
+        document.getElementById('rSaved').textContent = fmt(diffInt);
+        document.getElementById('rMonthsSaved').textContent = diffMo > 0 ? diffMo + ' month' + (diffMo === 1 ? '' : 's') : 'no time saved';
+      } else {
+        document.getElementById('savedStats').style.display = 'none';
+      }
+
+      // plans table
+      var plans = [10, 20, 25].map(function (yr) {
+        var pn = yr * 12, pp = pmt(balStart, rate / 12, pn), pi = pp * pn - balStart;
+        return { yr: yr, pmt: pp, months: pn, int: pi };
+      });
+      document.getElementById('planBody').innerHTML = plans.map(function (p) {
+        var hl = p.yr === years ? ' style="font-weight:700;color:var(--accent-600)"' : '';
+        return '<tr' + hl + '><td>' + p.yr + '-year' + (p.yr === years ? ' (selected)' : '') + '</td><td class="num">' + fmt(p.pmt) + '/mo</td><td class="num">' + p.months + '</td><td class="num">' + fmt(p.int) + '</td></tr>';
+      }).join('');
+
+      // amortization chart — yearly balances
+      var labels = [], dataStd = [], dataExtra = [];
+      var bs = balStart;
+      for (var y2 = 0; y2 <= years; y2++) {
+        labels.push('Yr ' + y2);
+        var ncur = Math.min(y2 * 12, n0);
+        var rem = balStart * Math.pow(1 + rate / 12, ncur) - (pBase * (Math.pow(1 + rate / 12, ncur) - 1) / (rate / 12));
+        dataStd.push(Math.max(0, Math.round(rem)));
+        if (extra > 0) {
+          var rem2 = balStart * Math.pow(1 + rate / 12, ncur) - ((pBase + extra) * (Math.pow(1 + rate / 12, ncur) - 1) / (rate / 12));
+          dataExtra.push(Math.max(0, Math.round(rem2)));
+        }
+      }
+      var sets = [{ label: 'Standard (' + fmt(pBase) + '/mo)', data: dataStd, borderColor: '#4338CA', backgroundColor: 'rgba(67,56,202,.12)', fill: true, tension: .3, pointRadius: 0, borderWidth: 2 }];
+      if (extra > 0) sets.push({ label: 'With extra (' + fmt(pTotal) + '/mo)', data: dataExtra, borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,.1)', fill: true, tension: .3, pointRadius: 0, borderWidth: 2 });
+      DC.makeChart('slChart', {
+        type: 'line',
+        data: { labels: labels, datasets: sets },
+        options: {
+          plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c){ return c.dataset.label + ': ' + fmt(c.raw); } } } },
+          scales: { y: { ticks: { callback: function (v){ return sym() + (v >= 1000 ? (v/1000).toFixed(0) + 'k' : v); } } } }
+        }
+      });
+
+      // recommendation
+      var titleEl = document.getElementById('recoTitle'), textEl = document.getElementById('recoText');
+      if (extra > 0 && months < n0) {
+        titleEl.textContent = '⚡ Extra payment is working';
+        textEl.textContent = 'Adding ' + fmt(extra) + '/month drops your payoff from ' + n0 + ' to ' + months + ' months and saves ' + fmt(totIntBase - totIntTotal) + ' in interest — the simplest guaranteed return you will find.';
+      } else if (educationTax && dedFactor > 0) {
+        titleEl.textContent = 'Deduction softens the pain';
+        textEl.textContent = 'At your income, the federal student-loan deduction returns about $' + Math.round(intDed * 0.22) + ' a year — a little, but claim it. Filing status and AGI phase-outs are applied above.';
+      } else {
+        titleEl.textContent = 'Pick the plan for your goal';
+        textEl.textContent = 'Standard 10-year = least interest, fastest freedom. Longer plans cut the payment. An extra ' + fmt(Math.round(balStart * 0.01)) + '/month (≈1% of balance) would cut months off the end — try it in the box above.';
+      }
+
+      window.__lastSL = {
+        pmt: fmt(pBase), payoff: fmtDate(payoff), months: months,
+        totInt: fmt(totIntTotal), netInt: fmt(netInt), totPaid: fmt(totPaid),
+        balStart: fmt(balStart), saved: extra > 0 ? fmt(totIntBase - totIntTotal) : null
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['ccy','balance','apr','extra','agiF'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', compute);
+      document.getElementById(id).addEventListener('change', compute);
+    });
+    ['autopay','grace','tax'].forEach(function (id) { document.getElementById(id).addEventListener('change', compute); });
+    document.getElementById('tax').addEventListener('change', function () { document.getElementById('agiBox').style.display = this.checked ? '' : 'none'; });
+    document.getElementById('term').addEventListener('segment:change', compute);
+    document.getElementById('file').addEventListener('segment:change', compute);
+
+    // currency prefix on money fields
+    document.getElementById('ccy').addEventListener('change', function () {
+      document.querySelectorAll('.money-prefix').forEach(function (el){ el.textContent = sym(); });
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('ccy').value = 'USD';
+      document.getElementById('balance').value = '32000';
+      document.getElementById('apr').value = '6.53';
+      document.getElementById('extra').value = '0';
+      document.getElementById('autopay').checked = false;
+      document.getElementById('grace').checked = true;
+      document.getElementById('tax').checked = false;
+      document.getElementById('agiBox').style.display = 'none';
+      document.getElementById('agiF').value = '60000';
+      setSeg('file', 'single');
+      setSeg('term', '10');
+      document.querySelectorAll('.money-prefix').forEach(function (el){ el.textContent = '$'; });
+      compute();
+      DC.toast('Inputs reset', 'success');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastSL; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('Student loan: ' + r.balStart + ' at repayment, ' + r.pmt + '/month, ' + r.totInt + ' interest (payoff ' + r.payoff + '). Recalculated on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastSL; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult('Student Loan Summary\nBalance at repayment: ' + r.balStart + '\nMonthly payment: ' + r.pmt + '\nMonths to payoff: ' + r.months + '\nPayoff date: ' + r.payoff + '\nTotal interest: ' + r.totInt + '\nNet interest: ' + r.netInt + '\nTotal paid: ' + r.totPaid + (r.saved ? '\nExtra-payment savings: ' + r.saved : ''));
+    });
+
+    compute();
+  </script>
+</body>
+</html>

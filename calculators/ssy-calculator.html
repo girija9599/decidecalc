@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sukanya Samriddhi Yojana (SSY) Calculator — Girl Child Savings | DecideCalc</title>
+  <meta name="description" content="Free Sukanya Samriddhi Yojana calculator. Real 2025 rules: max ₹1.5L/year deposit, 8.2% p.a., deposit for 15 years, matures at 21 years from opening, tax-free EEE.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/ssy-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>SSY Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>SSY Calculator</h1><div class="sub">Sukanya Samriddhi Yojana — girl child plan</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Girl's age when account opens</label>
+            <div class="range-out"><span class="range-val" id="out-gage">1 year</span></div>
+            <input type="range" id="gage" min="0" max="10" value="1">
+          </div>
+          <div class="field"><label>Annual deposit (₹) — max 1.5L</label>
+            <div class="range-out"><span class="range-val" id="out-dep">₹1,50,000</span></div>
+            <input type="range" id="dep" min="250" max="150000" step="500" value="150000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Interest rate (%)</label>
+            <div class="range-out"><span class="range-val" id="out-rate">8.2%</span></div>
+            <input type="range" id="rate" min="7.5" max="9" step="0.1" value="8.2" data-suffix="%">
+          </div>
+          <div style="display:flex;gap:10px;margin-top:6px">
+            <div style="flex:1;background:var(--surface-2);padding:10px 12px;border-radius:var(--radius-sm);font-size:.8rem;color:var(--text-soft)"><b>Deposit window:</b> first 15 years</div>
+            <div style="flex:1;background:var(--surface-2);padding:10px 12px;border-radius:var(--radius-sm);font-size:.8rem;color:var(--text-soft)"><b>Maturity:</b> 21 years from account opening</div>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate SSY Maturity</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Maturity value at 21 years</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInvest">—</div><div class="k">Total deposited (15 yrs)</div></div>
+          <div class="result-stat"><div class="v" id="rInterest">—</div><div class="k">Interest earned</div></div>
+          <div class="result-stat"><div class="v" id="rMatureAge">—</div><div class="k">Girl's age at maturity</div></div>
+          <div class="result-stat"><div class="v" id="rMultiple">—</div><div class="k">Wealth multiple</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Best risk-free return for a girl child</h4><p id="recoText">SSY's 8.2% (Q1 FY25-26) beats FD, RD, PPF and most NSC options. The catch: you can't touch it until her 18th year even for emergencies. Budget only what you won't need.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>SSY vs PPF vs FD — girl child edition</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>SSY @ 8.2%:</b> highest guaranteed; 50% partial allowed at 18 for education; fully tax-free EEE</li>
+        <li><b>PPF @ 7.1%:</b> anyone's name, 15-year term, partial from year 7; EEE</li>
+        <li><b>FD @ 6.5-7.5%:</b> can break anytime but interest taxed; typically lowest net for 30% bracket</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>2025-26 rule check:</b> max ₹1.5L/year per girl child, one account per girl, two girls max per family (three for twins/triplets). Account must open before the girl turns 10.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'ssy-calculator', faqs: [
+      { q: 'Can I withdraw before 21 years?', a: 'Partial: 50% of the previous year-end balance, only for the girl\'s higher education, only after she turns 18. Full premature closure only for marriage after 18, or death/medical emergency. Otherwise locked for 21 years.' },
+      { q: 'What if I stop depositing?', a: 'Minimum ₹250/year required. If missed, account becomes default — you can regularise by paying ₹250 per missed year + ₹50 penalty per default year. The account still earns the SSY rate during default.' },
+      { q: 'What happens after maturity?', a: 'Account must be closed within 1 year of the girl turning 21 (or at her marriage after 18). You cannot extend. Funds can transfer to her PPF or bank account.' },
+      { q: 'Is the 8.2% rate fixed for 21 years?', a: 'No — the Government revises SSY rates quarterly along with other small-savings schemes (PPF, NSC, KVP). The 8.2% shown is Q1 FY25-26; historically it has ranged from 7.6% to 9.2%. Long-term planning should use ~8% as a realistic average.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('baby');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      const gage = Math.max(0, DC.fnum(document.getElementById('gage').value));
+      const dep  = Math.max(0, DC.fnum(document.getElementById('dep').value));
+      const rate = Math.max(0, DC.fnum(document.getElementById('rate').value)) / 100;
+      document.getElementById('out-gage').textContent = gage + (gage===1?' year':' years');
+      document.getElementById('out-dep').textContent = DC.compact(dep);
+      document.getElementById('out-rate').textContent = (rate*100).toFixed(1) + '%';
+      if (dep < 250) {
+        ['rMain','rInvest','rInterest','rMatureAge','rMultiple'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      // Annual compounding, deposits at start of year for 15 years, growth continues through 21
+      let balance = 0, invested = 0;
+      for (let yr = 1; yr <= 21; yr++) {
+        if (yr <= 15) { balance += dep; invested += dep; }
+        balance *= (1 + rate);
+      }
+      const interest = balance - invested;
+      const matureAge = gage + 21;
+      const mult = invested > 0 ? balance / invested : 0;
+
+      document.getElementById('rMain').textContent = DC.compact(balance);
+      document.getElementById('rLbl').textContent = 'SSY value at age ' + matureAge;
+      document.getElementById('rInvest').textContent = DC.compact(invested);
+      document.getElementById('rInterest').textContent = DC.compact(interest);
+      document.getElementById('rMatureAge').textContent = matureAge + ' yrs';
+      document.getElementById('rMultiple').textContent = mult.toFixed(2) + '×';
+
+      let title, text;
+      if (dep >= 100000) {
+        title = 'Full-limit SSY funds a full UG+PG education';
+        text = 'At ' + DC.compact(dep) + '/yr, ' + DC.compact(balance) + ' typically covers MBBS-B category or top-tier IIT/NIT + masters without touching your own emergency fund.';
+      } else if (dep < 5000) {
+        title = 'Symbolically useful but won\'t move the needle';
+        text = 'Even full compounding on ₹' + Math.round(dep).toLocaleString('en-IN') + '/yr yields only ' + DC.compact(balance) + ' after 21 years. Consider pairing with equity index fund SIP for balance.';
+      } else {
+        title = 'Solid start — pair with 18-year aligned education planning';
+        text = 'The 50% education withdrawal at her 18th year can cover early college fees while the remainder compounds for higher education or marriage.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['gage','dep','rate'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('SSY maturity for my daughter: ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('SSY: ' + document.getElementById('rInvest').textContent + ' invested → ' + document.getElementById('rMain').textContent + ' at maturity (interest: ' + document.getElementById('rInterest').textContent + ')'); });
+  </script>
+</body>
+</html>

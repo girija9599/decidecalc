@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Switch ROI Calculator — Is Retraining Worth It? | DecideCalc</title>
+  <meta name="description" content="Calculate the ROI of switching careers. Compare retraining cost vs salary gain to find your break-even year and 5-year net gain or loss.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/career-switch-roi.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-career">Career & Salary</a><span class="sep">/</span><span>Career Switch ROI</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Career Switch ROI</h1><div class="sub">Break-even · 5-year gain</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field"><label>Current Annual Salary</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="curSal" type="number" value="800000"></div></div>
+            <div class="field"><label>Expected New Salary</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="newSal" type="number" value="1400000"></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Salary Growth — Current Path (%)</label><input class="input" id="curGrowth" type="number" value="8" step="0.5"></div>
+            <div class="field"><label>Salary Growth — New Path (%)</label><input class="input" id="newGrowth" type="number" value="15" step="0.5"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Retraining / Course Cost</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="cost" type="number" value="200000"></div></div>
+            <div class="field"><label>Time to Switch (months)</label><input class="input" id="months" type="number" value="8"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Income During Transition (% of current)</label><input class="input" id="transitionIncome" type="number" value="0" step="10"></div>
+            <div class="field"><label>Discount Rate (%)</label><input class="input" id="discount" type="number" value="8" step="0.5"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate ROI</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:8px">Break-even in</div>
+          <div class="big" id="rBE">2.3 years</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="r5yr">₹18.4 L</div><div class="k">5-Year Net Gain</div></div>
+          <div class="result-stat"><div class="v" id="rCost">₹2.7 L</div><div class="k">Total Switch Cost</div></div>
+          <div class="result-stat"><div class="v" id="rROI">680%</div><div class="k">5-Year ROI</div></div>
+          <div class="result-stat"><div class="v" id="rMult">3.1x</div><div class="k">Salary Multiple</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="roiChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Verdict</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How we calculate career-switch ROI</h2>
+      <p class="mt-2">We compare two parallel 5-year paths and find where they cross:</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Stay path:</b> current salary growing at its rate for 5 years.</li>
+        <li><b>Switch path:</b> pay training cost + lose income during transition, then earn the higher new salary growing at the new rate.</li>
+        <li><b>Break-even</b> = the month when cumulative switch income overtakes stay income (accounting for all costs).</li>
+        <li><b>5-year net gain</b> = switch cumulative − stay cumulative, discounted to today\'s value.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Smart moves:</b> switch part-time where possible, employer-sponsored upskilling, and choose careers with strong growth rates to compress break-even time.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'career-switch-roi', faqs: [
+      { q: 'When is a career switch financially worth it?', a: 'When break-even is under 3 years and the 5-year net gain meaningfully exceeds the cost. Also consider non-financial factors: fulfilment, growth ceiling, work enjoyment.' },
+      { q: 'What transition costs should I include?', a: 'Course fees, certification exams, lost salary during study (if you quit), possible relocation, and the opportunity cost of time invested.' },
+      { q: 'How accurate are the salary growth rates?', a: 'Use conservative figures. 8-12% is typical for lateral growth; 15-20% is achievable in high-demand fields (AI, data, product) but not guaranteed.' },
+      { q: 'Should I quit my job to retrain?', a: 'Only if you have 6-12 months of expenses saved. Most career switches are safer done alongside your current job, even if it takes longer.' },
+      { q: 'What if break-even is more than 5 years?', a: 'The switch is financially marginal. It may still be worth it for non-financial reasons (passion, longevity of new career), but treat it as a lifestyle choice, not an investment.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('graduation');
+    document.getElementById('recoIc').innerHTML = DC.icon('trending');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const curSal = DC.fnum(document.getElementById('curSal').value);
+      const newSal = DC.fnum(document.getElementById('newSal').value);
+      const curG = DC.fnum(document.getElementById('curGrowth').value) / 100;
+      const newG = DC.fnum(document.getElementById('newGrowth').value) / 100;
+      const cost = DC.fnum(document.getElementById('cost').value);
+      const months = DC.fnum(document.getElementById('months').value);
+      const trIncome = DC.fnum(document.getElementById('transitionIncome').value) / 100;
+      const disc = DC.fnum(document.getElementById('discount').value) / 100;
+
+      const horizon = 60; // months
+      const stayCum = [], switchCum = [];
+      let stayTotal = 0, switchTotal = 0, beMonth = -1;
+      let staySalM = curSal / 12, newSalM = newSal / 12;
+      let stayAcc = 0, swAcc = -cost; // switch starts negative (training cost)
+
+      for (let m = 1; m <= horizon; m++) {
+        // stay path
+        const stayMonthInc = staySalM * Math.pow(1 + curG, (m - 1) / 12);
+        stayAcc += stayMonthInc;
+        // switch path
+        let swMonthInc;
+        if (m <= months) {
+          swMonthInc = (curSal / 12) * trIncome; // partial/no income during transition
+        } else {
+          swMonthInc = newSalM * Math.pow(1 + newG, (m - months - 1) / 12);
+        }
+        swAcc += swMonthInc;
+        if (beMonth < 0 && swAcc >= stayAcc) beMonth = m;
+        if (m % 6 === 0 || m === horizon) {
+          stayCum.push(Math.round(stayAcc));
+          switchCum.push(Math.round(swAcc));
+        }
+      }
+      // discount 5-year gain
+      const gain5 = (swAcc - stayAcc) / Math.pow(1 + disc, 5);
+      const totalCost = cost + (curSal / 12) * months * (1 - trIncome);
+      const roi = gain5 > 0 ? (gain5 / totalCost * 100) : 0;
+
+      document.getElementById('rBE').textContent = beMonth > 0 ? (beMonth / 12).toFixed(1) + ' years' : 'Never (5yr)';
+      document.getElementById('r5yr').textContent = DC.compact(gain5);
+      document.getElementById('rCost').textContent = DC.compact(totalCost);
+      document.getElementById('rROI').textContent = roi > 0 ? Math.round(roi) + '%' : '—';
+      document.getElementById('rMult').textContent = (newSal / curSal).toFixed(1) + 'x';
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (beMonth > 0 && beMonth <= 36) { title.textContent = '✅ Strong YES — switch'; txt.textContent = 'You break even in just ' + (beMonth / 12).toFixed(1) + ' years and gain ' + DC.compact(gain5) + ' over 5 years. Financially, this switch is a clear win — execute the plan.'; }
+      else if (beMonth > 0 && beMonth <= 60) { title.textContent = '👍 Worth it, but patient'; txt.textContent = 'Break-even at ' + (beMonth / 12).toFixed(1) + ' years is acceptable. You gain ' + DC.compact(gain5) + ' over 5 years. Switch if the new career also excites you long-term.'; }
+      else { title.textContent = '⚠ Marginal financially'; txt.textContent = 'You don\'t break even within 5 years. Only switch if non-financial factors (passion, burnout, future ceiling) justify it. Consider negotiating a higher starting salary.'; }
+
+      const labels = []; for (let i = 6; i <= 60; i += 6) labels.push('M' + i);
+      DC.makeChart('roiChart', {
+        type: 'line',
+        data: { labels: labels, datasets: [
+          { label: 'Stay path (cumulative)', data: stayCum, borderColor: '#1B3A6B', backgroundColor: 'rgba(27,58,107,.1)', fill: true, tension: .3, borderWidth: 2, pointRadius: 0 },
+          { label: 'Switch path (cumulative)', data: switchCum, borderColor: '#00C2A8', backgroundColor: 'rgba(0,194,168,.15)', fill: true, tension: .3, borderWidth: 2.5, pointRadius: 0 }
+        ]},
+        options: { scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } }, plugins: { tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['curSal','newSal','curGrowth','newGrowth','cost','months','transitionIncome','discount'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My career switch break-even: ' + document.getElementById('rBE').textContent + ' — check yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Career Switch ROI:\nBreak-even: ' + document.getElementById('rBE').textContent + '\n5-year gain: ' + document.getElementById('r5yr').textContent + '\n' + document.getElementById('recoTitle').textContent); });
+  </script>
+</body>
+</html>

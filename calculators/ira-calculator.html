@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRA Calculator — Roth vs Traditional, Contribution Limits &amp; Retirement Growth | DecideCalc</title>
+  <meta name="description" content="Project your IRA balance at retirement. Compare Roth vs traditional side-by-side with 2025 income phase-outs, age-50+ catch-up, backdoor-Roth guidance and RMD warnings.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/ira-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>IRA Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>IRA Calculator</h1><div class="sub">Roth vs traditional · growth at retirement · eligibility check</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field"><label for="age">Current age</label><input class="input" id="age" type="number" min="18" max="72" step="1" value="30" inputmode="numeric"></div>
+            <div class="field"><label for="ret">Retirement age</label><input class="input" id="ret" type="number" min="55" max="75" step="1" value="60" inputmode="numeric"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="income">Annual income (MAGI)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="income" type="number" min="0" step="any" value="85000" inputmode="decimal"></div></div>
+            <div class="field"><label>Filing status</label>
+              <input type="hidden" name="file" value="single">
+              <div class="segmented" id="file" data-target="file">
+                <button type="button" data-value="single" class="active">Single</button>
+                <button type="button" data-value="married">Married joint</button>
+              </div>
+            </div>
+          </div>
+          <div class="note" style="margin:0 0 12px">
+            <input id="workplace" type="checkbox" style="width:18px;height:18px;accent-color:var(--accent-600);margin-top:3px;flex:0 0 auto" checked>
+            <div><label for="workplace" style="font-weight:700;cursor:pointer">I (or my spouse) have a 401(k)/workplace plan</label><div style="color:var(--text-soft);font-size:.84rem;margin-top:3px">Workplace coverage limits when a <b>traditional IRA deduction</b> can be taken at higher incomes.</div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="contrib">Annual contribution ($/yr)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="contrib" type="number" min="0" step="any" value="7000" inputmode="decimal"></div></div>
+            <div class="field"><label for="curBal">Current IRA balance</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="curBal" type="number" min="0" step="any" value="0" inputmode="decimal"></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="annInc">Annual income growth (%)</label><input class="input" id="annInc" type="number" min="0" max="8" step="any" value="3" inputmode="decimal"></div>
+            <div class="field"><label for="retR">Expected return (%/yr)</label><input class="input" id="retR" type="number" min="0" max="15" step="any" value="7" inputmode="decimal"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="mtrNow">Marginal tax rate now (%)</label><input class="input" id="mtrNow" type="number" min="0" max="50" step="any" value="22" inputmode="decimal"></div>
+            <div class="field"><label for="mtrRet">Tax rate at retirement (%)</label><input class="input" id="mtrRet" type="number" min="0" max="50" step="any" value="18" inputmode="decimal"></div>
+          </div>
+          <p id="errBox" role="alert" aria-live="polite" style="min-height:1.3em;color:#DC2626;font-size:.84rem;margin:2px 0 10px"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Project my IRA</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rBal">—</div><div class="lbl" id="rBalLbl">Projected balance at retirement</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rCap">—</div><div class="k">2025 annual cap (with catch-up)</div></div>
+          <div class="result-stat"><div class="v" id="rType">—</div><div class="k">Your best IRA type</div></div>
+          <div class="result-stat"><div class="v" id="rMine">—</div><div class="k">Total contributions</div></div>
+          <div class="result-stat"><div class="v" id="rGrowth">—</div><div class="k">Investment growth</div></div>
+          <div class="result-stat"><div class="v" id="rTaxNow">—</div><div class="k">Tax saved per year (trad)</div></div>
+          <div class="result-stat"><div class="v" id="rAfterTax">—</div><div class="k">After-tax value at retirement</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="iraChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Maxing beats timing</h4><p id="recoText">A lump-sum yearly IRA contribution in January beats twelve monthly contributions nearly every year the market rises. Everything else equal, contribute as early as you can.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How Roth vs traditional eligibility actually works</h2>
+      <p class="mt-2">IRA rules look simple until the IRS phase-outs kick in. Think of them as two separate doors — one on each account type:</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Roth contribution door:</b> income too high and it closes. 2025 phase-out: $150k–$165k (single), $236k–$246k (married filing jointly). Above the top you can still convert — the backdoor.</li>
+        <li><b>Traditional deduction door:</b> only limits you if you (or a spouse) are covered by a workplace plan. 2025 phase-out: $79k–$89k (single with plan), $126k–$146k (married with plan), $236k–$246k (spouse not covered, but you are). No workplace plan = always deductible.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Two doors, one ruleset:</b> above both doors? Make a <b>non-deductible traditional</b> contribution, then convert to Roth (backdoor). Above only the Roth door? Direct traditional is your answer if deductible; otherwise use the backdoor. The math on this page handles the growth — use IRS Phase-out rules for the final tax filing call.</div></div>
+      <h3 class="mt-3" style="font-size:1.1rem">Watch for RMDs</h3>
+      <p class="mt-2">Traditional IRAs (and 401(k)s eventually rolled to IRA) start Required Minimum Distributions at age 73 under SECURE 2.0, rising to 75 for those born after 1960. Failure to withdraw costs up to 25% of the shortfall. Roth IRAs have no RMDs for the original owner — a quiet but powerful difference.</p>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'ira-calculator', faqs: [
+      { q: 'What is the IRA contribution limit for 2025?', a: '$7,000 if you are under 50 or $8,000 if you are 50 or older. The limit applies to the combined total across all your traditional and Roth IRAs. 2025 numbers are the latest the IRS has published for the current tax year.' },
+      { q: 'What is the difference between a traditional and Roth IRA?', a: 'Traditional — usually pre-tax now, taxed when withdrawn in retirement. Roth — after-tax now, qualified withdrawals are tax-free. The one that pays the lower known tax rate wins. Use our comparison above with your own marginal rates.' },
+      { q: 'Can I contribute to an IRA if I have a 401(k)?', a: 'Yes — but your traditional-IRA deduction may be limited if your income exceeds $89k (single) or $146k (married) for 2025 when the workplace plan covers you. Roth contribution handles its own separate $150k/$165k (single) phase-out. Learn your door before you walk in.' },
+      { q: 'What is a backdoor Roth IRA?', a: 'A legal two-step: make a non-deductible traditional IRA contribution, then convert it to Roth. IRS Form 8606 tracks the after-tax basis so you aren\'t taxed twice. It is the standard workaround when income is above the Roth contribution phase-out.' },
+      { q: 'When can I withdraw from an IRA without penalty?', a: 'At age 59½ for the account balance. First-time homebuyers ($10,000 lifetime), birth/adoption ($5,000), disability, and a few hardship categories waive the 10% early-penalty. Traditional withdrawals are still taxed; Roth contributions (not earnings) can always come out tax- and penalty-free.' },
+      { q: 'Can I contribute to both a traditional and Roth IRA in the same year?', a: 'Yes, as long as combined contributions stay under the annual limit across both accounts. The contribution eligibility rules differ, so many people split to hedge their tax-rate bet.' },
+      { q: 'Do IRA contributions reduce my taxes this year?', a: 'Traditional IRA: usually yes, if you qualify for the deduction under the workplace-plan phase-out rules. Roth IRA: no — contributions are after-tax and the tax-free benefit shows up later, in retirement. The calculator shows both scenarios side-by-side.' },
+      { q: 'What are Required Minimum Distributions (RMDs)?', a: 'Starting at age 73 (75 for those born after 1960), the IRS forces annual withdrawals from traditional IRAs and 401(k)s. The withdrawal amount is the balance divided by an IRS life-expectancy factor. Roth IRAs have no RMDs for the original owner, which is part of why high-earners prize them.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('money');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function segVal(id){ var h=document.querySelector('[name="'+id+'"]'); return h ? h.value : null; }
+    function setSeg(id,v){ var seg=document.getElementById(id),h=document.querySelector('[name="'+id+'"]'); if(!seg||!h)return; h.value=v; seg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-value')===String(v)); }); }
+    function fmt(n){ if(!isFinite(n)) n=0; var v=Math.round(Math.abs(n)); return (n<0?'−':'')+'$'+v.toLocaleString('en-US'); }
+    function money(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+
+    function compute() {
+      var age = Number(document.getElementById('age').value);
+      var retAge = Number(document.getElementById('ret').value);
+      var inc = Number(document.getElementById('income').value);
+      var filing = segVal('file') || 'single';
+      var wPlan = document.getElementById('workplace').checked;
+      var contrib = Number(document.getElementById('contrib').value);
+      var curBal = Number(document.getElementById('curBal').value);
+      var annInc = Number(document.getElementById('annInc').value) / 100;
+      var retR = Number(document.getElementById('retR').value) / 100;
+      var mtrNow = Number(document.getElementById('mtrNow').value) / 100;
+      var mtrRet = Number(document.getElementById('mtrRet').value) / 100;
+
+      var err = [];
+      if (!isFinite(age) || age < 18 || age > 72) err.push('Age must be 18–72.');
+      if (!isFinite(retAge) || retAge <= age || retAge > 75) err.push('Retirement age must be after current age and ≤ 75.');
+      if (!isFinite(inc) || inc <= 0) err.push('Enter income greater than zero.');
+      if (!isFinite(contrib) || contrib < 0) err.push('Contribution cannot be negative.');
+      if (!isFinite(curBal) || curBal < 0) err.push('Current balance cannot be negative.');
+      if (!isFinite(annInc) || annInc < 0 || annInc > 0.08) err.push('Income growth must be 0–8%.');
+      if (!isFinite(retR) || retR < 0 || retR > 0.15) err.push('Return must be 0–15%.');
+      if (!isFinite(mtrNow) || mtrNow < 0 || mtrNow > 0.5) err.push('Marginal rate must be 0–50%.');
+      if (!isFinite(mtrRet) || mtrRet < 0 || mtrRet > 0.5) err.push('Retirement rate must be 0–50%.');
+      var errEl = document.getElementById('errBox');
+      errEl.textContent = err.join(' ');
+      if (err.length) {
+        ['rBal','rCap','rType','rMine','rGrowth','rTaxNow','rAfterTax'].forEach(function (id){ document.getElementById(id).textContent='—'; });
+        if (DC.charts&&DC.charts.iraChart){ DC.charts.iraChart.destroy(); delete DC.charts.iraChart; }
+        return;
+      }
+
+      // eligibility
+      var rothPhase = filing === 'married' ? { lo: 236000, hi: 246000 } : { lo: 150000, hi: 165000 };
+      var tradPhase = filing === 'married' ? { lo: 126000, hi: 146000 } : { lo: 79000, hi: 89000 };
+      var marriedSpouseUncovPhase = { lo: 236000, hi: 246000 }; // covered spouse but you are not
+      var rothOK = inc < rothPhase.hi;
+      var rothPartial = inc > rothPhase.lo && inc < rothPhase.hi;
+      var tradDeductible, tradPartial;
+      if (!wPlan) { tradDeductible = true; tradPartial = false; }
+      else if (filing === 'married') { tradPartial = inc > tradPhase.lo && inc < tradPhase.hi; tradDeductible = inc < tradPhase.hi; }
+      else { tradPartial = inc > tradPhase.lo && inc < tradPhase.hi; tradDeductible = inc < tradPhase.hi; }
+      var bestType = !rothOK ? 'Backdoor Roth or non-deductible' : rothPartial ? 'Roth (partial) / trad partial ded.' : tradDeductible ? 'Traditional pre-tax' : 'Roth after-tax';
+
+      // min cap: 7000 or 8000 with catch-up
+      var cap = age >= 50 ? 8000 : 7000;
+      var annual = Math.min(contrib, cap);
+      var growBal = curBal, incNow = inc;
+      var mine = 0;
+      var series = [curBal];
+      for (var y = 0; y < retAge - age; y++) {
+        var grow = (growBal + annual * 0.5) * retR;
+        growBal = growBal + annual + grow;
+        mine += annual;
+        series.push(growBal);
+        incNow *= (1 + annInc);
+      }
+      var growth = growBal - curBal - mine;
+      var tradTaxedAt = growBal * (1 - mtrRet);
+      var rothTaxedAt = growBal;
+      var annualDed = (tradDeductible ? annual : (tradPartial ? annual * (1 - (inc - tradPhase.lo) / (tradPhase.hi - tradPhase.lo)) : 0));
+      var taxNowYr = tradDeductible ? annual * mtrNow : (tradPartial ? Math.max(0, annualDed) * mtrNow : 0);
+      var afterTaxAtRet = bestType.indexOf('Traditional') === 0 && tradDeductible ? tradTaxedAt : rothTaxedAt;
+
+      document.getElementById('rBal').textContent = fmt(growBal);
+      document.getElementById('rBalLbl').textContent = 'Projected IRA at age ' + retAge;
+      document.getElementById('rCap').textContent = money(cap) + '/yr' + (age >= 50 ? ' (50+ catch-up)' : '');
+      document.getElementById('rType').textContent = bestType;
+      document.getElementById('rMine').textContent = fmt(mine);
+      document.getElementById('rGrowth').textContent = fmt(growth);
+      document.getElementById('rTaxNow').textContent = tradDeductible ? money(taxNowYr) : 'Not deductible';
+      document.getElementById('rAfterTax').textContent = fmt(afterTaxAtRet);
+
+      var labels = series.map(function (v, i) { return i === 0 ? 'Now' : 'Age ' + (age + i); });
+      DC.makeChart('iraChart', {
+        type: 'line',
+        data: { labels: labels, datasets: [{ label: 'IRA balance', data: series.map(function (v){ return Math.round(v); }), borderColor: '#4338CA', backgroundColor: 'rgba(67,56,202,.12)', fill: true, tension: .3, pointRadius: 0, borderWidth: 2 }] },
+        options: {
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c){ return fmt(c.raw); } } } },
+          scales: { y: { ticks: { callback: function (v){ return '$' + (v >= 1000000 ? (v/1000000).toFixed(1) + 'M' : v >= 1000 ? (v/1000).toFixed(0) + 'k' : v); } } } }
+        }
+      });
+
+      var titleEl = document.getElementById('recoTitle'), textEl = document.getElementById('recoText');
+      if (!rothOK && !tradDeductible) {
+        titleEl.textContent = 'Both direct doors closed — backdoor Roth';
+        textEl.textContent = 'Your income is above the Roth phase-out and workplace plan blocks your traditional deduction. Contribute non-deductible traditional then convert to Roth (document on Form 8606). That unlocks tax-free growth.';
+      } else if (rothPartial) {
+        titleEl.textContent = 'You sit in the Roth phase-out';
+        textEl.textContent = 'Income $' + Math.round(inc).toLocaleString('en-US') + ' is inside $' + rothPhase.lo.toLocaleString() + '–$' + rothPhase.hi.toLocaleString() + ' — your Roth allowance shrinks linearly. Direct traditional up to its deduction limit, then Roth what remains.';
+      } else if (tradDeductible && mtrRet < mtrNow) {
+        titleEl.textContent = 'Traditional is mathematically ahead';
+        textEl.textContent = 'You skip ' + (mtrNow * 100) + '% tax today against ' + (mtrRet * 100) + '% later — that wedge is real money. After-tax at withdrawal: traditional ' + fmt(tradTaxedAt) + ' vs Roth ' + fmt(rothTaxedAt) + '.';
+      } else if (rothOK && mtrNow < mtrRet) {
+        titleEl.textContent = 'Roth is mathematically ahead';
+        textEl.textContent = 'Paying ' + (mtrNow * 100) + '% now avoids ' + (mtrRet * 100) + '% later. At retirement, the Roth is worth ' + fmt(rothTaxedAt) + ' after-tax vs traditional ' + fmt(tradTaxedAt) + '.';
+      } else {
+        titleEl.textContent = 'Both work — hedge bets';
+        textEl.textContent = 'Your marginal rates look close. Split contributions across traditional and Roth to keep flexibility at withdrawal; you decide which buckets to draw down based on each year\'s tax picture.';
+      }
+
+      window.__lastIRA = {
+        bal: fmt(growBal), afterTax: fmt(afterTaxAtRet), cap: money(cap), type: bestType,
+        mine: fmt(mine), growth: fmt(growth), taxNow: tradDeductible ? money(taxNowYr) : 'Not deductible'
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['age','ret','income','contrib','curBal','annInc','retR','mtrNow','mtrRet'].forEach(function (id) {
+      var el = document.getElementById(id);
+      el.addEventListener('input', compute);
+      el.addEventListener('change', compute);
+    });
+    document.getElementById('workplace').addEventListener('change', compute);
+    document.getElementById('file').addEventListener('segment:change', compute);
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('age').value = '30';
+      document.getElementById('ret').value = '60';
+      document.getElementById('income').value = '85000';
+      document.getElementById('contrib').value = '7000';
+      document.getElementById('curBal').value = '0';
+      document.getElementById('annInc').value = '3';
+      document.getElementById('retR').value = '7';
+      document.getElementById('mtrNow').value = '22';
+      document.getElementById('mtrRet').value = '18';
+      document.getElementById('workplace').checked = true;
+      setSeg('file', 'single');
+      compute();
+      DC.toast('Inputs reset', 'success');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastIRA; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('My IRA lands at ' + r.bal + ' (' + r.mine + ' in + ' + r.growth + ' growth, cap ' + r.cap + ' — type: ' + r.type + '). Project yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastIRA; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult('IRA Projection\nBalance at retirement: ' + r.bal + '\nAfter-tax at retirement: ' + r.afterTax + '\n2025 cap: ' + r.cap + '\nBest type: ' + r.type + '\nTotal contributions: ' + r.mine + '\nInvestment growth: ' + r.growth + '\nTax saved per year now: ' + r.taxNow);
+    });
+
+    compute();
+  </script>
+</body>
+</html>

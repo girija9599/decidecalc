@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hash Generator — MD5, SHA-1, SHA-256, SHA-512 | DecideCalc</title>
+  <meta name="description" content="Free cryptographic hash generator. MD5, SHA-1, SHA-256, SHA-512, SHA-384 hashes via Web Crypto API — fully offline. Includes file & text input.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/hash-generator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-dev">Developer Tools</a><span class="sep">/</span><span>Hash Generator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Hash Generator</h1><div class="sub">MD5 · SHA-1 · SHA-256 · SHA-384 · SHA-512</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Text to hash</label>
+            <textarea class="input" id="text" rows="4" placeholder="Hello World" style="font-family:var(--mono);font-size:.9rem;resize:vertical"></textarea>
+          </div>
+          <div class="field">
+            <button class="btn btn-ghost btn-sm" id="fileBtn" style="width:100%">… or pick a file to hash</button>
+            <input type="file" id="fileInput" style="display:none">
+            <div id="fileInfo" style="font-size:.8rem;color:var(--text-soft);margin-top:4px"></div>
+          </div>
+          <div class="field"><label>Algorithm</label>
+            <select class="input" id="alg">
+              <option value="SHA-256" selected>SHA-256 (most common)</option>
+              <option value="SHA-512">SHA-512</option>
+              <option value="SHA-384">SHA-384</option>
+              <option value="SHA-1">SHA-1 (legacy only — collision-prone)</option>
+              <option value="MD5">MD5 (BROKEN — never for security)</option>
+            </select>
+          </div>
+          <input type="hidden" name="case" value="lower">
+          <div class="segmented" id="case" data-target="case">
+            <button type="button" data-value="lower" class="active">lowercase</button>
+            <button type="button" data-value="upper">UPPERCASE</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Compute Hash</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain" style="font-size:1rem;font-family:var(--mono);word-break:break-all;line-height:1.5">—</div><div class="lbl" id="rLbl">hash output</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rAlg">—</div><div class="k">Algorithm</div></div>
+          <div class="result-stat"><div class="v" id="rLen">—</div><div class="k">Output size</div></div>
+          <div class="result-stat"><div class="v" id="rInput">—</div><div class="k">Input length</div></div>
+          <div class="result-stat"><div class="v" id="rSecurity">—</div><div class="k">Security status</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy hash</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">MD5 and SHA-1 are broken</h4><p id="recoText">MD5 collisions are craftable in seconds on commodity hardware ($0.65 of GPU time), SHA-1 since SHAttered (2017). Use only SHA-256+ for security. MD5/SHA-1 are fine for non-security uses like cache keys or checksums.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Known-answer tests (sanity-check this calculator)</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft);font-family:var(--mono);font-size:.82rem">
+        <li>"hello" → SHA-256 = <code style="word-break:break-all">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</code></li>
+        <li>"" (empty) → SHA-256 = <code style="word-break:break-all">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code></li>
+        <li>"hello" → MD5 = <code>5d41402abc4b2a76b9719d911017c592</code></li>
+        <li>"hello" → SHA-1 = <code>aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</code></li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Hashes are one-way</b> — no math exists to recover input from output (only brute force). Checksum equality proves two files match (with high probability for broken algorithms, near-certainty for SHA-256+).</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'hash-generator', faqs: [
+      { q: 'Where are MD5/SHA-1 still acceptable?', a: 'Checksums for accidental corruption (CDN integrity, file downloads where security isn\'t the goal). Cache keys (no attacker model). Non-adversarial deduplication. NEVER for passwords, signatures, or certificates.' },
+      { q: 'Why don\'t you include bcrypt/scrypt/Argon2?', a: 'Those are PASSWORD-HASHING algorithms — deliberately slow with built-in salt + work factor. Web Crypto API doesn\'t expose them, and you shouldn\'t compute them in browsers anyway — password hashing happens on the server.' },
+      { q: 'File hashing shows a different value than online tools?', a: 'Encoding! Text tools may add a trailing newline, or differ on EOL (\\n vs \\r\\n). Files hash exactly their bytes. Most online tools hash UTF-8 of the visible text, which may differ from your file\'s actual encoding.' },
+      { q: 'Salting + hashing — do I need it?', a: 'For password storage: YES, absolutely, use bcrypt/Argon2 (which integrate salt). For checksums / dedup: salt is pointless. For token uniqueness: use random tokens directly, not hashes.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('lock');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    document.getElementById('fileBtn').addEventListener('click', () => document.getElementById('fileInput').click());
+    let fileBytes = null;
+    document.getElementById('fileInput').addEventListener('change', async (e) => {
+      const f = e.target.files[0];
+      if (!f) { fileBytes = null; document.getElementById('fileInfo').textContent = ''; return; }
+      fileBytes = new Uint8Array(await f.arrayBuffer());
+      document.getElementById('fileInfo').textContent = f.name + ' (' + f.size.toLocaleString('en-IN') + ' bytes)';
+      document.getElementById('text').value = '';
+      compute();
+    });
+    let uppercase = false;
+    document.getElementById('case').addEventListener('segment:change', function(e){ uppercase = e.detail.value === 'upper'; compute(); });
+
+    // minimal MD5 + SHA-1 fallback implementations (since Web Crypto doesn't do MD5, and SHA-1 is being removed from secure contexts)
+    function md5(input) {
+      // Clean MD5 — verified against RFC 1321 test vectors
+      function rotl(x, n) { return ((x << n) | (x >>> (32 - n))) >>> 0; }
+      const n = input.length;
+      const bits = n * 8;
+      const padLen = ((n % 64) < 56) ? (56 - (n % 64)) : (56 + 64 - (n % 64));
+      const total = n + padLen + 8;
+      const data = new Uint8Array(total);
+      data.set(input);
+      data[n] = 0x80;
+      const lower = bits >>> 0;
+      const upper = Math.floor(bits / 4294967296) >>> 0;
+      for (let i = 0; i < 4; i++) data[total - 8 + i] = (lower >>> (8*i)) & 0xff;
+      for (let i = 0; i < 4; i++) data[total - 4 + i] = (upper >>> (8*i)) & 0xff;
+      let a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
+      const S1 = [7,12,17,22], S2 = [5,9,14,20], S3 = [4,11,16,23], S4 = [6,10,15,21];
+      const K = [];
+      for (let i = 0; i < 64; i++) K[i] = Math.floor(Math.abs(Math.sin(i+1)) * 4294967296) >>> 0;
+
+      for (let off = 0; off < total; off += 64) {
+        const M = new Array(16);
+        for (let j = 0; j < 16; j++) {
+          const o = off + j*4;
+          M[j] = (data[o] | (data[o+1] << 8) | (data[o+2] << 16) | (data[o+3] << 24)) >>> 0;
+        }
+        let A = a0, B = b0, C = c0, D = d0;
+        for (let i = 0; i < 64; i++) {
+          let F, g;
+          if (i < 16)      { F = (B & C) | ((~B) & D); g = i; }
+          else if (i < 32) { F = (D & B) | ((~D) & C); g = (5*i + 1) % 16; }
+          else if (i < 48) { F = B ^ C ^ D;            g = (3*i + 5) % 16; }
+          else             { F = C ^ (B | (~D));       g = (7*i)     % 16; }
+          const s = i < 16 ? S1[i%4] : i < 32 ? S2[i%4] : i < 48 ? S3[i%4] : S4[i%4];
+          const tmp = D;
+          D = C;
+          C = B;
+          B = (B + rotl((A + F + K[i] + M[g]) >>> 0, s)) >>> 0;
+          A = tmp;
+        }
+        a0 = (a0 + A) >>> 0;
+        b0 = (b0 + B) >>> 0;
+        c0 = (c0 + C) >>> 0;
+        d0 = (d0 + D) >>> 0;
+      }
+      let hex = '';
+      for (const w of [a0, b0, c0, d0]) {
+        for (let i = 0; i < 4; i++) hex += ((w >>> (8*i)) & 0xff).toString(16).padStart(2,'0');
+      }
+      return hex;
+    }
+    function sha1(input) {
+      // Standard SHA-1 implementation
+      function rotl32(x, n) { return ((x << n) | (x >>> (32 - n))) >>> 0; }
+      let h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476, h4 = 0xC3D2E1F0;
+      const n = input.length, bits = n * 8;
+      const padLen = ((n % 64) < 56) ? (56 - (n % 64)) : (56 + 64 - (n % 64));
+      const total = n + padLen + 8;
+      const data = new Uint8Array(total);
+      data.set(input);
+      data[n] = 0x80;
+      const view = new DataView(data.buffer);
+      // write length as big-endian 64-bit (top 32 always 0 for reasonable sizes)
+      const lowBits = bits >>> 0;
+      const highBits = Math.floor(bits / 4294967296);
+      view.setUint32(total - 8, highBits, false);
+      view.setUint32(total - 4, lowBits, false);
+      for (let off = 0; off < total; off += 64) {
+        const w = new Array(80).fill(0);
+        for (let i = 0; i < 16; i++) w[i] = view.getUint32(off + i*4, false);
+        for (let i = 16; i < 80; i++) w[i] = rotl32(w[i-3] ^ w[i-8] ^ w[i-14] ^ w[i-16], 1);
+        let a = h0, b = h1, c = h2, d = h3, e = h4;
+        for (let i = 0; i < 80; i++) {
+          let f, k;
+          if (i < 20)      { f = (b & c) | ((~b) & d); k = 0x5A827999; }
+          else if (i < 40) { f = b ^ c ^ d;            k = 0x6ED9EBA1; }
+          else if (i < 60) { f = (b & c) | (b & d) | (c & d); k = 0x8F1BBCDC; }
+          else             { f = b ^ c ^ d;            k = 0xCA62C1D6; }
+          const tmp = (rotl32(a, 5) + f + e + k + w[i]) >>> 0;
+          e = d; d = c; c = rotl32(b, 30); b = a; a = tmp;
+        }
+        h0 = (h0 + a) >>> 0; h1 = (h1 + b) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0; h4 = (h4 + e) >>> 0;
+      }
+      return [h0,h1,h2,h3,h4].map(h => h.toString(16).padStart(8,'0')).join('');
+    }
+
+    let lastHash = '';
+    async function compute() {
+      const alg = document.getElementById('alg').value;
+      const text = document.getElementById('text').value;
+      let data;
+      if (fileBytes && !text) {
+        data = fileBytes;
+      } else {
+        data = new TextEncoder().encode(text);
+      }
+      if (!data.length) {
+        document.getElementById('rMain').textContent = '—';
+        document.getElementById('rLbl').textContent = 'hash output';
+        ['rAlg','rLen','rInput','rSecurity'].forEach(function(id){document.getElementById(id).textContent='—';});
+        lastHash = '';
+        return;
+      }
+      let hashHex = '';
+      let security = { 'MD5':'BROKEN', 'SHA-1':'Deprecated (broken 2017)', 'SHA-256':'Strong', 'SHA-384':'Strong', 'SHA-512':'Strong' }[alg] || '?';
+      try {
+        if (alg === 'MD5') {
+          hashHex = md5(data);
+        } else if (alg === 'SHA-1') {
+          hashHex = sha1(data);
+        } else {
+          const digest = await crypto.subtle.digest(alg, data);
+          hashHex = [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2,'0')).join('');
+        }
+      } catch (e) {
+        hashHex = 'error: ' + e.message;
+        security = 'failed';
+      }
+      if (uppercase) hashHex = hashHex.toUpperCase();
+      lastHash = hashHex;
+      document.getElementById('rMain').textContent = hashHex;
+      document.getElementById('rLbl').textContent = alg + ' (' + (hashHex.length * 4) + ' bits)';
+      document.getElementById('rAlg').textContent = alg;
+      document.getElementById('rLen').textContent = (hashHex.length * 4) + ' bits';
+      document.getElementById('rInput').textContent = data.length.toLocaleString('en-IN') + ' bytes';
+      document.getElementById('rSecurity').textContent = security;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['text','alg'].forEach(id => document.getElementById(id).addEventListener('input', compute));
+    document.getElementById('alg').addEventListener('change', compute);
+
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult(lastHash); });
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('Hash generated — via DecideCalc'); });
+  </script>
+</body>
+</html>

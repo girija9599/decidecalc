@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Budget Planner — India Wedding Cost Calculator | DecideCalc</title>
+  <meta name="description" content="Free India-first wedding budget planner. Get an itemized breakdown of venue, catering, decor, jewelry, photography & more based on guests, city tier & your budget.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/wedding-budget-planner.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-life">Life Planning</a><span class="sep">/</span><span>Wedding Budget Planner</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Wedding Budget Planner</h1><div class="sub">Itemized · India-specific</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Total Wedding Budget</label>
+            <div class="range-out"><span class="range-val" id="out-budget">₹15,00,000</span></div>
+            <input type="range" id="budget" min="200000" max="10000000" step="50000" value="1500000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Number of Guests</label><input class="input" id="guests" type="number" value="300"></div>
+            <div class="field"><label>City Tier</label>
+              <select class="select" id="tier"><option value="1">Tier 1 (metro)</option><option value="2" selected>Tier 2</option><option value="3">Tier 3</option></select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Events</label>
+              <select class="select" id="events"><option value="1">1 (just wedding)</option><option value="2">2 (wedding + reception)</option><option value="3" selected>3 (+ engagement/haldi)</option><option value="4">4+ (full multi-day)</option></select>
+            </div>
+            <div class="field"><label>Luxury Level</label>
+              <select class="select" id="lux"><option value="0.8">Budget</option><option value="1" selected>Standard</option><option value="1.5">Premium</option><option value="2.2">Luxury</option></select>
+            </div>
+          </div>
+          <div class="field"><label>Jewelry Focus</label>
+            <select class="select" id="jewelry"><option value="0.8">Light (gold-plated/light)</option><option value="1" selected>Standard gold</option><option value="1.6">Heavy (traditional)</option></select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Plan My Wedding Budget</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:8px">Per guest cost</div>
+          <div class="big" id="rPerGuest">₹5,000</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rFood">₹6.0 L</div><div class="k">Food & Venue</div></div>
+          <div class="result-stat"><div class="v" id="rJewelry">₹3.0 L</div><div class="k">Jewelry</div></div>
+          <div class="result-stat"><div class="v" id="rDeco">₹1.5 L</div><div class="k">Decor & Events</div></div>
+          <div class="result-stat"><div class="v" id="rMisc">₹4.5 L</div><div class="k">Photo · Attire · Misc</div></div>
+        </div>
+        <div id="breakdownList" style="margin-top:18px"></div>
+        <div class="chart-wrap"><canvas id="wedChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy breakdown</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Smart tips</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How Indian weddings are typically split</h2>
+      <p class="mt-2">Food & venue usually consume the largest chunk, followed by jewelry. Typical percentage allocation:</p>
+      <table class="breakdown mt-2">
+        <thead><tr><th>Category</th><th class="num">% of Budget</th></tr></thead>
+        <tbody>
+          <tr><td>Venue & catering (food)</td><td class="num">35–40%</td></tr>
+          <tr><td>Jewelry & gifts</td><td class="num">18–22%</td></tr>
+          <tr><td>Decor & event management</td><td class="num">10–12%</td></tr>
+          <tr><td>Photography & videography</td><td class="num">6–8%</td></tr>
+          <tr><td>Bride & groom attire</td><td class="num">6–8%</td></tr>
+          <tr><td>Invitations, transport, music, misc</td><td class="num">10–12%</td></tr>
+        </tbody>
+      </table>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Realistic warning:</b> Indian weddings typically overshoot budget by 15-25%. Build a 20% contingency, and agree a hard cap with family before booking starts.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'wedding-budget-planner', faqs: [
+      { q: 'What is a realistic Indian wedding budget?', a: 'A standard 300-guest wedding in a tier-2 city costs ₹10-20 lakh. Metros easily run ₹25-50 lakh+. Luxury destination weddings start at ₹50 lakh and go into crores.' },
+      { q: 'How can I cut wedding costs?', a: 'Trim the guest list (biggest lever), choose off-peak dates/seasons, book venues 6-12 months early, simplify decor, and consider pre-loved or lighter jewelry.' },
+      { q: 'Should I take a wedding loan?', a: 'Avoid if possible — weddings are consumption, not investment. Better to save in advance or scale down the wedding. A loan funds one day but pays interest for years.' },
+      { q: 'Is ₹15 lakh enough for a wedding?', a: 'Yes, for ~200-300 guests in a tier-2/3 city with standard arrangements. In metros it will be tight — prioritize guests you truly want present.' },
+      { q: 'Who pays for an Indian wedding?', a: 'Traditionally the bride\'s family, but modern couples increasingly split costs or fund it themselves. Decide contributions early to avoid family friction later.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('ring');
+    document.getElementById('recoIc').innerHTML = DC.icon('sparkle');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      const budget = DC.fnum(document.getElementById('budget').value);
+      const guests = DC.fnum(document.getElementById('guests').value);
+      const tier = parseInt(document.getElementById('tier').value, 10);
+      const events = parseInt(document.getElementById('events').value, 10);
+      const lux = parseFloat(document.getElementById('lux').value);
+      const jewelryMult = parseFloat(document.getElementById('jewelry').value);
+
+      // base allocation %
+      const tierAdj = [1.25, 1, 0.75][tier - 1];
+      const eventsAdj = 0.7 + events * 0.15; // more events => more decor+venue
+      let alloc = {
+        'Venue & Catering (food)': 0.38 * tierAdj * eventsAdj,
+        'Jewelry & gifts': 0.20 * jewelryMult,
+        'Decor & event management': 0.11 * eventsAdj,
+        'Photography & videography': 0.07,
+        'Bride & groom attire': 0.07,
+        'Music / DJ / entertainment': 0.05,
+        'Invitations & transport': 0.05,
+        'Miscellaneous & contingency': 0.07
+      };
+      // normalize
+      const total = Object.values(alloc).reduce(function (a, b) { return a + b; }, 0);
+      Object.keys(alloc).forEach(function (k) { alloc[k] = alloc[k] / total; });
+      const adjusted = budget * lux;
+
+      document.getElementById('rPerGuest').textContent = DC.inr(adjusted / Math.max(1, guests));
+      const cats = Object.keys(alloc);
+      document.getElementById('rFood').textContent = DC.compact(adjusted * (alloc['Venue & Catering (food)']));
+      document.getElementById('rJewelry').textContent = DC.compact(adjusted * alloc['Jewelry & gifts']);
+      document.getElementById('rDeco').textContent = DC.compact(adjusted * alloc['Decor & event management']);
+      document.getElementById('rMisc').textContent = DC.compact(adjusted * (alloc['Photography & videography'] + alloc['Bride & groom attire'] + alloc['Music / DJ / entertainment'] + alloc['Invitations & transport'] + alloc['Miscellaneous & contingency']));
+
+      const palette = ['#1B3A6B', '#00C2A8', '#F5B041', '#FF7A45', '#7C3AED', '#16A34A', '#0D9488', '#64748B'];
+      document.getElementById('breakdownList').innerHTML = cats.map(function (k, i) {
+        const amt = adjusted * alloc[k]; const pct = Math.round(alloc[k] * 100);
+        return '<div class="bar-row"><div class="br-head"><span>' + k + '</span><span><b>' + DC.compact(amt) + '</b> · ' + pct + '%</span></div><div class="bar-track"><div class="bar-fill" style="background:' + palette[i] + '" data-w="' + pct + '"></div></div></div>';
+      }).join('');
+      setTimeout(function () { document.querySelectorAll('#breakdownList .bar-fill').forEach(function (b) { b.style.width = b.getAttribute('data-w') + '%'; }); }, 50);
+
+      DC.makeChart('wedChart', {
+        type: 'doughnut',
+        data: { labels: cats, datasets: [{ data: cats.map(function (k) { return Math.round(adjusted * alloc[k]); }), backgroundColor: palette, borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '58%', plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      const perGuest = adjusted / Math.max(1, guests);
+      if (perGuest > 3000) { title.textContent = 'Premium wedding ✨'; txt.textContent = 'At ' + DC.inr(perGuest) + '/guest, you\'re in premium territory. Consider trimming the guest list by 20% — that alone frees up ' + DC.compact(0.2 * adjusted * alloc['Venue & Catering (food)']) + ' for experiences that matter more.'; }
+      else if (perGuest < 1200) { title.textContent = 'Smart, lean wedding 👏'; txt.textContent = 'At ' + DC.inr(perGuest) + '/guest you\'re running lean. Smart moves: off-peak dates, simpler decor, and a tight guest list of people who truly matter.'; }
+      else { title.textContent = 'Balanced plan ⚖️'; txt.textContent = 'At ' + DC.inr(perGuest) + '/guest this is a balanced standard wedding. Set aside a 20% contingency (' + DC.compact(0.2 * adjusted) + ') — Indian weddings almost always overshoot.'; }
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['budget','guests','tier','events','lux','jewelry'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', compute); el.addEventListener('change', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My wedding budget plan: ' + DC.compact(DC.fnum(document.getElementById('budget').value)) + ' total · ' + DC.inr(DC.fnum(document.getElementById('budget').value) / Math.max(1, DC.fnum(document.getElementById('guests').value))) + '/guest — plan yours on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { const lines = document.querySelectorAll('#breakdownList .br-head'); let t = 'Wedding Budget Breakdown:\n'; lines.forEach(function (l) { t += l.textContent.trim() + '\n'; }); DC.copyResult(t); });
+  </script>
+</body>
+</html>

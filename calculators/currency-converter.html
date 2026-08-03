@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Converter — INR, USD, EUR, GBP, AED & 20+ Currencies | DecideCalc</title>
+  <meta name="description" content="Currency converter with editable browser-saved rates and optional Frankfurter live-rate refresh. Works offline with your saved exchange rates.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/currency-converter.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-converter">Unit Converters</a><span class="sep">/</span><span>Currency Converter</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Currency Converter</h1><div class="sub">Offline · editable rates · 22 currencies</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="val">Amount</label><input class="input" id="val" type="number" min="0" step="any" placeholder="Enter amount"></div>
+          <div class="field-row">
+            <div class="field"><label for="from">From</label><select class="select" id="from"></select></div>
+            <div class="field"><label for="to">To</label><select class="select" id="to"></select></div>
+          </div>
+          <button class="btn btn-ghost btn-block" id="swapBtn" type="button">⇅ Swap currencies</button>
+          <div class="note" style="margin-top:14px"><span id="noteIc"></span><div><b id="rateStatusTitle">Saved rates:</b> <span id="rateStatus">Use Refresh Live Rate when online, or edit and save your own rates below. Bank/remittance rates can include a margin.</span></div></div>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Result</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rRate">—</div><div class="k">Exchange rate</div></div>
+          <div class="result-stat"><div class="v" id="rInv">—</div><div class="k">Inverse rate</div></div>
+          <div class="result-stat"><div class="v" id="r1k">—</div><div class="k" id="r1klbl">1,000-unit value</div></div>
+          <div class="result-stat"><div class="v" id="rUpd">—</div><div class="k">Last updated</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="refreshBtn" type="button">🔄 Refresh Live Rate</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="shareBtn">Share</button>
+        </div>
+        <details style="margin:0 22px 12px;padding:12px 14px;background:var(--surface-2,#f8f9ff);border-radius:10px;border:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.9rem">⚙ Edit rates (saved in your browser)</summary>
+          <p style="margin:8px 0 0;font-size:.8rem;color:var(--text-soft)">Enter how many INR equal 1 unit of each currency, then save. Your rates remain available offline.</p>
+          <div id="rateGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:12px"></div>
+          <div class="result-actions" style="margin:12px 0 0"><button class="btn btn-primary btn-sm" id="saveRatesBtn" type="button">Save edited rates</button><button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset rates</button></div>
+        </details>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Save rates for offline use</h4><p id="recoText">Refresh from Frankfurter when online, or save your own INR-per-currency values. This converter never invents a rate: it uses only the values saved in this browser.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Getting the best rate</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Airport kiosks</b> charge the worst rates — 5–10% worse than interbank. Convert only enough to reach the city.</li>
+        <li><b>Cards (forex/debit)</b> typically add 1–3.5% over the interbank rate shown here. Check your bank's "markup fee".</li>
+        <li><b>Wise / Revolut / Niyo</b>-style services usually beat traditional banks for INR conversions.</li>
+        <li><b>Send on weekdays.</b> Weekends often use Friday's closing rate plus a markup since markets are shut.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Rate time-stamp:</b> Refresh Live Rate fetches available Frankfurter mid-market rates and saves them in this browser. For currencies Frankfurter does not return, enter your own INR value; saved values remain available if refresh fails or you are offline.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'currency-converter', faqs: [
+      { q: 'Are these live exchange rates?', a: 'Tap Refresh Live Rate while online to request the latest available mid-market rates from the Frankfurter API. The response is saved only in your browser so the converter continues to work offline.' },
+      { q: 'What happens when I am offline?', a: 'The converter never needs an account or API key. It uses your previously saved live or manually edited INR rates. If no rate is saved yet, it clearly asks you to refresh or enter one instead of inventing a rate.' },
+      { q: 'How do I edit a rate?', a: 'Open Edit rates and enter how many INR equal one unit of the foreign currency — for example, enter the INR value for 1 USD. Select Save edited rates. The values stay in localStorage on this device.' },
+      { q: 'Why does my bank give a different number?', a: 'Banks, card networks and remittance services can add a markup, fees or a separate buy/sell spread. The live API rate is an informational mid-market reference; always confirm the final provider quote for a transaction.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('money');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('check');
+    document.getElementById('noteIc').innerHTML = DC.icon('sparkle');
+
+    const NAMES = {
+      INR: 'Indian Rupee (₹)', USD: 'US Dollar ($)', EUR: 'Euro (€)', GBP: 'British Pound (£)', AED: 'UAE Dirham (د.إ)', SAR: 'Saudi Riyal (﷼)', QAR: 'Qatari Riyal', KWD: 'Kuwaiti Dinar', OMR: 'Omani Rial', BHD: 'Bahraini Dinar',
+      CAD: 'Canadian Dollar (CA$)', AUD: 'Australian Dollar (A$)', NZD: 'NZ Dollar (NZ$)', SGD: 'Singapore Dollar (S$)', HKD: 'Hong Kong Dollar (HK$)', JPY: 'Japanese Yen (¥)', CNY: 'Chinese Yuan (¥)', CHF: 'Swiss Franc', SEK: 'Swedish Krona', NOK: 'Norwegian Krone', DKK: 'Danish Krone', ZAR: 'South African Rand'
+    };
+    const SYMS = { INR:'₹', USD:'$', EUR:'€', GBP:'£', AED:'د.إ ', JPY:'¥', CNY:'¥', CHF:'CHF ', CAD:'CA$', AUD:'A$', NZD:'NZ$', SGD:'S$', HKD:'HK$', SAR:'﷼ ', QAR:'QR ', KWD:'KD ', OMR:'RO ', BHD:'BD ', SEK:'kr ', NOK:'kr ', DKK:'kr ', ZAR:'R ' };
+    const LS_KEY = 'dc_currency_rate_state_v2';
+    const RATE_CODES = Object.keys(NAMES).filter(function (code) { return code !== 'INR'; });
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(LS_KEY));
+        if (saved && saved.rates && typeof saved.rates === 'object') return saved;
+      } catch (e) {}
+      return { rates: {}, updatedAt: '', source: 'No saved rates' };
+    }
+    let state = loadState();
+    function saveState() { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {} }
+    function statusText() {
+      const updated = state.updatedAt ? new Date(state.updatedAt).toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' }) : 'not yet set';
+      return state.source + ' · ' + updated;
+    }
+    function renderStatus(message) {
+      document.getElementById('rateStatusTitle').textContent = state.source === 'Frankfurter API' ? 'Live rates saved:' : 'Saved rates:';
+      document.getElementById('rateStatus').textContent = message || statusText();
+    }
+
+    const fromSel = document.getElementById('from'), toSel = document.getElementById('to');
+    Object.keys(NAMES).forEach(function (code) {
+      const fromOption = document.createElement('option'); fromOption.value = code; fromOption.textContent = NAMES[code]; fromSel.appendChild(fromOption);
+      const toOption = document.createElement('option'); toOption.value = code; toOption.textContent = NAMES[code]; toSel.appendChild(toOption);
+    });
+    fromSel.value = 'INR'; toSel.value = 'USD';
+
+    const grid = document.getElementById('rateGrid');
+    RATE_CODES.forEach(function (code) {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = '<label style="font-size:.75rem;font-weight:600;color:var(--text-soft)">1 ' + code + ' = INR</label><input aria-label="1 ' + code + ' equals INR" type="number" step="any" min="0" inputmode="decimal" data-code="' + code + '" style="width:100%;padding:6px 8px;border-radius:8px;border:1px solid var(--border);font-size:.85rem;background:var(--surface);color:var(--text)">';
+      grid.appendChild(wrap);
+    });
+    function syncRateInputs() {
+      grid.querySelectorAll('input[data-code]').forEach(function (input) {
+        input.value = state.rates[input.dataset.code] || '';
+      });
+    }
+    function inrPerUnit(code) { return code === 'INR' ? 1 : Number(state.rates[code]); }
+    function fmt(n) {
+      if (!Number.isFinite(n)) return '—';
+      if (Math.abs(n) < 0.0001 && n !== 0) return n.toExponential(4);
+      return Number(n.toPrecision(8)).toLocaleString('en-IN', { maximumFractionDigits: 6 });
+    }
+    function fmtMoney(n, code) {
+      return sym(code) + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function sym(code) { return SYMS[code] || code + ' '; }
+    function showUnavailable(message) {
+      ['rMain','rRate','rInv','r1k'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      document.getElementById('rLbl').textContent = message;
+      document.getElementById('rUpd').textContent = state.updatedAt ? new Date(state.updatedAt).toLocaleDateString('en-IN') : '—';
+      document.getElementById('recoTitle').textContent = 'Rate required';
+      document.getElementById('recoText').textContent = 'Refresh Live Rate when online, or enter and save the INR value for the selected currencies. Saved rates work offline.';
+    }
+    function compute() {
+      const from = fromSel.value, to = toSel.value, amount = Number(document.getElementById('val').value);
+      if (!Number.isFinite(amount) || amount < 0) return showUnavailable('Enter a non-negative amount');
+      const fromRate = inrPerUnit(from), toRate = inrPerUnit(to);
+      if (!Number.isFinite(fromRate) || fromRate <= 0 || !Number.isFinite(toRate) || toRate <= 0) return showUnavailable('Save a rate for ' + (!Number.isFinite(fromRate) || fromRate <= 0 ? from : to));
+      const rate = fromRate / toRate;
+      const converted = amount * rate;
+      document.getElementById('rMain').textContent = fmtMoney(converted, to);
+      document.getElementById('rLbl').textContent = fmtMoney(amount, from) + ' =';
+      document.getElementById('rRate').textContent = '1 ' + from + ' = ' + fmt(rate) + ' ' + to;
+      document.getElementById('rInv').textContent = '1 ' + to + ' = ' + fmt(1 / rate) + ' ' + from;
+      document.getElementById('r1k').textContent = fmtMoney(1000 * rate, to);
+      document.getElementById('r1klbl').textContent = '1,000 ' + from + ' =';
+      document.getElementById('rUpd').textContent = state.updatedAt ? new Date(state.updatedAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) : 'Manual';
+      document.getElementById('recoTitle').textContent = state.source === 'Frankfurter API' ? 'Frankfurter mid-market rate' : 'Saved exchange rate';
+      document.getElementById('recoText').textContent = 'This conversion uses your ' + state.source + ' rate. Cards, banks and remittance providers may add their own margin.';
+    }
+    function saveEditedRates() {
+      const next = Object.assign({}, state.rates);
+      let saved = 0;
+      grid.querySelectorAll('input[data-code]').forEach(function (input) {
+        const value = Number(input.value);
+        if (Number.isFinite(value) && value > 0) { next[input.dataset.code] = value; saved++; }
+      });
+      if (!saved) { DC.toast('Enter at least one positive INR rate', 'error'); return; }
+      state = { rates: next, updatedAt: new Date().toISOString(), source: 'Manually edited rates' };
+      saveState(); syncRateInputs(); renderStatus(); compute();
+      DC.toast('Edited rates saved for offline use', 'success');
+    }
+    async function refreshLiveRates() {
+      const button = document.getElementById('refreshBtn');
+      const original = button.textContent;
+      button.disabled = true; button.textContent = 'Refreshing…';
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(function () { controller.abort(); }, 10000);
+        const url = 'https://api.frankfurter.dev/v1/latest?base=INR&symbols=' + RATE_CODES.join(',');
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timer);
+        if (!response.ok) throw new Error('Request failed');
+        const payload = await response.json();
+        // Frankfurter does not publish every listed currency. Keep any existing
+        // user-entered value for an unsupported symbol instead of deleting it.
+        const next = Object.assign({}, state.rates);
+        RATE_CODES.forEach(function (code) {
+          const perInr = Number(payload.rates && payload.rates[code]);
+          if (Number.isFinite(perInr) && perInr > 0) next[code] = 1 / perInr;
+        });
+        if (!Object.keys(next).length) throw new Error('No usable rates');
+        state = { rates: next, updatedAt: payload.date ? new Date(payload.date + 'T12:00:00Z').toISOString() : new Date().toISOString(), source: 'Frankfurter API' };
+        saveState(); syncRateInputs(); renderStatus(); compute();
+        DC.toast('Latest rates saved for offline use', 'success');
+      } catch (error) {
+        renderStatus('Using previously saved exchange rates. Refresh failed or you are offline.');
+        compute();
+        DC.toast('Could not refresh. Using saved rates.', 'error');
+      } finally { button.disabled = false; button.textContent = original; }
+    }
+    [fromSel, toSel].forEach(function (select) { select.addEventListener('change', compute); });
+    document.getElementById('val').addEventListener('input', compute);
+    document.getElementById('swapBtn').addEventListener('click', function () { const from = fromSel.value; fromSel.value = toSel.value; toSel.value = from; compute(); });
+    document.getElementById('saveRatesBtn').addEventListener('click', saveEditedRates);
+    document.getElementById('refreshBtn').addEventListener('click', refreshLiveRates);
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      state = { rates: {}, updatedAt: '', source: 'No saved rates' }; saveState(); syncRateInputs(); renderStatus('Saved rates cleared. Refresh or add your own rates to continue.'); compute();
+      DC.toast('Saved rates cleared', 'success');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const value = document.getElementById('rMain').textContent;
+      if (value === '—') { DC.toast('Enter an amount and save a rate first', 'error'); return; }
+      DC.copyResult(document.getElementById('rLbl').textContent + ' ' + value + ' — DecideCalc Currency Converter');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const value = document.getElementById('rMain').textContent;
+      if (value === '—') { DC.toast('Enter an amount and save a rate first', 'error'); return; }
+      DC.shareWhatsApp(document.getElementById('rLbl').textContent + ' ' + value + ' (DecideCalc Currency Converter)');
+    });
+    syncRateInputs(); renderStatus(); compute();
+  </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Fund Calculator — How Much Should You Save? | DecideCalc</title>
+  <meta name="description" content="Free emergency fund calculator for USD, INR, EUR and GBP. Get a realistic savings target based on expenses, dependents and job stability — plus your coverage months and gap.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/emergency-fund-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>Emergency Fund</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Emergency Fund Calculator</h1><div class="sub">How big should your rainy-day cushion be?</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="cur">Currency</label>
+            <select class="input" id="cur">
+              <option value="INR" selected>₹ INR — Indian Rupee</option>
+              <option value="USD">$ USD — US Dollar</option>
+              <option value="EUR">€ EUR — Euro</option>
+              <option value="GBP">£ GBP — British Pound</option>
+            </select>
+          </div>
+          <div class="field"><label for="exp">Monthly essential expenses <span class="hint" id="expHint">(rent, food, EMIs, utilities, school fees)</span></label>
+            <input class="input" id="exp" type="number" min="0" step="500" value="45000" placeholder="e.g. 45000" inputmode="decimal">
+            <div class="hint" id="expErr" style="color:#DC2626;display:none">Expenses must be greater than zero — a fund against nothing protects nothing.</div>
+          </div>
+          <div class="field"><label>Dependents relying on this income</label>
+            <input type="hidden" name="dep" value="0">
+            <div class="segmented" id="dep" data-target="dep">
+              <button type="button" data-value="0" class="active">0</button>
+              <button type="button" data-value="1">1</button>
+              <button type="button" data-value="2">2</button>
+              <button type="button" data-value="3">3+</button>
+            </div>
+          </div>
+          <div class="field"><label for="emp">Employment type</label>
+            <select class="input" id="emp">
+              <option value="salaried" selected>Salaried — stable monthly income</option>
+              <option value="freelancer">Freelancer / self-employed — variable income</option>
+              <option value="contractor">Contractor / gig — project-based income</option>
+            </select>
+          </div>
+          <div class="field"><label for="sav">Existing liquid savings <span class="hint">(savings a/c, FD you can break, money-market)</span></label>
+            <input class="input" id="sav" type="number" min="0" step="1000" value="60000" placeholder="e.g. 60000" inputmode="decimal">
+            <div class="hint" id="savErr" style="color:#DC2626;display:none">Savings cannot be negative. If you're in overdraft, enter 0.</div>
+          </div>
+          <div class="field"><label>Monthly amount you can add to the fund (for timeline)</label>
+            <input class="input" id="add" type="number" min="0" step="500" value="10000" placeholder="e.g. 10000">
+          </div>
+          <div class="field"><label>Target coverage</label>
+            <input type="hidden" name="mo" value="6">
+            <div class="segmented" id="mo" data-target="mo">
+              <button type="button" data-value="3">3 months</button>
+              <button type="button" data-value="6" class="active">6 months</button>
+              <button type="button" data-value="9">9 months</button>
+              <button type="button" data-value="12">12 months</button>
+            </div>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate My Emergency Fund</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rTarget">—</div><div class="lbl" id="rLbl">Recommended emergency fund</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rCoverage">—</div><div class="k">Current coverage (months)</div></div>
+          <div class="result-stat"><div class="v" id="rGap">—</div><div class="k">Gap to target</div></div>
+          <div class="result-stat"><div class="v" id="rMonths">—</div><div class="k">Months to fully fund</div></div>
+          <div class="result-stat"><div class="v" id="rPct">—</div><div class="k">Funded so far</div></div>
+        </div>
+        <div class="bar-row" style="margin-top:16px">
+          <div class="br-head"><span id="progressLbl">Progress to target</span><span id="progressPct">0%</span></div>
+          <div class="bar-track"><div class="bar-fill" id="progressBar" style="background:linear-gradient(90deg,#3B82F6,#22C55E)"></div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Why this amount</h4><p id="recoText">A solid emergency fund covers 3–6 months of essential expenses for salaried workers and 6–9 months for freelancers and contractors. Dependents push the safe number up.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Ground rules for a real emergency fund</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Liquidity beats returns.</b> This money belongs in a savings account, sweep-in FD or money-market fund — not in stocks, crypto or locked FDs.</li>
+        <li><b>Essentials only.</b> Count rent, groceries, EMIs, insurance premiums, utilities and school fees — not dining out or holidays. A crisis budget is leaner than your normal one.</li>
+        <li><b>Use it only for true emergencies:</b> job loss, medical events, urgent home or vehicle repair. A sale on flights is not an emergency.</li>
+        <li><b>Refill after every dip.</b> If you draw it down, pause discretionary investing for a month or two and rebuild the buffer first.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Advisor rule of thumb:</b> salaried with a dual income — 3–6 months. Single earner or some dependents — 6 months. Freelancers, contractors, commission-heavy roles — 6–9 months. Single earner with 3+ dependents — 9–12 months.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'emergency-fund-calculator', faqs: [
+      { q: 'How many months of expenses should an emergency fund cover?', a: 'The classic advisor range is 3–6 months of essential expenses for salaried employees with stable income. Freelancers and contractors with variable income should target 6–9 months, and single earners with several dependents 9–12. Your job type and family load matter more than any single rule.' },
+      { q: 'Where should I keep my emergency fund?', a: 'Somewhere safe and instantly accessible: a high-interest savings account, sweep-in fixed deposit or money-market/liquid fund. The goal is liquidity, not growth — chasing returns here risks needing the money the day the market is down.' },
+      { q: 'Should I invest the emergency fund or pay off debt first?', a: 'Build a starter fund of at least one month first — it stops new debt when surprises hit. Then clear high-interest debt (credit cards, personal loans), then finish the full 3–9 month fund, then resume long-term investing at full speed.' },
+      { q: 'Do I count EMIs and insurance in essential expenses?', a: 'Yes. Rent/mortgage, loan EMIs, insurance premiums, utilities, groceries, transport, medicines and school fees are all essential — the money keeps going out even when income stops. Exclude discretionary spending like streaming, dining out and holidays.' },
+      { q: 'What if I use some of the fund — how do I rebuild it?', a: 'Treat the refill as your top financial priority. Divert your normal savings and investment contributions to the fund until it is back to target, then resume your regular plan. Most households rebuild 1 month of coverage per 2–4 months of disciplined saving.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('shield');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('piggy');
+
+    var CUR = {
+      INR: { sym: '₹', locale: 'en-IN' },
+      USD: { sym: '$', locale: 'en-US' },
+      EUR: { sym: '€', locale: 'de-DE' },
+      GBP: { sym: '£', locale: 'en-GB' }
+    };
+    var defaults = { cur: 'INR', exp: '45000', dep: '0', emp: 'salaried', sav: '60000', add: '10000', mo: '6' };
+
+    function money(n) {
+      var c = CUR[document.getElementById('cur').value] || CUR.INR;
+      if (!isFinite(n)) n = 0;
+      return c.sym + Number(Math.round(n)).toLocaleString(c.locale);
+    }
+    function readNum(id) {
+      var v = DC.fnum(document.getElementById(id).value);
+      return v;
+    }
+    function segVal(id) {
+      var hidden = document.querySelector('[name="' + id + '"]');
+      return hidden ? hidden.value : null;
+    }
+    function setSeg(id, value) {
+      var seg = document.getElementById(id);
+      var hidden = document.querySelector('[name="' + id + '"]');
+      if (!seg || !hidden) return;
+      hidden.value = value;
+      seg.querySelectorAll('button').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-value') === String(value));
+      });
+    }
+
+    function compute() {
+      var exp = readNum('exp'), sav = readNum('sav'), add = readNum('add');
+      var dep = parseInt(segVal('dep') || '0', 10);
+      var monthsTarget = parseInt(segVal('mo') || '6', 10);
+      var emp = document.getElementById('emp').value;
+
+      /* ---- Strict validation ---- */
+      var expErr = document.getElementById('expErr'), savErr = document.getElementById('savErr');
+      var expBad = exp < 0 || (document.getElementById('exp').value !== '' && exp === 0);
+      var savBad = sav < 0;
+      expErr.style.display = expBad ? 'block' : 'none';
+      savErr.style.display = savBad ? 'block' : 'none';
+      if (document.getElementById('exp').value === '' || exp === 0) {
+        expErr.textContent = 'Monthly essential expenses must be greater than zero.';
+        expErr.style.display = 'block';
+        expBad = true;
+      } else if (expBad) {
+        expErr.textContent = 'Monthly essential expenses must be greater than zero.';
+      }
+      if (expBad || savBad) {
+        ['rTarget','rCoverage','rGap','rMonths','rPct'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressPct').textContent = '0%';
+        document.getElementById('recoTitle').textContent = 'Check your inputs';
+        document.getElementById('recoText').textContent = 'Expenses must be a positive number and savings cannot be negative. Fix the highlighted fields to see your plan.';
+        return;
+      }
+
+      if (sav < 0) sav = 0;
+      if (add < 0) add = 0;
+
+      /* ---- Advisor guidance band from profile ---- */
+      var baseRec;
+      if (emp === 'salaried') baseRec = [3, 6];
+      else if (emp === 'freelancer') baseRec = [6, 9];
+      else baseRec = [6, 9];
+      if (dep === 1) { baseRec[0] += 1; baseRec[1] += 1; }
+      else if (dep === 2) { baseRec[0] += 1; baseRec[1] += 2; }
+      else if (dep >= 3) { baseRec[0] += 2; baseRec[1] += 3; }
+      if (baseRec[1] > 12) { baseRec[0] = Math.min(baseRec[0], 9); baseRec[1] = 12; }
+
+      /* ---- Real math ---- */
+      var target = exp * monthsTarget;
+      var bandMin = exp * baseRec[0], bandMax = exp * baseRec[1];
+      var coverage = sav / exp;                       // months covered today
+      var gap = Math.max(0, target - sav);            // shortfall in currency
+      var surplus = Math.max(0, sav - target);
+      var pct = target > 0 ? Math.min(100, (sav / target) * 100) : 0;
+      var toFull = gap <= 0 ? 0 : (add > 0 ? Math.ceil(gap / add) : Infinity);
+
+      document.getElementById('rTarget').textContent = money(target);
+      document.getElementById('rLbl').textContent = 'Recommended fund: ' + monthsTarget + ' × ' + money(exp) + '/mo';
+      document.getElementById('rCoverage').textContent = (coverage >= 10 ? coverage.toFixed(0) : coverage.toFixed(1)) + ' mo';
+      document.getElementById('rGap').textContent = gap > 0 ? money(gap) : (surplus > 0 ? '+' + money(surplus) + ' extra' : 'Fully funded');
+      document.getElementById('rMonths').textContent = gap <= 0 ? 'Done' : (isFinite(toFull) ? toFull + ' mo' : 'No contribution set');
+      document.getElementById('rPct').textContent = pct.toFixed(0) + '%';
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('progressPct').textContent = pct.toFixed(0) + '%';
+      document.getElementById('progressLbl').textContent = 'Progress to ' + monthsTarget + '-month target';
+
+      /* ---- Plain-English guidance ---- */
+      var empLabel = emp === 'salaried' ? 'a salaried income' : (emp === 'freelancer' ? 'variable freelance income' : 'project-based contractor income');
+      var depLabel = dep === 0 ? 'no dependents' : (dep >= 3 ? '3+ dependents' : dep + (dep === 1 ? ' dependent' : ' dependents'));
+      var empAdvice = emp === 'salaried'
+        ? 'Salaried workers are normally fine at 3–6 months; your steady paycheque is itself a cushion.'
+        : (emp === 'freelancer'
+          ? 'Freelancer income swings month to month, so advisors suggest 6–9 months — dry spells, not just job loss.'
+          : 'Contractor income stops the day a project ends, so 6–9 months is the common advice — gaps between contracts are expected.');
+
+      var title, text;
+      if (coverage >= monthsTarget) {
+        title = 'Fully funded great position';
+        text = 'Your liquid savings already cover ' + coverage.toFixed(1) + ' months of essentials against a ' + monthsTarget + '-month goal. Park anything above the target into long-term investments instead of letting it idle in cash.';
+      } else if (coverage >= baseRec[0] && monthsTarget <= baseRec[1]) {
+        title = 'Within the safe band for your profile';
+        text = 'You hold ' + coverage.toFixed(1) + ' months, and for ' + empLabel + ' with ' + depLabel + ' the sensible band is ' + baseRec[0] + '–' + baseRec[1] + ' months (' + money(bandMin) + '–' + money(bandMax) + '). Topping up the remaining ' + money(gap) + ' makes this airtight.';
+      } else if (coverage < 1) {
+        title = 'Build a starter cushion this month';
+        text = 'Liquid savings cover less than one month of essentials. Don\'t aim for the full ' + money(target) + ' at once — first stack one month (' + money(exp) + ') in a separate savings account, then keep going. ' + empAdvice;
+      } else if (coverage < baseRec[0]) {
+        title = 'Still below the recommended floor';
+        text = 'At ' + coverage.toFixed(1) + ' months you are under the ' + baseRec[0] + '–' + baseRec[1] + '-month band advised for someone with ' + empLabel + ' and ' + depLabel + '. ' + empAdvice + (isFinite(toFull) ? ' Saving ' + money(add) + '/month closes the ' + money(gap) + ' gap in about ' + toFull + ' months.' : ' Set a monthly contribution to see a realistic timeline.');
+      } else {
+        title = 'Stretch target chosen — plan it steadily';
+        text = 'You have ' + coverage.toFixed(1) + ' months against a ' + monthsTarget + '-month stretch goal. ' + empAdvice + (isFinite(toFull) ? ' At ' + money(add) + '/month you reach it in roughly ' + toFull + ' months.' : ' Add a monthly contribution amount to see when you get there.');
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['cur','exp','emp','sav','add'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', compute);
+      document.getElementById(id).addEventListener('change', compute);
+    });
+    document.getElementById('dep').addEventListener('segment:change', compute);
+    document.getElementById('mo').addEventListener('segment:change', compute);
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('cur').value = defaults.cur;
+      document.getElementById('exp').value = defaults.exp;
+      document.getElementById('emp').value = defaults.emp;
+      document.getElementById('sav').value = defaults.sav;
+      document.getElementById('add').value = defaults.add;
+      setSeg('dep', defaults.dep);
+      setSeg('mo', defaults.mo);
+      DC.toast('Inputs reset', 'success');
+      compute();
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      DC.copyResult('Emergency Fund Summary'
+        + '\nRecommended target: ' + document.getElementById('rTarget').textContent
+        + '\nCurrent coverage: ' + document.getElementById('rCoverage').textContent
+        + '\nGap to target: ' + document.getElementById('rGap').textContent
+        + '\nMonths to fully fund: ' + document.getElementById('rMonths').textContent
+        + '\nFunded so far: ' + document.getElementById('rPct').textContent
+        + '\nTarget = monthly essential expenses × chosen coverage months (advisor band: salaried 3–6, freelancer/contractor 6–9, more with dependents)');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      DC.shareWhatsApp('My emergency fund target: ' + document.getElementById('rTarget').textContent + ' — I currently cover ' + document.getElementById('rCoverage').textContent + ' of essentials (' + document.getElementById('rPct').textContent + ' funded). Check yours on DecideCalc.');
+    });
+    compute();
+  </script>
+</body>
+</html>

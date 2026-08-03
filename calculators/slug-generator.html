@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slug Generator — URL-Safe Blog & Page Slugs, Free | DecideCalc</title>
+  <meta name="description" content="Free slug generator for blog posts and web pages. Convert titles to clean, SEO-friendly URL slugs — handles apostrophes, Unicode, and common stop words.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/slug-generator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-text">Text Tools</a><span class="sep">/</span><span>Slug Generator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Slug Generator</h1><div class="sub">SEO-friendly URLs from any title</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="title">Page / post title</label><textarea class="input" id="title" rows="3" placeholder="e.g. 10 Tips to Save ₹5 Lakhs on Your Home Loan (2026 Guide)"></textarea></div>
+          <div class="field">
+            <label>Separator & options</label>
+            <label class="check"><input type="checkbox" id="noStops"> Remove stop words (a, the, to, of, in…)</label>
+            <label class="check"><input type="checkbox" id="keepNums" checked> Keep numbers</label>
+            <label class="check"><input type="checkbox" id="lowercase" checked> Force lowercase</label>
+          </div>
+          <button class="btn btn-primary btn-block" id="genBtn">Generate Slug</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="calc-header"><div><h2 style="font-size:1.05rem;margin:0">Your slug</h2><div class="sub">Paste-ready</div></div></div>
+        <div class="calc-body" style="padding-top:12px">
+          <input class="input" id="slug" readonly placeholder="your-slug-appears-here" style="font-family:monospace;font-size:1rem">
+          <div style="margin-top:10px;font-size:.82rem;color:var(--text-soft)">Length: <b id="slugLen">0</b> chars · Ideal: 3–6 words, under 60 chars</div>
+        </div>
+        <div class="result-grid" style="padding:0 22px 12px">
+          <div class="result-stat"><div class="v" id="rWords">0</div><div class="k">Words</div></div>
+          <div class="result-stat"><div class="v" id="rStripped">0</div><div class="k">Characters stripped</div></div>
+        </div>
+        <div class="result-actions" style="padding:0 22px 22px">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy slug</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">SEO → 3 to 6 words wins</h4><p id="recoText">Short, keyword-rich slugs outrank long ones on Google. Trim "the/a/in" automatically with the stop-word toggle above.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>What makes a slug SEO-friendly</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Hyphens, not underscores</b> — Google treats hyphen as a word separator, underscore as a joiner.</li>
+        <li><b>Lowercase everything</b> — some servers are case-sensitive; /Guide ≠ /guide (duplicate content risk).</li>
+        <li><b>Strip stop words</b> — "a", "the", "to" add length without value. Keep numbers — "2026-guide" is searchable.</li>
+        <li><b>Stay under 60 chars</b> — longer slugs get truncated in search results.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Indian twist:</b> rupee ₹, ®, ™ — non-Latin chars get stripped. "₹10 Lakh in 5 Years" becomes <code>10-lakh-in-5-years</code>.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'slug-generator', faqs: [
+      { q: 'Should I include a date (2026) in the slug?', a: 'If the content is time-sensitive (news, deals, tax years, deadlines) then yes — it signals freshness to both readers and Google. Evergreen how-to guides rank better without years.' },
+      { q: 'Is HTTPS wherever the slug matters?', a: 'Slugs are just path segments — they work in WordPress, Ghost, Webflow, Shopify, custom backends anywhere. Case may matter on Linux/Nginx servers, so keep everything lowercase.' },
+      { q: 'Can I use a slug with override uppercase?', a: 'Technically yes, but avoid it. Search engines may see /Blog-Post and /blog-post as two different pages, splitting rank.' },
+      { q: 'Why no underscores?', a: 'Google\'s own Matt Cutts confirmed hyphens are word separators, underscores aren\'t. "best_cms" reads as one word to the crawler.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const STOPS = ['a','an','and','are','as','at','be','by','for','from','has','have','how','in','is','it','its','of','on','or','that','the','their','there','this','to','was','what','when','where','which','will','with','you','your'];
+
+    function slugify(title, opts) {
+      let s = title.normalize ? title.normalize('NFD') : title;
+      s = s.replace(/[̀-ͯ]/g, ''); // strip diacritics
+      if (opts.lower) s = s.toLowerCase();
+      s = s.replace(/['’]/g, ''); // contractions → kept joined
+      s = s.replace(/&/g, ' and ');
+      if (!opts.nums) s = s.replace(/\d+/g, '');
+      s = s.replace(/[^a-z0-9\s-]/gi, ' '); // strip everything else
+      let words = s.split(/\s+/).filter(Boolean);
+      if (opts.stops) words = words.filter(function (w) { return STOPS.indexOf(w.toLowerCase()) === -1; });
+      return { slug: words.join('-'), words: words.length, stripped: title.replace(/[a-z0-9\s-]/gi, '').length };
+    }
+    function opts() {
+      return {
+        stops: document.getElementById('noStops').checked,
+        nums: document.getElementById('keepNums').checked,
+        lower: document.getElementById('lowercase').checked
+      };
+    }
+    function update() {
+      const t = document.getElementById('title').value.trim();
+      if (!t) {
+        document.getElementById('slug').value = '';
+        document.getElementById('slugLen').textContent = '0';
+        document.getElementById('rWords').textContent = '0';
+        document.getElementById('rStripped').textContent = '0';
+        return;
+      }
+      const r = slugify(t, opts());
+      document.getElementById('slug').value = r.slug;
+      document.getElementById('slugLen').textContent = r.slug.length;
+      document.getElementById('rWords').textContent = r.words;
+      document.getElementById('rStripped').textContent = r.stripped;
+      document.getElementById('recoTitle').textContent = r.slug.length <= 60 ? 'Length is good' : 'Too long — trim words';
+      document.getElementById('recoText').textContent = r.slug.length <= 60
+        ? 'Slug is ' + r.slug.length + ' characters (' + r.words + ' words). Ready for WordPress, Ghost, or your custom CMS.'
+        : 'Slug is ' + r.slug.length + ' chars — Google truncates around 60. Try shorter phrasing or drop a few words.';
+    }
+    document.getElementById('genBtn').addEventListener('click', update);
+    document.getElementById('title').addEventListener('input', update);
+    ['noStops','keepNums','lowercase'].forEach(function (id) { document.getElementById(id).addEventListener('change', update); });
+    document.getElementById('clearBtn').addEventListener('click', function () { document.getElementById('title').value = ''; update(); document.getElementById('title').focus(); });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('slug').value;
+      if (!v) { DC.toast('Type a title first', 'error'); return; }
+      DC.copyResult(v);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Body Fat Calculator — US Navy Circumference Method | DecideCalc</title>
+  <meta name="description" content="Free body fat calculator using the official US Navy circumference method. Men: neck + waist. Women: neck + waist + hip. Includes category per ACE chart.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/body-fat-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>Body Fat Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Body Fat Calculator</h1><div class="sub">US Navy circumference method</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="sex" value="male">
+          <div class="segmented" id="sex" data-target="sex">
+            <button type="button" data-value="male" class="active">Male</button>
+            <button type="button" data-value="female">Female</button>
+          </div>
+          <div class="row-2" style="margin-top:14px">
+            <div class="field"><label>Height (cm)</label><input class="input" id="h" type="number" min="120" max="230" value="170"></div>
+            <div class="field"><label>Weight (kg)</label><input class="input" id="w" type="number" min="30" max="200" value="70"></div>
+          </div>
+          <div class="row-2">
+            <div class="field"><label>Neck (cm)</label><input class="input" id="neck" type="number" min="25" max="60" value="38"></div>
+            <div class="field"><label>Waist (cm)</label><input class="input" id="waist" type="number" min="50" max="200" value="85"></div>
+          </div>
+          <div class="field" id="hipField" style="display:none"><label>Hip (cm) — females only</label>
+            <input class="input" id="hip" type="number" min="50" max="200" value="95">
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Body Fat</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">body fat %</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rCat">—</div><div class="k">ACE category</div></div>
+          <div class="result-stat"><div class="v" id="rFatKg">—</div><div class="k">Fat mass</div></div>
+          <div class="result-stat"><div class="v" id="rLeanKg">—</div><div class="k">Lean mass</div></div>
+          <div class="result-stat"><div class="v" id="rBMI">—</div><div class="k">BMI (for reference)</div></div>
+          <div class="result-stat"><div class="v" id="rFFMI">—</div><div class="k">FFMI (muscle leanness)</div></div>
+          <div class="result-stat"><div class="v" id="rTip">—</div><div class="k">Direction</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Navy vs Dexa — expect ±3%</h4><p id="recoText">The Navy circumference method has ±3-4% standard error vs Dexa gold standard. It's free, repeatable, and good for TREND tracking. For absolute numbers, get a Dexa scan or BodPod test.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>ACE Body-Fat Categories</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Essential:</b> Men 2-5%, Women 10-13%</li>
+        <li><b>Athletes:</b> Men 6-13%, Women 14-20%</li>
+        <li><b>Fitness:</b> Men 14-17%, Women 21-24%</li>
+        <li><b>Average:</b> Men 18-24%, Women 25-31%</li>
+        <li><b>Obese:</b> Men 25%+, Women 32%+</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Measure right:</b> neck below the larynx, waist at the navel when relaxed (not sucked in), hip at the widest point of the buttocks. Measuring wrong by even 2cm shifts the answer ~1.5%.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'body-fat-calculator', faqs: [
+      { q: 'Why does BMI give a different answer?', a: 'BMI uses only height & weight — it can\'t tell muscle from fat. A powerlifter at BMI 30 can have 12% body fat (\"obese\" BMI but metabolically healthy). Body-fat % is the more meaningful metric for body composition.' },
+      { q: 'Why so different from my smart scale?', a: 'Bio-impedance (BIA) scales vary widely with hydration (+2-4% right after drinking water, -2-3% dehydrated). The Navy circumference method is more repeatable but slightly less precise on absolute value. Pick one method and track TREND only.' },
+      { q: 'Can women safely go below 14%?', a: 'Not recommended. Below ~14% women risk menstrual irregularity (RED-S), bone density loss, and hormonal disruption. Competitors dip to 10-12% only under medical supervision for the day-of-stage — not sustainable.' },
+      { q: 'Why neck over chest measurements?', a: 'Neck is the empirical constant that improves accuracy of the circumference-only regression. Hutchinson & Hodgdon\'s original 1984 US Navy study validated this exact formula on 4,818 subjects — no other body sites improved the prediction enough to add complexity.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('heart');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let sex = 'male';
+    document.getElementById('sex').addEventListener('segment:change', function(e){
+      sex = e.detail.value;
+      document.getElementById('hipField').style.display = sex === 'female' ? '' : 'none';
+      compute();
+    });
+
+    function compute() {
+      const h = Math.max(0, DC.fnum(document.getElementById('h').value));
+      const w = Math.max(0, DC.fnum(document.getElementById('w').value));
+      const neck = Math.max(0, DC.fnum(document.getElementById('neck').value));
+      const waist = Math.max(0, DC.fnum(document.getElementById('waist').value));
+      const hip = sex === 'female' ? Math.max(0, DC.fnum(document.getElementById('hip').value)) : 0;
+      if (h <= 0 || w <= 0 || neck <= 0 || waist <= 0 || (sex==='female' && hip <= 0)) {
+        ['rMain','rCat','rFatKg','rLeanKg','rBMI','rFFMI','rTip'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      // US Navy formula (centimetres) — log10 of cm
+      let bf;
+      if (sex === 'male') {
+        if (waist - neck <= 0) { document.getElementById('rMain').textContent = '—'; return; }
+        bf = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(h)) - 450;
+      } else {
+        if (waist + hip - neck <= 0) { document.getElementById('rMain').textContent = '—'; return; }
+        bf = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(h)) - 450;
+      }
+      bf = Math.max(2, Math.min(60, bf));
+      const fatKg = w * bf / 100;
+      const leanKg = w - fatKg;
+      const bmi = w / Math.pow(h / 100, 2);
+      const ffmi = leanKg / Math.pow(h / 100, 2);
+      const normFFMI = ffmi + 6.3 * (1.8 - h / 100);
+
+      // ACE category
+      let cat;
+      if (sex === 'male') {
+        cat = bf < 6 ? 'Essential fat' : bf < 14 ? 'Athletes' : bf < 18 ? 'Fitness' : bf < 25 ? 'Average' : 'Obese';
+      } else {
+        cat = bf < 14 ? 'Essential fat' : bf < 21 ? 'Athletes' : bf < 25 ? 'Fitness' : bf < 32 ? 'Average' : 'Obese';
+      }
+      const tip = cat === 'Essential fat' || cat === 'Athletes' ? 'Maintain'
+                : cat === 'Fitness' ? 'Optional minor cut for shape'
+                : cat === 'Average' ? 'Consider slow fat-loss phase'
+                : 'Medical guidance advised';
+
+      document.getElementById('rMain').textContent = bf.toFixed(1) + '%';
+      document.getElementById('rLbl').textContent = 'body fat (' + cat + ')';
+      document.getElementById('rCat').textContent = cat;
+      document.getElementById('rFatKg').textContent = fatKg.toFixed(1) + ' kg';
+      document.getElementById('rLeanKg').textContent = leanKg.toFixed(1) + ' kg';
+      document.getElementById('rBMI').textContent = bmi.toFixed(1);
+      document.getElementById('rFFMI').textContent = normFFMI.toFixed(1);
+      document.getElementById('rTip').textContent = tip;
+
+      let title, text;
+      if (cat === 'Obese') {
+        title = 'Aim for 5-10% body-weight reduction first';
+        text = 'Dropping 5-10% body weight reduces cardiometabolic risk dramatically. At ' + w.toFixed(0) + ' kg a realistic 6-month target is ' + (w * 0.93).toFixed(0) + '-' + (w * 0.95).toFixed(0) + ' kg with resistance training to preserve lean mass.';
+      } else if (cat === 'Average') {
+        title = 'Body recomposition, not just weight loss';
+        text = 'You\'re in the normal zone. Focus on adding 2-4 kg of muscle while losing equal fat over 12 months — same scale, dramatically better silhouette. Lift 3x/week, eat ~1.8g protein/kg.';
+      } else if (cat === 'Fitness' || cat === 'Athletes') {
+        title = 'Already at high performance';
+        text = 'Going lower has diminishing returns + risk for women. Focus on strength/cardio benchmarks rather than further loss. FFMI ' + normFFMI.toFixed(1) + ' is ' + (normFFMI > 22 ? 'excellent' : (normFFMI > 19 ? 'good' : 'average')) + ' for your training age.';
+      } else {
+        title = 'Essential fat zone';
+        text = 'Your body fat is at the lowest sustainable band. Professional athletes maintain this only under medical supervision — don\'t aim lower.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['h','w','neck','waist','hip'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('Body fat: ' + document.getElementById('rMain').textContent + ' (' + document.getElementById('rCat').textContent + ') — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult('Body fat: ' + document.getElementById('rMain').textContent + ' | Lean: ' + document.getElementById('rLeanKg').textContent + ' | FFMI: ' + document.getElementById('rFFMI').textContent + ' | ' + document.getElementById('rCat').textContent); });
+  </script>
+</body>
+</html>

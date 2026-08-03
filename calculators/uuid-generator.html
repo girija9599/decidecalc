@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Generator — v4 Random, Bulk Generate | DecideCalc</title>
+  <meta name="description" content="Free UUID/GUID generator. Cryptographically-random v4 UUIDs via Web Crypto API. Generate one or 100, with or without dashes, raw or uppercase.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/uuid-generator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-utility">Utility Tools</a><span class="sep">/</span><span>UUID Generator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>UUID Generator</h1><div class="sub">v4 random, cryptographically secure</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>How many UUIDs?</label>
+            <div class="range-out"><span class="range-val" id="out-n">1</span></div>
+            <input type="range" id="n" min="1" max="100" value="1">
+          </div>
+          <input type="hidden" name="format" value="dashes">
+          <div class="segmented" id="format" data-target="format">
+            <button type="button" data-value="dashes" class="active" title="xxxxxxxx-xxxx-xxxx">With dashes</button>
+            <button type="button" data-value="raw" title="32 hex chars">No dashes</button>
+            <button type="button" data-value="upper" title="UPPERCASE-WITH-DASHES">UPPERCASE</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="genBtn">Generate</button>
+          <button class="btn btn-ghost btn-block" id="copyAllBtn" style="margin-top:8px">Copy all to clipboard</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain" style="font-size:1.1rem;font-family:var(--mono);word-break:break-all">—</div><div class="lbl" id="rLbl">click Generate</div></div>
+        <div id="rList" style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;font-family:var(--mono);font-size:.85rem;max-height:400px;overflow-y:auto;word-break:break-all;display:none;margin-top:10px"></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy first</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Collision chance is negligible</h4><p id="recoText">UUID v4 has 122 bits of randomness. To expect a single collision you'd need to generate 2.71×10¹⁸ UUIDs — roughly 139 years of generating 1 billion per second. Use them as primary keys, session IDs, and trace IDs without fear.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>UUID versions</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>v1:</b> timestamp + MAC address — often leaks hardware info, avoid in 2025</li>
+        <li><b>v3, v5:</b> name-based (MD5/SHA-1 of namespace + name) — deterministic, useful for content-addressed storage</li>
+        <li><b>v4:</b> pure random — most common, this generator's flavour</li>
+        <li><b>v6, v7, v8 (2024 RFC 9562):</b> timestamped for DB index-friendliness; v7 preferred for new apps</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Used by:</b> PostgreSQL uuid type, MySQL UUID(), MongoDB ObjectID alternative, Session cookies, Distributed trace IDs, wire formats, file uploads.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'uuid-generator', faqs: [
+      { q: 'UUID vs GUID — same thing?', a: 'Yes. GUID (Globally Unique IDentifier) is the Microsoft name; UUID (Universally Unique IDentifier) is the RFC 4122 standard. They have the same format and are interchangeable in practice.' },
+      { q: 'Can I use UUIDs as primary key in my database?', a: 'Yes — PostgreSQL has a native uuid type, MySQL has UUID(). But sequential v4 UUIDs hurt InnoDB index performance due to random inserts. For MySQL/MariaDB use UUID_TO_BIN(id, 1) (time-ordered) or the newer UUIDv7 which has timestamp prefix.' },
+      { q: 'Are these UUIDs valid offline?', a: 'Yes — UUIDs need no central authority. Anyone, anywhere, anytime can generate v4 UUIDs and trust they\'ll collide with some other UUID with probability smaller than winning a lottery every day for your entire life.' },
+      { q: 'Why 36 characters?', a: '32 hex digits + 4 dashes. The dashes are purely cosmetic, breaking the ID into 8-4-4-4-12 segments. Strip or uppercase freely — the underlying 16 bytes are the same.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('zap');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function uuidv4() {
+      // RFC 4122 v4: 16 random bytes, positions 6 & 8 manipulated
+      const bytes = new Uint8Array(16);
+      crypto.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;   // version 4
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;   // variant 10
+      const hex = [...bytes].map(b => b.toString(16).padStart(2,'0')).join('');
+      return hex.substring(0,8) + '-' + hex.substring(8,12) + '-' + hex.substring(12,16) + '-' + hex.substring(16,20) + '-' + hex.substring(20,32);
+    }
+
+    let format = 'dashes';
+    let lastList = [];
+    document.getElementById('format').addEventListener('segment:change', function(e){ format = e.detail.value; applyFormat(); });
+
+    function applyFormat() {
+      if (!lastList.length) return;
+      const show = lastList.map(u => {
+        if (format === 'raw') return u.replace(/-/g,'');
+        if (format === 'upper') return u.toUpperCase();
+        return u;
+      });
+      document.getElementById('rMain').textContent = show[0];
+      const list = document.getElementById('rList');
+      list.style.display = lastList.length > 1 ? '' : 'none';
+      list.innerHTML = show.map((u,i) => (i+1) + '. ' + u).join('<br>');
+    }
+    function compute() {
+      const n = Math.min(100, Math.max(1, DC.fnum(document.getElementById('n').value)));
+      document.getElementById('out-n').textContent = n;
+      lastList = [];
+      for (let i = 0; i < n; i++) lastList.push(uuidv4());
+      applyFormat();
+      document.getElementById('rLbl').textContent = n === 1 ? 'UUID ready' : n + ' UUIDs ready';
+    }
+    document.getElementById('genBtn').addEventListener('click', compute);
+    document.getElementById('n').addEventListener('input', compute);
+
+    document.getElementById('copyAllBtn').addEventListener('click', function(){
+      const show = lastList.map(u => format==='raw'?u.replace(/-/g,''):(format==='upper'?u.toUpperCase():u));
+      navigator.clipboard.writeText(show.join('\n')).then(()=>DC.toast('Copied ' + show.length + ' UUIDs'));
+    });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult(lastList[0] || ''); });
+    document.getElementById('shareBtn').addEventListener('click', function(){ if (lastList.length) DC.shareWhatsApp('UUID: ' + lastList[0] + ' — via DecideCalc'); });
+
+    compute();
+  </script>
+</body>
+</html>

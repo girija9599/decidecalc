@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Duration Calculator — Hours & Minutes Between Two Times | DecideCalc</title>
+  <meta name="description" content="Free time duration calculator. Calculate hours, minutes and seconds between two times (even across midnight), or add/subtract durations. For shifts, flights, workouts, logs.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/time-duration-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Time Duration Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Time Duration Calculator</h1><div class="sub">Across midnight handled automatically</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field"><label for="t1">Start time</label><input class="input" id="t1" type="time" value="09:30"></div>
+            <div class="field"><label for="t2">End time</label><input class="input" id="t2" type="time" value="18:15"></div>
+          </div>
+          <div class="field">
+            <label>Break deduction (minutes)</label>
+            <input class="input" id="brk" type="number" min="0" max="600" step="1" value="45" placeholder="e.g. 45 for lunch">
+          </div>
+          <label class="check" style="margin:2px 0 14px"><input type="checkbox" id="overnight"> End time is next day (night shift)</label>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Duration</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Net work duration</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rGross">—</div><div class="k">Gross duration</div></div>
+          <div class="result-stat"><div class="v" id="rBrk">—</div><div class="k">Break time</div></div>
+          <div class="result-stat"><div class="v" id="rMin">—</div><div class="k">Total minutes</div></div>
+          <div class="result-stat"><div class="v" id="rDec">—</div><div class="k">Decimal hours (payroll)</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          <button class="btn btn-ghost btn-sm" id="shareBtn">Share</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Payroll-ready decimal hours</h4><p id="recoText">Payroll software wants 7.75 hours, not "7 h 45 min". Both formats shown side-by-side above.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Common uses</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Timesheets:</b> net hours after break — enter start/end/lunch for instant payroll decimals.</li>
+        <li><b>Night shifts:</b> tick "next day" — 22:00 to 06:00 correctly returns 8 hours, not -16.</li>
+        <li><b>Flight & travel:</b> gate-to-gate time without timezone confusion (same-day flights).</li>
+        <li><b>Workouts & study:</b> total focused time minus rest intervals.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Decimal shortcut:</b> minutes ÷ 60. 45 min = 0.75 hr, 30 min = 0.5 hr, 15 min = 0.25 hr, 6 min = 0.1 hr.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'time-duration-calculator', faqs: [
+      { q: 'From 10 PM to 6 AM — how many hours?', a: 'Tick "End time is next day" and the calculator returns 8 hours. Without the checkbox, the same input looks like a negative -16 hours and the tool shows "—".' },
+      { q: 'What if I have multiple breaks?', a: 'Add all break minutes together into the single break field — 15 min coffee + 45 min lunch = 60 min total.' },
+      { q: 'Why decimal hours for payroll?', a: 'Most HRMS/Payroll systems multiply decimal hours by rate. 7h45m as "7.75" is what the software expects — typing "7:45" breaks formulas.' },
+      { q: 'What about seconds?', a: 'The input is hours/minutes only — that\'s what 99% of shift logs need. Second-second differences belong in the Date Difference calculator.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('clock');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    function parseTime(id) {
+      const v = document.getElementById(id).value;
+      if (!v) return null;
+      const parts = v.split(':');
+      if (parts.length < 2) return null;
+      const h = parseInt(parts[0], 10), m = parseInt(parts[1], 10);
+      if (!isFinite(h) || !isFinite(m) || h > 23 || m > 59) return null;
+      return h * 60 + m;
+    }
+    function fmt(min) {
+      if (min === null) return '—';
+      const h = Math.floor(min / 60), m = Math.round(min % 60);
+      return (h ? h + 'h ' : '') + m + 'm';
+    }
+    function setInvalid(msg) {
+      ['rMain','rGross','rBrk','rMin','rDec'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      if (msg) document.getElementById('recoText').textContent = msg;
+    }
+    function compute() {
+      const s = parseTime('t1'), e = parseTime('t2');
+      const brk = Math.max(0, Math.min(600, DC.fnum(document.getElementById('brk').value)));
+      const over = document.getElementById('overnight').checked;
+      if (s === null || e === null) return setInvalid('Enter both start and end times.');
+      let dur = e - s;
+      if (over) dur += 1440;
+      if (dur < 0) return setInvalid('End time is before start time. Tick "next day" for overnight shifts.');
+      if (dur > 1440) return setInvalid('Duration exceeds 24 hours. Use the Date Difference tool.');
+      const net = dur - brk;
+      if (net < 0) return setInvalid('Break time (' + brk + ' min) is longer than total duration (' + dur + ' min).');
+      document.getElementById('rMain').textContent = fmt(net);
+      document.getElementById('rLbl').textContent = 'Net work duration' + (over ? ' (overnight)' : '');
+      document.getElementById('rGross').textContent = fmt(dur);
+      document.getElementById('rBrk').textContent = fmt(brk);
+      document.getElementById('rMin').textContent = net.toLocaleString('en-IN') + ' min';
+      document.getElementById('rDec').textContent = (net / 60).toFixed(2) + ' hr';
+      document.getElementById('recoTitle').textContent = fmt(net) + ' net working time';
+      document.getElementById('recoText').textContent = 'From ' + document.getElementById('t1').value + ' to ' + document.getElementById('t2').value + (over ? ' (next day)' : '') + ' = ' + fmt(dur) + ' gross. Less ' + fmt(brk) + ' break → ' + fmt(net) + ' net ≈ ' + (net/60).toFixed(2) + ' decimal hours.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['t1','t2','brk'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('overnight').addEventListener('change', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('t1').value = '09:30';
+      document.getElementById('t2').value = '18:15';
+      document.getElementById('brk').value = '45';
+      document.getElementById('overnight').checked = false;
+      compute();
+    });
+    compute();
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Enter times first', 'error'); return; }
+      DC.copyResult('Net duration: ' + v + ' (' + document.getElementById('rDec').textContent + ') — via DecideCalc');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Enter times first', 'error'); return; }
+      DC.shareWhatsApp('Net duration: ' + v + ' (DecideCalc Time Calculator)');
+    });
+  </script>
+</body>
+</html>

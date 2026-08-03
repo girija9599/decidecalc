@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Countdown — Days & Hours Until Any Date | DecideCalc</title>
+  <meta name="description" content="Free live event countdown calculator. Days, hours, minutes, seconds until any date — birthday, wedding, exam, vacation — with automatic refresh every second.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/countdown-timer.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Event Countdown</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Event Countdown</h1><div class="sub">Days, hours, min, sec — auto-updates</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Target date</label>
+            <input class="input" id="date" type="date">
+          </div>
+          <div class="field"><label>Target time (optional)</label>
+            <input class="input" id="time" type="time" value="00:00">
+          </div>
+          <div class="field"><label>Event name (for display)</label>
+            <input class="input" id="name" type="text" placeholder="e.g. Wedding, Exam Day, New Year" maxlength="40">
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Start Counting Down</button>
+          <button class="btn btn-ghost btn-block" id="resetBtn" style="margin-top:8px">Reset</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">days remaining</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rDays">—</div><div class="k">Days</div></div>
+          <div class="result-stat"><div class="v" id="rHours">—</div><div class="k">Hours</div></div>
+          <div class="result-stat"><div class="v" id="rMins">—</div><div class="k">Minutes</div></div>
+          <div class="result-stat"><div class="v" id="rSecs">—</div><div class="k">Seconds</div></div>
+          <div class="result-stat"><div class="v" id="rWeeks">—</div><div class="k">Weeks (rounded)</div></div>
+          <div class="result-stat"><div class="v" id="rProgress">—</div><div class="k">Of current year</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Park this tab</h4><p id="recoText">The digits tick live — keep this page open while working on the event. Bookmarking remembers nothing because every number comes from now.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How to use this for real goals</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Exam prep:</b> days remaining ÷ topics = topics/day target</li>
+        <li><b>Travel:</b> weeks left × save-per-week goal = suitcase fund</li>
+        <li><b>Debt payoff:</b> total days ÷ ₹you-can-pay-per-day shows if schedule is realistic</li>
+        <li><b>Habit building:</b> start on a memorable date (birthday, festival) — it's easier to stay consistent</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Past dates work too:</b> pick a date in the past (wedding anniversary, first job day) and the counter shows how long it has been — the \"days since\" form is useful for milestone celebrations.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'countdown-timer', faqs: [
+      { q: 'Do leap years affect the count?', a: 'Yes — the calculation uses the exact millisecond difference, so Feb 29 is correctly included. Birthday countdowns spanning a leap year will show 1 extra day.' },
+      { q: 'Why does my time zone matter?', a: 'The calculation uses your browser\'s local time zone. For an event in another time zone (e.g., a webinar in EST while you\'re in IST), choose the event time as if in YOUR local zone so the difference matches what you experience.' },
+      { q: 'Can I save multiple events?', a: 'This calculator shows one event at a time to keep it fast. For multiple events use a spreadsheet or task app; or open multiple browser tabs each with a different target.' },
+      { q: 'What happens when the date passes?', a: 'The counter flips to \"X days since\" — the digits continue ticking upward in negative form. Useful for tracking streaks and elapsed anniversaries.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('clock');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('calendar');
+
+    // Default: 6 months from now
+    (function(){
+      const d = new Date(Date.now() + 180 * 24 * 3600 * 1000);
+      document.getElementById('date').value = d.toISOString().substring(0,10);
+    })();
+
+    let ticker = null;
+    function compute() {
+      if (ticker) clearInterval(ticker);
+      const dStr = document.getElementById('date').value;
+      const tStr = document.getElementById('time').value || '00:00';
+      if (!dStr) return;
+      const target = new Date(dStr + 'T' + tStr + ':00');
+      if (isNaN(target.getTime())) {
+        ['rMain','rDays','rHours','rMins','rSecs','rWeeks','rProgress'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const name = document.getElementById('name').value || 'the event';
+      function tick() {
+        const now = new Date();
+        let diff = target.getTime() - now.getTime();
+        const past = diff < 0;
+        diff = Math.abs(diff);
+        const days = Math.floor(diff / 86400000);
+        const hrs  = Math.floor(diff % 86400000 / 3600000);
+        const mins = Math.floor(diff % 3600000 / 60000);
+        const secs = Math.floor(diff % 60000 / 1000);
+        document.getElementById('rDays').textContent = days;
+        document.getElementById('rHours').textContent = hrs;
+        document.getElementById('rMins').textContent = mins;
+        document.getElementById('rSecs').textContent = secs;
+        document.getElementById('rWeeks').textContent = (days / 7).toFixed(1);
+        document.getElementById('rMain').textContent = past ? days + ' ago' : days;
+        document.getElementById('rLbl').textContent = past ? 'days since ' + name : 'days until ' + name;
+        // Progress through the year containing target
+        const yr = target.getFullYear();
+        const yearStart = new Date(yr, 0, 1);
+        const yearEnd   = new Date(yr + 1, 0, 1);
+        const throughYear = (target - yearStart) / (yearEnd - yearStart) * 100;
+        document.getElementById('rProgress').textContent = throughYear.toFixed(1) + '%';
+      }
+      tick();
+      ticker = setInterval(tick, 1000);
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['date','time','name'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    document.getElementById('resetBtn').addEventListener('click', function(){
+      if (ticker) clearInterval(ticker);
+      document.getElementById('date').value = '';
+      document.getElementById('name').value = '';
+      ['rMain','rDays','rHours','rMins','rSecs','rWeeks','rProgress'].forEach(function(id){document.getElementById(id).textContent='—';});
+      document.getElementById('rLbl').textContent = 'days remaining';
+    });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp(document.getElementById('rMain').textContent + ' days ' + document.getElementById('rLbl').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult(document.getElementById('rLbl').textContent + ': ' + document.getElementById('rDays').textContent + ' days, ' + document.getElementById('rHours').textContent + ':' + document.getElementById('rMins').textContent + ':' + document.getElementById('rSecs').textContent); });
+  </script>
+</body>
+</html>

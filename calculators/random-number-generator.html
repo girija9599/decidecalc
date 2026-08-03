@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Number Generator — Dice, Range, Lottery, Coin Flip | DecideCalc</title>
+  <meta name="description" content="Free random number generator: pick between any range, roll dice, flip a coin, or generate lottery picks. Cryptographically secure randomness, runs offline.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/random-number-generator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-utility">Utility Tools</a><span class="sep">/</span><span>Random Number Generator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Random Number Generator</h1><div class="sub">Crypto-secure · 100% offline</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="kind" value="range">
+          <div class="segmented" id="kind" data-target="kind">
+            <button type="button" data-value="range" class="active">Range</button>
+            <button type="button" data-value="dice">Dice</button>
+            <button type="button" data-value="coin">Coin</button>
+            <button type="button" data-value="lotto">Lottery</button>
+          </div>
+          <div style="height:14px"></div>
+
+          <div id="box-range">
+            <div class="field-row">
+              <div class="field"><label>Min</label><input class="input" id="min" type="number" value="1"></div>
+              <div class="field"><label>Max</label><input class="input" id="max" type="number" value="100"></div>
+            </div>
+            <div class="field"><label>How many numbers?</label><input class="input" id="count" type="number" min="1" max="100" value="5"></div>
+            <label class="check" style="margin:2px 0 12px"><input type="checkbox" id="unique" checked> Unique results only</label>
+          </div>
+
+          <div id="box-dice" style="display:none">
+            <div class="field"><label>How many dice?</label><input class="input" id="dice" type="number" min="1" max="10" value="2"></div>
+            <div class="field"><label>Sides per die</label>
+              <select class="select" id="sides"><option value="4">D4</option><option value="6" selected>D6</option><option value="8">D8</option><option value="10">D10</option><option value="12">D12</option><option value="20">D20</option></select>
+            </div>
+          </div>
+
+          <div id="box-lotto" style="display:none">
+            <div class="field-row">
+              <div class="field"><label>Balls to draw</label><input class="input" id="lN" type="number" min="1" max="10" value="6"></div>
+              <div class="field"><label>Out of</label><input class="input" id="lOf" type="number" min="10" max="90" value="45"></div>
+            </div>
+          </div>
+
+          <div id="box-coin" style="display:none;text-align:center;padding:20px 0">
+            <div style="font-size:.85rem;color:var(--muted)">Flip a coin — 50/50, fair by crypto.random</div>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="genBtn">Generate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain" style="word-break:break-word;font-size:1.4rem">—</div><div class="lbl" id="rLbl">Result</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rStats">—</div><div class="k" id="kStats">Statistics</div></div>
+          <div class="result-stat"><div class="v" id="rHist">0</div><div class="k">Draws this session</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">Reset counter</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>Truly random, not pseudo</h4><p>Uses <code>crypto.getRandomValues()</code> — the same source as browser TLS keys — with rejection sampling to remove modulo bias. Unlike Math.random(), it can't be reproduced or predicted.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Real randomness matters</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Online contests:</b> pick winners fairly — anyone can audit crypto.getRandomValues is unbiased.</li>
+        <li><b>Board games:</b> missing your D20? D4 to D20 all work offline.</li>
+        <li><b>Lottery-style picks:</b> true uniform sampling over the full space.</li>
+        <li><b>Decision paralysis:</b> flip a coin when both choices are equal — the instant it lands, you'll know which you hoped for.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>A note on lottery:</b> every combination is equally likely — no tool predicts winning numbers. If any site claims to, close the tab.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'random-number-generator', faqs: [
+      { q: 'How is crypto.getRandomValues better than Math.random?', a: 'Math.random uses a deterministic seed — with enough observations the stream is predictable. crypto.getRandomValues pulls from the OS entropy pool — the same source that secures your HTTPS connections. It\'s designed to be unpredictable.' },
+      { q: 'Can the same number repeat?', a: 'In Range mode you control that with the "Unique" checkbox. Lottery mode always produces unique picks. Dice rolls are independent — rolling the same number multiple times is normal & expected.' },
+      { q: 'Is there an audit trail?', a: 'The session counter shows how many rolls you\'ve made. Refresh clears it — nothing is logged or transmitted. Independent verification is your trust model.' },
+      { q: 'Why use rejection sampling?', a: 'Naive "rand % n" biases toward low numbers when 2^32 doesn\'t divide evenly by n. Rejection sampling discards the imperfect range, giving every number exactly equal probability.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('check');
+
+    let kind = 'range', draws = 0;
+    document.getElementById('kind').addEventListener('segment:change', function (e) {
+      kind = e.detail.value;
+      ['range','dice','lotto','coin'].forEach(function(k){document.getElementById('box-'+k).style.display = (str=>str===kind?'':'none')(k);});
+      document.getElementById('rMain').textContent = '—';
+      document.getElementById('rLbl').textContent = 'Tap Generate';
+    });
+
+    function secureRand(maxExclusive) {
+      if (maxExclusive <= 0) return 0;
+      const arr = new Uint32Array(1);
+      const limit = Math.floor(4294967296 / maxExclusive) * maxExclusive;
+      let v;
+      do { crypto.getRandomValues(arr); v = arr[0]; } while (v >= limit);
+      return v % maxExclusive;
+    }
+    function genRange(minV, maxV) {
+      return minV + secureRand(maxV - minV + 1);
+    }
+
+    function run() {
+      let out = '', label = '', stats = '';
+      draws++;
+      if (kind === 'range') {
+        const min = parseInt(document.getElementById('min').value,10);
+        const max = parseInt(document.getElementById('max').value,10);
+        const cnt = Math.max(1, Math.min(100, DC.fnum(document.getElementById('count').value)));
+        const unique = document.getElementById('unique').checked;
+        if (!isFinite(min) || !isFinite(max) || max < min) { DC.toast('Min must be ≤ Max', 'error'); return; }
+        if (unique && (max - min + 1) < cnt) { DC.toast('Not enough unique values in range', 'error'); return; }
+        const picks = new Set();
+        while (picks.size < cnt) picks.add(genRange(min, max));
+        const arr = Array.from(picks);
+        out = arr.join(' · ');
+        label = 'Range ' + min + '–' + max + ' (' + cnt + ' pick' + (cnt>1?'s':'') + ')';
+        const sum = arr.reduce((a,b)=>a+b,0);
+        stats = 'avg ' + (sum/arr.length).toFixed(1) + ' · sum ' + sum;
+      } else if (kind === 'dice') {
+        const n = Math.max(1, Math.min(10, DC.fnum(document.getElementById('dice').value)));
+        const s = parseInt(document.getElementById('sides').value,10);
+        const rolls = [];
+        for (let i=0;i<n;i++) rolls.push(1 + secureRand(s));
+        const sum = rolls.reduce((a,b)=>a+b,0);
+        out = rolls.join(' + ') + ' = ' + sum;
+        label = n + '×D' + s + ' roll';
+        stats = 'Sum ' + sum + ' · min possible ' + n + ' · max ' + (n * s);
+      } else if (kind === 'coin') {
+        const flip = secureRand(2);
+        out = flip === 0 ? '🌕 HEADS' : '🌑 TAILS';
+        label = 'Coin flip';
+        stats = 'Fair 50/50';
+      } else { // lotto
+        const n = Math.max(1, Math.min(10, DC.fnum(document.getElementById('lN').value)));
+        const of = Math.max(10, Math.min(90, DC.fnum(document.getElementById('lOf').value)));
+        if (n > of) { DC.toast('Balls to draw must be ≤ out-of', 'error'); return; }
+        const pool = Array.from({length: of}, (_,i)=>i+1);
+        for (let i = pool.length - 1; i > 0; i--) {
+          const j = secureRand(i + 1);
+          [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        const picks = pool.slice(0, n).sort((a,b)=>a-b);
+        out = picks.join(' · ');
+        label = 'Picked ' + n + ' of ' + of;
+        const total = Math.round(combinations(of, n));
+        stats = '1 in ' + total.toLocaleString('en-IN') + ' chance';
+      }
+      document.getElementById('rMain').textContent = out;
+      document.getElementById('rLbl').textContent = label;
+      document.getElementById('rStats').textContent = stats;
+      document.getElementById('kStats').textContent = 'Stats';
+      document.getElementById('rHist').textContent = draws;
+    }
+    function combinations(n,k) {
+      if (k > n - k) k = n - k;
+      let r = 1;
+      for (let i = 0; i < k; i++) r = r * (n - i) / (i + 1);
+      return r;
+    }
+    document.getElementById('genBtn').addEventListener('click', run);
+    document.getElementById('clearBtn').addEventListener('click', function () { draws = 0; document.getElementById('rHist').textContent = '0'; });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Generate first', 'error'); return; }
+      DC.copyResult(document.getElementById('rLbl').textContent + ': ' + v);
+    });
+  </script>
+</body>
+</html>

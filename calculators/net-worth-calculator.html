@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net Worth Calculator — Track Assets, Liabilities & Net Worth | DecideCalc</title>
+  <meta name="description" content="Free net worth calculator for India. Add up your assets (cash, investments, property, gold, EPF/PPF) and liabilities (home loan, car loan, credit cards) to see your true net worth.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/net-worth-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Net Worth Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Net Worth Calculator</h1><div class="sub">Assets minus liabilities · the real number</div></div></div>
+        <div class="calc-body">
+          <h3 style="margin:0 0 10px;font-size:1.1rem">Assets — what you own</h3>
+          <div class="field"><label>Cash & Bank Balance</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-cash" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Investments (stocks, mutual funds, FD, bonds)</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-invest" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Real Estate / Property</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-realestate" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Gold & Precious Metals</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-gold" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>EPF / PPF / NPS</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-epf" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Vehicle(s)</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-vehicle" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Other Assets</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="a-other" type="number" min="0" step="any" placeholder="0"></div></div>
+
+          <h3 style="margin:22px 0 10px;font-size:1.1rem">Liabilities — what you owe</h3>
+          <div class="field"><label>Home Loan Outstanding</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="l-home" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Car Loan Outstanding</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="l-car" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Credit Card Dues</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="l-cc" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Personal / Education Loan</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="l-personal" type="number" min="0" step="any" placeholder="0"></div></div>
+          <div class="field"><label>Other Debt</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="l-other" type="number" min="0" step="any" placeholder="0"></div></div>
+
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Net Worth</button>
+          <button class="btn btn-ghost btn-block" id="resetBtn" style="margin-top:8px">Reset all inputs</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:8px">Your net worth</div>
+          <div class="big" id="rNet">—</div>
+        </div>
+        <div style="text-align:center;margin-top:6px"><span class="signal yellow" id="signal">AWAITING INPUT</span></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rAssets">₹0</div><div class="k">Total Assets</div></div>
+          <div class="result-stat"><div class="v" id="rLiab">₹0</div><div class="k">Total Liabilities</div></div>
+          <div class="result-stat"><div class="v" id="rRatio">0%</div><div class="k">Debt-to-Asset</div></div>
+          <div class="result-stat"><div class="v" id="rClass">—</div><div class="k">Classification</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="nwChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Add your numbers</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>What is net worth — and why it matters</h2>
+      <p class="mt-2">Your <b>net worth</b> is simply everything you own (assets) minus everything you owe (liabilities). It's the single most honest measure of financial health — far more telling than salary alone. Two people earning ₹2 lakh a month can have wildly different net worths depending on savings, debt and assets.</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Assets</b> include cash, bank balances, investments, property, gold, retirement corpus (EPF/PPF/NPS) and vehicles.</li>
+        <li><b>Liabilities</b> include every outstanding loan balance and credit card due — not EMIs, but the remaining principal.</li>
+        <li><b>Net worth = Assets − Liabilities.</b> Track it yearly; the trend matters more than any single number.</li>
+        <li><b>Debt-to-asset ratio</b> under 40% is comfortable; above 60% is a warning sign to deleverage.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Rule of thumb:</b> a healthy household aims for net worth equal to 1–2× annual income by their late 30s, growing to 6–8× by the mid-40s on the way to financial independence.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'net-worth-calculator', faqs: [
+      { q: 'What counts as an asset for net worth?', a: 'Anything you own that holds monetary value: cash and bank balances, stocks, mutual funds, FDs, bonds, PPF/EPF/NPS, gold, real estate, and vehicles. Use current market value, not purchase price — your home and car depreciate or appreciate over time.' },
+      { q: 'Should I include my primary residence?', a: 'Yes, at current market value, but also include the outstanding home loan under liabilities. Some people track "investable net worth" separately (excluding the home they live in) — both views are valid; just be consistent year to year.' },
+      { q: 'What is a good net worth for my age in India?', a: 'There\'s no universal number, but a common benchmark is net worth of 1–2× annual income by age 35, 3–4× by 40, and 6–8× by 45. Crossing ₹1 crore of net worth typically puts a household in the top 5–10% in India.' },
+      { q: 'My net worth is negative — is that bad?', a: 'It\'s common early in your career, especially right after a home or education loan. The priority is to stop the bleed: clear high-cost credit card and personal loans first, build an emergency fund, then attack the larger loans. A negative number turning less negative each year is real progress.' },
+      { q: 'What debt-to-asset ratio is healthy?', a: 'Below 40% is comfortable, 40–60% is acceptable but worth watching, and above 60% signals over-leverage. Credit card and personal loans should ideally be zero — they carry 12–40% interest and erode net worth faster than almost any asset can grow.' },
+      { q: 'How often should I calculate my net worth?', a: 'Once a year is enough for most people — pick a fixed date (birthday, financial year-end, or Diwali) so comparisons stay meaningful. Update property and gold values conservatively, and recheck loan balances from statements.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('piggy');
+    document.getElementById('recoIc').innerHTML = DC.icon('trending');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    var ASSET_IDS = ['a-cash', 'a-invest', 'a-realestate', 'a-gold', 'a-epf', 'a-vehicle', 'a-other'];
+    var LIAB_IDS = ['l-home', 'l-car', 'l-cc', 'l-personal', 'l-other'];
+    function val(id) { return Math.max(0, DC.fnum(document.getElementById(id).value)); }
+
+    function setEmpty() {
+      document.getElementById('rNet').textContent = 'Enter your assets and liabilities';
+      document.getElementById('rNet').style.fontSize = '1.3rem';
+      var sig = document.getElementById('signal');
+      sig.className = 'signal yellow';
+      sig.textContent = 'AWAITING INPUT';
+      document.getElementById('rAssets').textContent = '₹0';
+      document.getElementById('rLiab').textContent = '₹0';
+      document.getElementById('rRatio').textContent = '0%';
+      document.getElementById('rClass').textContent = '—';
+      document.getElementById('recoTitle').textContent = 'Add your numbers above';
+      document.getElementById('recoText').textContent = 'Fill in your cash, investments, property and loans to instantly see your net worth, debt-to-asset ratio and a financial-health classification.';
+      DC.makeChart('nwChart', {
+        type: 'doughnut',
+        data: { labels: ['Assets', 'Liabilities'], datasets: [{ data: [1, 1], backgroundColor: ['#00C2A8', '#E5484D'], borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '60%', plugins: { legend: { display: true }, tooltip: { enabled: false } } }
+      });
+    }
+
+    function compute() {
+      var assets = 0, liab = 0;
+      ASSET_IDS.forEach(function (id) { assets += val(id); });
+      LIAB_IDS.forEach(function (id) { liab += val(id); });
+
+      if (assets === 0 && liab === 0) { setEmpty(); return; }
+
+      var nw = assets - liab;
+      var ratio = assets > 0 ? (liab / assets * 100) : 0;
+
+      document.getElementById('rNet').style.fontSize = '';
+      document.getElementById('rNet').textContent = (nw < 0 ? '-' : '') + DC.inr(Math.abs(Math.round(nw)));
+      document.getElementById('rAssets').textContent = DC.compact(assets);
+      document.getElementById('rLiab').textContent = DC.compact(liab);
+      document.getElementById('rRatio').textContent = DC.pct(ratio, ratio < 10 ? 1 : 0);
+
+      var sig = document.getElementById('signal');
+      var cls = document.getElementById('rClass');
+      var title = document.getElementById('recoTitle');
+      var txt = document.getElementById('recoText');
+
+      var L = 100000, CR = 10000000; // 1 lakh, 1 crore
+      if (nw < 0) {
+        sig.className = 'signal red'; sig.textContent = 'NEGATIVE NET WORTH';
+        cls.textContent = 'Negative'; cls.style.color = 'var(--signal-red, #E5484D)';
+        title.textContent = 'Liabilities exceed your assets';
+        txt.textContent = 'Your debts (' + DC.compact(liab) + ') are larger than your assets (' + DC.compact(assets) + '). Clear credit card and personal loans first, pause fresh borrowing, and build a small emergency fund before investing aggressively.';
+      } else if (nw < 10 * L) {
+        sig.className = 'signal yellow'; sig.textContent = 'BUILDING BASE';
+        cls.textContent = 'Building base'; cls.style.color = 'var(--signal-yellow, #F5A623)';
+        title.textContent = 'You\'re building a foundation';
+        txt.textContent = 'Net worth of ' + DC.compact(nw) + ' is a solid start. Focus on raising savings rate, maxing out 80C (₹1.5L) and clearing any high-interest debt — this stage compounds fast once invested consistently.';
+      } else if (nw < 1 * CR) {
+        sig.className = 'signal green'; sig.textContent = 'HEALTHY';
+        cls.textContent = 'Healthy'; cls.style.color = 'var(--signal-green, #00C2A8)';
+        title.textContent = 'You\'re in healthy territory';
+        txt.textContent = 'A net worth of ' + DC.compact(nw) + ' with a ' + ratio.toFixed(0) + '% debt ratio is healthy. Keep SIPs running, diversify beyond real estate, and start a separate retirement corpus if you haven\'t already.';
+      } else if (nw < 5 * CR) {
+        sig.className = 'signal green'; sig.textContent = 'STRONG';
+        cls.textContent = 'Strong'; cls.style.color = 'var(--signal-green, #00C2A8)';
+        title.textContent = 'Strong financial position';
+        txt.textContent = 'Net worth of ' + DC.compact(nw) + ' places you well above the Indian median. Watch concentration risk (too much in property or a single stock), ensure adequate term and health insurance, and consider estate planning.';
+      } else {
+        sig.className = 'signal green'; sig.textContent = 'WEALTHY';
+        cls.textContent = 'Wealthy'; cls.style.color = 'var(--signal-green, #00C2A8)';
+        title.textContent = 'You\'re in the wealthy band';
+        txt.textContent = 'A net worth above ' + DC.compact(5 * CR) + ' puts your household in the top tier in India. Focus now shifts to preservation, tax efficiency, succession and philanthropy — growth is no longer the only goal.';
+      }
+
+      DC.makeChart('nwChart', {
+        type: 'doughnut',
+        data: { labels: ['Assets', 'Liabilities'], datasets: [{ data: [assets, liab], backgroundColor: ['#00C2A8', '#E5484D'], borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '60%', plugins: { tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      ASSET_IDS.concat(LIAB_IDS).forEach(function (id) { document.getElementById(id).value = ''; });
+      compute();
+    });
+    ASSET_IDS.concat(LIAB_IDS).forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      DC.shareWhatsApp('My net worth is ' + document.getElementById('rNet').textContent + ' (' + document.getElementById('signal').textContent + '). Calculate yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      DC.copyResult('Net Worth Summary\nNet worth: ' + document.getElementById('rNet').textContent +
+        '\nTotal assets: ' + document.getElementById('rAssets').textContent +
+        '\nTotal liabilities: ' + document.getElementById('rLiab').textContent +
+        '\nDebt-to-asset: ' + document.getElementById('rRatio').textContent +
+        '\nClassification: ' + document.getElementById('rClass').textContent);
+    });
+  </script>
+</body>
+</html>

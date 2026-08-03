@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Year Finder — Indian FY / Assessment Year / Quarter | DecideCalc</title>
+  <meta name="description" content="Free Indian financial year calculator. Enter any date to find its FY (Apr-Mar), Assessment Year (AY), fiscal quarter (Q1-Q4), and applicable tax-years.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/financial-year-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Financial Year Finder</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Financial Year Finder</h1><div class="sub">Indian FY / AY / quarter for any date</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Pick a date</label>
+            <input class="input" id="date" type="date">
+          </div>
+          <button class="btn btn-block btn-ghost" id="todayBtn">Use today</button>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Find Financial Year</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Financial Year</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rFY">—</div><div class="k">Financial Year (FY)</div></div>
+          <div class="result-stat"><div class="v" id="rAY">—</div><div class="k">Assessment Year (AY)</div></div>
+          <div class="result-stat"><div class="v" id="rQ">—</div><div class="k">Fiscal Quarter</div></div>
+          <div class="result-stat"><div class="v" id="rCalYr">—</div><div class="k">Calendar Year</div></div>
+          <div class="result-stat"><div class="v" id="rFYStart">—</div><div class="k">FY start date</div></div>
+          <div class="result-stat"><div class="v" id="rFYEnd">—</div><div class="k">FY end date</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">FY vs AY confuses everyone</h4><p id="recoText">A salary earned in FY 2025-26 is DECLARED in AY 2026-27. Income tax returns always reference the AY. Business turnover, GST returns and audits reference the FY. Don't mix them up.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Indian fiscal quarter boundaries</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Q1:</b> Apr 1 – Jun 30</li>
+        <li><b>Q2:</b> Jul 1 – Sep 30</li>
+        <li><b>Q3:</b> Oct 1 – Dec 31</li>
+        <li><b>Q4:</b> Jan 1 – Mar 31</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>US companies in India:</b> MNCs often follow US calendar quarters (Jan-Mar = Q1, etc.). Check your employer's convention — Q1 for them may be Q4 by Indian tax law.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'financial-year-calculator', faqs: [
+      { q: 'My birth date is before 1950 — does FY apply?', a: 'India\'s Apr-Mar FY convention started in 1867 (British era) and remains unchanged. Any Gregorian date maps to an FY using this tool.' },
+      { q: 'What if my company uses a different FY?', a: 'Private limited companies in India MUST use Apr-Mar FY by Companies Act. Multinational parents may use calendar year internally, but statutory Indian filings always use Apr-Mar.' },
+      { q: 'When is the tax filing deadline?', a: 'Individual non-audit returns: 31 July of AY (so FY 24-25 income → file by 31 Jul 2025). Audited businesses: 31 Oct of AY. Extensions are sometimes announced — always verify with CBDT circular.' },
+      { q: 'What about the Union Budget — which FY does it cover?', a: 'The Budget announced on Feb 1, 2026 covers FY 2026-27 (Apr 2026 – Mar 2027). New tax rules apply from Apr 1 of the new FY unless explicitly effective later.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('calendar');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function fmt(d) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+    function compute() {
+      const dStr = document.getElementById('date').value;
+      if (!dStr) {
+        ['rMain','rFY','rAY','rQ','rCalYr','rFYStart','rFYEnd'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const d = new Date(dStr + 'T00:00:00');
+      if (isNaN(d.getTime())) return;
+      const yr = d.getFullYear();
+      const mo = d.getMonth() + 1; // 1-12
+      // Indian FY runs Apr(Y) to Mar(Y+1)
+      const fyStartYr = mo >= 4 ? yr : yr - 1;
+      const fyEndYr = fyStartYr + 1;
+      const fyShort = 'FY ' + String(fyStartYr).slice(2) + '-' + String(fyEndYr).slice(2);
+      const fyLong  = 'FY ' + fyStartYr + '-' + fyEndYr;
+      const ay      = 'AY ' + fyEndYr + '-' + (fyEndYr + 1);
+      // Quarter
+      let q;
+      if (mo >= 4 && mo <= 6) q = 1;
+      else if (mo >= 7 && mo <= 9) q = 2;
+      else if (mo >= 10 && mo <= 12) q = 3;
+      else q = 4;
+      const fyStartDate = new Date(fyStartYr, 3, 1);
+      const fyEndDate   = new Date(fyEndYr, 2, 31);
+
+      document.getElementById('rMain').textContent = fyShort;
+      document.getElementById('rLbl').textContent = 'covers 1 Apr ' + fyStartYr + ' to 31 Mar ' + fyEndYr;
+      document.getElementById('rFY').textContent = fyLong;
+      document.getElementById('rAY').textContent = ay;
+      document.getElementById('rQ').textContent = 'Q' + q + ' (' + (mo>=4&&mo<=6?'Apr–Jun':(mo>=7&&mo<=9?'Jul–Sep':(mo>=10?'Oct–Dec':'Jan–Mar'))) + ')';
+      document.getElementById('rCalYr').textContent = yr;
+      document.getElementById('rFYStart').textContent = fmt(fyStartDate);
+      document.getElementById('rFYEnd').textContent = fmt(fyEndDate);
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('date').addEventListener('input', compute);
+    document.getElementById('todayBtn').addEventListener('click', function(){
+      const t = new Date();
+      document.getElementById('date').value = t.toISOString().substring(0,10);
+      compute();
+    });
+    document.getElementById('todayBtn').click();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('Date belongs to ' + document.getElementById('rFY').textContent + ' / ' + document.getElementById('rAY').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult(document.getElementById('rFY').textContent + ' | ' + document.getElementById('rAY').textContent + ' | ' + document.getElementById('rQ').textContent); });
+  </script>
+</body>
+</html>

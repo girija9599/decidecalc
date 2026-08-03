@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rent Affordability Calculator — How Much Rent Can I Afford? | DecideCalc</title>
+  <meta name="description" content="Free rent affordability calculator. Based on the 30% rule adjusted for Indian salaries — find the maximum safe rent, plus deposits, broker fees & moving costs.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/rent-affordability-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Rent Affordability</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Rent Affordability Calculator</h1><div class="sub">How much rent is actually safe</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Monthly take-home income (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-inc">₹60,000</span></div>
+            <input type="range" id="inc" min="8000" max="500000" step="1000" value="60000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Monthly debt EMIs (₹) — loans / cards</label>
+            <input class="input" id="emi" type="number" min="0" step="500" value="5000" placeholder="e.g. 5000">
+          </div>
+          <div class="field"><label>Essential expenses (groceries, transport, utilities) ₹/mo</label>
+            <input class="input" id="ess" type="number" min="0" step="500" value="15000">
+          </div>
+          <input type="hidden" name="rule" value="30">
+          <div class="segmented" id="rule" data-target="rule">
+            <button type="button" data-value="25" title="Conservative">25% rule</button>
+            <button type="button" data-value="30" class="active" title="Standard">30% rule</button>
+            <button type="button" data-value="35" title="Stretch">35% rule</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Safe Rent</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Max safe monthly rent</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rRuleAmt">—</div><div class="k">By rule alone (30%)</div></div>
+          <div class="result-stat"><div class="v" id="rActual">—</div><div class="k">After EMIs & essentials</div></div>
+          <div class="result-stat"><div class="v" id="rDeposit">—</div><div class="k">Security deposit (3-10 mo)</div></div>
+          <div class="result-stat"><div class="v" id="rMoving">—</div><div class="k">Move-in cash needed</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The 30/10/60 sanity rule</h4><p id="recoText">Rent ≤ 30% of take-home · EMIs ≤ 10% · Essentials ≤ 60% combined. Exceed any of those three and you're one surprise expense away from credit-card debt.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Indian rental realities</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Bengaluru / Mumbai:</b> typical 2BHK ₹25-45K/month — singles often split with flatmates</li>
+        <li><b>Pune / Hyderabad:</b> 2BHK ₹18-30K — quality of life per rupee is best here in 2026</li>
+        <li><b>Security deposits:</b> 6-10 months in Bengaluru, 2-3 in most other metros</li>
+        <li><b>Hidden costs:</b> broker fee ~1 month, move-in furniture ₹30-80K, society transfer ₹5-15K</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Rule of thumb:</b> if your rent would exceed 35% after accounting for EMIs and essentials, you can't actually afford it no matter what the listing site says.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'rent-affordability-calculator', faqs: [
+      { q: 'Is the 30% rule really right for India?', a: 'The US 30% rule was based on ~1970s American incomes. Indian metro salaries often require 35-40% in city cores — as long as EMIs and essentials stay under their own caps. Choose the rule that still leaves ₹8-12K monthly savings cushion.' },
+      { q: 'Should I count gross or take-home?', a: 'Always take-home (net) income after tax. Gross salary over-estimates what you can spend by 20-30% for most salaried employees.' },
+      { q: 'Do utilities count in the 30%?', a: 'Traditional rule counts rent only. Adding utilities + internet + maintenance makes it a more honest cap (~33-35% in real life).' },
+      { q: 'What about security deposit buildup?', a: 'Treat it as a savings goal. 6 months\' rent means saving ₹15K/month for a year on ₹30K salary before moving — that\'s the true entry cost.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let rule = 30;
+    document.getElementById('rule').addEventListener('segment:change', function(e){ rule = parseInt(e.detail.value,10); compute(); });
+
+    function compute() {
+      const inc = Math.max(0, DC.fnum(document.getElementById('inc').value));
+      const emi = Math.max(0, DC.fnum(document.getElementById('emi').value));
+      const ess = Math.max(0, DC.fnum(document.getElementById('ess').value));
+      document.getElementById('out-inc').textContent = DC.compact(inc);
+      if (inc <= 0) {
+        ['rMain','rRuleAmt','rActual','rDeposit','rMoving'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const byRule = inc * rule / 100;
+      const leftover = inc - emi - ess;
+      const actual = Math.max(0, Math.min(byRule, leftover - inc * 0.10)); // reserve 10% savings
+      const deposit3 = actual * 3 * (rule === 35 ? 0.9 : 1);
+      const deposit10 = actual * 10 * (rule === 35 ? 0.9 : 1);
+      const moving = actual * 1.5 + actual * 6;  // broker 0.5-1mo + first rent + deposit 6mo
+
+      document.getElementById('rMain').textContent = DC.compact(actual) + '/mo';
+      document.getElementById('rLbl').textContent = 'Safe monthly rent (' + rule + '% rule applied)';
+      document.getElementById('rRuleAmt').textContent = DC.compact(byRule);
+      document.getElementById('rActual').textContent = DC.compact(Math.max(0, leftover));
+      document.getElementById('rDeposit').textContent = DC.compact(deposit3) + ' – ' + DC.compact(deposit10);
+      document.getElementById('rMoving').textContent = DC.compact(moving);
+
+      let title, text;
+      if (actual <= 0) {
+        title = 'Can\'t afford independent rent yet';
+        text = 'Your EMIs + essentials already exceed take-home + 10% safety buffer. Clear debt or share accommodation before locking a lease.';
+      } else if (actual < byRule * 0.7) {
+        title = 'Debt is the real constraint, not income';
+        text = 'The ' + rule + '% rule allows ' + DC.compact(byRule) + ' but EMIs and essentials cap you at ' + DC.compact(actual) + '. Prepay the smallest loan first to unlock room.';
+      } else if (rule === 35) {
+        title = 'Stretched. Live here only if the savings goal holds';
+        text = '35% considers you still save ≥ 10%/mo. If savings drop below that, step down to a smaller place or add a flatmate.';
+      } else {
+        title = 'Safe zone — you have breathing room';
+        text = 'Rent at ' + DC.compact(actual) + '/mo still leaves ₹' + Math.round(inc - emi - ess - actual).toLocaleString('en-IN') + ' monthly for savings, lifestyle and surprises.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['inc','emi','ess'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Safe rent for me: ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Rent affordability: ' + document.getElementById('rMain').textContent + ', security deposit ' + document.getElementById('rDeposit').textContent + ', move-in cash needed ' + document.getElementById('rMoving').textContent); });
+  </script>
+</body>
+</html>

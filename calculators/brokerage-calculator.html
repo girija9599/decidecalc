@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brokerage Calculator — Zerodha, Groww, Angel One, Upstox Trade Cost | DecideCalc</title>
+  <meta name="description" content="Free brokerage calculator for Indian stock traders. Equity delivery, intraday, F&O — full cost breakdown: brokerage, STT, GST, stamp duty, SEBI charges, exchange txn fees.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/brokerage-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Brokerage Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Brokerage Calculator</h1><div class="sub">True trade cost — all charges</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="segment" value="delivery">
+          <div class="segmented" id="segment" data-target="segment">
+            <button type="button" data-value="delivery" class="active">Delivery</button>
+            <button type="button" data-value="intraday">Intraday</button>
+            <button type="button" data-value="fo">Futures/Options</button>
+          </div>
+          <div class="field" style="margin-top:14px"><label>Buy price (₹)</label>
+            <input class="input" id="buy" type="number" min="0.05" step="0.05" value="1000">
+          </div>
+          <div class="field"><label>Sell price (₹)</label>
+            <input class="input" id="sell" type="number" min="0.05" step="0.05" value="1050">
+          </div>
+          <div class="field"><label>Quantity (shares / lots)</label>
+            <input class="input" id="qty" type="number" min="1" step="1" value="50">
+          </div>
+          <input type="hidden" name="broker" value="zerodha">
+          <div class="segmented" id="broker" data-target="broker">
+            <button type="button" data-value="zerodha" class="active">Zerodha</button>
+            <button type="button" data-value="groww">Groww</button>
+            <button type="button" data-value="upstox">Upstox</button>
+            <button type="button" data-value="full">Full-service (0.5%)</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate True Cost</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Net P&L</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rGross">—</div><div class="k">Gross profit</div></div>
+          <div class="result-stat"><div class="v" id="rBrokerage">—</div><div class="k">Brokerage</div></div>
+          <div class="result-stat"><div class="v" id="rSTT">—</div><div class="k">STT</div></div>
+          <div class="result-stat"><div class="v" id="rOther">—</div><div class="k">GST + stamp + SEBI + txn</div></div>
+          <div class="result-stat"><div class="v" id="rCharges">—</div><div class="k">Total charges</div></div>
+          <div class="result-stat"><div class="v" id="rBE">—</div><div class="k">Break-even price</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Charges eat 5-10% on typical intraday trades</h4><p id="recoText">On a ₹50K intraday trade with ₹400 profit, you'll typically pay ₹80-150 in total charges (₹40 STT + ₹40 brokerage + ₹30 exchange + GST + stamp). Frequent small trades compound this quickly.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>2025 statutory rates snapshot</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>STT:</b> Delivery 0.1% each side · Intraday 0.025% only on sell · F no STT on buy, 0.0125% on sell · Options 0.0625% on sell (premium value)</li>
+        <li><b>Exchange txn:</b> NSE 0.00345% (equity) / 0.05% (options premium); BSE similar</li>
+        <li><b>GST:</b> 18% on (brokerage + txn + SEBI)</li>
+        <li><b>SEBI:</b> ₹10 per ₹1 crore turnover (0.0001%)</li>
+        <li><b>Stamp:</b> buy-side only: delivery 0.015%, intraday 0.003%, F 0.002%, O 0.003%</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Zerodha model:</b> ₹0 brokerage on delivery, ₹20/order or 0.03% (whichever lower) on intraday/F&O. Groww same. Full-service brokers like ICICI Direct charge 0.55% for delivery, 0.275% for intraday — 10-50x higher than discount brokers.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'brokerage-calculator', faqs: [
+      { q: 'Why does my broker show different numbers?', a: 'Rounding! Exchanges round txn charges per order (not per lakh). GST also rounds per invoice line. Most calculators average these; the real bill varies ±₹0.50 on small trades.' },
+      { q: 'Is there a minimum brokerage?', a: 'Discount brokers (Zerodha, Groww, Upstox) have no minimum. Full-service brokers often have ₹20-30 minimum per order. Some banks like ICICI Direct enforce minimum brokerage on equity delivery.' },
+      { q: 'What about DP charges?', a: 'Depository charges apply only on DELIVERY sells (₹15.93 per scrip per day, no matter quantity). Not shown here because it\'s a flat daily-ish fee, not a % trade cost.' },
+      { q: 'Options have different STT — is that correct?', a: 'Yes. Options STT (0.0625% of premium on SELL) is 25x higher than intraday equity STT (0.025% of sell value). This is why F&O is disproportionately expensive for small traders.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('percent');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let segment = 'delivery', broker = 'zerodha';
+    document.getElementById('segment').addEventListener('segment:change', function(e){ segment = e.detail.value; compute(); });
+    document.getElementById('broker').addEventListener('segment:change', function(e){ broker = e.detail.value; compute(); });
+
+    function compute() {
+      const buy = Math.max(0, DC.fnum(document.getElementById('buy').value));
+      const sell = Math.max(0, DC.fnum(document.getElementById('sell').value));
+      const qty = Math.max(1, DC.fnum(document.getElementById('qty').value));
+      if (buy <= 0 || sell <= 0) {
+        ['rMain','rGross','rBrokerage','rSTT','rOther','rCharges','rBE'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const buyV = buy * qty, sellV = sell * qty, turn = buyV + sellV;
+      // Brokerage per segment & broker
+      let brokerage = 0;
+      if (segment === 'delivery') {
+        if (broker === 'full') brokerage = turn * 0.005;
+        // discount brokers: zero on delivery
+      } else if (segment === 'intraday') {
+        if (broker === 'full') brokerage = turn * 0.00275;
+        else brokerage = 2 * Math.min(20, turn/2 * 0.0003);   // 0.03% per side capped at ₹20
+      } else if (segment === 'fo') {
+        if (broker === 'full') brokerage = turn * 0.0005;
+        else brokerage = 40; // flat ₹20 per executed order × 2 (buy + sell)
+      }
+      // STT
+      let stt = 0;
+      if (segment === 'delivery') stt = turn * 0.001;
+      else if (segment === 'intraday') stt = sellV * 0.00025;
+      else if (segment === 'fo') stt = sellV * 0.000625;
+      // Exchange txn: NSE equity 0.00345% each side; F&O 0.05% on options premium
+      const txnPct = segment === 'fo' ? 0.0005 : 0.0000345;
+      const txn = turn * txnPct;
+      // GST 18% on (brokerage + txn + sebi)
+      const sebi = turn * 0.000001;
+      const gst = 0.18 * (brokerage + txn + sebi);
+      // Stamp on buy side only
+      const stampPct = segment === 'delivery' ? 0.00015 : (segment === 'intraday' ? 0.00003 : 0.00002);
+      const stamp = buyV * stampPct;
+
+      const total = brokerage + stt + txn + gst + sebi + stamp;
+      const gross = (sell - buy) * qty;
+      const net = gross - total;
+      const bePrice = buy + total / qty;
+
+      document.getElementById('rMain').textContent = (net >= 0 ? '+' : '−') + DC.inr(Math.abs(Math.round(net)));
+      document.getElementById('rLbl').textContent = net >= 0 ? 'Net profit' : 'Net loss';
+      document.getElementById('rGross').textContent = (gross>=0?'+':'−') + DC.inr(Math.abs(Math.round(gross)));
+      document.getElementById('rBrokerage').textContent = DC.inr(Math.round(brokerage));
+      document.getElementById('rSTT').textContent = DC.inr(Math.round(stt));
+      document.getElementById('rOther').textContent = DC.inr(Math.round(gst + txn + sebi + stamp));
+      document.getElementById('rCharges').textContent = DC.inr(Math.round(total)) + ' (' + (total/(turn || 1) * 100).toFixed(3) + '%)';
+      document.getElementById('rBE').textContent = '₹' + bePrice.toFixed(2);
+
+      let title, text;
+      const chgPct = gross !== 0 ? (total / Math.abs(gross) * 100) : 0;
+      if (gross > 0 && net < 0) {
+        title = 'Charges flipped this into a loss';
+        text = 'Gross profit ₹' + Math.round(gross).toLocaleString('en-IN') + ' but charges of ₹' + Math.round(total).toLocaleString('en-IN') + ' exceed it. Trade bigger size or skip.';
+      } else if (chgPct > 30) {
+        title = 'Charges eat ' + chgPct.toFixed(0) + '% of your profit';
+        text = 'High relative cost — typical for small trades or options. Aim for trades where charges stay under 10% of expected gain.';
+      } else if (broker === 'full') {
+        title = 'Full-service brokerage is bleeding you';
+        text = 'At 0.5% delivery or 0.275% intraday, switching to a discount broker saves ₹' + Math.round((brokerage - (segment==='delivery'?0:2*Math.min(20, turn/2*0.0003)))).toLocaleString('en-IN') + ' per trade.';
+      } else {
+        title = 'Thin but efficient trade';
+        text = 'Charges at ' + (total/(turn||1)*100).toFixed(3) + '% of turnover — typical for discount brokers on ' + segment + '.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['buy','sell','qty'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Trade P&L: ' + document.getElementById('rMain').textContent + ' after ₹' + document.getElementById('rCharges').textContent + ' charges — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Trade: gross ' + document.getElementById('rGross').textContent + ', charges ' + document.getElementById('rCharges').textContent + ', net ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

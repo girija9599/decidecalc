@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debt-to-Income (DTI) Calculator — 28/36 Rule & Loan Affordability | DecideCalc</title>
+  <meta name="description" content="Free debt-to-income ratio calculator. Front-end and back-end DTI, the 28/36 rule, India EMI/NMI guideline and how lenders judge loan affordability.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/debt-to-income-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Debt-to-Income Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Debt-to-Income (DTI) Calculator</h1><div class="sub">28/36 rule · EMI/NMI · affordability</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Gross monthly income</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="income" type="number" min="0" step="500" value="80000"></div></div>
+          <div class="field"><label>Housing — rent or home-loan EMI</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="housing" type="number" min="0" step="500" value="22000"></div></div>
+          <div class="field-row">
+            <div class="field"><label>Auto loan EMI</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="auto" type="number" min="0" step="500" value="8000"></div></div>
+            <div class="field"><label>Credit-card minimum</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="card" type="number" min="0" step="100" value="3000"></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Student / education loan</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="edu" type="number" min="0" step="500" value="0"></div></div>
+            <div class="field"><label>Personal / other loan</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="personal" type="number" min="0" step="500" value="4000"></div></div>
+          </div>
+          <div class="field"><label>Any other monthly debt</label><div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="other" type="number" min="0" step="500" value="0"></div></div>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate DTI</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rBack">—</div><div class="lbl">Back-end DTI (total debt)</div></div>
+        <div style="text-align:center;margin-top:10px"><span class="signal yellow" id="signal">Enter your numbers</span></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rFront">—</div><div class="k">Front-end DTI (housing)</div></div>
+          <div class="result-stat"><div class="v" id="rTotalDebt">—</div><div class="k">Total monthly debt</div></div>
+          <div class="result-stat"><div class="v" id="rLeft">—</div><div class="k">Income left after debt</div></div>
+          <div class="result-stat"><div class="v" id="rVerdict">—</div><div class="k">Affordability</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="dtiChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">DTI snapshot</h4><p id="recoText">Lenders use DTI to judge whether you can comfortably take on new debt. The US 28/36 rule caps housing at 28% and total debt at 36% of gross income.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Reading your DTI</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Front-end DTI</b> = housing (rent/EMI) ÷ income. The US 28/36 rule wants this under 28%.</li>
+        <li><b>Back-end DTI</b> = all monthly debt ÷ income. Under 36% is considered healthy; 37–43% is a warning; above 43% most US lenders decline.</li>
+        <li><b>India EMI/NMI</b>: banks usually prefer total EMIs below 40–50% of net monthly income. The closer you are to the cap, the smaller any new loan you can qualify for.</li>
+        <li><b>50/30/20 budget</b>: with debt under control, aim for 50% needs, 30% wants, 20% savings/investment.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Important:</b> DTI is only one factor. Lenders also check credit score, employment stability, existing obligations and the loan type. This calculator is guidance, not a credit decision.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'debt-to-income-calculator', faqs: [
+      { q: 'What counts as "debt" for DTI?', a: 'Recurring monthly obligations: rent or home-loan EMI, auto loan, minimum credit-card payments, student/personal/other loan EMIs, and child support or alimony. Utilities, groceries and discretionary spending are not debt — they are living expenses.' },
+      { q: 'What is the 28/36 rule?', a: 'A US guideline: spend at most 28% of gross monthly income on housing (front-end) and at most 36% on all debt combined (back-end). Lenders use it as a quick affordability benchmark; strong borrowers can sometimes exceed it.' },
+      { q: 'What is the Indian equivalent?', a: 'Indian banks generally look at EMI/NMI — the ratio of total Equated Monthly Installments to Net Monthly Income — and prefer it under 40–50%. The lower your ratio, the larger the loan you can qualify for.' },
+      { q: 'How do I lower my DTI?', a: 'Increase income, pay down the highest-interest debt first (usually credit cards), avoid new EMIs before applying, consolidate loans at a lower rate, or extend a loan term to reduce the monthly payment (though that raises total interest).' },
+      { q: 'Can I still get a loan with DTI above 43%?', a: 'It becomes harder and the rate may be higher. Some government-backed or secured loans allow more, but a high DTI is a warning sign to lenders and to yourself that new debt may be risky.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('scale');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function num(id) { return Math.max(0, DC.fnum(document.getElementById(id).value)); }
+
+    function compute() {
+      const income = num('income');
+      const housing = num('housing');
+      const auto = num('auto');
+      const card = num('card');
+      const edu = num('edu');
+      const personal = num('personal');
+      const other = num('other');
+      const totalDebt = housing + auto + card + edu + personal + other;
+      const front = income > 0 ? housing / income * 100 : 0;
+      const back = income > 0 ? totalDebt / income * 100 : 0;
+      const left = Math.max(0, income - totalDebt);
+
+      if (income <= 0) {
+        ['rBack','rFront','rTotalDebt','rLeft','rVerdict'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+        document.getElementById('signal').className = 'signal yellow';
+        document.getElementById('signal').textContent = 'Enter your gross monthly income';
+        document.getElementById('recoTitle').textContent = 'Income required';
+        document.getElementById('recoText').textContent = 'Enter your gross monthly income and each recurring debt to see your debt-to-income ratio and affordability.';
+        if (DC.charts && DC.charts['dtiChart']) DC.charts['dtiChart'].destroy();
+        return;
+      }
+
+      document.getElementById('rBack').textContent = back.toFixed(1) + '%';
+      document.getElementById('rFront').textContent = front.toFixed(1) + '%';
+      document.getElementById('rTotalDebt').textContent = DC.inr(Math.round(totalDebt));
+      document.getElementById('rLeft').textContent = DC.inr(Math.round(left));
+
+      const sig = document.getElementById('signal');
+      let verdict, sigClass, sigText, title, text;
+      if (back <= 36) { verdict = 'Healthy'; sigClass = 'signal green'; sigText = '✓ HEALTHY — under 36%'; title = 'Strong affordability'; text = 'Your total debt is ' + back.toFixed(1) + '% of income — within the comfortable range. Lenders generally view this favourably for new credit.'; }
+      else if (back <= 43) { verdict = 'Caution'; sigClass = 'signal yellow'; sigText = '◐ CAUTION — 37–43%'; title = 'Approaching the limit'; text = 'At ' + back.toFixed(1) + '% you are in the warning band. New EMIs should be small, and consider paying down existing debt before borrowing more.'; }
+      else { verdict = 'Stretched'; sigClass = 'signal red'; sigText = '✗ STRETCHED — above 43%'; title = 'High debt burden'; text = 'At ' + back.toFixed(1) + '% you exceed the typical 43% ceiling. Focus on reducing existing debt and avoid new borrowing until the ratio improves.'; }
+      document.getElementById('rVerdict').textContent = verdict;
+      sig.className = sigClass; sig.textContent = sigText;
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+
+      DC.makeChart('dtiChart', {
+        type: 'doughnut',
+        data: { labels: ['Housing', 'Other debt', 'Remaining income'], datasets: [{ data: [housing, Math.max(0,totalDebt-housing), left], backgroundColor: ['#1B3A6B', '#FF7A45', '#00C2A8'], borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '62%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.inr(Math.round(c.raw)); } } } } }
+      });
+    }
+
+    ['income','housing','auto','card','edu','personal','other'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', compute); el.addEventListener('change', compute); });
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('DTI Result\nBack-end DTI: ' + document.getElementById('rBack').textContent + '\nFront-end DTI: ' + document.getElementById('rFront').textContent + '\nAffordability: ' + document.getElementById('rVerdict').textContent); });
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My debt-to-income ratio is ' + document.getElementById('rBack').textContent + ' — ' + document.getElementById('rVerdict').textContent + '. Check yours on DecideCalc.'); });
+    compute();
+  </script>
+</body>
+</html>

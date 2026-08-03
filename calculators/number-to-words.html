@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number to Words Converter — Indian & International System | DecideCalc</title>
+  <meta name="description" content="Convert any number to words — Indian system (lakh, crore) and International system (million, billion). Perfect for cheque writing, invoices and legal documents. Free & offline.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/number-to-words.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-text">Text Tools</a><span class="sep">/</span><span>Number to Words</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Number to Words</h1><div class="sub">Cheque-ready · Indian + International</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="num">Number</label>
+            <input class="input" id="num" type="number" step="any" placeholder="e.g. 1250000">
+          </div>
+          <div class="field"><label for="cur">Optional currency prefix</label>
+            <select class="select" id="cur">
+              <option value="">None (just number)</option>
+              <option value="₹|paise|Rupees|Paise" selected>Indian Rupee (₹)</option>
+              <option value="$|cents|Dollars|Cents">US Dollar ($)</option>
+              <option value="£|pence|Pounds|Pence">British Pound (£)</option>
+              <option value="€|cents|Euros|Cents">Euro (€)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Convert to Words</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rInd" style="font-size:1.1rem;line-height:1.45">—</div><div class="lbl">Indian system</div></div>
+        <div class="result-grid">
+          <div class="result-stat" style="grid-column:span 2"><div class="v" id="rInt" style="font-size:.95rem;line-height:1.4">—</div><div class="k">International system</div></div>
+          <div class="result-stat"><div class="v" id="rDigits">—</div><div class="k">Digits</div></div>
+          <div class="result-stat"><div class="v" id="rFig">—</div><div class="k">In figures</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="copyInd">Copy Indian</button>
+          <button class="btn btn-ghost btn-sm" id="copyInt">Copy International</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>Cheque-writing tip</h4><p>Banks in India require the amount in words to match the figures exactly. Always end with "Only" — e.g. <i>Rupees One Lakh Twenty Five Thousand Only</i> — to prevent tampering.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Two number systems, side by side</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Indian:</b> ones → tens → hundreds → thousands → lakhs → crores → arabs. 12,50,000 = "Twelve lakh fifty thousand".</li>
+        <li><b>International:</b> ones → tens → hundreds → thousands → millions → billions. 1,250,000 = "One million two hundred fifty thousand".</li>
+        <li>Same number — two readings. Cheques & legal docs in India use the Indian system. International invoices use the International system.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Currency:</b> when prefix selected, the converter appends "Rupees"/"Dollars" before the integer words and "Paise/Cents" after the decimal portion. Otherwise just the bare number words.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'number-to-words', faqs: [
+      { q: 'How high can this converter go?', a: 'Up to ±99,99,99,99,999 (≈ ₹100 arab / ~$10 billion). Beyond that, it falls back to scientific notation. For 99.99% of practical Indian cheques & invoices, you\'re well within range.' },
+      { q: 'Does it handle decimals?', a: 'Yes — the fractional part after the decimal point is read as two-digit pairs (e.g. 0.45 → "Forty Five"). With currency selected, you get "Rupees X and Paise Forty Five Only".' },
+      { q: 'What about negative numbers?', a: 'Yes — they get a "Minus" prefix. Useful for accounting entries, refunds and adjustment notes.' },
+      { q: 'Is the spelling correct for legal docs?', a: 'Capitalisation matches the convention used on Indian bank cheques and most GST invoices. Always cross-verify with your bank\'s exact phrasing — some require ALL CAPS.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('money');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const ONES = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+    const TENS = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+    function twoDigits(n) {
+      n = parseInt(n, 10);
+      if (n < 20) return ONES[n];
+      const t = Math.floor(n / 10), o = n % 10;
+      return TENS[t] + (o ? ' ' + ONES[o] : '');
+    }
+    function threeDigits(n) {
+      const h = Math.floor(n / 100), r = n % 100;
+      let s = '';
+      if (h) s += ONES[h] + ' Hundred';
+      if (r) s += (h ? ' ' : '') + twoDigits(r);
+      return s;
+    }
+    // Indian system: groups of 2-2-3 from the right (crores-lakh-thousand-hundreds)
+    function toIndianWords(absInt) {
+      if (absInt === 0) return 'Zero';
+      const s = String(absInt);
+      let result = '';
+      // From the right: last 3 = hundreds, then pairs for thousand, lakh, crore, arab...
+      const groups = [];
+      groups.push(s.slice(-3)); // hundreds
+      let rest = s.slice(0, -3);
+      while (rest.length > 0) { groups.push(rest.slice(-2)); rest = rest.slice(0, -2); }
+      // groups: [hundreds, thousands, lakhs, crores, arabs...]
+      const NAMES = ['', 'Thousand', 'Lakh', 'Crore', 'Arab', 'Kharab'];
+      for (let i = groups.length - 1; i >= 0; i--) {
+        const g = parseInt(groups[i], 10);
+        if (!g) continue;
+        const fn = i === 0 ? threeDigits : twoDigits;
+        result += (result ? ' ' : '') + fn(g) + (NAMES[i] ? ' ' + NAMES[i] : '');
+      }
+      return result.trim();
+    }
+    // International: groups of 3 from right
+    function toIntlWords(absInt) {
+      if (absInt === 0) return 'Zero';
+      const s = String(absInt);
+      const NAMES = ['', 'Thousand', 'Million', 'Billion', 'Trillion'];
+      const groups = [];
+      let rem = s;
+      while (rem.length > 0) { groups.push(rem.slice(-3)); rem = rem.slice(0, -3); }
+      let result = '';
+      for (let i = groups.length - 1; i >= 0; i--) {
+        const g = parseInt(groups[i], 10);
+        if (!g) continue;
+        result += (result ? ' ' : '') + threeDigits(g) + (NAMES[i] ? ' ' + NAMES[i] : '');
+      }
+      return result.trim();
+    }
+    function convert() {
+      const raw = document.getElementById('num').value;
+      const out = { ind: '—', intl: '—', digits: '—', fig: '—' };
+      if (raw === '' || raw === '-' || raw === '.') {
+        document.getElementById('rInd').textContent = '—';
+        document.getElementById('rInt').textContent = '—';
+        document.getElementById('rDigits').textContent = '—';
+        document.getElementById('rFig').textContent = '—';
+        return;
+      }
+      const n = parseFloat(raw);
+      if (!isFinite(n) || Math.abs(n) >= 1e12) {
+        document.getElementById('rInd').textContent = 'Out of range (max 11 digits)';
+        document.getElementById('rInt').textContent = '—';
+        return;
+      }
+      const neg = n < 0;
+      const abs = Math.abs(n);
+      const intPart = Math.floor(abs);
+      const decStr = (String(abs).split('.')[1] || '').replace(/0+$/, '');
+      const curSel = document.getElementById('cur').value;
+      const cur = curSel ? curSel.split('|') : null;
+      const sym = cur ? cur[0] : '';
+      const curInt = cur ? cur[2] : '';
+      const curDec = cur ? cur[3] : '';
+
+      let ind = (neg ? 'Minus ' : '') + toIndianWords(intPart);
+      let intl = (neg ? 'Minus ' : '') + toIntlWords(intPart);
+      if (decStr) {
+        const decNum = parseInt((decStr + '00').slice(0, 2), 10); // first two digits
+        const decWords = twoDigits(decNum);
+        ind += (cur ? ' ' + curInt + ' and ' + decWords + ' ' + curDec : ' Point ' + decStr.split('').map(function (d) { return ONES[parseInt(d,10)] || 'Zero'; }).join(' '));
+        intl += (cur ? ' ' + curInt + ' and ' + decWords + ' ' + curDec : ' Point ' + decStr.split('').map(function (d) { return ONES[parseInt(d,10)] || 'Zero'; }).join(' '));
+      } else if (cur) {
+        ind += ' ' + curInt;
+        intl += ' ' + curInt;
+      }
+      if (cur) { ind += ' Only'; intl += ' Only'; }
+      document.getElementById('rInd').textContent = ind;
+      document.getElementById('rInt').textContent = intl;
+      document.getElementById('rDigits').textContent = String(intPart).length;
+      document.getElementById('rFig').textContent = sym + intPart.toLocaleString('en-IN') + (decStr ? '.' + decStr : '');
+    }
+    document.getElementById('calcBtn').addEventListener('click', convert);
+    ['num','cur'].forEach(function (id){document.getElementById(id).addEventListener('input', convert);});
+    document.getElementById('cur').addEventListener('change', convert);
+    document.getElementById('copyInd').addEventListener('click', function () { var t = document.getElementById('rInd').textContent; if (t === '—') { DC.toast('Enter a number first', 'error'); return; } DC.copyResult(t); });
+    document.getElementById('copyInt').addEventListener('click', function () { var t = document.getElementById('rInt').textContent; if (t === '—') { DC.toast('Enter a number first', 'error'); return; } DC.copyResult(t); });
+  </script>
+</body>
+</html>

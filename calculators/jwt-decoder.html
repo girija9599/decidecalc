@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Decoder & Inspector — Base64URL Decode + Signature Validation Notes | DecideCalc</title>
+  <meta name="description" content="Free JWT decoder. Decodes header & payload, validates expiration times, explains each claim. Signature never leaves your browser — this is decode-only, never trust the result without verifying signature server-side.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/jwt-decoder.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-dev">Developer Tools</a><span class="sep">/</span><span>JWT Decoder</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>JWT Decoder</h1><div class="sub">Inspect tokens locally — no verify, decode only</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Paste JWT token</label>
+            <textarea class="input" id="jwt" rows="5" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" style="font-family:var(--mono);font-size:0.85rem;resize:vertical"></textarea>
+          </div>
+          <div class="field">
+            <button class="btn btn-ghost btn-sm" id="sampleBtn">Try sample token</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Decode JWT</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Status</div></div>
+        <div style="text-align:left">
+          <h4 style="margin:14px 0 6px;color:var(--text-muted);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase">Header</h4>
+          <pre id="rHeader" style="background:var(--surface-2);padding:12px;border-radius:var(--radius-sm);font-family:var(--mono);font-size:.8rem;overflow-x:auto;color:#f5c26b">—</pre>
+          <h4 style="margin:14px 0 6px;color:var(--text-muted);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase">Payload</h4>
+          <pre id="rPayload" style="background:var(--surface-2);padding:12px;border-radius:var(--radius-sm);font-family:var(--mono);font-size:.8rem;overflow-x:auto;color:#a5d8ff">—</pre>
+          <div class="result-grid" style="margin-top:14px">
+            <div class="result-stat"><div class="v" id="rAlg">—</div><div class="k">Algorithm</div></div>
+            <div class="result-stat"><div class="v" id="rExp">—</div><div class="k">Expires</div></div>
+            <div class="result-stat"><div class="v" id="rIat">—</div><div class="k">Issued</div></div>
+            <div class="result-stat"><div class="v" id="rIssuer">—</div><div class="k">Issuer</div></div>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy payload</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Decode ≠ verify</h4><p id="recoText">Decoding shows the CLAIMS — but proves nothing. An attacker can decode, change \"role\" to \"admin\", and re-encode in 30 seconds. Always verify the signature on the server with the secret/key. Never trust decoded claims client-side for authorization decisions.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>JWT anatomy</h2>
+      <pre style="background:var(--surface-2);padding:12px;border-radius:var(--radius-sm);font-family:var(--mono);font-size:.8rem;overflow-x:auto;margin-top:10px">HEADER.PAYLOAD.SIGNATURE
+│       │       │
+│       │       └─ HMAC(RSA/ECDSA) of (header.payload, secret)
+│       └─ Claims: {sub, iat, exp, aud, iss, jti, custom...}
+└─ {alg: HS256 | RS256 | ES256..., typ: JWT}</pre>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>HS256:</b> symmetric HMAC + SHA-256 — same secret signs & verifies (microservices)</li>
+        <li><b>RS256:</b> asymmetric RSA — private key signs, public key verifies (OAuth providers)</li>
+        <li><b>ES256:</b> ECDSA using P-256 — smaller signatures, newer standard</li>
+        <li><b>none:</b> alg:none tokens are unsigned — REJECT THESE on every server</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Standard claims:</b> <code>sub</code> subject / <code>iss</code> issuer / <code>aud</code> audience / <code>exp</code> expiration / <code>iat</code> issued-at / <code>nbf</code> not-before / <code>jti</code> unique ID (for revocation).</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'jwt-decoder', faqs: [
+      { q: 'Is my JWT safe to paste here?', a: 'From a technical-privacy view: yes — everything runs in JS on your device, no network call is made. But from a security-hygiene view: no — never paste live production tokens into any website. Use only test tokens, or redacted versions.' },
+      { q: 'The decoder says my token is valid but the server returns 401.', a: 'Decode tells you the FORMAT is valid. The server checks the SIGNATURE — which you cannot do attacker-side without the private key. Common reasons: wrong RS256 public key on server, expired exp claim, revoked jti, or aud/iss mismatch.' },
+      { q: 'How long should JWTs live?', a: 'Access tokens: short (5-15 min), refreshed silently. Refresh tokens: longer (days, weeks), revocable server-side. Never make access tokens live hours or days — the whole point of JWT is statelessness, which conflicts with revocation.' },
+      { q: 'alg: none — the attack', a: 'Some old libraries accepted { \"alg\": \"none\" } as a valid token. An attacker can strip the signature, swap alg to \"none\", and gain admin access. Any modern JWT library (jsonwebtoken, jose, pyjwt) rejects this by default in 2025. If yours accepts it, upgrade IMMEDIATELY.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('lock');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function b64url(s) {
+      let b = s.replace(/-/g,'+').replace(/_/g,'/');
+      while (b.length % 4) b += '=';
+      const bin = atob(b);
+      const bytes = new Uint8Array(bin.length);
+      for (let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder('utf-8').decode(bytes);
+    }
+    function fmtTime(t) {
+      if (!t) return '—';
+      const d = new Date(t * 1000);
+      return d.toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' });
+    }
+    document.getElementById('sampleBtn').addEventListener('click', function(){
+      document.getElementById('jwt').value = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' + btoa(JSON.stringify({sub:'user123',name:'Priya Sharma',iat:1750000000,exp:1752500000,iss:'https://auth.example.com',aud:'api.example.com',roles:['member']})).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'') + '.signature_hash_here';
+      compute();
+    });
+
+    function compute() {
+      const token = (document.getElementById('jwt').value || '').trim();
+      if (!token) {
+        ['rMain','rAlg','rExp','rIat','rIssuer'].forEach(function(id){document.getElementById(id).textContent='—';});
+        document.getElementById('rHeader').textContent = '—';
+        document.getElementById('rPayload').textContent = '—';
+        return;
+      }
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        document.getElementById('rMain').textContent = 'Invalid';
+        document.getElementById('rLbl').textContent = 'JWT must have exactly 3 parts (header.payload.signature)';
+        return;
+      }
+      try {
+        const header = JSON.parse(b64url(parts[0]));
+        const payload = JSON.parse(b64url(parts[1]));
+        document.getElementById('rMain').textContent = 'Decoded';
+        let expMsg = 'No exp claim';
+        if (payload.exp) {
+          const now = Math.floor(Date.now()/1000);
+          expMsg = payload.exp < now ? 'EXPIRED (' + fmtTime(payload.exp) + ')' : 'Valid until ' + fmtTime(payload.exp);
+        }
+        document.getElementById('rLbl').textContent = expMsg;
+        document.getElementById('rHeader').textContent = JSON.stringify(header, null, 2);
+        document.getElementById('rPayload').textContent = JSON.stringify(payload, null, 2);
+        document.getElementById('rAlg').textContent = header.alg || '—';
+        document.getElementById('rExp').textContent = payload.exp ? fmtTime(payload.exp) : '—';
+        document.getElementById('rIat').textContent = payload.iat ? fmtTime(payload.iat) : '—';
+        document.getElementById('rIssuer').textContent = payload.iss ? String(payload.iss).substring(0, 30) : '—';
+      } catch (e) {
+        document.getElementById('rMain').textContent = 'Error';
+        document.getElementById('rLbl').textContent = e.message;
+      }
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('jwt').addEventListener('input', compute);
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('JWT decoded — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult(document.getElementById('rPayload').textContent); });
+  </script>
+</body>
+</html>

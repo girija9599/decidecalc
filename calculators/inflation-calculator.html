@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inflation Calculator — Future Value & Real Purchasing Power | DecideCalc</title>
+  <meta name="description" content="Free inflation calculator for India. Find how much ₹X today will be worth in Y years, and what you need to save today to match future prices.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/inflation-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Inflation Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Inflation Calculator</h1><div class="sub">What ₹X becomes in Y years</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="dir" value="forward">
+          <div class="segmented" id="dir" data-target="dir">
+            <button type="button" data-value="forward" class="active">Today → Future cost</button>
+            <button type="button" data-value="backward">Future → Today's value</button>
+          </div>
+          <div style="height:14px"></div>
+          <div class="field" id="lbl-row">
+            <label id="amtLbl">Price / cost today (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-amt">₹1,00,000</span></div>
+            <input type="range" id="amt" min="1000" max="100000000" step="1000" value="100000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Expected inflation rate (% / yr)</label>
+            <div class="range-out"><span class="range-val" id="out-r">6.0%</span></div>
+            <input type="range" id="rate" min="1" max="15" step="0.1" value="6" data-suffix="%">
+          </div>
+          <div class="field"><label>Years ahead</label>
+            <div class="range-out"><span class="range-val" id="out-yrs">10 yrs</span></div>
+            <input type="range" id="yrs" min="1" max="40" step="1" value="10" data-suffix=" yrs">
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">—</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rOther">—</div><div class="k" id="kOther">—</div></div>
+          <div class="result-stat"><div class="v" id="rMult">—</div><div class="k">Multiplier</div></div>
+          <div class="result-stat"><div class="v" id="rPP">—</div><div class="k">Purchasing power erosion</div></div>
+          <div class="result-stat"><div class="v" id="rBeat">—</div><div class="k">Required return to beat</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Where to beat Indian inflation</h4><p id="recoText">CPI has averaged ~6%/yr over the last decade. To grow purchasing power, your post-tax return must exceed 6%.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How inflation compounds</h2>
+      <p class="mt-2">Future cost = Today's cost × (1 + inflation)<sup>years</sup>. At 6% inflation, ₹1L today = ₹1.79L needed after 10 yrs — just to buy the same basket. That's why cash under the mattress shrinks every day.</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Savings a/c (3%)</b> loses ~3% real value per year against 6% inflation</li>
+        <li><b>FD (7%)</b> barely keeps pace after tax (post-tax ~4.9%)</li>
+        <li><b>Index funds (12% historical)</b> leave ~6% real growth after inflation</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Inverse trick:</b> divide today's cost by the result above to see what it felt like years ago. ₹1L today ≈ ₹55,838 of 2016 purchasing power at 6%/yr.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'inflation-calculator', faqs: [
+      { q: 'What is India\'s current inflation?', a: 'Headline CPI has ranged 4-7% in FY24-FY26 — well within RBI\'s 2-6% band. Your personal inflation depends on what you buy: education & healthcare run at 10-12% while electronics deflate.' },
+      { q: 'Is 6% a good default assumption?', a: 'Yes for India\'s long-run average. Use 8-10% for higher education & medical goals, 5-6% for general consumption, 7-8% for urban real-estate-focused plans.' },
+      { q: 'Why does "Real return" matter more than nominal?', a: 'If your money grows at 7% but prices grow at 6%, your real purchasing power only grows 0.94%/yr (1.07/1.06 − 1). India\'s savers often celebrate nominal gains while real wealth stagnates.' },
+      { q: 'What beats inflation reliably?', a: 'Historically: diversified equity index funds 11-13%, gold 8-10%, real estate 8-10% (location-dependent). FDs & savings accounts generally underperform after tax.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('trending');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let dirn = 'forward';
+    document.getElementById('dir').addEventListener('segment:change', function (e) {
+      dirn = e.detail.value;
+      document.getElementById('amtLbl').textContent = dirn === 'forward' ? 'Price / cost today (₹)' : 'Future cost (₹)';
+      compute();
+    });
+    function compute() {
+      const A = DC.fnum(document.getElementById('amt').value);
+      const r = DC.fnum(document.getElementById('rate').value);
+      const t = DC.fnum(document.getElementById('yrs').value);
+      document.getElementById('out-r').textContent = r.toFixed(1) + '%';
+      document.getElementById('out-yrs').textContent = t + ' yrs';
+      document.getElementById('out-amt').textContent = DC.compact(A);
+      if (A <= 0 || r <= 0 || r > 30 || t <= 0) {
+        ['rMain','rOther','rMult','rPP','rBeat'].forEach(function (id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const mult = Math.pow(1 + r/100, t);
+      let res, other, lbl, otherLbl, pp;
+      if (dirn === 'forward') {
+        res = A * mult; other = A;
+        lbl = 'Cost in ' + t + ' years';
+        otherLbl = 'Today\'s cost';
+        pp = (1 - 1/mult) * 100;
+      } else {
+        res = A / mult; other = A;
+        lbl = 'Today\'s equivalent purchasing power';
+        otherLbl = 'Future cost';
+        pp = (1 - 1/mult) * 100;
+      }
+      document.getElementById('rMain').textContent = DC.compact(res);
+      document.getElementById('rLbl').textContent = lbl;
+      document.getElementById('rOther').textContent = DC.compact(other);
+      document.getElementById('kOther').textContent = otherLbl;
+      document.getElementById('rMult').textContent = mult.toFixed(2) + '×';
+      document.getElementById('rPP').textContent = pp.toFixed(1) + '%';
+      document.getElementById('rBeat').textContent = r.toFixed(1) + '% post-tax';
+      document.getElementById('recoTitle').textContent = (dirn === 'forward' ? 'Future cost: ' : 'Equivalent today: ') + DC.compact(res);
+      document.getElementById('recoText').textContent = 'At ' + r.toFixed(1) + '% inflation, prices multiply ' + mult.toFixed(2) + '× over ' + t + ' ' + (t===1?'year':'years') + '. Money must grow faster than this to stay ahead.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amt','rate','yrs'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Inflation: ' + document.getElementById('rLbl').textContent + ' → ' + document.getElementById('rMain').textContent + ' — DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult(document.getElementById('rLbl').textContent + ': ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

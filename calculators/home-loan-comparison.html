@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Loan Comparison Calculator — Compare Two Loans Side-by-Side | DecideCalc</title>
+  <meta name="description" content="Free home loan comparison calculator. Compare two loan offers: different amounts, rates, tenures, and processing fees — see true lifetime cost including fees.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/home-loan-comparison.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Home Loan Comparison</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Home Loan Comparison</h1><div class="sub">Side-by-side true-cost analysis</div></div></div>
+        <div class="calc-body">
+          <h3 style="margin:0 0 12px;font-size:0.95rem">🏦 Loan A (e.g. SBI)</h3>
+          <div class="row-2">
+            <div class="field"><label>Amount (₹)</label><input class="input" id="a_amt" type="number" value="5000000" min="100000" step="100000"></div>
+            <div class="field"><label>Rate (% p.a.)</label><input class="input" id="a_rate" type="number" value="8.7" min="5" max="15" step="0.05"></div>
+          </div>
+          <div class="row-2">
+            <div class="field"><label>Tenure (years)</label><input class="input" id="a_ten" type="number" value="20" min="1" max="30"></div>
+            <div class="field"><label>Processing fee (₹)</label><input class="input" id="a_fee" type="number" value="10000" min="0" step="1000"></div>
+          </div>
+          <h3 style="margin:14px 0 12px;font-size:0.95rem">🏦 Loan B (e.g. HDFC)</h3>
+          <div class="row-2">
+            <div class="field"><label>Amount (₹)</label><input class="input" id="b_amt" type="number" value="5000000" min="100000" step="100000"></div>
+            <div class="field"><label>Rate (% p.a.)</label><input class="input" id="b_rate" type="number" value="8.5" min="5" max="15" step="0.05"></div>
+          </div>
+          <div class="row-2">
+            <div class="field"><label>Tenure (years)</label><input class="input" id="b_ten" type="number" value="20" min="1" max="30"></div>
+            <div class="field"><label>Processing fee (₹)</label><input class="input" id="b_fee" type="number" value="23600" min="0" step="1000"></div>
+          </div>
+          <div style="height:12px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Compare Loans</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Winner</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rEmiA">—</div><div class="k">EMI A</div></div>
+          <div class="result-stat"><div class="v" id="rEmiB">—</div><div class="k">EMI B</div></div>
+          <div class="result-stat"><div class="v" id="rTotalA">—</div><div class="k">Total cost A (incl fee)</div></div>
+          <div class="result-stat"><div class="v" id="rTotalB">—</div><div class="k">Total cost B (incl fee)</div></div>
+          <div class="result-stat"><div class="v" id="rIntA">—</div><div class="k">Interest paid A</div></div>
+          <div class="result-stat"><div class="v" id="rIntB">—</div><div class="k">Interest paid B</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Compare true cost, not EMI</h4><p id="recoText">A lower EMI often hides a longer tenure. Always compare TOTAL outgo = (EMI × months) + processing fee. ₹10K fee and 0.2% rate drop can swing the verdict by lakhs over 20 years.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>What to negotiate besides rate</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Processing fee:</b> negotiable to zero at most private banks (PSU banks hard-coded)</li>
+        <li><b>Rate reset clause:</b> current EBLR-linked vs old MCLR-linked docs — EBLR passes rate cuts faster</li>
+        <li><b>Prepayment penalty:</b> floating-rate retail loans have zero penalty by RBI rule — fixed-rate may have 2-4%</li>
+        <li><b>Insurance bundle:</b> never buy the bundled HLPP — a separate ₹1Cr term plan is cheaper for most</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Refinancing math:</b> if a competitor offers 0.5% less, calculate remaining-tenure savings; refinancing fee (typically 0.5-1% + ₹5-15K legal) should be &lt; 1/3rd of savings for the switch to make sense.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'home-loan-comparison', faqs: [
+      { q: 'Is SBI always cheaper than HDFC?', a: 'Usually 10-40bps cheaper on headline rate, but HDFC/ICICI offer better digital experience and faster processing. Negotiate: get HDFC/ICICI quote first, then take it to SBI — they almost always match for prime borrowers.' },
+      { q: 'Floating vs fixed rate for home loan?', a: 'Floating is almost always better in India. Fixed-rate retail home loans typically have 2-4% prepayment penalty, while floating is penalty-free by RBI mandate. Rates also tend to converge at refinance anyway.' },
+      { q: 'Should I extend tenure to lower EMI?', a: 'Only if cash-flow pinched. At 20 yrs vs 30 yrs on ₹50L at 8.5%: EMI drops ₹5.2K but total interest rises ₹13.6L. Most advisors say cap tenure at retirement age, then aggressively prepay.' },
+      { q: 'What about PMAY subsidy?', a: 'Pradhan Mantri Awas Yojana CLSS adds ₹2.30-2.67L upfront subsidy for eligible buyers (income & loan caps apply). Check eligibility BEFORE finalizing — non-CLSS agreements can\'t be converted.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('scale');
+
+    function emi(a, r, t) {
+      const i = r / 1200, n = t * 12;
+      if (i === 0) return a / n;
+      const p = Math.pow(1 + i, n);
+      return a * i * p / (p - 1);
+    }
+    function compute() {
+      const aAmt = DC.fnum(document.getElementById('a_amt').value);
+      const aRate = DC.fnum(document.getElementById('a_rate').value);
+      const aTen = DC.fnum(document.getElementById('a_ten').value);
+      const aFee = DC.fnum(document.getElementById('a_fee').value);
+      const bAmt = DC.fnum(document.getElementById('b_amt').value);
+      const bRate = DC.fnum(document.getElementById('b_rate').value);
+      const bTen = DC.fnum(document.getElementById('b_ten').value);
+      const bFee = DC.fnum(document.getElementById('b_fee').value);
+      if (aAmt <= 0 || bAmt <= 0) {
+        ['rMain','rEmiA','rEmiB','rTotalA','rTotalB','rIntA','rIntB'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const eA = emi(aAmt, aRate, aTen);
+      const eB = emi(bAmt, bRate, bTen);
+      const tA = eA * aTen * 12 + aFee;
+      const tB = eB * bTen * 12 + bFee;
+      const iA = tA - aAmt - aFee;
+      const iB = tB - bAmt - bFee;
+      const diff = Math.abs(tA - tB);
+      const winner = tA < tB ? 'Loan A' : (tB < tA ? 'Loan B' : 'Tied');
+
+      document.getElementById('rMain').textContent = winner;
+      document.getElementById('rLbl').textContent = winner !== 'Tied' ? 'saves ' + DC.compact(diff) + ' over the tenure' : 'identical total cost';
+      document.getElementById('rEmiA').textContent = DC.inr(Math.round(eA));
+      document.getElementById('rEmiB').textContent = DC.inr(Math.round(eB));
+      document.getElementById('rTotalA').textContent = DC.compact(tA);
+      document.getElementById('rTotalB').textContent = DC.compact(tB);
+      document.getElementById('rIntA').textContent = DC.compact(iA);
+      document.getElementById('rIntB').textContent = DC.compact(iB);
+
+      let title, text;
+      if (winner === 'Tied') {
+        title = 'Pick the one with the better service';
+        text = 'Total cost identical. Priority: faster disbursal, better app/portal, lower prepayment friction.';
+      } else {
+        const losing = winner === 'Loan A' ? 'B' : 'A';
+        const losingCost = winner === 'Loan A' ? tB : tA;
+        const winDiff = diff;
+        title = winner + ' is the better deal on pure maths';
+        text = 'Saves ' + DC.compact(winDiff) + ' over the tenure. Before finalizing: check if you can negotiate Loan ' + losing + '\'s rate down by even 10bps — that may flip the result back.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['a_amt','a_rate','a_ten','a_fee','b_amt','b_rate','b_ten','b_fee'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Loan compare: ' + document.getElementById('rMain').textContent + ' wins — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Home loan compare: ' + document.getElementById('rMain').textContent + '. A: EMI ' + document.getElementById('rEmiA').textContent + ' total ' + document.getElementById('rTotalA').textContent + ' | B: EMI ' + document.getElementById('rEmiB').textContent + ' total ' + document.getElementById('rTotalB').textContent); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KVP Calculator — Kisan Vikas Patra Maturity & Doubling Time | DecideCalc</title>
+  <meta name="description" content="Free KVP calculator: compute Kisan Vikas Patra maturity value at 7.5% p.a. (compounded annually), total interest, effective yield and exact years-to-double. Post-office small savings scheme.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/kvp-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>KVP Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>KVP Calculator</h1><div class="sub">Kisan Vikas Patra · doubles in ~115 months</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Investment amount (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-amt">₹1,00,000</span></div>
+            <input type="range" id="amt" min="1000" max="10000000" step="1000" value="100000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Tenure (years)</label>
+            <input class="input" id="yrs" type="number" min="1" max="30" step="0.5" value="10">
+          </div>
+          <div class="field">
+            <label for="rate">Interest rate (% p.a., compounded annually) <span style="font-weight:400;color:var(--text-soft);font-size:.85em">· current: 7.5%</span></label>
+            <input class="input" id="rate" type="number" min="0.1" max="15" step="0.05" value="7.5" disabled>
+            <label class="check" style="margin:6px 0 0"><input type="checkbox" id="advRate"> Advanced: override rate</label>
+          </div>
+          <div class="field"><label for="start">Investment start date (optional)</label>
+            <input class="input" id="start" type="date">
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Maturity</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Maturity value</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInt">—</div><div class="k">Total interest earned</div></div>
+          <div class="result-stat"><div class="v" id="rDep">—</div><div class="k">Principal</div></div>
+          <div class="result-stat"><div class="v" id="rEff">—</div><div class="k">Effective annual yield</div></div>
+          <div class="result-stat"><div class="v" id="rDouble">—</div><div class="k">Years to double (exact)</div></div>
+          <div class="result-stat"><div class="v" id="rDouble72">—</div><div class="k">Years to double (72 rule)</div></div>
+          <div class="result-stat"><div class="v" id="rMatDate">—</div><div class="k">Maturity date</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="kvpChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Backed by Govt of India</h4><p id="recoText">KVP is a post-office small-savings scheme with sovereign guarantee — no market risk. Current 7.5% rate doubles money in about 115 months (9 yrs 7 mo). Interest accrues annually and is paid out only at maturity.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>KVP formula & rules</h2>
+      <p class="mt-2">Maturity = Principal × (1 + r)<sup>n</sup> where r = annual rate (7.5% currently) and n = years. KVP uses annual compounding — simpler than bank FDs (which compound quarterly) but at a competitive sovereign-backed rate.</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>₹1 L invested at 7.5% for 10 yrs → matures at ₹2,06,103 (interest ₹1,06,103)</li>
+        <li>₹1 L at 7.5% doubles in exactly ~9.59 years (115 months) — verified by the formula ln(2)/ln(1.075)</li>
+        <li><b>Eligibility:</b> any resident Indian adult (18+); guardians can open for minors; no maximum investment limit; joint accounts allowed</li>
+        <li><b>Min deposit:</b> ₹1,000 · then multiples of ₹100 · no upper cap</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Tax warning:</b> KVP interest is <i>fully taxable</i> at your slab (accrues yearly even though paid at maturity). TDS applies on <i>aggregate</i> post-office interest (KVP + NSC + MIS + TD) over ₹40,000/yr — ₹50,000 for senior citizens. Unlike PPF/SSY, there is <b>no 80C deduction</b> on KVP investment.</div></div>
+    </section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How to invest (nominal process)</h2>
+      <ol style="margin-top:10px;padding-left:20px;color:var(--text-soft)">
+        <li>Visit any India Post branch with Aadhaar + PAN (KYC) and 2 photos</li>
+        <li>Fill KVP application form (Form A); choose single or joint holder</li>
+        <li>Pay by cash, cheque, or demand draft (cheque clears before certificate issues)</li>
+        <li>Receive KVP certificate (or e-certificate if you have a post-office savings account)</li>
+        <li>Nomination is optional but recommended at opening (Form C)</li>
+      </ol>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'kvp-calculator', faqs: [
+      { q: 'How does the doubling rule work in KVP?', a: 'At the current 7.5% p.a. compounded annually, ₹1 invested becomes ₹2 in ln(2)/ln(1.075) ≈ 9.59 years (about 115 months). The rough "72 rule" (72 ÷ 7.5 ≈ 9.6 yrs) is a close mental shortcut. The Government revises the rate quarterly, which is why the doubling time has historically ranged from ~100 to ~124 months.' },
+      { q: 'Can I close KVP before maturity?', a: 'Yes, but only after a lock-in of 2 years 6 months (30 months). After that you can prematurely encash at the post office — you will receive the principal + simple interest (not compound) for the completed period as per the KVP premature-closure table. Exceptions that waive the lock-in: death of holder, court order, or forfeiture by a pledgee (Gazetted Officer).' },
+      { q: 'KVP vs bank FD — which is better?', a: 'KVP: sovereign guarantee, fixed 7.5% p.a., annual compounding, no 80C benefit, 2.5-yr lock-in, no max limit. Bank FD: 6.5–7.75% typical (seniors +0.5%), quarterly compounding (slightly better effective yield), 80C benefit on 5-yr tax-saver FDs, DICGC insured up to ₹5 L per bank. KVP wins for risk-averse lump sums above ₹5 L; FDs win for seniors, tax-saver needs and short tenures.' },
+      { q: 'What KYC documents do I need to buy KVP?', a: 'Aadhaar card (identity + address), PAN card (mandatory if deposit ≥ ₹50,000 or aggregate ≥ ₹10 L in a FY), 2 passport photos, and a filled Form A. For minors, the guardian\'s KYC plus the child\'s birth certificate. Non-resident Indians (NRIs) are not eligible.' },
+      { q: 'Is KVP interest taxable and is TDS deducted?', a: 'Yes — interest accrues each financial year and is taxed at your slab even though it\'s paid only at maturity. TDS at 10% is deducted when aggregate interest across your post-office schemes (KVP + NSC + MIS + Time Deposits) exceeds ₹40,000 in a year (₹50,000 for senior citizens). If your total income is below the taxable limit, submit Form 15G/15H to avoid TDS.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('piggy');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const DEFAULTS = { amt: 100000, yrs: 10, rate: 7.5, start: '' };
+    let chart = null;
+
+    function fmtDate(d) {
+      if (!d) return '—';
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function compute() {
+      const P = DC.fnum(document.getElementById('amt').value);
+      const t = DC.fnum(document.getElementById('yrs').value);
+      let rate = DC.fnum(document.getElementById('rate').value);
+      const startStr = document.getElementById('start').value;
+
+      // Strict validation
+      if (P <= 0 || rate <= 0 || rate > 15 || t <= 0 || t > 30) {
+        ['rMain','rInt','rDep','rEff','rDouble','rDouble72','rMatDate'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+        return;
+      }
+
+      const r = rate / 100;
+      // Annual compounding: FV = P × (1 + r)^n
+      const maturity = P * Math.pow(1 + r, t);
+      const interest = maturity - P;
+      // Effective annual yield for annual compounding = nominal rate itself;
+      // but compute the CAGR realised over tenure, which equals rate (kept for transparency).
+      const effYield = (Math.pow(maturity / P, 1 / t) - 1) * 100;
+      const dblExact = Math.log(2) / Math.log(1 + r);
+      const dbl72 = 72 / rate;
+
+      let matDateStr = '—';
+      if (startStr) {
+        const s = new Date(startStr + 'T00:00:00');
+        if (!isNaN(s.getTime())) {
+          const m = new Date(s.getTime());
+          const wholeYears = Math.floor(t);
+          const fracMonths = Math.round((t - wholeYears) * 12);
+          m.setFullYear(m.getFullYear() + wholeYears);
+          m.setMonth(m.getMonth() + fracMonths);
+          matDateStr = fmtDate(m);
+        }
+      }
+
+      document.getElementById('rMain').textContent = DC.compact(maturity);
+      document.getElementById('rLbl').textContent = 'Maturity in ' + t + ' yr' + (t !== 1 ? 's' : '') + ' @ ' + rate.toFixed(2) + '%';
+      document.getElementById('rInt').textContent = DC.compact(interest);
+      document.getElementById('rDep').textContent = DC.compact(P);
+      document.getElementById('rEff').textContent = effYield.toFixed(2) + '%';
+      document.getElementById('rDouble').textContent = dblExact.toFixed(2) + ' yrs (' + Math.round(dblExact * 12) + ' mo)';
+      document.getElementById('rDouble72').textContent = dbl72.toFixed(2) + ' yrs';
+      document.getElementById('rMatDate').textContent = matDateStr;
+
+      // Growth curve
+      const labels = [], series = [];
+      for (let y = 0; y <= Math.ceil(t); y++) {
+        const t2 = Math.min(t, y);
+        labels.push('Yr ' + y);
+        series.push(Math.round(P * Math.pow(1 + r, t2)));
+      }
+      DC.makeChart('kvpChart', {
+        type: 'line',
+        data: { labels: labels, datasets: [{ label: 'KVP value', data: series, borderColor: '#4338CA', backgroundColor: 'rgba(67,56,202,.12)', fill: true, tension: .3, pointRadius: 0, borderWidth: 2 }] },
+        options: { plugins: { tooltip: { callbacks: { label: function (c) { return DC.compact(c.raw); } } } }, scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } } }
+      });
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amt','yrs','rate','start'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('amt').addEventListener('input', function () { document.getElementById('out-amt').textContent = '₹' + parseInt(this.value, 10).toLocaleString('en-IN'); });
+    document.getElementById('advRate').addEventListener('change', function () {
+      const rateEl = document.getElementById('rate');
+      rateEl.disabled = !this.checked;
+      if (!this.checked) { rateEl.value = '7.5'; }
+      compute();
+    });
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('amt').value = DEFAULTS.amt;
+      document.getElementById('out-amt').textContent = '₹' + DEFAULTS.amt.toLocaleString('en-IN');
+      document.getElementById('yrs').value = DEFAULTS.yrs;
+      document.getElementById('rate').value = DEFAULTS.rate;
+      document.getElementById('advRate').checked = false;
+      document.getElementById('rate').disabled = true;
+      document.getElementById('start').value = DEFAULTS.start;
+      compute();
+      DC.toast('Reset to defaults', 'success');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('KVP maturity: ' + document.getElementById('rMain').textContent +
+        ' (principal ' + document.getElementById('rDep').textContent +
+        ', interest ' + document.getElementById('rInt').textContent +
+        ', doubles in ' + document.getElementById('rDouble').textContent +
+        ') — try DecideCalc KVP Calculator!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult('KVP Result\nPrincipal: ' + document.getElementById('rDep').textContent +
+        '\nInterest: ' + document.getElementById('rInt').textContent +
+        '\nMaturity: ' + document.getElementById('rMain').textContent +
+        '\nEffective yield: ' + document.getElementById('rEff').textContent +
+        '\nYears to double: ' + document.getElementById('rDouble').textContent +
+        (document.getElementById('rMatDate').textContent !== '—' ? '\nMaturity date: ' + document.getElementById('rMatDate').textContent : ''));
+    });
+
+    compute();
+  </script>
+</body>
+</html>

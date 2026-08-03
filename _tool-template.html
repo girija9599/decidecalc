@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} | DecideCalc</title>
+  <meta name="description" content="{{DESC}}">
+  <link rel="canonical" href="https://decidecalc.com/calculators/{{SLUG}}.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-{{CAT}}">{{CATNAME}}</a><span class="sep">/</span><span>{{SHORTNAME}}</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>{{SHORTNAME}}</h1><div class="sub">{{SUBTITLE}}</div></div></div>
+        <div class="calc-body">
+          {{INPUTS}}
+          <button class="btn btn-primary btn-block" id="calcBtn">{{CTA}}</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rMainLbl">{{HEROLBL}}</div></div>
+        <div class="result-grid">{{RESULTS}}</div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">{{RECOT}}</h4><p id="recoText">{{RECOTXT}}</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>{{EXPLAINH}}</h2>
+      <p class="mt-2">{{EXPLAINBODY}}</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Note:</b> {{EXPLAINNOTE}}</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/toolkit.js"></script>
+  <script>
+    DC.page = { slug: '{{SLUG}}', faqs: [{{FAQS}}] };
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('{{ICON}}');
+    document.getElementById('recoIc').innerHTML = DC.icon('{{RECOICON}}');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      {{COMPUTE}}
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    {{INPUTIDS}}.forEach(function (id) { const el = document.getElementById(id); if (el) { el.addEventListener('input', compute); el.addEventListener('change', compute); } });
+    DC.bindReset('resetBtn', {{DEFAULTS}}, compute);
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp(document.getElementById('rMain').textContent + ' — computed with DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('{{SHORTNAME}}\nResult: ' + document.getElementById('rMain').textContent + '\n' + document.getElementById('recoTitle').textContent); });
+  </script>
+</body>
+</html>

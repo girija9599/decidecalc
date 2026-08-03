@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rule of 72 Calculator — Years to Double Your Money | DecideCalc</title>
+  <meta name="description" content="Free Rule of 72 calculator. Find years to double your money at any interest rate — or the rate needed to double in N years. Plus Rule of 114 (triple) and Rule of 144 (quadruple).">
+  <link rel="canonical" href="https://decidecalc.com/calculators/rule-of-72.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Rule of 72</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Rule of 72 Calculator</h1><div class="sub">Mental math for doubling time</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="mode" value="rate">
+          <div class="segmented" id="mode" data-target="mode">
+            <button type="button" data-value="rate" class="active">I know the rate</button>
+            <button type="button" data-value="years">I know the years</button>
+          </div>
+          <div style="height:14px"></div>
+          <div id="box-rate">
+            <div class="field"><label>Annual return / interest rate (%)</label>
+              <div class="range-out"><span class="range-val" id="out-r">8.0%</span></div>
+              <input type="range" id="rate" min="1" max="36" step="0.1" value="8" data-suffix="%">
+            </div>
+          </div>
+          <div id="box-years" style="display:none">
+            <div class="field"><label>I want my money to double in… (years)</label>
+              <div class="range-out"><span class="range-val" id="out-y">9 yrs</span></div>
+              <input type="range" id="yrs" min="1" max="30" step="1" value="9" data-suffix=" yrs">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">—</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="r114">—</div><div class="k">Triple time (Rule 114)</div></div>
+          <div class="result-stat"><div class="v" id="r144">—</div><div class="k">Quadruple time (Rule 144)</div></div>
+          <div class="result-stat"><div class="v" id="r10x">—</div><div class="k">10× time</div></div>
+          <div class="result-stat"><div class="v" id="rExact">—</div><div class="k">Exact (vs approx)</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The inflation warning</h4><p id="recoText">Rule of 72 also works backward: at 6% inflation, the rupee halves in buying power every 12 years. If your money sits at 5% FD, you're losing real wealth despite a growing balance.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>The stockpile of famous rates</h2>
+      <p class="mt-2">Years to double = 72 ÷ annual rate (%).</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>72 ÷ 2% = 36 yrs</b> — savings account</li>
+        <li><b>72 ÷ 6% = 12 yrs</b> — FD / PPF territory</li>
+        <li><b>72 ÷ 9% = 8 yrs</b> — gold / balanced funds</li>
+        <li><b>72 ÷ 12% = 6 yrs</b> — Nifty 50 long-run average</li>
+        <li><b>72 ÷ 18% = 4 yrs</b> — aggressive equity funds</li>
+        <li><b>72 ÷ 36% = 2 yrs</b> — high-risk territory</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Exact vs Rule of 72:</b> at 8%, exact answer is 9.006 yrs vs Rule of 72's 9 yrs — accurate to within 0.1%. Between 3–15%, the rule is virtually perfect.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'rule-of-72', faqs: [
+      { q: 'Why does the Rule of 72 work?', a: 'Natural log of 2 ≈ 0.693; multiplying by 100 gets 69.3. Using 72 makes mental math easier because it\'s divisible by 1, 2, 3, 4, 6, 8, 9, 12. Within typical interest rates, the error stays under 0.5%.' },
+      { q: 'What are Rules of 114 and 144?', a: 'Same trick for tripling (×3) and quadrupling (×4). ln(3)×100 ≈ 110, we use 114 for divisibility. ln(4)×100 ≈ 139, we use 144. Both are approximations within a few %.' },
+      { q: 'Does it work for inflation & fees?', a: 'Yes — apply it to anything compounding: inflation, debt, fees. "Inflation will halve my money\'s value in Rule-of-72 terms" is as useful as knowing when your savings double.' },
+      { q: 'When does the rule break down?', a: 'Above ~25-30% the deviation grows: at 100%, exact answer is 1 yr but rule says 0.72 yr. Below 1% it overestimates slightly. For everyday rates (3-20%) it\'s an excellent mental estimate.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('calculator') || DC.icon('percent');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    let mode = 'rate';
+    document.getElementById('mode').addEventListener('segment:change', function (e) {
+      mode = e.detail.value;
+      document.getElementById('box-rate').style.display = mode === 'rate' ? '' : 'none';
+      document.getElementById('box-years').style.display = mode === 'years' ? '' : 'none';
+      compute();
+    });
+
+    function compute() {
+      let r;
+      if (mode === 'rate') {
+        r = DC.fnum(document.getElementById('rate').value);
+        document.getElementById('out-r').textContent = r.toFixed(1) + '%';
+      } else {
+        const y = DC.fnum(document.getElementById('yrs').value);
+        document.getElementById('out-y').textContent = y + ' yrs';
+        if (y <= 0) { clearResults(); return; }
+        r = 72 / y;
+      }
+      if (r <= 0 || !isFinite(r) || r > 360) { clearResults(); return; }
+
+      const dblYrs = 72 / r;
+      const exactDbl = Math.log(2) / Math.log(1 + r/100);
+      const trpYrs = 114 / r;
+      const qdrYrs = 144 / r;
+      const t10Yrs = Math.log(10) / Math.log(1 + r/100);
+
+      if (mode === 'rate') {
+        document.getElementById('rMain').textContent = dblYrs.toFixed(1) + ' yrs';
+        document.getElementById('rLbl').textContent = 'Money doubles at ' + r.toFixed(1) + '%';
+      } else {
+        document.getElementById('rMain').textContent = r.toFixed(2) + '%';
+        document.getElementById('rLbl').textContent = 'Rate needed to double in ' + DC.fnum(document.getElementById('yrs').value) + ' yrs';
+      }
+      document.getElementById('r114').textContent = trpYrs.toFixed(1) + ' yrs';
+      document.getElementById('r144').textContent = qdrYrs.toFixed(1) + ' yrs';
+      document.getElementById('r10x').textContent = t10Yrs.toFixed(1) + ' yrs';
+      document.getElementById('rExact').textContent = exactDbl.toFixed(2) + ' yrs';
+
+      document.getElementById('recoTitle').textContent = 'At ' + r.toFixed(1) + '% annual return, doubling takes ' + dblYrs.toFixed(1) + ' years';
+      let verdict;
+      if (r <= 3) verdict = 'Savings account territory — money technically doubles but inflation erodes the real value faster.';
+      else if (r <= 8) verdict = 'FD / debt fund range. Steady doubling but post-tax returns hover near break-even with inflation.';
+      else if (r <= 12) verdict = 'Equity index / Nifty long-run range. 6-8 yr doubling means a ₹10L SIP corpus becomes ₹40L in 12 yrs by this logic.';
+      else verdict = 'Aggressive rate. Verify reality — sustained >15% is rare, and chasing it invites scams.';
+      document.getElementById('recoText').textContent = verdict;
+    }
+    function clearResults() {
+      ['rMain','r114','r144','r10x','rExact'].forEach(function(id){document.getElementById(id).textContent='—';});
+      document.getElementById('rLbl').textContent = 'Enter a valid value';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['rate','yrs'].forEach(function (id){ document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('rate').value = 8; document.getElementById('yrs').value = 9;
+      compute();
+    });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('Rule of 72: ' + document.getElementById('rLbl').textContent + ' → ' + v + ' — DecideCalc');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult(document.getElementById('rLbl').textContent + ' = ' + v);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCSS Calculator — Senior Citizens Savings Scheme (Quarterly Interest) | DecideCalc</title>
+  <meta name="description" content="Free Senior Citizens Savings Scheme (SCSS) calculator. Deposit up to ₹30 lakh per account, interest paid quarterly and a 5-year tenure. See quarterly income, maturity value and maturity date.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/scss-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>SCSS Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>SCSS Calculator</h1><div class="sub">Senior Citizens Savings Scheme — quarterly income, 5-yr tenure</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Deposit amount (₹) — maximum ₹30 lakh per account</label>
+            <div class="range-out"><span class="range-val" id="out-dep">₹15,00,000</span></div>
+            <input type="range" id="dep" min="1000" max="3000000" step="1000" value="1500000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Your age (must be 60+)</label>
+            <div class="range-out"><span class="range-val" id="out-age">65 years</span></div>
+            <input type="range" id="age" min="45" max="90" value="65">
+          </div>
+          <div class="field"><label>Interest rate (%)</label>
+            <div class="range-out"><span class="range-val" id="out-rate">8.2%</span></div>
+            <input type="range" id="rate" min="7" max="9" step="0.1" value="8.2" data-suffix="%">
+          </div>
+          <div style="display:flex;gap:10px;margin-top:6px">
+            <div style="flex:1;background:var(--surface-2);padding:10px 12px;border-radius:var(--radius-sm);font-size:.8rem;color:var(--text-soft)"><b>Tenure:</b> 5 years (extendable by 3 yrs)</div>
+            <div style="flex:1;background:var(--surface-2);padding:10px 12px;border-radius:var(--radius-sm);font-size:.8rem;color:var(--text-soft)"><b>Payout:</b> interest credited every quarter</div>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate SCSS Income</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Quarterly interest income</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rAnnual">—</div><div class="k">Annual interest income</div></div>
+          <div class="result-stat"><div class="v" id="rMaturity">—</div><div class="k">Maturity value (= deposit)</div></div>
+          <div class="result-stat"><div class="v" id="rMatDate">—</div><div class="k">Maturity date</div></div>
+          <div class="result-stat"><div class="v" id="rTotalInt">—</div><div class="k">Total interest over 5 yrs</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Quarterly income for retirees</h4><p id="recoText">SCSS pays interest out every quarter — it is not reinvested. Your deposit of ₹15,00,000 comes back to you in full at maturity after 5 years. Interest is fully taxable.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How SCSS interest works</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Interest is paid out, not compounded.</b> Every quarter the bank/post office credits the interest to your savings account; the principal stays intact and is returned at the end of 5 years.</li>
+        <li><b>Quarterly income</b> = (Deposit × Rate) ÷ 4. Annual income = Deposit × Rate. Total over 5 years = Deposit × Rate × 5.</li>
+        <li><b>Rate is fixed</b> for your entire 5-year term at the rate prevailing on the date you open the account. Enter the currently notified rate for an estimate.</li>
+        <li><b>Extension:</b> on maturity you can extend for 3 more years at the rate then applicable.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Tax note:</b> SCSS interest is fully taxable at your slab rate. From FY 2025-26, TDS of 10% is deducted if total interest in a year exceeds ₹1,00,000 (₹50,000 was the prior threshold for senior citizens under section 194A). Submit Form 15H only if your total income is below the taxable limit — otherwise tax still applies.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'scss-calculator', faqs: [
+      { q: 'Who is eligible to open an SCSS account?', a: 'Any Indian resident aged 60 or above. Retired civilian and defence personnel aged 55-60 (within one month of retirement) can also open. For simplicity this calculator uses age 60+; the 55-60 retired-from-service rule is a narrow exception.' },
+      { q: 'What is the maximum deposit in SCSS?', a: 'The maximum deposit is ₹30 lakh per SCSS account. A joint account can be opened with a spouse, but it does not create a ₹60 lakh limit for one account. Confirm how the limit applies across your accounts before investing.' },
+      { q: 'Is SCSS interest taxable?', a: 'Yes. Interest is fully taxable at your income-slab rate and is added to your total income. From FY 2025-26, 10% TDS applies once yearly interest exceeds ₹1,00,000. You can claim the deposit as a deduction under section 80C (within the ₹1.5L overall limit) but the interest itself has no exemption.' },
+      { q: 'Can I close the account before 5 years?', a: 'Premature closure is allowed after one year with a penalty: 1.5% of the deposit is deducted if closed within 1-2 years, and 1% if closed after 2 years. No closure is permitted within the first year.' },
+      { q: 'What happens at maturity after 5 years?', a: 'Your full deposit is returned. You can then withdraw the money, or extend the account for another 3 years (only once) at the interest rate applicable on the date of extension. During extension you continue to receive quarterly interest.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('shield');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const dep  = Math.max(0, DC.fnum(document.getElementById('dep').value));
+      const age  = Math.max(0, DC.fnum(document.getElementById('age').value));
+      const rate = Math.max(0, DC.fnum(document.getElementById('rate').value));
+      document.getElementById('out-dep').textContent = DC.inr(dep);
+      document.getElementById('out-age').textContent = age + (age === 1 ? ' year' : ' years');
+      document.getElementById('out-rate').textContent = rate.toFixed(1) + '%';
+
+      if (dep < 1000) {
+        ['rMain', 'rAnnual', 'rMaturity', 'rMatDate', 'rTotalInt'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+        return;
+      }
+
+      // SCSS pays interest out quarterly — it is NOT reinvested.
+      // Quarterly income = (deposit * rate) / 4 ; annual = deposit * rate.
+      const r = rate / 100;
+      const annualInt = dep * r;
+      const quarterlyInt = annualInt / 4;
+      const totalInt = annualInt * 5;
+      const maturityValue = dep; // principal returned, interest was paid out
+
+      // Maturity date = today + 5 years
+      const today = new Date();
+      const matDate = new Date(today.getFullYear() + 5, today.getMonth(), today.getDate());
+      const matStr = matDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+      document.getElementById('rMain').textContent = DC.inr(quarterlyInt, 0) + ' / qtr';
+      document.getElementById('rAnnual').textContent = DC.inr(annualInt);
+      document.getElementById('rMaturity').textContent = DC.inr(maturityValue);
+      document.getElementById('rMatDate').textContent = matStr;
+      document.getElementById('rTotalInt').textContent = DC.inr(totalInt);
+
+      // Recommendation logic — eligibility, deposit cap and TDS
+      let title, text;
+      const ineligibleAge = age < 60;
+      const tdsApplies = annualInt > 100000;
+
+      if (ineligibleAge) {
+        title = 'Below the SCSS age threshold';
+        text = 'SCSS requires you to be 60+. The 55-60 exception applies only to those retired from service opening the account within one month of retirement. Try PPF, Post Office MIS or bank FDs until you turn 60.';
+      } else if (annualInt >= 600000) {
+        title = 'A meaningful, regular retirement income stream';
+        text = 'At ' + rate.toFixed(1) + '% you draw ' + DC.inr(quarterlyInt, 0) + ' every quarter for 5 years, then your ' + DC.inr(dep) + ' deposit returns in full on ' + matStr + '. Pair it with PMVVY for a pension-style annuity and an equity index fund to beat inflation.';
+      } else if (annualInt >= 150000) {
+        title = 'Solid supplement to pension income';
+        text = 'SCSS at 8.2% beats most bank FDs and Post Office MIS for guaranteed yield. The quarterly payout suits regular expenses; just remember interest is taxable at your slab rate.';
+      } else {
+        title = 'A starter SCSS allocation';
+        text = 'Even a modest deposit locks in a guaranteed quarterly payout. If your risk appetite allows, consider raising the deposit toward the ₹30 L cap to maximise the senior-only rate that few other instruments match.';
+      }
+      if (tdsApplies && !ineligibleAge) {
+        text += ' Since yearly interest exceeds ₹1,00,000, the bank will deduct 10% TDS — declare the full interest in your ITR.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['dep', 'age', 'rate'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('SCSS: ' + document.getElementById('rMain').textContent + ' income, maturity ' + document.getElementById('rMaturity').textContent + ' on ' + document.getElementById('rMatDate').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('SCSS Results\nQuarterly income: ' + document.getElementById('rMain').textContent + '\nAnnual income: ' + document.getElementById('rAnnual').textContent + '\nMaturity value: ' + document.getElementById('rMaturity').textContent + '\nMaturity date: ' + document.getElementById('rMatDate').textContent + '\nTotal interest (5 yrs): ' + document.getElementById('rTotalInt').textContent); });
+  </script>
+</body>
+</html>

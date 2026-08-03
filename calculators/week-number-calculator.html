@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week Number Calculator — ISO 8601 Week of Year | DecideCalc</title>
+  <meta name="description" content="Free ISO week-number calculator. Enter any date to get its ISO-8601 week number (W01-W53), US week number, and day-of-year. Quick reference table for the whole year.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/week-number-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Week Number</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Week Number Calculator</h1><div class="sub">ISO-8601, US, day-of-year</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Pick a date</label>
+            <input class="input" id="date" type="date">
+          </div>
+          <button class="btn btn-ghost btn-block" id="todayBtn">Use today</button>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Find Week Number</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">ISO-8601 week</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rISO">—</div><div class="k">ISO week (Mon-start)</div></div>
+          <div class="result-stat"><div class="v" id="rUS">—</div><div class="k">US week (Sun-start)</div></div>
+          <div class="result-stat"><div class="v" id="rDOY">—</div><div class="k">Day of year (1-366)</div></div>
+          <div class="result-stat"><div class="v" id="rDOW">—</div><div class="k">Day of week</div></div>
+          <div class="result-stat"><div class="v" id="rISOYr">—</div><div class="k">ISO year</div></div>
+          <div class="result-stat"><div class="v" id="rTotalW">—</div><div class="k">Weeks in this ISO year</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">ISO-8601 is the one that matters</h4><p id="recoText">Most business systems, European payroll, and supply chains use ISO weeks. Week 1 is the week containing the year's first Thursday — equivalently, the week containing Jan 4. The US convention simply starts Week 1 on Jan 1 and counts Sundays.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Why ISO weeks sometimes claim Jan-1 belongs to last year</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>ISO Year 2026 starts on <b>Mon Dec 29, 2025</b> (because Jan 1 2026 is a Thursday, week 1 starts the preceding Monday)</li>
+        <li>Dec 29-31 2025 are officially \"Week 1 of 2026\" in ISO — it's normal</li>
+        <li>The first 53-week years recur on specific patterns; 2026 is a 52-week year, while 2020 was 53 weeks</li>
+        <li>Microsoft Excel's WEEKNUM with mode 21 returns ISO week; default mode uses the US convention</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Payroll gotcha:</b> if you're paid weekly, your December payslip might show \"Week 53\" in some tax years — a different withholding calculation applies in those years.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'week-number-calculator', faqs: [
+      { q: 'Which one do Indian offices typically use?', a: 'ISO-8601 is the de-facto standard in Indian IT and multinational payrolls. Domestic small businesses often colloquially say \"week N\" meaning calendar-week-from-Monday but don\'t strictly track ISO.' },
+      { q: 'Why does my calendar app show a different week number?', a: 'iPhone, Android and Windows let you pick the week-number convention. Default iOS uses US; default Google Calendar uses ISO. This tool tells you both so you always know which one you\'re looking at.' },
+      { q: 'ISO year differs from calendar year — really?', a: 'Yes. ISO year starts on the Monday of the week containing the first Thursday. For 2026, ISO year Y=2026 starts Dec 29 2025. For 2020, ISO year ended Jan 3 2021. Edge effects are real and matter for payroll.' },
+      { q: 'Are there 52 or 53 ISO weeks?', a: '53 when Jan 1 falls on a Thursday, or on a Wednesday in a leap year. Otherwise 52. Recent 53-week years: 2015, 2020, 2026. Next: 2032, 2037, 2043. The extra week rarely changes payroll but does stretch schedule cycles.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('calendar');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('clock');
+
+    // ISO-8601 week algorithm (per RFC / wiki)
+    function isoWeek(d) {
+      const target = new Date(d.getTime());
+      // Set to Thursday this week
+      const dayNum = (d.getDay() + 6) % 7;    // 0=Mon,6=Sun
+      target.setDate(target.getDate() - dayNum + 3);
+      const firstThursday = new Date(target.getFullYear(), 0, 4);
+      const firstDayNum = (firstThursday.getDay() + 6) % 7;
+      firstThursday.setDate(firstThursday.getDate() - firstDayNum + 3);
+      const week = 1 + Math.round((target - firstThursday) / (7 * 24 * 3600 * 1000));
+      // ISO year: year of the Thursday
+      const isoYear = target.getFullYear();
+      return { week, isoYear };
+    }
+    function totalWeeksISO(isoYear) {
+      // Year has 53 if Jan 1 is Thursday, OR (leap and Jan 1 is Wednesday)
+      const jan1 = new Date(isoYear, 0, 1).getDay(); // 0=Sun..6=Sat
+      const leap = (isoYear % 4 === 0 && isoYear % 100 !== 0) || isoYear % 400 === 0;
+      return (jan1 === 4 || (leap && jan1 === 3)) ? 53 : 52;
+    }
+    function usWeek(d) {
+      const start = new Date(d.getFullYear(), 0, 1);
+      const diff = (d - start + start.getDay() * 86400000) / 86400000;
+      return Math.floor(diff / 7) + 1;
+    }
+    function compute() {
+      const dStr = document.getElementById('date').value;
+      if (!dStr) {
+        ['rMain','rISO','rUS','rDOY','rDOW','rISOYr','rTotalW'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const d = new Date(dStr + 'T12:00:00'); // noon to dodge DST
+      if (isNaN(d.getTime())) return;
+      const iso = isoWeek(d);
+      const us = usWeek(d);
+      const doy = Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000);
+      const dow = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+      const totalW = totalWeeksISO(iso.isoYear);
+
+      document.getElementById('rMain').textContent = 'W' + String(iso.week).padStart(2,'0');
+      document.getElementById('rLbl').textContent = 'of ISO year ' + iso.isoYear;
+      document.getElementById('rISO').textContent = 'W' + iso.week;
+      document.getElementById('rUS').textContent = 'W' + us;
+      document.getElementById('rDOY').textContent = 'Day ' + doy;
+      document.getElementById('rDOW').textContent = dow;
+      document.getElementById('rISOYr').textContent = iso.isoYear;
+      document.getElementById('rTotalW').textContent = totalW;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('date').addEventListener('input', compute);
+    document.getElementById('todayBtn').addEventListener('click', function(){
+      const t = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      document.getElementById('date').value = t.getFullYear() + '-' + pad(t.getMonth()+1) + '-' + pad(t.getDate());
+      compute();
+    });
+    document.getElementById('todayBtn').click();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('ISO ' + document.getElementById('rMain').textContent + ' ' + document.getElementById('rLbl').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult('ISO ' + document.getElementById('rISO').textContent + ' | US ' + document.getElementById('rUS').textContent + ' | ' + document.getElementById('rDOY').textContent); });
+  </script>
+</body>
+</html>

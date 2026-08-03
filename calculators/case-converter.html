@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Converter — UPPER, lower, Title, Sentence & camelCase | DecideCalc</title>
+  <meta name="description" content="Free case converter: change text to uppercase, lowercase, title case, sentence case, camelCase or snake_case instantly. Works offline, fully private.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/case-converter.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-text">Text Tools</a><span class="sep">/</span><span>Case Converter</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Case Converter</h1><div class="sub">Pick a style, get instant results</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="text">Input text</label><textarea class="input" id="text" rows="6" placeholder="Type or paste text…"></textarea></div>
+          <div id="caseBtns" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+            <button class="btn btn-ghost btn-sm" data-case="upper">UPPERCASE</button>
+            <button class="btn btn-ghost btn-sm" data-case="lower">lowercase</button>
+            <button class="btn btn-ghost btn-sm" data-case="title">Title Case</button>
+            <button class="btn btn-ghost btn-sm" data-case="sentence">Sentence case</button>
+            <button class="btn btn-ghost btn-sm" data-case="camel">camelCase</button>
+            <button class="btn btn-ghost btn-sm" data-case="snake">snake_case</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="calc-header"><div><h2 style="font-size:1.05rem;margin:0">Result</h2><div class="sub" id="modeLbl">Choose a conversion style</div></div></div>
+        <div class="calc-body" style="padding-top:12px">
+          <textarea class="input" id="out" rows="8" readonly placeholder="Converted text appears here…"></textarea>
+        </div>
+        <div class="result-actions" style="padding:0 22px 22px">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">Clear all</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>One click per job</h4><p>Paste once, tap the style you need, copy the output. Heading? Use Title Case. Legal line? UPPERCASE. Variable name? camelCase or snake_case.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>When to use each style</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Title Case:</b> blog headlines & chapter names — small words (a, an, the, and, of, in…) stay lowercase.</li>
+        <li><b>Sentence case:</b> body paragraphs — first letter of each sentence capitalised.</li>
+        <li><b>camelCase / snake_case:</b> JavaScript / Python variable naming conventions.</li>
+        <li><b>UPPERCASE:</b> legal disclaimers & form labels (use sparingly — it shouts).</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Private by design:</b> conversion happens entirely in your browser — perfect for confidential drafts.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'case-converter', faqs: [
+      { q: 'What is Title Case exactly?', a: 'Major words are capitalised; small connecting words (a, an, the, and, but, or, of, in, on, at, to, for...) stay lowercase unless they start the title. This matches AP-style headline rules.' },
+      { q: 'Difference between camelCase and snake_case?', a: 'camelCase joins words with capitals mid-word (myVariableName) — standard in JavaScript/Java. snake_case uses underscores (my_variable_name) — standard in Python and databases.' },
+      { q: 'Will it keep my line breaks?', a: 'Yes — paragraph structure is preserved in every conversion mode.' },
+      { q: 'Is there a length limit?', a: 'No practical limit — hundreds of pages convert instantly because everything runs locally in your browser.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const SMALL = ['a','an','the','and','but','or','nor','at','by','in','of','on','to','up','as','for','with','from','is','it'];
+    let mode = '';
+    function convert(text, mode) {
+      if (!text) return '';
+      switch (mode) {
+        case 'upper': return text.toUpperCase();
+        case 'lower': return text.toLowerCase();
+        case 'title':
+          return text.toLowerCase().replace(/(^|[\s\-\/(])([a-z])/g, function (m, pre, ch, off, str) {
+            const wordStart = off + pre.length;
+            const rest = str.slice(wordStart).match(/^([a-z']+)/i)[1].toLowerCase();
+            if (off !== 0 && rest !== SMALL.indexOf(rest) && SMALL.indexOf(rest) !== -1 && str[off].match(/[\s(]/)) return m;
+            return pre + ch.toUpperCase();
+          });
+        case 'sentence':
+          return text.toLowerCase().replace(/(^\s*[a-z])|([.!?]\s+[a-z])/g, function (m) { return m.toUpperCase(); });
+        case 'camel': {
+          const w = text.toLowerCase().split(/[^a-z0-9]+/i).filter(Boolean);
+          return w.map(function (x, i) { return i === 0 ? x : x.charAt(0).toUpperCase() + x.slice(1); }).join('');
+        }
+        case 'snake':
+          return text.toLowerCase().split(/[^a-z0-9]+/i).filter(Boolean).join('_');
+        default: return text;
+      }
+    }
+    document.getElementById('caseBtns').addEventListener('click', function (e) {
+      const btn = e.target.closest('button[data-case]');
+      if (!btn) return;
+      const t = document.getElementById('text').value;
+      if (!t.trim()) { DC.toast('Type or paste some text first', 'error'); return; }
+      mode = btn.dataset.case;
+      document.getElementById('out').value = convert(t, mode);
+      document.getElementById('modeLbl').textContent = btn.textContent;
+    });
+    document.getElementById('text').addEventListener('input', function () {
+      if (mode) document.getElementById('out').value = convert(this.value, mode);
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const o = document.getElementById('out').value;
+      if (!o) { DC.toast('Convert something first', 'error'); return; }
+      DC.copyResult(o);
+    });
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      document.getElementById('text').value = ''; document.getElementById('out').value = ''; mode = '';
+      document.getElementById('modeLbl').textContent = 'Choose a conversion style';
+      document.getElementById('text').focus();
+    });
+  </script>
+</body>
+</html>

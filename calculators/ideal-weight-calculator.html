@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ideal Weight Calculator — BMI-Based Healthy Range | DecideCalc</title>
+  <meta name="description" content="Free ideal body weight calculator based on WHO BMI ranges (18.5–24.9). See your healthy weight band for your height, plus Devine, Robinson, Miller & Hamwi estimates.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/ideal-weight-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-weight='bold' font-family='Arial' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>Ideal Weight Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Ideal Weight Calculator</h1><div class="sub">4 established formulas + WHO BMI range</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="sex" value="male">
+          <div class="segmented" id="sex" data-target="sex">
+            <button type="button" data-value="male" class="active">Male</button>
+            <button type="button" data-value="female">Female</button>
+          </div>
+          <div style="height:14px"></div>
+          <div class="field"><label>Height (cm)</label>
+            <div class="range-out"><span class="range-val" id="out-ht">170 cm (5′7″)</span></div>
+            <input type="range" id="ht" min="140" max="210" step="0.5" value="170" data-suffix=" cm">
+          </div>
+          <div class="field"><label>Current weight (kg) — optional</label>
+            <input class="input" id="kg" type="number" min="25" max="250" step="0.5" placeholder="Leave blank to skip">
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Show Ideal Weight</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">WHO healthy range</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rDevine">—</div><div class="k">Devine (most cited)</div></div>
+          <div class="result-stat"><div class="v" id="rRobinson">—</div><div class="k">Robinson</div></div>
+          <div class="result-stat"><div class="v" id="rMiller">—</div><div class="k">Miller</div></div>
+          <div class="result-stat"><div class="v" id="rHamwi">—</div><div class="k">Hamwi</div></div>
+        </div>
+        <div id="gapBox" style="display:none;margin:0 22px 14px;padding:14px;background:var(--surface-2,#f6f8ff);border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:.82rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Your gap</div>
+          <div id="rGap" style="font-size:1.15rem;font-weight:700;color:var(--accent-600)">—</div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Formula agreement within ±3 kg</h4><p id="recoText">The four classic equations were derived from different populations. If they disagree wildly for you, the WHO healthy BMI range above (18.5–24.9) is a safer daily target than any single "ideal" number.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>The four formulas</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Devine (1974):</b> Men 50 + 2.3 kg/inch over 5ft · Women 45.5 + 2.3 kg/inch</li>
+        <li><b>Robinson (1983):</b> refined for better mid-height accuracy</li>
+        <li><b>Miller (1983):</b> slightly higher baseline values</li>
+        <li><b>Hamwi (1964):</b> Men 48 + 2.7 kg/inch · Women 45 + 2.2 kg/inch</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Frame size caveat:</b> all four formulas assume medium frame. Broad-built people can add ~10%; small frames subtract ~10%. That's why the WHO healthy <b>range</b> is the more realistic target.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'ideal-weight-calculator', faqs: [
+      { q: 'Which formula should I trust?', a: 'Trust the range, not a single number. The WHO healthy BMI band (18.5–24.9) translates to a ~10 kg window for most heights. Anywhere inside it carries similar health outcomes.' },
+      { q: 'I\'m muscular — is BMI-based ideal weight wrong for me?', a: 'Yes. Heavy muscle inflates BMI. Bodybuilders & powerlifters should use body-fat % (DEXA, skinfolds, smart scales) instead.' },
+      { q: 'How long does reaching ideal weight take?', a: 'At the safe rate of 0.5 kg/week: 5 kg = 10 weeks, 10 kg = 5 months, 20 kg ≈ 9–10 months. Rapid crash diets (>1 kg/wk) usually trigger rebound gain.' },
+      { q: 'Do age & pregnancy change the ideal?', a: 'Health ranges widen slightly with age (25–27 BMI still healthy at 65+). During pregnancy only an OB/GYN-monitored target applies — this calculator is not suitable.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('scale');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    let sex = 'male';
+    document.getElementById('sex').addEventListener('segment:change', function (e) { sex = e.detail.value; compute(); });
+    function compute() {
+      const cm = DC.fnum(document.getElementById('ht').value);
+      const kg = DC.fnum(document.getElementById('kg').value);
+      const inches = cm / 2.54;
+      const overFive = Math.max(0, inches - 60);
+      document.getElementById('out-ht').textContent = cm.toFixed(1) + ' cm (' + Math.floor(inches/12) + '′' + Math.round(inches%12) + '″)';
+      if (cm < 140 || cm > 210) {
+        ['rMain','rDevine','rRobinson','rMiller','rHamwi'].forEach(function (id){document.getElementById(id).textContent='—';});
+        document.getElementById('gapBox').style.display = 'none';
+        return;
+      }
+      const bmiMin = 18.5 * Math.pow(cm/100, 2);
+      const bmiMax = 24.9 * Math.pow(cm/100, 2);
+      const devine  = (sex === 'male' ? 50 : 45.5) + 2.3 * overFive;
+      const robin   = (sex === 'male' ? 52 : 49)   + 1.9 * overFive;
+      const miller  = (sex === 'male' ? 56.2 : 53.1) + 1.41 * overFive;
+      const hamwi   = (sex === 'male' ? 48 : 45.5) + 2.7 * overFive;
+
+      document.getElementById('rMain').textContent = bmiMin.toFixed(1) + '–' + bmiMax.toFixed(1) + ' kg';
+      document.getElementById('rLbl').textContent = 'WHO healthy BMI range for ' + cm.toFixed(0) + ' cm';
+      document.getElementById('rDevine').textContent = devine.toFixed(1) + ' kg';
+      document.getElementById('rRobinson').textContent = robin.toFixed(1) + ' kg';
+      document.getElementById('rMiller').textContent = miller.toFixed(1) + ' kg';
+      document.getElementById('rHamwi').textContent = hamwi.toFixed(1) + ' kg';
+
+      const gapBox = document.getElementById('gapBox');
+      if (kg > 0) {
+        const avg = (devine + robin + miller + hamwi) / 4;
+        const diff = kg - avg;
+        gapBox.style.display = 'block';
+        const el = document.getElementById('rGap');
+        if (Math.abs(diff) < 1) el.innerHTML = '✓ You\'re right at the formulas\' midpoint (' + kg.toFixed(1) + ' kg).';
+        else if (diff > 0) el.innerHTML = '−' + diff.toFixed(1) + ' kg to formula midpoint (' + avg.toFixed(1) + ' kg)';
+        else el.innerHTML = '+' + (-diff).toFixed(1) + ' kg to formula midpoint (' + avg.toFixed(1) + ' kg)';
+        const avgTarget = (bmiMin + bmiMax) / 2;
+        document.getElementById('recoTitle').textContent = kg > avgTarget * 1.05 ? 'Aim for gradual, steady fat loss' : kg < avgTarget * 0.95 ? 'Slight surplus + resistance training' : 'You\'re already inside the healthy band';
+        document.getElementById('recoText').textContent = 'Formula average for ' + cm.toFixed(0) + ' cm: ' + avg.toFixed(1) + ' kg · Mid-BMI target: ' + avgTarget.toFixed(1) + ' kg.';
+      } else {
+        gapBox.style.display = 'none';
+        document.getElementById('recoTitle').textContent = 'Healthy range: ' + bmiMin.toFixed(1) + ' – ' + bmiMax.toFixed(1) + ' kg';
+        document.getElementById('recoText').textContent = 'Enter your current weight above to see your distance from target.';
+      }
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['ht','kg'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Ideal weight (' + document.getElementById('out-ht').textContent + '): ' + document.getElementById('rMain').textContent + ' — DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Ideal weight for ' + document.getElementById('out-ht').textContent + ': ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

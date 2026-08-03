@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator — Calculate Loan EMI Online Free | DecideCalc</title>
+  <meta name="description" content="Free online EMI calculator. Enter loan amount, interest rate & tenure to get monthly EMI, total interest payable and a full amortization schedule. India-first.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/emi-calculator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a><span class="sep">/</span>
+      <a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span>
+      <span>EMI Calculator</span>
+    </nav>
+
+    <div class="calc-layout">
+      <!-- INPUT -->
+      <div class="calc-shell reveal">
+        <div class="calc-header">
+          <span class="ic" id="ic"></span>
+          <div>
+            <h1>EMI Calculator</h1>
+            <div class="sub">Loan EMI · total interest · amortization</div>
+          </div>
+        </div>
+        <div class="calc-body">
+          <div class="field">
+            <label>Loan Amount</label>
+            <div class="range-out"><span class="range-val" id="out-amount">₹10,00,000</span></div>
+            <input type="range" id="amount" min="50000" max="20000000" step="50000" value="1000000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field">
+            <label>Interest Rate (% per year)</label>
+            <div class="range-out"><span class="range-val" id="out-rate">8.5%</span></div>
+            <input type="range" id="rate" min="1" max="36" step="0.1" value="8.5" data-suffix="%" data-dec="1">
+          </div>
+          <div class="field">
+            <label>Loan Tenure</label>
+            <div class="segmented" data-target="tenureUnit">
+              <button data-val="years" class="active">Years</button>
+              <button data-val="months">Months</button>
+            </div>
+            <input type="hidden" name="tenureUnit" value="years">
+            <div class="range-out" style="margin-top:10px"><span class="range-val" id="out-tenure">15 years</span></div>
+            <input type="range" id="tenure" min="1" max="30" step="1" value="15" data-dec="0">
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate EMI</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="result-panel reveal d2">
+        <div id="result">
+          <div class="result-hero">
+            <div class="big" id="rEmi">₹9,847</div>
+            <div class="lbl">Monthly EMI</div>
+          </div>
+          <div class="result-grid">
+            <div class="result-stat"><div class="v" id="rPrincipal">₹10,00,000</div><div class="k">Principal</div></div>
+            <div class="result-stat"><div class="v" id="rInterest">₹7,72,440</div><div class="k">Total Interest</div></div>
+            <div class="result-stat"><div class="v" id="rTotal">₹17,72,440</div><div class="k">Total Payable</div></div>
+            <div class="result-stat"><div class="v" id="rRatio">56 : 44</div><div class="k">Principal : Interest</div></div>
+          </div>
+          <div class="chart-wrap"><canvas id="emiChart"></canvas></div>
+          <div class="result-actions">
+            <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+            <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+          </div>
+          <div class="reco">
+            <span class="ric" id="recoIc"></span>
+            <div>
+              <h4 id="recoTitle">Affordability check</h4>
+              <p id="recoText">Your EMI should ideally be under 40% of your monthly take-home income. If this EMI exceeds that, consider a longer tenure or a smaller loan.</p>
+            </div>
+          </div>
+          <details style="margin-top:16px">
+            <summary style="cursor:pointer;font-weight:700;padding:10px 0">View amortization schedule (yearly)</summary>
+            <div style="max-height:260px;overflow:auto;margin-top:8px">
+              <table class="breakdown" id="amortTable">
+                <thead><tr><th>Year</th><th class="num">Principal</th><th class="num">Interest</th><th class="num">Balance</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATED -->
+    <section class="mt-4 reveal">
+      <h3 style="margin-bottom:16px">Related calculators</h3>
+      <div class="related-mini" id="relatedTools"></div>
+    </section>
+
+    <!-- GUIDE -->
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How is EMI calculated?</h2>
+      <p class="mt-2">Your Equated Monthly Instalment (EMI) is fixed using the standard reducing-balance formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = principal, r = monthly interest rate (annual ÷ 12 ÷ 100), and n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips to reduce your EMI burden</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>Make a larger down payment to shrink the principal.</li>
+        <li>Pre-pay a portion each year — even 1 extra EMI/year cuts tenure significantly.</li>
+        <li>Compare rates across 3–4 lenders; even 0.25% matters over 20 years.</li>
+        <li>Keep EMI under 40% of net take-home pay to stay financially safe.</li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-4 reveal">
+      <h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <div id="faqList" data-single="1"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = {
+      slug: 'emi-calculator',
+      faqs: [
+        { q: 'What is an EMI?', a: 'EMI (Equated Monthly Instalment) is the fixed amount you pay every month to repay a loan. Each EMI splits into a principal part and an interest part.' },
+        { q: 'How is EMI calculated?', a: 'EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P is the principal, r is the monthly interest rate, and n is the loan tenure in months.' },
+        { q: 'Does prepayment reduce my EMI?', a: 'Prepayment usually reduces either your EMI or your tenure. Reducing tenure saves far more total interest; ask your bank to keep EMI the same and shorten the term.' },
+        { q: 'Is this EMI calculator free?', a: 'Yes — 100% free, no login, no data stored. Everything is calculated in your browser.' },
+        { q: 'Why is my actual bank EMI slightly different?', a: 'Banks may add processing fees, GST on charges, or use a slightly different rate. The EMI shown is the pure principal+interest calculation.' }
+      ]
+    };
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('bank');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function tenureMonths() {
+      const v = parseFloat(document.getElementById('tenure').value);
+      const unit = document.querySelector('[name="tenureUnit"]').value;
+      return unit === 'months' ? v : v * 12;
+    }
+    function tenureLabel() {
+      const v = parseFloat(document.getElementById('tenure').value);
+      const unit = document.querySelector('[name="tenureUnit"]').value;
+      return unit === 'months' ? v + ' months' : v + ' years';
+    }
+
+    // Update tenure range bounds when unit changes
+    document.querySelectorAll('.segmented button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        const unit = b.getAttribute('data-val');
+        document.querySelector('[name="tenureUnit"]').value = unit;
+        const t = document.getElementById('tenure');
+        if (unit === 'months') { t.min = 3; t.max = 360; t.value = Math.min(360, Math.max(3, parseFloat(t.value) * 12)); }
+        else { t.min = 1; t.max = 30; t.value = Math.min(30, Math.max(1, Math.round(parseFloat(t.value) / 12))); }
+        DC.setRangeValue(t, t.value, false);
+        document.getElementById('out-tenure').textContent = tenureLabel();
+        compute();
+      });
+    });
+    // live out-tenure sync
+    document.getElementById('tenure').addEventListener('input', function () {
+      document.getElementById('out-tenure').textContent = tenureLabel();
+    });
+
+    function compute() {
+      const P = DC.fnum(document.getElementById('amount').value);
+      const annualRate = DC.fnum(document.getElementById('rate').value);
+      const n = tenureMonths();
+      const r = annualRate / 12 / 100;
+      let emi;
+      if (r === 0) emi = P / n;
+      else emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      const total = emi * n;
+      const interest = total - P;
+
+      document.getElementById('rEmi').textContent = DC.inr(emi);
+      document.getElementById('rPrincipal').textContent = DC.compact(P);
+      document.getElementById('rInterest').textContent = DC.compact(interest);
+      document.getElementById('rTotal').textContent = DC.compact(total);
+      const pPct = Math.round(P / total * 100), iPct = 100 - pPct;
+      document.getElementById('rRatio').textContent = pPct + ' : ' + iPct;
+
+      // chart
+      DC.makeChart('emiChart', {
+        type: 'doughnut',
+        data: {
+          labels: ['Principal', 'Total Interest'],
+          datasets: [{
+            data: [P, interest],
+            backgroundColor: ['#1B3A6B', '#00C2A8'],
+            borderWidth: 0, hoverOffset: 8
+          }]
+        },
+        options: { cutout: '64%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+
+      // amortization
+      const tbody = document.querySelector('#amortTable tbody');
+      let bal = P, yRows = [];
+      const yearly = unit_isYears();
+      function unit_isYears() { return document.querySelector('[name="tenureUnit"]').value === 'years'; }
+      for (let i = 1; i <= n; i++) {
+        const intr = bal * r;
+        const prin = emi - intr;
+        bal -= prin;
+        if (yearly && i % 12 === 0) {
+          yRows.push({ yr: i / 12, prin: 0, intr: 0, bal: Math.max(0, bal) });
+        } else if (!yearly) {
+          yRows.push({ yr: i, prin: prin, intr: intr, bal: Math.max(0, bal) });
+        }
+      }
+      // For yearly mode, accumulate
+      if (yearly) {
+        // recompute yearly sums
+        let b2 = P, yi = 0, yp = 0, yr = 1;
+        const rows = [];
+        for (let i = 1; i <= n; i++) {
+          const intr = b2 * r; const prin = emi - intr; b2 -= prin; yi += intr; yp += prin;
+          if (i % 12 === 0) { rows.push({ yr: yr, prin: yp, intr: yi, bal: Math.max(0, b2) }); yi = 0; yp = 0; yr++; }
+        }
+        yRows = rows;
+      }
+      tbody.innerHTML = yRows.map(function (row) {
+        return '<tr><td>' + (yearly ? 'Year ' : 'Month ') + row.yr + '</td><td class="num">' + DC.compact(row.prin) + '</td><td class="num">' + DC.compact(row.intr) + '</td><td class="num">' + DC.compact(row.bal) + '</td></tr>';
+      }).join('');
+
+      // recommendation
+      const ratio = interest / P;
+      const reco = document.getElementById('recoText');
+      const title = document.getElementById('recoTitle');
+      if (ratio > 0.6) { title.textContent = '⚠ High interest burden'; reco.textContent = 'You\'re paying ' + DC.pct(ratio * 100) + ' of the principal as interest. Prepaying even one extra EMI each year, or shortening the tenure slightly, can save you lakhs.'; }
+      else if (ratio > 0.3) { title.textContent = 'Reasonable cost of borrowing'; reco.textContent = 'Your interest is ' + DC.pct(ratio * 100) + ' of principal — fairly typical. Keep your EMI under 40% of take-home pay and you\'re in good shape.'; }
+      else { title.textContent = 'Low-cost loan ✅'; reco.textContent = 'Excellent — you\'re paying only ' + DC.pct(ratio * 100) + ' of principal as interest. This is a cheap loan; no urgent action needed.'; }
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amount', 'rate', 'tenure'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const emi = document.getElementById('rEmi').textContent;
+      DC.shareWhatsApp('My loan EMI is ' + emi + '/month — calculate yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      DC.copyResult('EMI: ' + document.getElementById('rEmi').textContent + '\nTotal Interest: ' + document.getElementById('rInterest').textContent + '\nTotal Payable: ' + document.getElementById('rTotal').textContent);
+    });
+  </script>
+</body>
+</html>

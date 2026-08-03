@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESI Contribution Calculator India — Employee & Employer | DecideCalc</title>
+  <meta name="description" content="Calculate monthly ESI contributions in India: employee 0.75%, employer 3.25%, ₹21,000 wage ceiling and ₹25,000 ceiling for persons with disability. Includes contribution-period continuation guidance.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/esi-contribution-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span class="sep" aria-hidden="true">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">ESI Contribution Calculator</span></nav>
+
+    <div class="calc-layout">
+      <section class="calc-shell reveal" aria-labelledby="calculator-title">
+        <div class="calc-header"><span class="ic" id="ic" aria-hidden="true"></span><div><h1 id="calculator-title">ESI Contribution Calculator</h1><div class="sub">Monthly employee and employer contribution under the ESI scheme</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label for="wages">Monthly ESI wages / fixed remuneration (₹)</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="wages" type="number" min="0" max="10000000" step="0.01" value="21000" inputmode="decimal" aria-describedby="wages-hint"></div>
+            <div class="hint" id="wages-hint">Enter monthly wages that are treated as ESI wages by your employer.</div>
+          </div>
+          <div class="field">
+            <label for="allowance">Included monthly allowance / wage component (₹)</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="allowance" type="number" min="0" max="10000000" step="0.01" value="0" inputmode="decimal" aria-describedby="allowance-hint"></div>
+            <div class="hint" id="allowance-hint">Optional. Add only allowances or components included in ESI wages by your payroll. Do not guess excluded components.</div>
+          </div>
+          <div class="field">
+            <label for="ceiling">Applicable monthly wage ceiling</label>
+            <select class="select" id="ceiling" aria-describedby="ceiling-hint">
+              <option value="21000" selected>₹21,000 — standard ceiling</option>
+              <option value="25000">₹25,000 — person with disability</option>
+            </select>
+            <div class="hint" id="ceiling-hint">Select the higher ceiling only where the person with disability provision applies.</div>
+          </div>
+          <div class="note" style="margin:0 0 18px">
+            <input id="continued" type="checkbox" style="width:18px;height:18px;accent-color:var(--accent-600);margin-top:3px;flex:0 0 auto">
+            <div><label for="continued" style="font-weight:700;cursor:pointer">Continue contribution after crossing the ceiling</label><div style="color:var(--text-soft);font-size:.84rem;margin-top:3px">Use only if the employee was already covered at the start of the current contribution period and wages have risen above the selected ceiling. Contributions continue on actual ESI wages until that period ends.</div></div>
+          </div>
+          <p id="inputMessage" role="alert" aria-live="polite" style="min-height:1.3em;color:var(--danger);font-size:.84rem;margin:-8px 0 12px"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate ESI Contribution</button>
+        </div>
+      </section>
+
+      <section class="result-panel reveal d2" aria-label="ESI contribution result" aria-live="polite">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rMainLbl">Total monthly ESI contribution</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rWages">—</div><div class="k">ESI wages used</div></div>
+          <div class="result-stat"><div class="v" id="rEmployee">—</div><div class="k">Employee (0.75%)</div></div>
+          <div class="result-stat"><div class="v" id="rEmployer">—</div><div class="k">Employer (3.25%)</div></div>
+          <div class="result-stat"><div class="v" id="rEligibility">—</div><div class="k">Coverage / calculation</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc" aria-hidden="true"></span><div><h4 id="recoTitle">Enter ESI wage components accurately</h4><p id="recoText">The calculator applies the stated contribution rates to the full monthly ESI wages. The wage ceiling is an eligibility test; it is not a cap on the wage amount used for contributions when coverage applies.</p></div></div>
+      </section>
+    </div>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:16px">Related calculators</h2><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How this ESI contribution calculator works</h2>
+      <table class="breakdown" aria-label="ESI contribution formula">
+        <thead><tr><th>Item</th><th>Formula</th><th class="num">Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Contributory ESI wages</td><td>Fixed ESI wages + included allowance / wage component</td><td class="num">—</td></tr>
+          <tr><td>Employee contribution</td><td>Contributory ESI wages × 0.0075</td><td class="num">0.75%</td></tr>
+          <tr><td>Employer contribution</td><td>Contributory ESI wages × 0.0325</td><td class="num">3.25%</td></tr>
+          <tr><td>Total monthly contribution</td><td>Employee + employer contribution</td><td class="num">4.00%</td></tr>
+        </tbody>
+      </table>
+      <p class="mt-2">For a person ordinarily assessed at the ceiling, coverage is indicated when monthly ESI wages are at or below ₹21,000 (₹25,000 for a qualifying person with disability). If an employee is already covered and earnings cross the ceiling during a contribution period, ESI contributions generally continue through the end of that period; select the continuation control only for that situation.</p>
+      <div class="note mt-2"><span id="fIcon" aria-hidden="true"></span><div><b>Payroll caveat:</b> “Wages” under the ESI Act and payroll treatment of allowances can be fact-specific. This estimator does not decide which components your employer must include, and it does not replace the ESIC record, wage register, or professional payroll advice.</div></div>
+    </section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Eligibility versus contribution calculation</h2>
+      <p class="mt-2"><b>Eligibility:</b> the selected ₹21,000 or ₹25,000 ceiling helps assess whether an employee falls within ESI coverage on wages. <b>Calculation:</b> once coverage applies, the current rates are calculated on the actual contributory ESI wages entered here, not merely on the ceiling amount. This page therefore shows ₹0 when wages are above the applicable ceiling and no continuation is selected; it does not treat that as a wage cap.</p>
+      <p class="mt-2">Contribution periods are generally 1 April–30 September and 1 October–31 March. Whether a particular salary change, joining date, wage component, exemption, or establishment is covered should be verified with ESIC or the employer’s payroll team.</p>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/toolkit.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      DC.page = { slug: 'esi-contribution-calculator', faqs: [
+        { q: 'What are the current ESI contribution rates?', a: 'For the rates used by this calculator, the employee contribution is 0.75% of contributory wages and the employer contribution is 3.25%, making 4.00% in total. Confirm current rates with ESIC or your payroll team before relying on an estimate, as statutory rules can change.' },
+        { q: 'Is the ₹21,000 ceiling a cap on contributions?', a: 'No. It is primarily a coverage threshold. When ESI coverage applies, the contribution is calculated on the actual contributory wages, not capped at ₹21,000. The higher ₹25,000 threshold is for the applicable person-with-disability provision.' },
+        { q: 'What happens if salary crosses the wage ceiling mid-period?', a: 'If the person was already covered at the beginning of a contribution period and wages cross the ceiling during that period, contributions generally continue until its end. This calculator has a specific continuation control for that case; it is not an eligibility override for a newly joining or otherwise uncovered employee.' },
+        { q: 'Which allowances should be entered as ESI wages?', a: 'That depends on the statutory definition of wages, the employment terms, and applicable ESIC guidance or decisions. Use your employer’s payroll classification or seek professional advice. This calculator lets you add an included component but cannot determine whether an allowance is legally includible.' }
+      ] };
+      DC.initCalcPage();
+      document.getElementById('ic').innerHTML = DC.icon('briefcase');
+      document.getElementById('recoIc').innerHTML = DC.icon('check');
+      document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+      var DEFAULTS = { wages: '21000', allowance: '0', ceiling: '21000', continued: false };
+      var ids = ['rMain', 'rWages', 'rEmployee', 'rEmployer', 'rEligibility'];
+
+      function money(value) {
+        return DC.inr(value, 2);
+      }
+
+      function clearResults() {
+        ids.forEach(function (id) { document.getElementById(id).textContent = '—'; });
+        document.getElementById('rMainLbl').textContent = 'Total monthly ESI contribution';
+      }
+
+      function readNonNegativeNumber(id, label) {
+        var element = document.getElementById(id);
+        var raw = element.value.trim();
+        var value = Number(raw);
+        if (raw === '' || !Number.isFinite(value) || value < 0 || value > 10000000 || !element.validity.valid) {
+          return { valid: false, message: 'Enter a valid ' + label + ' from ₹0 to ₹1,00,00,000.' };
+        }
+        return { valid: true, value: value };
+      }
+
+      function setRecommendation(title, text) {
+        document.getElementById('recoTitle').textContent = title;
+        document.getElementById('recoText').textContent = text;
+      }
+
+      function compute() {
+        var wages = readNonNegativeNumber('wages', 'monthly ESI wage');
+        var allowance = readNonNegativeNumber('allowance', 'included allowance');
+        var message = document.getElementById('inputMessage');
+        if (!wages.valid || !allowance.valid) {
+          message.textContent = !wages.valid ? wages.message : allowance.message;
+          clearResults();
+          setRecommendation('Check the wage inputs', 'No contribution is shown until both wage fields contain valid non-negative amounts. Blank, negative, out-of-range and invalid decimal inputs are not treated as zero.');
+          return;
+        }
+
+        message.textContent = '';
+        var contributoryWages = wages.value + allowance.value;
+        var ceiling = Number(document.getElementById('ceiling').value);
+        var continued = document.getElementById('continued').checked;
+        var withinCeiling = contributoryWages <= ceiling;
+        var contributionApplies = withinCeiling || continued;
+        var employee = contributionApplies ? contributoryWages * 0.0075 : 0;
+        var employer = contributionApplies ? contributoryWages * 0.0325 : 0;
+        var total = employee + employer;
+
+        document.getElementById('rWages').textContent = money(contributoryWages);
+        document.getElementById('rEmployee').textContent = money(employee);
+        document.getElementById('rEmployer').textContent = money(employer);
+        document.getElementById('rMain').textContent = money(total);
+
+        if (contributoryWages === 0) {
+          document.getElementById('rEligibility').textContent = '₹0 wages';
+          document.getElementById('rMainLbl').textContent = 'No contribution on ₹0 entered wages';
+          setRecommendation('₹0 is a valid wage input', 'The contribution is ₹0 because the monthly ESI wages entered are ₹0. Verify that this accurately represents the payroll month before using the result.');
+        } else if (withinCeiling) {
+          document.getElementById('rEligibility').textContent = 'Within ceiling';
+          document.getElementById('rMainLbl').textContent = 'Total monthly ESI contribution';
+          setRecommendation('Within the selected wage ceiling', 'At ' + money(contributoryWages) + ', the entered wages are at or below the selected ' + money(ceiling) + ' ceiling. The contributions shown use the full entered ESI wage amount.');
+        } else if (continued) {
+          document.getElementById('rEligibility').textContent = 'Period continued';
+          document.getElementById('rMainLbl').textContent = 'Total while contribution period continues';
+          setRecommendation('Continuation selected after the ceiling was crossed', 'The entered wages exceed ' + money(ceiling) + ', but the calculator applies contributions because you selected existing coverage through the contribution period. Confirm the period and payroll status with your employer.');
+        } else {
+          document.getElementById('rEligibility').textContent = 'Above ceiling';
+          document.getElementById('rMainLbl').textContent = 'No contribution under the selected eligibility assumption';
+          setRecommendation('Above the selected wage ceiling', 'The entered wages exceed ' + money(ceiling) + '. This result assumes the employee is not in an existing contribution period that must continue. Select the continuation control only when that specific rule applies.');
+        }
+      }
+
+      document.getElementById('calcBtn').addEventListener('click', compute);
+      ['wages', 'allowance', 'ceiling', 'continued'].forEach(function (id) {
+        var element = document.getElementById(id);
+        element.addEventListener('input', compute);
+        element.addEventListener('change', compute);
+      });
+      document.getElementById('resetBtn').addEventListener('click', function () {
+        document.getElementById('wages').value = DEFAULTS.wages;
+        document.getElementById('allowance').value = DEFAULTS.allowance;
+        document.getElementById('ceiling').value = DEFAULTS.ceiling;
+        document.getElementById('continued').checked = DEFAULTS.continued;
+        compute();
+        DC.toast('Calculator reset', 'success');
+      });
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        DC.shareWhatsApp('My monthly ESI contribution: ' + document.getElementById('rMain').textContent + ' (employee ' + document.getElementById('rEmployee').textContent + ', employer ' + document.getElementById('rEmployer').textContent + ') — via DecideCalc');
+      });
+      document.getElementById('copyBtn').addEventListener('click', function () {
+        DC.copyResult('ESI Contribution Calculator\nESI wages used: ' + document.getElementById('rWages').textContent + '\nEmployee (0.75%): ' + document.getElementById('rEmployee').textContent + '\nEmployer (3.25%): ' + document.getElementById('rEmployer').textContent + '\nTotal: ' + document.getElementById('rMain').textContent + '\nStatus: ' + document.getElementById('rEligibility').textContent);
+      });
+
+      compute();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Intake Calculator — How Much Water Per Day? | DecideCalc</title>
+  <meta name="description" content="Free daily water intake calculator. Personalised by body weight, activity, climate and diet. Convert your needs into glasses, bottles & litres.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/water-intake-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>Water Intake Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Water Intake Calculator</h1><div class="sub">Personalised, not the 8-glass myth</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Body weight (kg)</label>
+            <div class="range-out"><span class="range-val" id="out-kg">65 kg</span></div>
+            <input type="range" id="kg" min="30" max="180" step="1" value="65" data-suffix=" kg">
+          </div>
+          <div class="field"><label>Exercise minutes today</label>
+            <div class="range-out"><span class="range-val" id="out-ex">30 min</span></div>
+            <input type="range" id="ex" min="0" max="180" step="5" value="30" data-suffix=" min">
+          </div>
+          <div class="field"><label>Climate where you live</label>
+            <select class="select" id="climate">
+              <option value="0">Cool / hill regions / AC all day</option>
+              <option value="300" selected>Moderate (most Indian cities Oct–Feb)</option>
+              <option value="600">Hot & humid / summer Apr–Jun</option>
+            </select>
+          </div>
+          <label class="check" style="margin:4px 0 6px"><input type="checkbox" id="preg"> Pregnant or breastfeeding (+700 ml)</label>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Total daily water target</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rGlasses">—</div><div class="k">250 ml glasses</div></div>
+          <div class="result-stat"><div class="v" id="rBottles">—</div><div class="k">1-L bottles</div></div>
+          <div class="result-stat"><div class="v" id="rHourly">—</div><div class="k">Per waking hour (~16h)</div></div>
+          <div class="result-stat"><div class="v" id="rCPP">—</div><div class="k">Cups of tea/coffee OK?</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Trust your thirst signal</h4><p id="recoText">The classic "8 glasses a day" ignores body size & climate. A 50-kg person in a cool climate needs far less than a 90-kg athlete in Chennai summer. Personalise it.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Where the numbers come from</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Base:</b> ~33 ml per kg of body weight (per European Food Safety Authority guidance)</li>
+        <li><b>Exercise:</b> +350 ml per 30 min of moderate-intensity exercise</li>
+        <li><b>Climate:</b> hot/humid adds 300–600 ml via increased sweat</li>
+        <li><b>Pregnancy/breastfeeding:</b> +700 ml baseline</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Fluid ≠ water:</b> tea, coffee, fruit, soups and curries count — roughly 20–30% of typical Indian fluid intake comes from food. Coffee is mildly diuretic but net-positive overall.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'water-intake-calculator', faqs: [
+      { q: 'Does tea & coffee count toward intake?', a: 'Yes — caffeine\'s diuretic effect is mild (~5 ml extra urine per cup) and limited to heavy users. 3–4 cups a day still net you fluid. Plain water remains the cheapest/easiest source.' },
+      { q: 'Can I drink too much water?', a: 'Yes. Hyponatremia (dangerously low blood sodium) can happen if you chug >1L/hr for extended periods. Stick to your calculated target distributed across the waking day.' },
+      { q: 'Do I need more on protein-heavy diets?', a: 'Mildly. High protein raises urea production which needs water to excrete. Consider +250-500 ml if you\'re on a muscle-gain cutting diet above 1.8 g/kg protein.' },
+      { q: 'What\'s a good hydration check?', a: 'Urine colour. Pale yellow = good. Dark yellow = drink more. Crystal clear = backing off a little is fine (over-hydration washes out electrolytes).' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('heart');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    function compute() {
+      const kg = DC.fnum(document.getElementById('kg').value);
+      const ex = DC.fnum(document.getElementById('ex').value);
+      const climate = parseInt(document.getElementById('climate').value, 10);
+      const preg = document.getElementById('preg').checked;
+      document.getElementById('out-kg').textContent = kg + ' kg';
+      document.getElementById('out-ex').textContent = ex + ' min';
+      if (kg < 30 || kg > 180) {
+        ['rMain','rGlasses','rBottles','rHourly','rCPP'].forEach(function (id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      let ml = kg * 33 + (ex / 30) * 350 + climate + (preg ? 700 : 0);
+      ml = Math.round(ml / 50) * 50;
+      document.getElementById('rMain').textContent = (ml / 1000).toFixed(1) + ' L';
+      document.getElementById('rLbl').textContent = 'Daily total — ' + ml.toLocaleString('en-IN') + ' ml';
+      document.getElementById('rGlasses').textContent = Math.round(ml / 250) + ' × 250ml';
+      document.getElementById('rBottles').textContent = (ml / 1000).toFixed(1) + ' × 1L';
+      document.getElementById('rHourly').textContent = Math.round(ml / 16) + ' ml';
+      document.getElementById('rCPP').textContent = 'Yes — count as fluid';
+      const tip = kg < 55 ? 'Smaller body = smaller target. Sip consistently.' :
+                  ex >= 60 ? 'Substantial workout today — front-load 500 ml before exercise.' :
+                  climate >= 600 ? 'Hot climate day — electrolytes matter. Add a glass of ORS or coconut water post-sweat.' :
+                  'Steady sipping all day beats chugging 1L at dinner.';
+      document.getElementById('recoTitle').textContent = 'Roughly ' + (ml/250).toFixed(0) + ' glasses a day';
+      document.getElementById('recoText').textContent = tip;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['kg','ex','climate'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    document.getElementById('preg').addEventListener('change', compute);
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My daily water target: ' + document.getElementById('rMain').textContent + ' — DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Daily water target: ' + document.getElementById('rMain').textContent + ' (' + document.getElementById('rGlasses').textContent + ' glasses)'); });
+  </script>
+</body>
+</html>

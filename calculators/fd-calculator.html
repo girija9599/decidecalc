@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FD Calculator — Fixed Deposit Maturity & Interest | DecideCalc</title>
+  <meta name="description" content="Free FD calculator: compute Fixed Deposit maturity value and interest earned with monthly/quarterly/half-yearly/yearly compounding. Useful for SBI, HDFC, ICICI & post-office FDs.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/fd-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>FD Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>FD Calculator</h1><div class="sub">Compound frequency matters</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Deposit amount (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-amt">₹1,00,000</span></div>
+            <input type="range" id="amt" min="1000" max="10000000" step="1000" value="100000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Interest rate (% per year)</label>
+            <input class="input" id="rate" type="number" min="0.1" max="15" step="0.05" value="7.0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Years</label><input class="input" id="yrs" type="number" min="0" max="30" step="1" value="5"></div>
+            <div class="field"><label>Months (+)</label><input class="input" id="mo" type="number" min="0" max="11" step="1" value="0"></div>
+          </div>
+          <div class="field"><label>Compounding frequency</label>
+            <select class="select" id="freq">
+              <option value="1">Yearly</option>
+              <option value="2">Half-Yearly</option>
+              <option value="4" selected>Quarterly (most banks)</option>
+              <option value="12">Monthly</option>
+            </select>
+          </div>
+          <label class="check" style="margin:2px 0 14px"><input type="checkbox" id="senior"> Senior citizen (+0.50% rate bonus)</label>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Maturity</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Maturity value</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInt">—</div><div class="k">Interest earned</div></div>
+          <div class="result-stat"><div class="v" id="rDep">—</div><div class="k">Principal</div></div>
+          <div class="result-stat"><div class="v" id="rEff">—</div><div class="k">Effective annual yield</div></div>
+          <div class="result-stat"><div class="v" id="rDouble">—</div><div class="k">Years to double (72 rule)</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="fdChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Current bank floor: 6.5–7.5%</h4><p id="recoText">SBI/HDFC/ICICI public FDs currently run 6.5–7.5% for 1–5 yr terms (seniors +0.5%). Small-finance banks pay 8–9% but check DICGC's ₹5 L deposit insurance limit per bank.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>FD formula</h2>
+      <p class="mt-2">Maturity = Principal × (1 + r/n)<sup>n×t</sup> where r = annual rate, n = compounds per year, t = years. Quarterly compounding (n=4) is the standard at most Indian banks — the RBI mandates quarterly compounding for FDs under 1 year.</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>₹1L at 7% quarterly for 5 yrs → ₹1,41,478 (₹41,478 interest)</li>
+        <li>Same principal at monthly compounding → ₹1,41,762 (₹284 more)</li>
+        <li><b>TDS:</b> banks deduct 10% TDS on interest above ₹40,000/yr (₹50,000 for seniors) — file ITR to claim refund if you're in a lower slab.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Ladder strategy:</b> split ₹5L across 5 annual FDs of ₹1L each. Every year one matures — you get liquidity AND catch any rate rises.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'fd-calculator', faqs: [
+      { q: 'Is FD interest taxable?', a: 'Yes — fully. Interest is added to your income and taxed at your slab. Banks also deduct 10% TDS once yearly interest crosses ₹40,000 (₹50,000 if you\'re a senior citizen).' },
+      { q: 'What happens if I break my FD early?', a: 'The bank pays the rate applicable for the shorter tenure held — and deducts ~0.5-1% penalty. A 5-yr FD broken at 2 yrs earns only the 2-yr rate, minus penalty.' },
+      { q: 'Are small-finance banks (SFBs) safe?', a: 'Yes, up to ₹5 lakh per depositor per bank (DICGC insurance covers principal + interest). Above that limit, prefer nationalised banks (SBI, PNB) or established private banks.' },
+      { q: 'Quarterly vs monthly compounding — does it really matter?', a: 'Small but real. ₹1L at 7% for 10 yrs quarterly → ₹2,01,598; monthly → ₹2,01,929. The long-haul gap grows to ~₹1,700 by 20 yrs.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('piggy');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      const P = DC.fnum(document.getElementById('amt').value);
+      let rate = DC.fnum(document.getElementById('rate').value);
+      const yrs = Math.max(0, DC.fnum(document.getElementById('yrs').value));
+      const mo = Math.max(0, Math.min(11, DC.fnum(document.getElementById('mo').value)));
+      const n = parseInt(document.getElementById('freq').value, 10);
+      const t = yrs + mo / 12;
+      if (P <= 0 || rate <= 0 || rate > 15 || t <= 0) {
+        ['rMain','rInt','rDep','rEff','rDouble'].forEach(function (id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      if (document.getElementById('senior').checked) rate += 0.5;
+      const maturity = P * Math.pow(1 + rate / 100 / n, n * t);
+      const interest = maturity - P;
+      const effYield = (Math.pow(1 + rate / 100 / n, n) - 1) * 100;
+      const dblYrs = 72 / rate;
+
+      document.getElementById('rMain').textContent = DC.compact(maturity);
+      document.getElementById('rLbl').textContent = 'Maturity in ' + (yrs ? yrs + ' yr' + (yrs !== 1 ? 's' : '') : '') + (mo ? (yrs ? ' ' : '') + mo + ' mo' : '');
+      document.getElementById('rInt').textContent = DC.compact(interest);
+      document.getElementById('rDep').textContent = DC.compact(P);
+      document.getElementById('rEff').textContent = effYield.toFixed(2) + '%';
+      document.getElementById('rDouble').textContent = dblYrs.toFixed(1) + ' yrs';
+
+      // growth curve yearly
+      const labels = [], series = [];
+      for (let y = 0; y <= Math.ceil(t); y++) {
+        const t2 = Math.min(t, y);
+        series.push(Math.round(P * Math.pow(1 + rate/100/n, n*t2)));
+        labels.push('Yr ' + y);
+      }
+      DC.makeChart('fdChart', {
+        type: 'line',
+        data: { labels: labels, datasets: [{ label: 'FD value', data: series, borderColor: '#4338CA', backgroundColor: 'rgba(67,56,202,.12)', fill: true, tension: .3, pointRadius: 0, borderWidth: 2 }] },
+        options: { plugins: { tooltip: { callbacks: { label: function (c) { return DC.compact(c.raw); } } } }, scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amt','rate','yrs','mo','freq'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('senior').addEventListener('change', compute);
+    document.getElementById('amt').addEventListener('input', function () { document.getElementById('out-amt').textContent = '₹' + parseInt(this.value,10).toLocaleString('en-IN'); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('FD maturity: ' + document.getElementById('rMain').textContent + ', interest ' + document.getElementById('rInt').textContent + ' — try DecideCalc FD Calculator!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('FD Result\nPrincipal: ' + document.getElementById('rDep').textContent + '\nInterest: ' + document.getElementById('rInt').textContent + '\nMaturity: ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

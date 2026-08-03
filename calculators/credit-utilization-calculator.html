@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Utilization Calculator — Overall & Per-Card Ratio | DecideCalc</title>
+  <meta name="description" content="Calculate overall and highest-card credit utilization from revolving credit limits and reported balances. Get a clear utilization band and practical next step.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/credit-utilization-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>Credit Utilization Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Credit Utilization Calculator</h1><div class="sub">Overall ratio · highest card · revolving credit only</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label for="currency">Display currency</label>
+            <select class="input" id="currency" aria-describedby="currencyHelp">
+              <option value="USD" selected>USD — US Dollar ($)</option>
+              <option value="EUR">EUR — Euro (€)</option>
+              <option value="GBP">GBP — British Pound (£)</option>
+              <option value="CAD">CAD — Canadian Dollar (CA$)</option>
+              <option value="AUD">AUD — Australian Dollar (A$)</option>
+              <option value="INR">INR — Indian Rupee (₹)</option>
+              <option value="JPY">JPY — Japanese Yen (¥)</option>
+            </select>
+            <small id="currencyHelp" style="color:var(--text-soft)">Use one currency consistently. The ratio is the same in every currency.</small>
+          </div>
+          <div class="field">
+            <label for="totalLimit">Total revolving credit limits</label>
+            <div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix" id="totalLimit" type="number" inputmode="decimal" min="0" step="0.01" value="10000" required aria-describedby="totalsHelp"></div>
+            <small id="totalsHelp" style="color:var(--text-soft)">Add open credit-card and revolving line limits. Do not include installment loans.</small>
+          </div>
+          <div class="field">
+            <label for="totalBalance">Total reported revolving balances</label>
+            <div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix" id="totalBalance" type="number" inputmode="decimal" min="0" step="0.01" value="2000"></div>
+          </div>
+
+          <div class="note" style="margin:18px 0 14px"><span id="cardsIcon"></span><div><b>Optional: individual cards</b><br>Use these to see the highest individual-card ratio. They do not replace or change the overall totals above.</div></div>
+          <div class="field" style="margin-bottom:8px"><label>Individual revolving accounts</label></div>
+          <div id="cardRows">
+            <div class="field-row card-row">
+              <div class="field"><label for="card1Limit">Card 1 limit</label><div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix card-limit" id="card1Limit" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Optional"></div></div>
+              <div class="field"><label for="card1Balance">Card 1 balance</label><div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix card-balance" id="card1Balance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Optional"></div></div>
+            </div>
+            <div class="field-row card-row">
+              <div class="field"><label for="card2Limit">Card 2 limit</label><div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix card-limit" id="card2Limit" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Optional"></div></div>
+              <div class="field"><label for="card2Balance">Card 2 balance</label><div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix card-balance" id="card2Balance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Optional"></div></div>
+            </div>
+            <div class="field-row card-row">
+              <div class="field"><label for="card3Limit">Card 3 limit</label><div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix card-limit" id="card3Limit" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Optional"></div></div>
+              <div class="field"><label for="card3Balance">Card 3 balance</label><div class="input-wrap"><span class="prefix money-prefix">$</span><input class="input with-prefix card-balance" id="card3Balance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Optional"></div></div>
+            </div>
+          </div>
+          <p id="validation" role="alert" aria-live="polite" style="color:var(--signal-red, #E5484D);margin:4px 0 12px;min-height:1.4em"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate utilization</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rUtilization">20.0%</div><div class="lbl">Overall credit utilization</div></div>
+        <div style="text-align:center;margin-top:10px"><span class="signal green" id="signal">LOW UTILIZATION</span></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rAvailable">$8,000</div><div class="k">Remaining available credit</div></div>
+          <div class="result-stat"><div class="v" id="rHighest">—</div><div class="k">Highest individual-card utilization</div></div>
+          <div class="result-stat"><div class="v" id="rBand">Low</div><div class="k">Utilization band</div></div>
+          <div class="result-stat"><div class="v" id="rReported">$2,000</div><div class="k">Reported revolving balances</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="utilizationChart" aria-label="Doughnut chart showing used and available revolving credit" role="img"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Low utilization</h4><p id="recoText">Your balances use 20.0% of your reported revolving limits. Keeping reported balances lower may support a stronger credit profile, but scoring models differ.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How credit utilization is calculated</h2>
+      <p class="mt-2"><b>Overall utilization = total reported revolving balances ÷ total revolving credit limits × 100.</b> For example, a $2,000 balance divided by a $10,000 total limit is 20% utilization. This calculator uses reported revolving balances and limits, such as credit cards and revolving credit lines.</p>
+      <div class="field-row" style="margin-top:16px">
+        <div><h3 style="font-size:1.05rem">Overall vs. per-card utilization</h3><p style="color:var(--text-soft);margin-top:6px">A lender or score may consider both your total ratio and how much of each card is used. One card near its limit can matter even when the total ratio looks moderate. Enter optional card details above to find the highest individual ratio.</p></div>
+        <div><h3 style="font-size:1.05rem">What is not included</h3><p style="color:var(--text-soft);margin-top:6px">Installment loans such as mortgages, auto loans, personal loans, and student loans generally are not part of this revolving-credit utilization formula. They can affect creditworthiness in other ways.</p></div>
+      </div>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Important:</b> There is no single universal credit score or guaranteed score change. Credit bureau data, scoring model, timing of statement reporting, payment history, and other factors can produce different results. This is educational guidance, not credit advice.</div></div>
+    </section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Utilization bands used here</h2>
+      <div class="result-grid" style="margin-top:14px">
+        <div class="result-stat"><div class="v">0–9%</div><div class="k">Excellent</div></div>
+        <div class="result-stat"><div class="v">10–29%</div><div class="k">Low</div></div>
+        <div class="result-stat"><div class="v">30–49%</div><div class="k">High</div></div>
+        <div class="result-stat"><div class="v">50%+</div><div class="k">Very high</div></div>
+      </div>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'credit-utilization-calculator', faqs: [
+      { q: 'What is credit utilization?', a: 'Credit utilization is the percentage of available revolving credit that appears as a reported balance: total revolving balances divided by total revolving credit limits, multiplied by 100. Credit cards and revolving lines are typical examples.' },
+      { q: 'Does credit utilization include mortgages or other installment loans?', a: 'Usually no. The utilization ratio shown here is for revolving credit. Mortgages, auto loans, student loans, and other installment loans can affect a credit profile, but their remaining balance is not normally added to revolving utilization.' },
+      { q: 'What is a good credit utilization ratio?', a: 'There is no ratio that guarantees a score outcome, and models differ. This tool labels 0–9% as excellent and 10–29% as low. In general, lower reported revolving utilization is often viewed more favorably than higher utilization.' },
+      { q: 'Why does my highest individual card utilization matter?', a: 'Credit reports and scoring models may look at both total utilization and utilization on individual revolving accounts. A card carrying a large share of its own limit can be a concern even if your overall percentage is lower.' },
+      { q: 'When should I pay a card balance to lower reported utilization?', a: 'Reporting dates vary by issuer and bureau. Paying before a statement closes may lower the balance that is reported, but confirm the issuer\'s reporting practice. Always make at least the required payment by its due date.' }
+    ] };
+
+    DC.initCalcPage();
+
+    document.getElementById('ic').innerHTML = DC.icon('pie');
+    document.getElementById('cardsIcon').innerHTML = DC.icon('bank');
+    document.getElementById('recoIc').innerHTML = DC.icon('target');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    var CARD_IDS = [['card1Limit', 'card1Balance'], ['card2Limit', 'card2Balance'], ['card3Limit', 'card3Balance']];
+    var DEFAULTS = { currency: 'USD', totalLimit: '10000', totalBalance: '2000' };
+
+    function currencyCode() { return document.getElementById('currency').value; }
+    function money(value) {
+      var currency = currencyCode();
+      var digits = currency === 'JPY' ? 0 : 2;
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency: currency, maximumFractionDigits: digits, minimumFractionDigits: digits }).format(value);
+    }
+    function setPrefixes() {
+      var symbol = { USD: '$', EUR: '€', GBP: '£', CAD: 'CA$', AUD: 'A$', INR: '₹', JPY: '¥' }[currencyCode()] || '$';
+      document.querySelectorAll('.money-prefix').forEach(function (el) { el.textContent = symbol; });
+    }
+    function readAmount(id) {
+      var raw = document.getElementById(id).value.trim();
+      if (raw === '') return { value: 0, empty: true, valid: true };
+      var value = Number(raw);
+      return { value: value, empty: false, valid: Number.isFinite(value) && value >= 0 };
+    }
+    function showInvalid(message) {
+      document.getElementById('validation').textContent = message;
+      ['rUtilization', 'rAvailable', 'rHighest', 'rBand', 'rReported'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      var signal = document.getElementById('signal');
+      signal.className = 'signal red';
+      signal.textContent = 'CHECK YOUR INPUTS';
+      document.getElementById('recoTitle').textContent = 'A valid total limit is needed';
+      document.getElementById('recoText').textContent = message;
+      drawChart(0, 1, true);
+    }
+    function bandFor(utilization) {
+      if (utilization <= 9) return { name: 'Excellent', signal: 'green', label: 'EXCELLENT UTILIZATION', title: 'Excellent utilization', text: 'Your reported balances use only ' + utilization.toFixed(1) + '% of available revolving credit. Keep on-time payments and avoid taking on balances you cannot repay.' };
+      if (utilization <= 29) return { name: 'Low', signal: 'green', label: 'LOW UTILIZATION', title: 'Low utilization', text: 'Your reported balances use ' + utilization.toFixed(1) + '% of your available revolving limits. Paying balances down before they report may lower the ratio further, but credit scores differ.' };
+      if (utilization <= 49) return { name: 'High', signal: 'yellow', label: 'HIGH UTILIZATION', title: 'High utilization', text: 'Your reported balances use ' + utilization.toFixed(1) + '% of available revolving credit. Consider paying down balances, especially the highest-utilized card, before adding new charges.' };
+      return { name: 'Very high', signal: 'red', label: 'VERY HIGH UTILIZATION', title: 'Very high utilization', text: 'Your reported balances use ' + utilization.toFixed(1) + '% of available revolving credit. Prioritize on-time payments and a realistic paydown plan; avoid relying on additional revolving debt if possible.' };
+    }
+    function drawChart(used, available, empty) {
+      var usedSlice = Math.max(0, used);
+      var availableSlice = Math.max(0, available);
+      if (usedSlice === 0 && availableSlice === 0) { usedSlice = 1; availableSlice = 1; }
+      DC.makeChart('utilizationChart', {
+        type: 'doughnut',
+        data: { labels: empty ? ['No valid data', ''] : ['Reported balance', 'Available credit'], datasets: [{ data: [usedSlice, availableSlice], backgroundColor: empty ? ['#CBD5E6', '#E8EEF7'] : ['#FF7A45', '#00C2A8'], borderWidth: 0, hoverOffset: empty ? 0 : 6 }] },
+        options: { cutout: '62%', plugins: { legend: { position: 'bottom' }, tooltip: { enabled: !empty, callbacks: { label: function (context) { return context.label + ': ' + money(context.raw); } } } } }
+      });
+    }
+    function compute() {
+      setPrefixes();
+      var limit = readAmount('totalLimit');
+      var balance = readAmount('totalBalance');
+      if (!limit.valid || !balance.valid) { showInvalid('Limits and balances must be numbers that are zero or greater.'); return; }
+      if (limit.empty || limit.value <= 0) { showInvalid('Enter a positive total revolving credit limit to calculate utilization.'); return; }
+
+      var highest = null;
+      for (var i = 0; i < CARD_IDS.length; i++) {
+        var cardLimit = readAmount(CARD_IDS[i][0]);
+        var cardBalance = readAmount(CARD_IDS[i][1]);
+        if (!cardLimit.valid || !cardBalance.valid) { showInvalid('Individual card limits and balances cannot be negative.'); return; }
+        if (!cardLimit.empty || !cardBalance.empty) {
+          if (cardLimit.value <= 0) { showInvalid('Each entered card needs a positive credit limit. Leave both card fields blank if you do not want to include that card.'); return; }
+          var cardUtilization = cardBalance.value / cardLimit.value * 100;
+          if (highest === null || cardUtilization > highest) highest = cardUtilization;
+        }
+      }
+
+      document.getElementById('validation').textContent = '';
+      var utilization = balance.value / limit.value * 100;
+      var available = Math.max(0, limit.value - balance.value);
+      var band = bandFor(utilization);
+      document.getElementById('rUtilization').textContent = utilization.toFixed(1) + '%';
+      document.getElementById('rAvailable').textContent = money(available);
+      document.getElementById('rHighest').textContent = highest === null ? 'Not entered' : highest.toFixed(1) + '%';
+      document.getElementById('rBand').textContent = band.name;
+      document.getElementById('rReported').textContent = money(balance.value);
+      var signal = document.getElementById('signal');
+      signal.className = 'signal ' + band.signal;
+      signal.textContent = band.label;
+      document.getElementById('recoTitle').textContent = band.title;
+      document.getElementById('recoText').textContent = band.text;
+      drawChart(Math.min(balance.value, limit.value), available, false);
+    }
+    function reset() {
+      document.getElementById('currency').value = DEFAULTS.currency;
+      document.getElementById('totalLimit').value = DEFAULTS.totalLimit;
+      document.getElementById('totalBalance').value = DEFAULTS.totalBalance;
+      CARD_IDS.forEach(function (pair) { document.getElementById(pair[0]).value = ''; document.getElementById(pair[1]).value = ''; });
+      compute();
+    }
+
+    ['currency', 'totalLimit', 'totalBalance'].concat(CARD_IDS.flat()).forEach(function (id) {
+      var input = document.getElementById(id);
+      input.addEventListener('input', compute);
+      input.addEventListener('change', compute);
+    });
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('resetBtn').addEventListener('click', reset);
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      DC.copyResult('Credit Utilization Summary\nOverall utilization: ' + document.getElementById('rUtilization').textContent + '\nRemaining available credit: ' + document.getElementById('rAvailable').textContent + '\nHighest individual-card utilization: ' + document.getElementById('rHighest').textContent + '\nBand: ' + document.getElementById('rBand').textContent + '\nFormula: reported revolving balances ÷ total revolving credit limits × 100');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      DC.shareWhatsApp('My overall credit utilization is ' + document.getElementById('rUtilization').textContent + ' (' + document.getElementById('rBand').textContent + '). Calculate yours on DecideCalc.');
+    });
+    compute();
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPF Calculator — Employee Provident Fund Retirement Savings | DecideCalc</title>
+  <meta name="description" content="Free EPF calculator with the real EPS carve-out: 12% employee + 12% employer (of which 8.33% goes to EPS capped at ₹1,250/mo) + projected corpus at retirement.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/epf-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>EPF Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>EPF Calculator</h1><div class="sub">Employee Provident Fund — with real EPS carve-out</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Basic salary + DA (monthly, ₹)</label>
+            <div class="range-out"><span class="range-val" id="out-basic">₹25,000</span></div>
+            <input type="range" id="basic" min="5000" max="500000" step="1000" value="25000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Current age</label>
+            <div class="range-out"><span class="range-val" id="out-age">30 years</span></div>
+            <input type="range" id="age" min="18" max="57" value="30">
+          </div>
+          <div class="field"><label>Expected annual EPF interest (%)</label>
+            <div class="range-out"><span class="range-val" id="out-rate">8.25%</span></div>
+            <input type="range" id="rate" min="7.5" max="9" step="0.05" value="8.25" data-suffix="%">
+          </div>
+          <div class="field"><label>Annual salary growth (%)</label>
+            <div class="range-out"><span class="range-val" id="out-growth">8%</span></div>
+            <input type="range" id="growth" min="0" max="15" step="0.5" value="8" data-suffix="%">
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate EPF Corpus</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">EPF corpus at age 58</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rEmpEE">—</div><div class="k">Your contribution/mo</div></div>
+          <div class="result-stat"><div class="v" id="rEmpER">—</div><div class="k">Employer EPF/mo (after EPS)</div></div>
+          <div class="result-stat"><div class="v" id="rEPS">—</div><div class="k">EPS pension fund/mo (8.33% capped)</div></div>
+          <div class="result-stat"><div class="v" id="rInvest">—</div><div class="k">Total invested (both)</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">EPS caps your pension at ₹7,500/mo</h4><p id="recoText">8.33% of your basic (capped at ₹1,250/mo since September 2014 under the old rules) diverts to the EPS pension scheme, which pays a fixed ₹7,500/mo max regardless of your salary. Only the remaining employer slice compounds at the EPF rate.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Where does your 12% + 12% actually go?</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Employee 12%:</b> fully into your EPF account, earns declared interest (8.25% for FY25)</li>
+        <li><b>Employer 12%:</b> split — 8.33% of basic (max ₹1,250/mo) → EPS pension; the rest → your EPF</li>
+        <li><b>On ₹25K basic:</b> EE ₹3,000 + ER-EPF ₹1,750 + EPS ₹1,250 = ₹6,000 total monthly</li>
+        <li><b>On ₹1L basic:</b> EE ₹12,000 + ER-EPF ₹10,750 + EPS ₹1,250 (still capped!) = ₹24,000</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>2024-25 update:</b> the Supreme Court allowed higher-pension opt-in with joint option, but most employees are still on the capped EPS. This calculator assumes the standard rule — verify on your EPF passbook if you opted for higher pension.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'epf-calculator', faqs: [
+      { q: 'What is the EPF interest rate currently?', a: 'FY2024-25 declared rate is 8.25% p.a., one of the highest guaranteed returns in India. It\'s tax-free up to ₹2.5L annual employee contribution (above that, interest on the excess is taxable).' },
+      { q: 'When can I withdraw EPF?', a: 'Full at 58 or on retirement. Partial allowed after 3 years: 75% for house purchase, 90% (1 year before retirement) — final withdrawal fully at 58. Job change → transfer via UAN, don\'t withdraw (loses compounding and counts as income if job < 5 years).' },
+      { q: 'Can I contribute more than 12%?', a: 'Yes — Voluntary Provident Fund (VPF) lets you add up to 100% of basic + DA. Same rate as EPF, same lock-in, same Section 80C benefit. Often the best \"guaranteed\" vehicle for the 30% tax bracket.' },
+      { q: 'Why is EPS capped at ₹1,250/mo?', a: 'The 8.33% EPS contribution is computed on the lower of (actual basic) or (₹15,000). On ₹15,000 basic it\'s exactly ₹1,250. Higher salaries don\'t attract proportionally higher EPS — this keeps the defined-benefit pension scheme solvent.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('bank');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function compute() {
+      const basic = Math.max(0, DC.fnum(document.getElementById('basic').value));
+      const age = Math.max(0, DC.fnum(document.getElementById('age').value));
+      const rate = Math.max(0, DC.fnum(document.getElementById('rate').value)) / 100;
+      const growth = Math.max(0, DC.fnum(document.getElementById('growth').value)) / 100;
+      document.getElementById('out-basic').textContent = DC.compact(basic);
+      document.getElementById('out-age').textContent = age + ' years';
+      document.getElementById('out-rate').textContent = (rate*100).toFixed(2) + '%';
+      document.getElementById('out-growth').textContent = (growth*100).toFixed(1) + '%';
+      const yrs = Math.max(0, 58 - age);
+      if (yrs === 0 || basic <= 0) {
+        ['rMain','rEmpEE','rEmpER','rEPS','rInvest'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+
+      // Monthly contribution: EE 12% of basic; ER: 8.33% capped at 1250 to EPS, rest to EPF
+      const EPS_CAP = 1250;
+      let b = basic;
+      let corpus = 0;
+      let invested = 0;
+      const r = rate / 12;
+      for (let yr = 0; yr < yrs; yr++) {
+        const ee = b * 0.12;
+        const eps = Math.min(b * 0.0833, EPS_CAP);
+        const erEpf = b * 0.12 - eps;
+        const monthlyToEpf = ee + erEpf;
+        for (let m = 0; m < 12; m++) {
+          corpus = (corpus + monthlyToEpf) * (1 + r);
+          invested += ee + erEpf;
+        }
+        b = b * (1 + growth);
+      }
+      // first-month breakdowns for display
+      const ee = basic * 0.12;
+      const eps = Math.min(basic * 0.0833, EPS_CAP);
+      const erEpf = basic * 0.12 - eps;
+
+      document.getElementById('rMain').textContent = DC.compact(corpus);
+      document.getElementById('rLbl').textContent = 'EPF corpus at age 58 (' + yrs + ' yrs)';
+      document.getElementById('rEmpEE').textContent = DC.inr(Math.round(ee));
+      document.getElementById('rEmpER').textContent = DC.inr(Math.round(erEpf));
+      document.getElementById('rEPS').textContent = DC.inr(Math.round(eps));
+      document.getElementById('rInvest').textContent = DC.compact(invested);
+
+      let title, text;
+      const ratio = corpus / (invested || 1);
+      if (basic > 50000) {
+        title = 'Your EPS pension is capped at ₹7,500/mo regardless';
+        text = 'Even at ₹' + Math.round(basic/1000) + 'K basic, EPS gets only ₹1,250/mo. The employer EPF + your EPF compounding at ' + (rate*100).toFixed(2) + '% is where the real retirement money is. Treat EPS as a small base pension, not the plan.';
+      } else if (ratio > 2.5) {
+        title = 'Compounding is doing the work — don\'t withdraw early';
+        text = 'Of the ₹' + Math.round(corpus/100000).toFixed(1) + 'L at retirement, ₹' + Math.round((corpus - invested)/100000).toFixed(1) + 'L is pure growth. Early withdrawal resets compounding and may be taxable (if service < 5 years).';
+      } else {
+        title = 'EPF alone is rarely a full retirement plan';
+        text = 'At 8.25% with ' + ((growth)*100).toFixed(0) + '% annual growth, this build is safe but slow. Most advisors suggest adding NPS Tier I or diversified equity MF for the remaining 30-40% of retirement savings.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['basic','age','rate','growth'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My EPF corpus at 58: ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('EPF at 58: ' + document.getElementById('rMain').textContent + ' (EE: ' + document.getElementById('rEmpEE').textContent + ', ER-EPF: ' + document.getElementById('rEmpER').textContent + ', EPS: ' + document.getElementById('rEPS').textContent + ')'); });
+  </script>
+</body>
+</html>

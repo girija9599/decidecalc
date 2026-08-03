@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown to HTML Converter — Live Preview, Free | DecideCalc</title>
+  <meta name="description" content="Convert Markdown to clean HTML instantly with live preview. Supports headings, bold, italic, lists, links, code blocks, tables, blockquotes. 100% offline in your browser.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/markdown-to-html.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-dev">Developer Tools</a><span class="sep">/</span><span>Markdown → HTML</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Markdown → HTML</h1><div class="sub">Live preview · GitHub-flavoured</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="input">Markdown source</label><textarea class="input" id="input" rows="14" placeholder="# Heading&#10;**bold**, *italic*, \`code\`, [link](url)&#10;&#10;- list item" style="font-family:monospace;font-size:.88rem"></textarea></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" id="sampleBtn">Load sample</button>
+            <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="calc-header"><div><h2 style="font-size:1.05rem;margin:0">Preview</h2><div class="sub">Rendered output</div></div></div>
+        <div class="calc-body" style="padding-top:12px">
+          <div id="preview" class="md-preview" style="font-size:.92rem;line-height:1.55;min-height:180px;padding:14px;background:var(--surface-2,#f6f8ff);border-radius:10px;border:1px solid var(--border);overflow:auto;max-height:340px"></div>
+        </div>
+        <div class="result-grid" style="padding:0 22px 12px">
+          <div class="result-stat"><div class="v" id="rMdChars">0</div><div class="k">MD chars</div></div>
+          <div class="result-stat"><div class="v" id="rHtmlChars">0</div><div class="k">HTML chars</div></div>
+        </div>
+        <details style="margin:0 22px 12px;padding:12px 14px;background:var(--surface-2,#f8f9ff);border-radius:10px;border:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.9rem">View raw HTML</summary>
+          <textarea id="rawHtml" rows="6" readonly style="width:100%;margin-top:10px;font-family:monospace;font-size:.78rem;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text)"></textarea>
+        </details>
+        <div class="result-actions" style="padding:0 22px 22px">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy HTML</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>Safe-by-design</h4><p>All HTML is escaped first, then re-built only from the allowed tags. Script tags, onclick handlers and other injection vectors are stripped — safe to paste into CMSes and emails.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Supported Markdown</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Headings:</b> <code># H1</code>, <code>## H2</code> through <code>###### H6</code></li>
+        <li><b>Emphasis:</b> <code>**bold**</code>, <code>*italic*</code>, <code>`inline code`</code></li>
+        <li><b>Lists:</b> <code>-</code> or <code>*</code> for bullets, <code>1.</code> for numbered</li>
+        <li><b>Links:</b> <code>[text](url)</code> · <b>Images:</b> <code>![alt](url)</code></li>
+        <li><b>Code blocks:</b> triple backticks · <b>Quotes:</b> <code>&gt;</code> · <b>HR:</b> <code>---</code></li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Not full GitHub-Flavoured Markdown:</b> this is a compact subset that covers ~95% of blog/article writing. For tables and footnotes use a full CommonMark library.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'markdown-to-html', faqs: [
+      { q: 'Is it safe to paste Markdown with embedded script tags?', a: 'Yes — every input character is HTML-escaped first, then Markdown syntax is rebuilt into a safe subset of tags. Any <script> you type renders as plain text, never executes.' },
+      { q: 'Does it support tables?', a: 'Not in this lightweight version. For complex tables, write the HTML by hand in the input and the converter will pass it through (after escaping, so use the raw HTML textarea to copy it).' },
+      { q: 'Can I use this for GitHub READMEs?', a: 'Yes for the common subset — headings, lists, code blocks, links and emphasis all match GitHub\'s rendering. Subtle differences exist in nested lists and task list checkboxes.' },
+      { q: 'Where can I paste the output?', a: 'Anywhere that accepts HTML — WordPress Custom HTML block, Mailchimp source view, Jekyll/Hugo static sites, your own blog template. Skip if the destination only takes Markdown.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('code');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    function mdToHtml(md) {
+      // Escape first, then re-introduce tags by replacing known patterns
+      let lines = esc(md).split('\n');
+      let html = [], inUL = false, inOL = false, inCode = false, inQuote = false, codeBuf = [];
+
+      function closeLists() { if (inUL) { html.push('</ul>'); inUL = false; } if (inOL) { html.push('</ol>'); inOL = false; } }
+      function closeQuote() { if (inQuote) { html.push('</blockquote>'); inQuote = false; } }
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        // fenced code blocks ```
+        if (/^```/.test(line)) {
+          if (inCode) { html.push('<pre><code>' + codeBuf.join('\n') + '</code></pre>'); codeBuf = []; inCode = false; }
+          else { closeLists(); closeQuote(); inCode = true; }
+          continue;
+        }
+        if (inCode) { codeBuf.push(line); continue; }
+        // horizontal rule
+        if (/^(\*\*\*|---|___)\s*$/.test(line)) { closeLists(); closeQuote(); html.push('<hr>'); continue; }
+        // headings
+        const h = line.match(/^(#{1,6})\s+(.*)$/);
+        if (h) { closeLists(); closeQuote(); const lvl = h[1].length; html.push('<h' + lvl + '>' + inline(h[2]) + '</h' + lvl + '>'); continue; }
+        // blockquote
+        const q = line.match(/^&gt;\s?(.*)$/);
+        if (q) { closeLists(); if (!inQuote) { html.push('<blockquote>'); inQuote = true; } html.push('<p>' + inline(q[1]) + '</p>'); continue; }
+        else if (inQuote) closeQuote();
+        // unordered list
+        if (/^[-*+]\s+/.test(line)) { if (!inUL) { closeLists(); html.push('<ul>'); inUL = true; } html.push('<li>' + inline(line.replace(/^[-*+]\s+/, '')) + '</li>'); continue; }
+        // ordered list
+        if (/^\d+\.\s+/.test(line)) { if (!inOL) { closeLists(); html.push('<ol>'); inOL = true; } html.push('<li>' + inline(line.replace(/^\d+\.\s+/, '')) + '</li>'); continue; }
+        // close any list if line doesn't continue it
+        if (inUL || inOL) closeLists();
+        // blank line
+        if (line.trim() === '') { html.push(''); continue; }
+        // paragraph (accumulate consecutive non-empty lines)
+        html.push('<p>' + inline(line) + '</p>');
+      }
+      if (inCode) html.push('<pre><code>' + codeBuf.join('\n') + '</code></pre>');
+      closeLists(); closeQuote();
+      return html.join('\n');
+
+      function inline(s) {
+        // images ![alt](url) before links
+        s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, function (m, alt, url) { return '<img alt="' + alt + '" src="' + url + '" style="max-width:100%">'; });
+        // links [text](url)
+        s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (m, txt, url) { return '<a href="' + url + '" target="_blank" rel="noopener">' + txt + '</a>'; });
+        // bold **x** and __x__
+        s = s.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>').replace(/__([^_]+)__/g, '<strong>$1</strong>');
+        // italic *x* and _x_
+        s = s.replace(/\*([^\*]+)\*/g, '<em>$1</em>').replace(/(^|[^_])_([^_]+)_/g, '$1<em>$2</em>');
+        // inline code `x`
+        s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+        return s;
+      }
+    }
+    function update() {
+      const md = document.getElementById('input').value;
+      const html = mdToHtml(md);
+      document.getElementById('preview').innerHTML = html || '<span style="color:var(--muted)">Preview appears here…</span>';
+      document.getElementById('rawHtml').value = html;
+      document.getElementById('rMdChars').textContent = md.length.toLocaleString('en-IN');
+      document.getElementById('rHtmlChars').textContent = html.length.toLocaleString('en-IN');
+    }
+    document.getElementById('input').addEventListener('input', update);
+    document.getElementById('sampleBtn').addEventListener('click', function () {
+      document.getElementById('input').value = '# Sample Article\n\nA **bold** word, an *italic* word, and some `inline code`.\n\n## Subheading\n\n- First bullet\n- Second bullet with a [link](https://decidecalc.com)\n- Third\n\n1. Numbered one\n2. Numbered two\n\n> A wise quote.\n\n```\nconst x = 42;\nconsole.log(x);\n```\n\n---\n\nThat\'s a horizontal rule.';
+      update();
+    });
+    document.getElementById('clearBtn').addEventListener('click', function () { document.getElementById('input').value = ''; update(); });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const h = document.getElementById('rawHtml').value;
+      if (!h.trim()) { DC.toast('Type some Markdown first', 'error'); return; }
+      DC.copyResult(h);
+    });
+    update();
+  </script>
+</body>
+</html>

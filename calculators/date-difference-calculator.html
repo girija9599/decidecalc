@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Difference Calculator — Days, Weeks & Months Between Dates | DecideCalc</title>
+  <meta name="description" content="Free date difference calculator. Find exact years, months, days, weeks, hours & seconds between two dates — including or excluding end date.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/date-difference-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Date Difference</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Date Difference Calculator</h1><div class="sub">Years · months · days between two dates</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="start">Start Date</label><input class="input" id="start" type="date"></div>
+          <div class="field"><label for="end">End Date</label><input class="input" id="end" type="date"></div>
+          <div class="field">
+            <label>Include end date?</label>
+            <div class="segmented" data-target="inclusive">
+              <button type="button" data-val="no" class="active">No (exclusive)</button>
+              <button type="button" data-val="yes">Yes (+1 day)</button>
+            </div>
+            <input type="hidden" name="inclusive" value="no">
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Difference</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Primary difference</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rDays">—</div><div class="k">Days</div></div>
+          <div class="result-stat"><div class="v" id="rWeeks">—</div><div class="k">Weeks</div></div>
+          <div class="result-stat"><div class="v" id="rMonths">—</div><div class="k">Months</div></div>
+          <div class="result-stat"><div class="v" id="rHours">—</div><div class="k">Hours</div></div>
+          <div class="result-stat"><div class="v" id="rMinutes">—</div><div class="k">Minutes</div></div>
+          <div class="result-stat"><div class="v" id="rSeconds">—</div><div class="k">Seconds</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Date math</h4><p id="recoText">Exclusive ends (default) count whole days between two instants. Inclusive adds 1 to include the end date itself — typical for rental/leave calculations.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>When to use inclusive vs exclusive days?</h2>
+      <p class="mt-2"><b>Exclusive:</b> time between two events (e.g., Jan 1 to Jan 10 = 9 days). <b>Inclusive:</b> count both endpoints (e.g., leave from Jan 1 to Jan 10 = 10 days of leave).</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> For interest accrual and legal deadlines, confirm whether the relevant convention is exclusive (most banking) or inclusive (rent, leave).</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'date-difference-calculator', faqs: [
+      { q: 'How many days between two dates?', a: 'Subtract the start from the end. By default this is exclusive: Jan 1 → Jan 10 = 9 days. Toggle "inclusive" to add 1 if both endpoints should count.' },
+      { q: 'Does this handle leap years?', a: 'Yes — JavaScript\'s Date object is the source and correctly accounts for leap-year Feb 29. So Jan 1 2024 → Jan 1 2025 = 366 days.' },
+      { q: 'Can the end be before the start?', a: 'Yes — the result is shown as a negative number of days (e.g., -5 days). Use this for "how many days ago" date math.' },
+      { q: 'Why do hours/minutes matter for date inputs?', a: 'Date fields resolve to local midnight. For precise intervals use a time-difference calculator instead — this one is for calendar days.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('clock');
+    document.getElementById('recoIc').innerHTML = DC.icon('scale');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function setInvalid(msg) {
+      ['rMain','rDays','rWeeks','rMonths','rHours','rMinutes','rSeconds'].forEach(id => document.getElementById(id).textContent = '—');
+      if (msg) document.getElementById('recoText').textContent = msg;
+    }
+
+    function compute() {
+      const s = document.getElementById('start').value, e = document.getElementById('end').value;
+      if (!s || !e) return setInvalid();
+      const start = new Date(s), end = new Date(e);
+      if (isNaN(start) || isNaN(end)) return setInvalid();
+      const incl = document.querySelector('[name="inclusive"]').value === 'yes' ? 1 : 0;
+      const ms = (end - start) + incl * 86400000;
+      const days = Math.floor(ms / 86400000);
+      const weeks = Math.floor(days / 7);
+      const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + (end.getDate() >= start.getDate() ? 0 : -1) + (incl ? 0 : 0);
+
+      document.getElementById('rMain').textContent = (days >= 0 ? days : days) + ' day' + (Math.abs(days) === 1 ? '' : 's');
+      document.getElementById('rDays').textContent = days.toLocaleString('en-IN');
+      document.getElementById('rWeeks').textContent = weeks.toLocaleString('en-IN') + ' wk + ' + (days % 7) + 'd';
+      document.getElementById('rMonths').textContent = months;
+      document.getElementById('rHours').textContent = (days * 24).toLocaleString('en-IN');
+      document.getElementById('rMinutes').textContent = (days * 1440).toLocaleString('en-IN');
+      document.getElementById('rSeconds').textContent = (days * 86400).toLocaleString('en-IN');
+
+      const abs = Math.abs(days);
+      document.getElementById('recoTitle').textContent = abs >= 365 ? 'Just over a year' : abs >= 30 ? 'More than a month' : abs >= 7 ? 'Over a week' : 'A few days';
+      document.getElementById('recoText').textContent = days >= 0 ? ('From ' + s + ' to ' + e + ' is ' + days + ' day' + (days === 1 ? '' : 's') + (incl ? ' (inclusive).' : ' (exclusive).')) : ('End is ' + Math.abs(days) + ' day' + (days === -1 ? '' : 's') + ' BEFORE the start.');
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['start','end'].forEach(id => document.getElementById(id).addEventListener('change', compute));
+    document.querySelector('[data-target="inclusive"]').addEventListener('segment:change', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () { document.getElementById('start').value = ''; document.getElementById('end').value = ''; compute(); });
+
+    document.getElementById('shareBtn').addEventListener('click', function () { const v = document.getElementById('rMain').textContent; if (v === '—') { DC.toast('Pick dates first', 'error'); return; } DC.shareWhatsApp('Date difference: ' + v + ' — via DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Date difference: ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

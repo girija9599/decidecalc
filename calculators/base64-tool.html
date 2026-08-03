@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encode / Decode — Free, Offline, Unicode-Safe | DecideCalc</title>
+  <meta name="description" content="Free Base64 encoder and decoder. Handles Unicode/emoji correctly. Also supports URL-safe Base64 and percent-encoding. 100% in-browser, nothing sent anywhere.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/base64-tool.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-dev">Developer Tools</a><span class="sep">/</span><span>Base64 & URL Tool</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Base64 & URL Tool</h1><div class="sub">Encode · decode · percent-escape — offline</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="mode" value="b64">
+          <div class="segmented" id="mode" data-target="mode">
+            <button type="button" data-value="b64" class="active">Base64</button>
+            <button type="button" data-value="url">URL-encode</button>
+          </div>
+          <div style="height:14px"></div>
+          <div class="field"><label for="input">Input text</label><textarea class="input" id="input" rows="6" placeholder="Paste text, JSON, emoji, anything…" style="font-family:monospace;font-size:.9rem"></textarea></div>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-primary btn-sm" id="encBtn" style="flex:1">Encode →</button>
+            <button class="btn btn-ghost btn-sm" id="decBtn" style="flex:1">← Decode</button>
+            <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+          </div>
+          <div class="note" style="margin-top:14px"><span id="noteIc"></span><div><b>Base64 is NOT encryption.</b> Anyone can decode it. Never store passwords or secrets in Base64 — use it only for binary-data transport.</div></div>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="calc-header"><div><h2 style="font-size:1.05rem;margin:0">Output</h2><div class="sub" id="status">Waiting…</div></div></div>
+        <div class="calc-body" style="padding-top:12px">
+          <textarea class="input" id="output" rows="8" readonly style="font-family:monospace;font-size:.85rem;word-break:break-all"></textarea>
+        </div>
+        <div class="result-grid" style="padding:0 22px 12px">
+          <div class="result-stat"><div class="v" id="rInChars">0</div><div class="k">Input chars</div></div>
+          <div class="result-stat"><div class="v" id="rOutChars">0</div><div class="k">Output chars</div></div>
+          <div class="result-stat"><div class="v" id="rRatio">—</div><div class="k">Size change</div></div>
+        </div>
+        <div class="result-actions" style="padding:0 22px 22px">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy output</button>
+          <button class="btn btn-ghost btn-sm" id="swapBtn">↓ Use as input</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>Unicode done right</h4><p>JavaScript's native <code>btoa()</code> breaks on emoji & non-ASCII. This tool first UTF-8 encodes, so Hindi (नमस्ते), Chinese (你好) and emoji (🎉) round-trip perfectly.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Common use cases</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Base64:</b> embed small images in HTML/CSS, send binary over JSON APIs, Basic auth headers.</li>
+        <li><b>URL-encode:</b> put user search terms into query strings safely — <code>?</code>, <code>&</code>, <code>+</code>, spaces all become safe percent-escapes.</li>
+        <li><b>URL-decode:</b> read what a server actually received when debugging webhooks.</li>
+        <li><b>WhatsApp / SMS templates</b> frequently need URL-encoded body text — this does it in one tap.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Decoding sanity check:</b> if the decoded output looks like garbage characters, the input wasn't actually Base64 — most errors come from mixing in whitespace or an invalid character.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'base64-tool', faqs: [
+      { q: 'Is Base64 safe for passwords?', a: 'Absolutely not. Base64 is reversible by anyone without any key. It\'s an encoding — like writing in a different alphabet — not encryption. For password hashing use bcrypt/argon2.' },
+      { q: 'Why is the output about 33% longer?', a: 'Base64 packs every 3 bytes into 4 printable characters. That 1.33× markup is the price paid to move binary data through text-only channels like JSON or email.' },
+      { q: 'Why do old tutorials warn about btoa breaking on Unicode?', a: 'btoa() expects bytes (0-255 per char) and throws "InvalidCharacterError" for emoji or non-Latin text. This tool first converts text to UTF-8 bytes, so Unicode round-trips correctly.' },
+      { q: 'Difference between Base64 and Base64URL?', a: 'Base64URL replaces + with - and / with _ and drops trailing = padding so the result can safely appear inside a URL without additional percent-encoding.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('code') || DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('check');
+    document.getElementById('noteIc').innerHTML = DC.icon('portal') || DC.icon('check');
+
+    let mode = 'b64';
+    document.getElementById('mode').addEventListener('segment:change', function (e) { mode = e.detail.value; liveStats(); });
+
+    function b64EncodeUnicode(str) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = '';
+      bytes.forEach(function (b) { bin += String.fromCharCode(b); });
+      return btoa(bin);
+    }
+    function b64DecodeUnicode(b64) {
+      const bin = atob(b64.replace(/\s/g, ''));
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    }
+    function setStatus(msg, ok) {
+      const s = document.getElementById('status');
+      s.textContent = msg;
+      s.style.color = ok ? '#10B981' : (msg === 'Waiting…' ? 'var(--text-soft)' : '#EF4444');
+    }
+    function liveStats() {
+      const inStr = document.getElementById('input').value;
+      const outStr = document.getElementById('output').value;
+      document.getElementById('rInChars').textContent = inStr.length.toLocaleString('en-IN');
+      document.getElementById('rOutChars').textContent = outStr.length.toLocaleString('en-IN');
+      if (inStr.length && outStr.length) {
+        const r = ((outStr.length - inStr.length) / inStr.length * 100).toFixed(1);
+        document.getElementById('rRatio').textContent = (r > 0 ? '+' : '') + r + '%';
+      } else document.getElementById('rRatio').textContent = '—';
+    }
+
+    function doEncode() {
+      const t = document.getElementById('input').value;
+      if (!t) { document.getElementById('output').value = ''; setStatus('Waiting…', true); liveStats(); return; }
+      try {
+        const out = mode === 'b64' ? b64EncodeUnicode(t) : encodeURIComponent(t);
+        document.getElementById('output').value = out;
+        setStatus('✓ Encoded (' + (mode === 'b64' ? 'Base64, UTF-8 safe' : 'percent-encoded') + ')', true);
+      } catch (e) { setStatus('✗ Encode failed: ' + e.message, false); }
+      liveStats();
+    }
+    function doDecode() {
+      const t = document.getElementById('input').value;
+      if (!t.trim()) { document.getElementById('output').value = ''; setStatus('Waiting…', true); liveStats(); return; }
+      try {
+        const out = mode === 'b64' ? b64DecodeUnicode(t) : decodeURIComponent(t.replace(/\+/g, ' '));
+        document.getElementById('output').value = out;
+        setStatus('✓ Decoded', true);
+      } catch (e) {
+        setStatus('✗ Invalid ' + (mode === 'b64' ? 'Base64' : 'URL') + ' input: ' + e.message, false);
+      }
+      liveStats();
+    }
+    document.getElementById('encBtn').addEventListener('click', doEncode);
+    document.getElementById('decBtn').addEventListener('click', doDecode);
+    document.getElementById('input').addEventListener('input', liveStats);
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      document.getElementById('input').value = ''; document.getElementById('output').value = '';
+      setStatus('Waiting…', true); liveStats(); document.getElementById('input').focus();
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const o = document.getElementById('output').value;
+      if (!o) { DC.toast('Encode/decode something first', 'error'); return; }
+      DC.copyResult(o);
+    });
+    document.getElementById('swapBtn').addEventListener('click', function () {
+      const o = document.getElementById('output').value;
+      if (!o) { DC.toast('Nothing to swap — encode first', 'error'); return; }
+      document.getElementById('input').value = o; document.getElementById('output').value = '';
+      liveStats();
+    });
+    liveStats();
+  </script>
+</body>
+</html>

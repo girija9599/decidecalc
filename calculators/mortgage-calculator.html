@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortgage Calculator — Monthly Payment, PITI & Total Cost | DecideCalc</title>
+  <meta name="description" content="Free mortgage calculator with PITI: principal, interest, property tax, insurance and PMI. Monthly payment, total cost and amortization for US and global mortgages.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/mortgage-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Mortgage Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Mortgage Calculator</h1><div class="sub">PITI · PMI · total cost · US / global</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Currency</label><select class="select" id="ccy"><option value="$">USD ($)</option><option value="£">GBP (£)</option><option value="€">EUR (€)</option><option value="₹">INR (₹)</option><option value="A$">AUD (A$)</option><option value="C$">CAD (C$)</option></select></div>
+          <div class="field"><label>Home price</label><div class="range-out"><span class="range-val" id="out-price">$400,000</span></div><input type="range" id="price" min="50000" max="5000000" step="5000" value="400000" data-prefix="$" data-dec="0"></div>
+          <div class="field-row">
+            <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down">$80,000</span></div><input type="range" id="down" min="0" max="1000000" step="1000" value="80000" data-prefix="$" data-dec="0"></div>
+            <div class="field"><label>Down payment %</label><div class="range-out"><span class="range-val" id="out-downpct">20%</span></div></div>
+          </div>
+          <div class="field"><label>Interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate">6.5%</span></div><input type="range" id="rate" min="0.5" max="15" step="0.05" value="6.5" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Loan term (years)</label><div class="range-out"><span class="range-val" id="out-term">30 years</span></div><input type="range" id="term" min="5" max="40" step="1" value="30" data-dec="0"></div>
+          <div class="field-row">
+            <div class="field"><label>Annual property tax (%)</label><input class="input" id="tax" type="number" min="0" max="5" step="0.05" value="1.2"></div>
+            <div class="field"><label>Annual home insurance</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="ins" type="number" min="0" step="50" value="1400"></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>PMI rate (%/yr, if down &lt; 20%)</label><input class="input" id="pmi" type="number" min="0" max="2" step="0.05" value="0.5"></div>
+            <div class="field"><label>Monthly HOA / fees</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="hoa" type="number" min="0" step="10" value="0"></div></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate mortgage</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Total monthly payment</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rPI">—</div><div class="k">Principal & interest</div></div>
+          <div class="result-stat"><div class="v" id="rTax">—</div><div class="k">Property tax / mo</div></div>
+          <div class="result-stat"><div class="v" id="rIns">—</div><div class="k">Insurance / mo</div></div>
+          <div class="result-stat"><div class="v" id="rPmi">—</div><div class="k">PMI / mo</div></div>
+        </div>
+        <div class="result-grid" style="margin-top:10px">
+          <div class="result-stat"><div class="v" id="rTotal">—</div><div class="k">Total paid over term</div></div>
+          <div class="result-stat"><div class="v" id="rInterest">—</div><div class="k">Total interest</div></div>
+          <div class="result-stat"><div class="v" id="rLoan">—</div><div class="k">Loan amount</div></div>
+          <div class="result-stat"><div class="v" id="rLtv">—</div><div class="k">Loan-to-value</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="mortChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Mortgage snapshot</h4><p id="recoText">Enter your numbers to see the full PITI breakdown, total cost over the term and whether private mortgage insurance applies.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How PITI and PMI work</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>PITI</b> = Principal + Interest + property Tax + insurance — the real monthly cost most US mortgages escrow.</li>
+        <li><b>PMI (Private Mortgage Insurance)</b> usually applies when your down payment is below 20%. It is added to the loan until you reach ~20–22% equity, then can be cancelled.</li>
+        <li><b>Loan-to-value (LTV)</b> = loan ÷ home price. Lower LTV unlocks better rates and avoids PMI.</li>
+        <li><b>Total cost</b> includes principal, interest, tax, insurance, HOA and PMI for the estimated period it applies. It assumes the tax, insurance and HOA inputs stay unchanged over the full term.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>India note:</b> Indian home loans are typically quoted as EMI (principal + interest) without escrow tax/insurance. This tool is global — switch the currency to ₹ for Indian use, and enter property tax/insurance only if they apply to you.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'mortgage-calculator', faqs: [
+      { q: 'What is PITI?', a: 'Principal, Interest, Taxes and Insurance — the four components most US mortgage servicers collect each month through an escrow account. Principal and interest repay the loan; taxes and insurance are held and paid on your behalf.' },
+      { q: 'When does PMI apply?', a: 'Private Mortgage Insurance is usually required when your down payment is less than 20% of the home price. It protects the lender, not you, and you can typically request removal once your loan-to-value reaches 80%.' },
+      { q: 'How is this different from the EMI calculator?', a: 'The EMI calculator is India-first and shows only principal + interest. This mortgage calculator adds property tax, home insurance, PMI and HOA so US and global buyers see the full monthly obligation, and supports multiple currencies.' },
+      { q: 'Does a shorter term save money?', a: 'Yes — a 15-year term usually has a lower rate and far less total interest than a 30-year term, but the monthly payment is much higher. Use this calculator to compare total cost across terms.' },
+      { q: 'Are property tax and insurance rates I enter accurate?', a: 'They are your inputs. US property taxes vary widely by county (0.3%–2.5%+); insurance depends on the home, location and coverage. Check local rates before relying on the total.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let ccy = '$';
+    function sym() { return ccy; }
+    function fmt(n) { return ccy + Math.round(n).toLocaleString('en-IN'); }
+    function compact(n) { return ccy + DC.compact(n).replace(/^[₹$£€]/,''); }
+
+    function setPrefix(el, prefix) {
+      const wrap = el.closest('.input-wrap');
+      if (wrap) { const p = wrap.querySelector('.prefix'); if (p) p.textContent = prefix; }
+    }
+
+    function syncLabels() {
+      ccy = document.getElementById('ccy').value;
+      ['out-price','out-down'].forEach(function (id) {
+        const el = document.getElementById(id);
+        const raw = el.textContent.replace(/^[^0-9]+/, '').replace(/,/g,'');
+        el.textContent = ccy + DC.compact(Number(raw) || 0).replace(/^[₹$£€]/,'');
+      });
+      ['out-downpct'].forEach(function(){});
+      // update data-prefix on ranges
+      document.getElementById('price').setAttribute('data-prefix', ccy);
+      document.getElementById('down').setAttribute('data-prefix', ccy);
+      document.getElementById('ins').value = document.getElementById('ins').value || 0;
+      ['ins','hoa'].forEach(function (id) { setPrefix(document.getElementById(id), ccy); });
+    }
+
+    function compute() {
+      ccy = document.getElementById('ccy').value;
+      const price = DC.fnum(document.getElementById('price').value);
+      const down = Math.min(price, DC.fnum(document.getElementById('down').value));
+      const rate = DC.fnum(document.getElementById('rate').value) / 100;
+      const years = DC.fnum(document.getElementById('term').value);
+      const taxPct = DC.fnum(document.getElementById('tax').value) / 100;
+      const ins = DC.fnum(document.getElementById('ins').value);
+      const pmiPct = DC.fnum(document.getElementById('pmi').value) / 100;
+      const hoa = DC.fnum(document.getElementById('hoa').value);
+
+      document.getElementById('out-price').textContent = compact(price);
+      document.getElementById('out-down').textContent = compact(down);
+      const downPct = price > 0 ? down / price * 100 : 0;
+      document.getElementById('out-downpct').textContent = downPct.toFixed(1) + '%';
+      document.getElementById('out-rate').textContent = (rate * 100).toFixed(2) + '%';
+      document.getElementById('out-term').textContent = years + ' years';
+
+      const loan = Math.max(0, price - down);
+      const n = Math.max(1, Math.round(years * 12));
+      const r = rate / 12;
+      const pi = loan > 0 ? (r > 0 ? loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : loan / n) : 0;
+      const monthlyTax = price * taxPct / 12;
+      const monthlyIns = ins / 12;
+      const ltv = price > 0 ? loan / price : 0;
+      const needsPmi = ltv > 0.80 && pmiPct > 0;
+      const monthlyPmi = needsPmi ? loan * pmiPct / 12 : 0;
+      const totalMonthly = pi + monthlyTax + monthlyIns + monthlyPmi + hoa;
+      let remaining = loan, pmiMonths = 0;
+      for (let month = 0; month < n && remaining > price * 0.80; month++) {
+        if (needsPmi) pmiMonths++;
+        const interestPart = remaining * r;
+        remaining = Math.max(0, remaining - (pi - interestPart));
+      }
+      const totalPmi = monthlyPmi * pmiMonths;
+      const totalPaid = (pi + monthlyTax + monthlyIns + hoa) * n + totalPmi;
+      const totalInterest = pi * n - loan;
+
+      document.getElementById('rMain').textContent = fmt(totalMonthly);
+      document.getElementById('rPI').textContent = fmt(pi);
+      document.getElementById('rTax').textContent = fmt(monthlyTax);
+      document.getElementById('rIns').textContent = fmt(monthlyIns);
+      document.getElementById('rPmi').textContent = monthlyPmi > 0 ? fmt(monthlyPmi) : '—';
+      document.getElementById('rTotal').textContent = compact(totalPaid);
+      document.getElementById('rInterest').textContent = compact(totalInterest);
+      document.getElementById('rLoan').textContent = compact(loan);
+      document.getElementById('rLtv').textContent = (ltv * 100).toFixed(1) + '%';
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (needsPmi) { title.textContent = 'PMI is adding to your payment'; txt.textContent = 'Your down payment is ' + downPct.toFixed(1) + '% — under the 20% threshold — so PMI of ' + fmt(monthlyPmi) + '/mo applies. This estimate includes it for about ' + pmiMonths + ' months; your lender’s removal rules can differ.'; }
+      else if (totalInterest > loan * 0.5) { title.textContent = 'Long term, lots of interest'; txt.textContent = 'Over ' + years + ' years you pay roughly ' + compact(totalInterest) + ' in interest. A 15-year term would raise the monthly payment but cut total interest sharply.'; }
+      else { title.textContent = 'Healthy down payment'; txt.textContent = 'With ' + downPct.toFixed(0) + '% down you avoid PMI. Keep an emergency fund separate from the down payment and confirm local tax and insurance rates before closing.'; }
+
+      const chartParts = [
+        { label: 'Principal & interest', value: pi, color: '#1B3A6B' },
+        { label: 'Property tax', value: monthlyTax, color: '#00C2A8' },
+        { label: 'Insurance', value: monthlyIns, color: '#F5B041' }
+      ];
+      if (monthlyPmi > 0) chartParts.push({ label: 'PMI', value: monthlyPmi, color: '#FF7A45' });
+      if (hoa > 0) chartParts.push({ label: 'HOA / fees', value: hoa, color: '#7C5CFC' });
+      DC.makeChart('mortChart', {
+        type: 'doughnut',
+        data: { labels: chartParts.map(function (part) { return part.label; }), datasets: [{ data: chartParts.map(function (part) { return part.value; }), backgroundColor: chartParts.map(function (part) { return part.color; }), borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '60%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + fmt(c.raw) + '/mo'; } } } } }
+      });
+    }
+
+    ['ccy','price','down','rate','term','tax','ins','pmi','hoa'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', function(){ syncLabels(); compute(); }); el.addEventListener('change', function(){ syncLabels(); compute(); }); });
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Mortgage\nMonthly payment: ' + document.getElementById('rMain').textContent + '\nP&I: ' + document.getElementById('rPI').textContent + '\nLoan: ' + document.getElementById('rLoan').textContent + '\nTotal interest: ' + document.getElementById('rInterest').textContent); });
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My mortgage is ' + document.getElementById('rMain').textContent + '/mo — total interest ' + document.getElementById('rInterest').textContent + '. Plan yours on DecideCalc.'); });
+    syncLabels();
+    compute();
+  </script>
+</body>
+</html>

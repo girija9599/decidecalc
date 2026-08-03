@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator — Body Mass Index India Calculator | DecideCalc</title>
+  <meta name="description" content="Free India BMI calculator. Enter height & weight to get Body Mass Index in kg/m² with WHO + Asian-Indian categories and a healthy weight range.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/bmi-calculator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>BMI Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>BMI Calculator</h1><div class="sub">Body Mass Index · Asian-Indian cut-offs</div></div></div>
+        <div class="calc-body">
+          <div class="segmented" data-target="units"><button data-val="metric" class="active">Metric (kg / cm)</button><button data-val="imperial">Imperial (lb / ft-in)</button></div>
+          <input type="hidden" name="units" value="metric">
+          <div class="field" style="margin-top:18px"><label>Weight</label><div class="input-wrap"><input class="input with-suffix" id="wt" type="number" value="70" step="0.1" style="padding-right:42px"><span class="suffix" id="wU">kg</span></div></div>
+          <div class="field"><label>Height</label>
+            <div id="hMetric"><div class="input-wrap"><input class="input with-suffix" id="htCm" type="number" value="170" step="1" style="padding-right:42px"><span class="suffix">cm</span></div></div>
+            <div id="hImp" style="display:none" class="field-row">
+              <div class="field"><label>Feet</label><input class="input" id="ft" type="number" value="5" min="2" max="8"></div>
+              <div class="field"><label>Inches</label><input class="input" id="inch" type="number" value="7" min="0" max="11"></div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate BMI</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rBmi">—</div><div class="lbl">Your BMI (kg/m²)</div></div>
+        <div style="text-align:center;margin-top:10px"><span class="signal yellow" id="signal">Enter your details</span></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rCat">—</div><div class="k">WHO category</div></div>
+          <div class="result-stat"><div class="v" id="rIcat">—</div><div class="k">Indian category</div></div>
+          <div class="result-stat"><div class="v" id="rHi">—</div><div class="k">Healthy weight (min)</div></div>
+          <div class="result-stat"><div class="v" id="rLo">—</div><div class="k">Healthy weight (max)</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="bmiChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Health signal</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <div class="calc-ad-layout">
+      <div style="flex:1;min-width:0;">
+        <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+        <section class="mt-4 card reveal" style="max-width:none">
+          <h2>Why Indian BMI cut-offs are different</h2>
+          <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+            <li>Asians develop diabetes & heart disease at lower BMI due to body-fat distribution.</li>
+            <li><b>WHO</b>: 18.5–24.9 normal · 25–29.9 overweight · ≥30 obese</li>
+            <li><b>Asian-Indian (ICMR)</b>: 18–22.9 normal · 23–24.9 overweight · ≥25 obese</li>
+            <li>Aim for the <i>Indian</i> range for metabolic risk, especially with family history of diabetes/PCOD.</li>
+          </ul>
+          <div class="note mt-2"><span id="fIcon"></span><div><b>Limitation:</b> BMI can over-flag muscular individuals and miss central obesity. Combine with waist circumference (target: <90 cm men, <80 cm women).</div></div>
+        </section>
+      </div>
+      <div class="ad-slot" data-slot="sidebar"></div>
+    </div>
+    <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    DC.page = { slug: 'bmi-calculator', faqs: [
+      { q: 'What is a healthy BMI for Indians?', a: 'For Asian Indians the healthy range is 18 to 22.9 kg/m² — lower than WHO\'s 18.5–24.9 — because Indians face higher metabolic risk at lower BMI. A BMI above 23 is already considered overweight in India.' },
+      { q: 'Is BMI accurate for everyone?', a: 'No. It underestimates fat in older or sedentary people (sarcopenic obesity) and overestimates it in heavily muscled individuals. Pair it with waist circumference & body fat percent for accuracy.' },
+      { q: 'How do I lower my BMI without losing muscle?', a: 'Combine resistance training (3-4x/week) with a protein-rich diet (1.2-1.6 g/kg body weight) and a modest calorie deficit (300-500 kcal/day). Focus on fat loss, not weight loss blindly.' },
+      { q: 'Is BMI different for children?', a: 'Yes — children use BMI-for-age percentile charts, not the adult cut-offs on this page. See a paediatrician for accurate assessment of a child below age 18.' },
+      { q: 'What if my BMI is below 18.5?', a: 'Underweight is linked with weaker immunity, anaemia, and bone loss. Aim to add 250-500 kcal/day from whole foods (nuts, dairy, dals, chapati, paneer) and include strength training to gain weight.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('heart');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const u = document.querySelector('[name="units"]').value;
+      let kg, cm;
+      if (u === 'metric') { kg = DC.fnum(document.getElementById('wt').value); cm = DC.fnum(document.getElementById('htCm').value); }
+      else {
+        const lb = DC.fnum(document.getElementById('wt').value); kg = lb * 0.4536;
+        const ft = DC.fnum(document.getElementById('ft').value), inch = DC.fnum(document.getElementById('inch').value); cm = (ft * 12 + inch) * 2.54;
+      }
+      document.getElementById('wU').textContent = (u === 'metric' ? 'kg' : 'lb');
+      const m = cm / 100;
+      if (m <= 0 || kg <= 0) {
+        document.getElementById('rBmi').textContent = '—';
+        document.getElementById('rCat').textContent = '—';
+        document.getElementById('rIcat').textContent = '—';
+        document.getElementById('rHi').textContent = '—';
+        document.getElementById('rLo').textContent = '—';
+        document.getElementById('signal').className = 'signal yellow';
+        document.getElementById('signal').textContent = 'Enter valid height & weight';
+        document.getElementById('recoTitle').textContent = 'Height/weight required';
+        document.getElementById('recoText').textContent = 'Please enter positive height and weight values to compute BMI.';
+        if (DC.charts && DC.charts['bmiChart']) DC.charts['bmiChart'].destroy();
+        return;
+      }
+      const bmi = kg / (m * m);
+      document.getElementById('rBmi').textContent = bmi.toFixed(1);
+      // WHO
+      const who = bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal' : bmi < 30 ? 'Overweight' : bmi < 35 ? 'Obese I' : bmi < 40 ? 'Obese II' : 'Obese III';
+      // Asian Indian
+      const ind = bmi < 18 ? 'Underweight' : bmi < 23 ? 'Normal' : bmi < 25 ? 'Overweight' : bmi < 30 ? 'Obese' : 'Obese (high)';
+      document.getElementById('rCat').textContent = who;
+      document.getElementById('rIcat').textContent = ind;
+      document.getElementById('rHi').textContent = (18.5 * m * m).toFixed(1) + ' kg';
+      document.getElementById('rLo').textContent = (23 * m * m).toFixed(1) + ' kg';
+      // signal
+      const sig = document.getElementById('signal');
+      if (bmi < 18) { sig.className='signal yellow'; sig.textContent='◐ UNDERWEIGHT'; }
+      else if (bmi < 23) { sig.className='signal green'; sig.textContent='✓ HEALTHY (Indian)'; }
+      else if (bmi < 25) { sig.className='signal yellow'; sig.textContent='◐ BORDERLINE'; }
+      else if (bmi < 30) { sig.className='signal red'; sig.textContent='✗ OVERWEIGHT'; }
+      else { sig.className='signal red'; sig.textContent='✗ OBESE'; }
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (bmi < 18) { title.textContent = 'Gain weight healthfully'; txt.textContent = 'Add 250-500 kcal/day from whole foods (dals, paneer, nuts, ghee) + light strength training to gain muscle, not just fat.'; }
+      else if (bmi < 23) { title.textContent = 'Maintain'; txt.textContent = 'You\'re in the Asian-Indian healthy zone. Keep strength training 2-3x/week and protein above 1g/kg to preserve muscle as you age.'; }
+      else if (bmi < 25) { title.textContent = 'Small course-correction'; txt.textContent = 'Just above the Indian healthy band. Drop 2-3 kg with portion control + 30 min daily walks to comfortably return to green.'; }
+      else { title.textContent = 'Reduce for metabolic safety'; txt.textContent = 'Higher metabolic risk — pick a sustainable calorie deficit (300-500/day), add resistance training 4x/week and check HbA1c/lipids annually.'; }
+
+      // gauge chart: a single-stack horizontal bar at BMI value relative to [10..45]
+      DC.makeChart('bmiChart', {
+        type: 'bar',
+        data: { labels: ['You'], datasets: [{
+          data: [bmi],
+          backgroundColor: [bmi<18?'#F5B041':bmi<23?'#16A34A':bmi<25?'#F59E0B':bmi<30?'#EA580C':'#DC2626'],
+          borderRadius: 8, barPercentage: 0.5
+        }] },
+        options: { indexAxis: 'y', plugins: { legend: { display:false } }, scales: { x: { min:10, max:45, ticks:{ callback:function(v){return v+' kg/m²';} } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.querySelectorAll('[id^="wt"],#htCm,#ft,#inch').forEach(function (el){ el.addEventListener('input', compute); el.addEventListener('change', compute); });
+    // Unit toggle: show/hide inputs + swap label
+    document.querySelectorAll('.segmented button').forEach(function (b){ b.addEventListener('click', function () {
+      const v = b.getAttribute('data-val'); const metric = v === 'metric';
+      document.getElementById('hMetric').style.display = metric ? '' : 'none';
+      document.getElementById('hImp').style.display = metric ? 'none' : '';
+      document.getElementById('wU').textContent = metric ? 'kg' : 'lb';
+      setTimeout(compute, 60);
+    }); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My BMI is ' + document.getElementById('rBmi').textContent + ' kg/m² — ' + document.getElementById('rIcat').textContent + ' (Asian-Indian). Test yours on DecideCalc.'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('BMI Result\nBMI: ' + document.getElementById('rBmi').textContent + ' kg/m²\nWHO category: ' + document.getElementById('rCat').textContent + '\nAsian-Indian category: ' + document.getElementById('rIcat').textContent + '\n' + document.getElementById('signal').textContent); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atal Pension Yojana (APY) Calculator — Monthly Contribution | DecideCalc</title>
+  <meta name="description" content="Estimate Atal Pension Yojana monthly contribution from age and selected guaranteed pension. Includes eligibility, contribution period and important APY rules.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/apy-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Atal Pension Yojana</span></nav>
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Atal Pension Yojana Calculator</h1><div class="sub">Official monthly contribution schedule · age 18–40</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="age">Joining age</label><input class="input" id="age" type="number" min="18" max="40" step="1" value="25"></div>
+          <div class="field"><label for="pension">Selected guaranteed monthly pension</label><select class="select" id="pension"><option value="1000">₹1,000 per month</option><option value="2000">₹2,000 per month</option><option value="3000" selected>₹3,000 per month</option><option value="4000">₹4,000 per month</option><option value="5000">₹5,000 per month</option></select></div>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Estimate contribution</button>
+        </div>
+      </div>
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Official monthly contribution</div></div>
+        <div class="result-grid"><div class="result-stat"><div class="v" id="rYears">—</div><div class="k">Years until age 60</div></div><div class="result-stat"><div class="v" id="rAnnual">—</div><div class="k">Indicative annual outgo</div></div><div class="result-stat"><div class="v" id="rPension">—</div><div class="k">Pension selected</div></div><div class="result-stat"><div class="v" id="rPay">—</div><div class="k">Contribution frequency</div></div></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Check eligibility before enrolling</h4><p id="recoText">This uses the published monthly APY contribution schedule. New subscribers who are or have been income-tax payers are not eligible; verify current rules with your bank or PFRDA before enrolment.</p></div></div>
+      </div>
+    </div>
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none"><h2>How APY works</h2><p class="mt-2">Atal Pension Yojana is a Government of India pension scheme. Eligible subscribers join between ages 18 and 40, contribute until 60, and choose a pension of ₹1,000–₹5,000 a month. This calculator uses the published monthly contribution schedule for those choices.</p><ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)"><li>Use a savings-bank or post-office account for auto-debit.</li><li>New APY subscribers who are or have been income-tax payers are not eligible under the current exclusion; check your eligibility before applying.</li><li>Tax treatment, death/exit rules and enrolment requirements should be checked against current PFRDA or bank guidance.</li></ul><div class="note mt-2"><span id="fIcon"></span><div><b>Important:</b> This tool is educational, not enrolment advice. Confirm current scheme terms with the official PFRDA or your bank.</div></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+  <script src="../assets/js/core.js"></script><script src="../assets/js/layout.js"></script><script src="../assets/js/tools.js"></script><script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page={slug:'apy-calculator',faqs:[
+      {q:'Who can join APY?',a:'APY is generally designed for Indian citizens in the scheme’s eligible joining-age range. Confirm the current eligibility and exclusions with the official PFRDA guidance or your bank before applying.'},
+      {q:'Is the contribution the same for everyone?',a:'No. Starting later requires a higher contribution for the same selected pension because there are fewer contribution years until age 60.'},
+      {q:'Does this calculator use the APY contribution schedule?',a:'Yes. It uses the published monthly contribution amounts for each joining age and pension choice. Your bank should still confirm the amount and payment frequency at enrolment because scheme terms can change.'}
+    ]};
+    DC.initCalcPage(); document.getElementById('ic').innerHTML=DC.icon('shield'); document.getElementById('recoIc').innerHTML=DC.icon('check'); document.getElementById('fIcon').innerHTML=DC.icon('shield');
+    const CONTRIBUTIONS={
+      18:{1000:42,2000:84,3000:126,4000:168,5000:210},19:{1000:46,2000:92,3000:138,4000:183,5000:228},20:{1000:50,2000:100,3000:150,4000:198,5000:248},21:{1000:54,2000:108,3000:162,4000:215,5000:269},22:{1000:59,2000:117,3000:177,4000:234,5000:292},23:{1000:64,2000:127,3000:192,4000:254,5000:318},24:{1000:70,2000:139,3000:208,4000:277,5000:346},25:{1000:76,2000:151,3000:226,4000:301,5000:376},26:{1000:82,2000:164,3000:246,4000:327,5000:409},27:{1000:90,2000:178,3000:268,4000:356,5000:446},28:{1000:97,2000:194,3000:292,4000:388,5000:485},29:{1000:106,2000:212,3000:318,4000:423,5000:529},30:{1000:116,2000:231,3000:347,4000:462,5000:577},31:{1000:126,2000:252,3000:379,4000:504,5000:630},32:{1000:138,2000:276,3000:414,4000:551,5000:689},33:{1000:151,2000:302,3000:453,4000:602,5000:752},34:{1000:165,2000:330,3000:495,4000:659,5000:824},35:{1000:181,2000:362,3000:543,4000:722,5000:902},36:{1000:198,2000:396,3000:594,4000:792,5000:990},37:{1000:218,2000:436,3000:654,4000:873,5000:1092},38:{1000:240,2000:480,3000:720,4000:957,5000:1196},39:{1000:264,2000:528,3000:792,4000:1054,5000:1318},40:{1000:291,2000:582,3000:873,4000:1164,5000:1454}
+    };
+    function compute(){const age=Number(document.getElementById('age').value), pension=Number(document.getElementById('pension').value);if(!Number.isInteger(age)||age<18||age>40){document.getElementById('rMain').textContent='—';document.getElementById('rYears').textContent='—';document.getElementById('rAnnual').textContent='—';document.getElementById('rPension').textContent='—';document.getElementById('rPay').textContent='—';document.getElementById('recoTitle').textContent='Enter an age from 18 to 40';document.getElementById('recoText').textContent='APY entry is generally limited to ages 18–40. Confirm current scheme eligibility before applying.';return;}const years=60-age;const monthly=CONTRIBUTIONS[age][pension];document.getElementById('rMain').textContent=DC.inr(monthly);document.getElementById('rYears').textContent=years+' years';document.getElementById('rAnnual').textContent=DC.inr(monthly*12);document.getElementById('rPension').textContent=DC.inr(pension)+'/mo';document.getElementById('rPay').textContent='Monthly';document.getElementById('recoTitle').textContent='Plan for the contribution until 60';document.getElementById('recoText').textContent='Joining at '+age+' leaves '+years+' years to contribute. This uses the published monthly schedule; confirm your eligibility and bank debit amount before enrolment.';}
+    ['age','pension'].forEach(function(id){document.getElementById(id).addEventListener('input',compute);document.getElementById(id).addEventListener('change',compute);});document.getElementById('calcBtn').addEventListener('click',compute);document.getElementById('copyBtn').addEventListener('click',function(){DC.copyResult('APY estimate\nMonthly contribution: '+document.getElementById('rMain').textContent+'\nSelected pension: '+document.getElementById('rPension').textContent);});document.getElementById('shareBtn').addEventListener('click',function(){DC.shareWhatsApp('My APY contribution estimate is '+document.getElementById('rMain').textContent+' per month for '+document.getElementById('rPension').textContent+'. Check yours on DecideCalc.');});compute();
+  </script>
+</body></html>

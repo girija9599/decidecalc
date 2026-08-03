@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter — Length, Weight, Temperature, Area, Speed, Data | DecideCalc</title>
+  <meta name="description" content="Free universal unit converter: length, weight, temperature, area, volume, speed and digital data. Instant two-way results, accurate conversion factors, works offline.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/unit-converter.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-converter">Unit Converters</a><span class="sep">/</span><span>Unit Converter</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Unit Converter</h1><div class="sub">7 categories · instant two-way results</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="cat">Category</label>
+            <select class="select" id="cat"></select>
+          </div>
+          <div class="field"><label for="val">Value</label><input class="input" id="val" type="number" step="any" placeholder="Enter value"></div>
+          <div class="field-row">
+            <div class="field"><label for="from">From</label><select class="select" id="from"></select></div>
+            <div class="field"><label for="to">To</label><select class="select" id="to"></select></div>
+          </div>
+          <button class="btn btn-ghost btn-block" id="swapBtn" type="button">⇅ Swap units</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Result</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rPrecise">—</div><div class="k">Precise value</div></div>
+          <div class="result-stat"><div class="v" id="rReverse">—</div><div class="k">Reverse (1 unit)</div></div>
+          <div class="result-stat"><div class="v" id="rFormula">—</div><div class="k">Factor / formula</div></div>
+          <div class="result-stat"><div class="v" id="rCat">—</div><div class="k">Category</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Exact conversion factors</h4><p id="recoText">Uses precise SI-defined factors: 1 inch = 2.54 cm exactly, 1 lb = 0.45359237 kg exactly, 1 mile = 1609.344 m exactly. Rounding happens only when displaying.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Covered categories</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Length:</b> mm, cm, m, km, in, ft, yd, mi</li>
+        <li><b>Weight:</b> mg, g, kg, tonne, oz, lb, stone</li>
+        <li><b>Temperature:</b> °C, °F, K (formula-based)</li>
+        <li><b>Area:</b> m², km², ft², yd², acre, hectare</li>
+        <li><b>Volume:</b> ml, litre, m³, tsp, tbsp, cup, pint, gallon</li>
+        <li><b>Speed:</b> m/s, km/h, mph, knot</li>
+        <li><b>Data:</b> bit, Byte, KB, MB, GB, TB (1024-based)</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>India-friendly:</b> temperature in °C, fuel-distance in km/l — defaults tuned for everyday Indian use cases.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'unit-converter', faqs: [
+      { q: 'Are the factors accurate?', a: 'Yes — every factor is the exact SI-defined value (1 in = 2.54 cm, 1 lb = 0.45359237 kg, 1 mi = 1609.344 m). Temperature uses the real formulas, not multipliers.' },
+      { q: 'Does temperature use a different logic?', a: 'Yes. Temperature conversions are formulas (°F = °C × 9/5 + 32), not simple factors, because the zero point differs between scales.' },
+      { q: 'Is MB 1000 KB or 1024 KB?', a: 'This tool uses binary (IEC) values where 1 KB = 1024 bytes — matching how operating systems display file sizes.' },
+      { q: 'Can I convert very large or small numbers?', a: 'Yes — scientific notation appears automatically beyond 9 digits so values stay accurate without losing readability.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('scale');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    const CATS = {
+      length: { name: 'Length', base: 'm', units: { mm: ['Millimetre (mm)', 0.001], cm: ['Centimetre (cm)', 0.01], m: ['Metre (m)', 1], km: ['Kilometre (km)', 1000], in: ['Inch (in)', 0.0254], ft: ['Foot (ft)', 0.3048], yd: ['Yard (yd)', 0.9144], mi: ['Mile (mi)', 1609.344] } },
+      weight: { name: 'Weight / Mass', base: 'kg', units: { mg: ['Milligram (mg)', 0.000001], g: ['Gram (g)', 0.001], kg: ['Kilogram (kg)', 1], t: ['Tonne (t)', 1000], oz: ['Ounce (oz)', 0.028349523125], lb: ['Pound (lb)', 0.45359237], st: ['Stone (st)', 6.35029318] } },
+      temp: { name: 'Temperature', formula: true, units: { c: ['Celsius (°C)'], f: ['Fahrenheit (°F)'], k: ['Kelvin (K)'] } },
+      area: { name: 'Area', base: 'm2', units: { m2: ['Square metre (m²)', 1], km2: ['Square kilometre (km²)', 1e6], ft2: ['Square foot (ft²)', 0.09290304], yd2: ['Square yard (yd²)', 0.83612736], ac: ['Acre', 4046.8564224], ha: ['Hectare', 10000] } },
+      volume: { name: 'Volume', base: 'l', units: { ml: ['Millilitre (ml)', 0.001], l: ['Litre (L)', 1], m3: ['Cubic metre (m³)', 1000], tsp: ['Teaspoon (US)', 0.00492892159], tbsp: ['Tablespoon (US)', 0.0147867648], cup: ['Cup (US)', 0.2365882365], pt: ['Pint (US)', 0.473176473], gal: ['Gallon (US)', 3.785411784] } },
+      speed: { name: 'Speed', base: 'ms', units: { ms: ['Metre/sec (m/s)', 1], kmh: ['km/h', 1 / 3.6], mph: ['Miles/hour (mph)', 0.44704], kn: ['Knot', 0.514444444] } },
+      data: { name: 'Digital Data', base: 'B', units: { bit: ['Bit', 0.125], B: ['Byte (B)', 1], KB: ['Kilobyte (KB)', 1024], MB: ['Megabyte (MB)', 1048576], GB: ['Gigabyte (GB)', 1073741824], TB: ['Terabyte (TB)', 1099511627776] } }
+    };
+
+    const catSel = document.getElementById('cat'), fromSel = document.getElementById('from'), toSel = document.getElementById('to');
+    Object.keys(CATS).forEach(function (k) { const o = document.createElement('option'); o.value = k; o.textContent = CATS[k].name; catSel.appendChild(o); });
+    function fillUnits(cat) {
+      fromSel.innerHTML = ''; toSel.innerHTML = '';
+      const keys = Object.keys(CATS[cat].units);
+      keys.forEach(function (k, i) {
+        const label = CATS[cat].units[k][0];
+        const o1 = document.createElement('option'); o1.value = k; o1.textContent = label; fromSel.appendChild(o1);
+        const o2 = document.createElement('option'); o2.value = k; o2.textContent = label; toSel.appendChild(o2);
+        if (i === 1) toSel.value = k;
+      });
+    }
+    function cToF(v) { return v * 9 / 5 + 32; } function fToC(v) { return (v - 32) * 5 / 9; }
+    function convertTemp(v, from, to) {
+      if (from === to) return v;
+      let c = v;
+      if (from === 'f') c = fToC(v); else if (from === 'k') c = v - 273.15;
+      if (to === 'f') return cToF(c); if (to === 'k') return c + 273.15;
+      return c;
+    }
+    function fmt(n) {
+      if (!isFinite(n)) return '—';
+      if (n !== 0 && (Math.abs(n) >= 1e10 || Math.abs(n) < 1e-6)) return n.toExponential(6);
+      return parseFloat(n.toPrecision(10)).toLocaleString('en-IN', { maximumFractionDigits: 6 });
+    }
+    function compute() {
+      const cat = catSel.value, from = fromSel.value, to = toSel.value;
+      const raw = document.getElementById('val').value;
+      const units = CATS[cat].units;
+      if (raw === '' || !isFinite(parseFloat(raw))) {
+        ['rMain','rPrecise','rReverse'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+        document.getElementById('rLbl').textContent = 'Enter a value';
+        document.getElementById('rCat').textContent = CATS[cat].name;
+        document.getElementById('rFormula').textContent = CATS[cat].formula ? '°F = °C × 9/5 + 32' : '1 ' + units[from][0].match(/\(([^)]+)\)/)[1] + ' = ' + fmt(units[from][1] / units[to][1]) + ' ' + units[to][0].match(/\(([^)]+)\)/)[1];
+        return;
+      }
+      const v = parseFloat(raw);
+      let res, factor;
+      if (CATS[cat].formula) {
+        res = convertTemp(v, from, to);
+        factor = convertTemp(1, from, to);
+      } else {
+        res = v * units[from][1] / units[to][1];
+        factor = units[from][1] / units[to][1];
+      }
+      const sym = function (u) { const m = units[u][0].match(/\(([^)]+)\)/); return m ? m[1] : units[u][0].replace(/^(\w+).*/, '$1'); };
+      document.getElementById('rMain').textContent = fmt(res);
+      document.getElementById('rLbl').textContent = fmt(v) + ' ' + sym(from) + ' =';
+      document.getElementById('rPrecise').textContent = res.toPrecision(12).replace(/\.?0+$/, '') + ' ' + sym(to);
+      document.getElementById('rReverse').textContent = '1 ' + sym(to) + ' = ' + fmt(CATS[cat].formula ? convertTemp(1, to, from) : 1 / factor) + ' ' + sym(from);
+      document.getElementById('rFormula').textContent = CATS[cat].formula ? (from === 'c' ? '°F = °C × 9/5 + 32' : from === 'f' ? '°C = (°F − 32) × 5/9' : 'K = °C + 273.15') : '1 ' + sym(from) + ' = ' + fmt(factor) + ' ' + sym(to);
+      document.getElementById('rCat').textContent = CATS[cat].name;
+    }
+    catSel.addEventListener('change', function () { fillUnits(catSel.value); compute(); });
+    [fromSel, toSel].forEach(function (el) { el.addEventListener('change', compute); });
+    document.getElementById('val').addEventListener('input', compute);
+    document.getElementById('swapBtn').addEventListener('click', function () {
+      const f = fromSel.value; fromSel.value = toSel.value; toSel.value = f; compute();
+    });
+    document.getElementById('resetBtn').addEventListener('click', function () { document.getElementById('val').value = ''; fillUnits(catSel.value); compute(); });
+    fillUnits('length');
+    catSel.value = 'length'; fromSel.value = 'cm'; toSel.value = 'in';
+    compute();
+
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Enter a value first', 'error'); return; }
+      DC.copyResult(document.getElementById('rLbl').textContent + ' ' + v + ' — via DecideCalc Unit Converter');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Enter a value first', 'error'); return; }
+      DC.shareWhatsApp(document.getElementById('rLbl').textContent + ' ' + v + ' (DecideCalc Unit Converter)');
+    });
+  </script>
+</body>
+</html>

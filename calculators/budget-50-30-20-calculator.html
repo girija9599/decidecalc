@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>50/30/20 Budget Calculator — Needs, Wants &amp; Savings Split | DecideCalc</title>
+  <meta name="description" content="Split your take-home pay with the 50/30/20 budget rule: 50% needs, 30% wants, 20% savings. Add what you actually spend to see where you run over — and by how much.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/budget-50-30-20-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>50/30/20 Budget Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>50/30/20 Budget Calculator</h1><div class="sub">Needs 50 · Wants 30 · Savings 20 — vs what you actually spend</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label for="ccy">Currency</label>
+            <select class="select" id="ccy">
+              <option value="INR" selected>₹ INR — Indian Rupee</option>
+              <option value="USD">$ USD — US Dollar</option>
+              <option value="EUR">€ EUR — Euro</option>
+              <option value="GBP">£ GBP — British Pound</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="income">Monthly take-home income</label>
+            <input class="input" id="income" type="number" min="0" step="any" value="75000" placeholder="e.g. 75000" inputmode="decimal">
+            <div class="hint">After-tax income that actually reaches your bank account each month.</div>
+          </div>
+
+          <div class="note" style="margin:0 0 14px"><span id="actIcon"></span><div><b>Optional: what you actually spend</b><br>Fill any bucket below to compare your real spending with the rule. Leave blank to skip the comparison.</div></div>
+          <div class="field-row">
+            <div class="field"><label for="actNeeds">Actual needs / month</label><input class="input" id="actNeeds" type="number" min="0" step="any" placeholder="Rent, EMIs, groceries…" inputmode="decimal"></div>
+            <div class="field"><label for="actWants">Actual wants / month</label><input class="input" id="actWants" type="number" min="0" step="any" placeholder="Dining, OTT, trips…" inputmode="decimal"></div>
+          </div>
+          <div class="field"><label for="actSave">Actual savings &amp; extra debt payoff / month</label><input class="input" id="actSave" type="number" min="0" step="any" placeholder="SIP, FD, RD, extra loan prepay…" inputmode="decimal"></div>
+
+          <label class="check" style="margin:4px 0 10px"><input type="checkbox" id="advSplit"> Custom split (advanced — must total 100%)</label>
+          <div id="advBox" style="display:none">
+            <div class="field-row">
+              <div class="field"><label for="pctNeeds">Needs %</label><input class="input" id="pctNeeds" type="number" min="0" max="100" step="any" value="50" inputmode="decimal"></div>
+              <div class="field"><label for="pctWants">Wants %</label><input class="input" id="pctWants" type="number" min="0" max="100" step="any" value="30" inputmode="decimal"></div>
+              <div class="field"><label for="pctSave">Savings %</label><input class="input" id="pctSave" type="number" min="0" max="100" step="any" value="20" inputmode="decimal"></div>
+            </div>
+          </div>
+          <p id="errBox" role="alert" aria-live="polite" style="min-height:1.3em;color:#DC2626;font-size:.84rem;margin:2px 0 10px"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate my split</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rNeeds">—</div><div class="lbl" id="rLbl">Needs budget (50%)</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rWants">—</div><div class="k" id="kWants">Wants budget (30%)</div></div>
+          <div class="result-stat"><div class="v" id="rSave">—</div><div class="k" id="kSave">Savings target (20%)</div></div>
+          <div class="result-stat"><div class="v" id="rRate">—</div><div class="k">Your actual savings rate</div></div>
+          <div class="result-stat"><div class="v" id="rDelta">—</div><div class="k">Biggest over-budget bucket</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="budgetChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The rule in one line</h4><p id="recoText">Half your take-home for needs, about a third for wants, at least a fifth to savings and debt payoff. Add your actual spending to see exactly where you drift.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>What counts as a need, a want, or savings?</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Needs (50%):</b> rent/mortgage, groceries, utilities, insurance, minimum EMIs, fuel/commute, medicines, school fees. If life stops working without it, it's a need.</li>
+        <li><b>Wants (30%):</b> dining out, streaming, gadgets, holidays, gym memberships, upgraded versions of needs (a costlier phone plan than the basic one).</li>
+        <li><b>Savings (20%):</b> emergency-fund top-ups, SIPs, NPS/PPF/401(k), extra loan prepayment beyond the EMI — anything that builds net worth or kills debt faster.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Not a straitjacket:</b> in expensive cities, needs can legitimately reach 60–65%. Use the advanced custom split to model your reality — the goal is knowing the split, not worshipping one number.</div></div>
+      <h3 class="mt-3" style="font-size:1.1rem">If a bucket is over budget</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Needs over:</b> attack the big three — housing, transport, EMIs. Renegotiate rent, refinance a loan, or re-commute before cutting groceries.</li>
+        <li><b>Wants over:</b> pick one lever (food delivery is the classic leak) and cap it for 60 days rather than trimming everything at once.</li>
+        <li><b>Savings under:</b> automate a transfer the day salary lands — pay yourself first, then spend the rest guilt-free.</li>
+      </ul>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'budget-50-30-20-calculator', faqs: [
+      { q: 'Is the 50/30/20 rule based on gross or take-home salary?', a: 'Take-home. The rule applies to the money that reaches your account after tax and payroll deductions — the amount you can actually allocate. Pre-tax deductions like EPF or 401(k) contributions already count as saving happening before the paycheck lands.' },
+      { q: 'What if my needs alone exceed 50% of my income?', a: 'That is common in high-rent metro cities or during heavy debt periods — it is a diagnosis, not a failure. Switch to a realistic split like 60/25/15 with the custom option, protect some savings rate no matter how small, and work the structural levers (rent, commute, loan rates) instead of starving groceries.' },
+      { q: 'Do minimum loan EMIs count as needs or savings?', a: 'The compulsory minimum EMI is a need — missing it has consequences. Any extra prepayment above the required EMI goes in the savings bucket, because it actively builds net worth by destroying interest.' },
+      { q: 'How is the 50/30/20 rule different from zero-based budgeting?', a: '50/30/20 is a guardrail: three buckets, minimal tracking, decide once a month. Zero-based budgeting assigns every rupee a job before the month starts — more precise, but far more effort. Many people use 50/30/20 to set targets and a monthly review to stay honest.' },
+      { q: 'Should the 20% savings go to investments or the emergency fund first?', a: 'Emergency fund first. Until you hold roughly 3–6 months of essentials in liquid savings, the savings bucket should largely refill the buffer. Once that is funded, redirect the same 20% toward long-term investing and high-interest debt payoff.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('pie');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+    document.getElementById('actIcon').innerHTML = DC.icon('target');
+
+    var SYMS = { INR: '₹', USD: '$', EUR: '€', GBP: '£' };
+    var DEFAULTS = { ccy: 'INR', income: '75000', actNeeds: '', actWants: '', actSave: '', pctNeeds: '50', pctWants: '30', pctSave: '20' };
+
+    function sym() { return SYMS[document.getElementById('ccy').value] || '₹'; }
+    function fmt(n) {
+      if (!isFinite(n)) n = 0;
+      var s = sym();
+      var v = Math.round(Math.abs(n));
+      var locale = document.getElementById('ccy').value === 'INR' ? 'en-IN' : 'en-US';
+      return (n < 0 ? '−' : '') + s + v.toLocaleString(locale);
+    }
+    function readOpt(id) {
+      var raw = document.getElementById(id).value.trim();
+      if (raw === '') return { has: false, value: 0, valid: true };
+      var v = Number(raw);
+      return { has: true, value: v, valid: isFinite(v) && v >= 0 };
+    }
+    function showErr(msg) {
+      document.getElementById('errBox').textContent = msg || '';
+      if (msg) {
+        ['rNeeds','rWants','rSave','rRate','rDelta'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+        if (DC.charts && DC.charts.budgetChart) { DC.charts.budgetChart.destroy(); delete DC.charts.budgetChart; }
+      }
+    }
+
+    function compute() {
+      var incomeRaw = document.getElementById('income').value.trim();
+      var income = Number(incomeRaw);
+      if (incomeRaw === '' || !isFinite(income) || income <= 0) {
+        showErr('Enter a monthly take-home income greater than zero.');
+        return;
+      }
+
+      var adv = document.getElementById('advSplit').checked;
+      var pN = 50, pW = 30, pS = 20;
+      if (adv) {
+        pN = Number(document.getElementById('pctNeeds').value);
+        pW = Number(document.getElementById('pctWants').value);
+        pS = Number(document.getElementById('pctSave').value);
+        if (![pN, pW, pS].every(function (p){ return isFinite(p) && p >= 0 && p <= 100; })) {
+          showErr('Each custom percentage must be between 0 and 100.');
+          return;
+        }
+        var sum = pN + pW + pS;
+        if (Math.abs(sum - 100) > 0.25) {
+          showErr('Custom split must total 100% — yours totals ' + (Math.round(sum * 10) / 10) + '%.');
+          return;
+        }
+      } else {
+        document.getElementById('pctNeeds').value = '50';
+        document.getElementById('pctWants').value = '30';
+        document.getElementById('pctSave').value = '20';
+      }
+
+      var actN = readOpt('actNeeds'), actW = readOpt('actWants'), actS = readOpt('actSave');
+      if (!actN.valid || !actW.valid || !actS.valid) {
+        showErr('Actual spending amounts must be numbers that are zero or greater.');
+        return;
+      }
+      showErr('');
+
+      var tN = income * pN / 100, tW = income * pW / 100, tS = income * pS / 100;
+
+      document.getElementById('rNeeds').textContent = fmt(tN);
+      document.getElementById('rLbl').textContent = 'Needs budget (' + pN + '%)';
+      document.getElementById('rWants').textContent = fmt(tW);
+      document.getElementById('kWants').textContent = 'Wants budget (' + pW + '%)';
+      document.getElementById('rSave').textContent = fmt(tS);
+      document.getElementById('kSave').textContent = 'Savings target (' + pS + '%)';
+
+      var hasActuals = actN.has || actW.has || actS.has;
+      var rateEl = document.getElementById('rRate'), deltaEl = document.getElementById('rDelta');
+      var titleEl = document.getElementById('recoTitle'), textEl = document.getElementById('recoText');
+
+      if (hasActuals) {
+        var aN = actN.value, aW = actW.value, aS = actS.value;
+        var saveRate = income > 0 ? (aS / income) * 100 : 0;
+        rateEl.textContent = saveRate.toFixed(1) + '%';
+
+        var over = [
+          { key: 'Needs', d: aN - tN },
+          { key: 'Wants', d: aW - tW },
+          { key: 'Savings gap', d: tS - aS }
+        ].sort(function (a, b){ return b.d - a.d; });
+        var worst = over[0];
+        if (worst.d > 0) {
+          deltaEl.textContent = worst.key + ' by ' + fmt(worst.d);
+        } else {
+          deltaEl.textContent = 'On track everywhere';
+        }
+
+        if (saveRate >= pS && aN <= tN && aW <= tW) {
+          titleEl.textContent = '✅ You beat the rule';
+          textEl.textContent = 'Your actual spending fits every bucket and you save ' + saveRate.toFixed(1) + '% of take-home (target ' + pS + '%). Consider putting the surplus toward long-term goals rather than letting it inflate wants.';
+        } else if (worst.key === 'Needs' && worst.d > 0) {
+          titleEl.textContent = '⚠ Needs are eating the budget';
+          textEl.textContent = 'Your needs run ' + fmt(worst.d) + '/month over the ' + pN + '% line. Groceries rarely cause this — it is usually rent, EMIs or transport. Fix the structure (refinance, relocate, car-pool), not the vegetable bill.';
+        } else if (worst.key === 'Wants' && worst.d > 0) {
+          titleEl.textContent = '⚠ Wants are leaking ' + fmt(worst.d) + '/month';
+          textEl.textContent = 'Wants exceed the ' + pW + '% guideline. Cap one visible category (food delivery, subscriptions, impulse orders) for 60 days — single-lever cuts stick far better than across-the-board austerity.';
+        } else if (worst.key === 'Savings gap' && worst.d > 0) {
+          titleEl.textContent = '⚠ Savings are ' + fmt(worst.d) + '/month short';
+          textEl.textContent = 'You save ' + saveRate.toFixed(1) + '% against a ' + pS + '% target. Automate a transfer of ' + fmt(tS) + ' the day income lands — money you never see is money you never miss.';
+        } else {
+          titleEl.textContent = '✨ Solid — keep the split visible';
+          textEl.textContent = 'Actual spending is within your self-set split. Review once a month; small drift is normal, but catch it early.';
+        }
+      } else {
+        rateEl.textContent = 'Not entered';
+        deltaEl.textContent = 'Not entered';
+        titleEl.textContent = 'Your targets at ' + pN + '/' + pW + '/' + pS;
+        textEl.textContent = 'On ' + fmt(income) + ' take-home, aim for ' + fmt(tN) + ' on needs, ' + fmt(tW) + ' on wants and ' + fmt(tS) + ' on savings. Fill the actual-spending boxes to grade your current month against these numbers.';
+      }
+
+      // Chart: target vs actual grouped bars
+      var labels = ['Needs', 'Wants', 'Savings'];
+      var targetData = [Math.round(tN), Math.round(tW), Math.round(tS)];
+      var datasets = [{ label: 'Budget (' + pN + '/' + pW + '/' + pS + ')', data: targetData, backgroundColor: 'rgba(67,56,202,.75)', borderRadius: 8 }];
+      if (hasActuals) {
+        datasets.push({ label: 'Actual', data: [Math.round(actN.value), Math.round(actW.value), Math.round(actS.value)], backgroundColor: 'rgba(34,197,94,.7)', borderRadius: 8 });
+      }
+      DC.makeChart('budgetChart', {
+        type: 'bar',
+        data: { labels: labels, datasets: datasets },
+        options: {
+          scales: { y: { ticks: { callback: function (v){ return sym() + (v >= 100000 ? (v/100000).toFixed(1) + 'L' : v >= 1000 ? (v/1000).toFixed(0) + 'k' : v); } } } },
+          plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c){ return c.dataset.label + ': ' + fmt(c.raw); } } } }
+        }
+      });
+
+      window.__lastBudget = {
+        income: fmt(income), split: pN + '/' + pW + '/' + pS,
+        needs: fmt(tN), wants: fmt(tW), save: fmt(tS),
+        rate: hasActuals ? rateEl.textContent : null
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['ccy','income','actNeeds','actWants','actSave','pctNeeds','pctWants','pctSave'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', compute);
+      document.getElementById(id).addEventListener('change', compute);
+    });
+    document.getElementById('advSplit').addEventListener('change', function () {
+      document.getElementById('advBox').style.display = this.checked ? '' : 'none';
+      compute();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      ['ccy','income','actNeeds','actWants','actSave','pctNeeds','pctWants','pctSave'].forEach(function (id) {
+        document.getElementById(id).value = DEFAULTS[id];
+      });
+      document.getElementById('advSplit').checked = false;
+      document.getElementById('advBox').style.display = 'none';
+      compute();
+      DC.toast('Reset to defaults', 'success');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastBudget;
+      if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('My 50/30/20 budget on ' + r.income + '/mo (' + r.split + '): needs ' + r.needs + ', wants ' + r.wants + ', savings ' + r.save + (r.rate ? ' — I actually save ' + r.rate : '') + '. Check yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastBudget;
+      if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult('My ' + r.split + ' Budget\nTake-home income: ' + r.income + '/month\nNeeds (' + r.split.split('/')[0] + '%): ' + r.needs + '\nWants (' + r.split.split('/')[1] + '%): ' + r.wants + '\nSavings (' + r.split.split('/')[2] + '%): ' + r.save + (r.rate ? '\nActual savings rate: ' + r.rate : '\nActual spending: not entered'));
+    });
+
+    compute();
+  </script>
+</body>
+</html>

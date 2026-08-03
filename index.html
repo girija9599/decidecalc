@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DecideCalc — Free Life Decision Calculators | Calculate Before You Decide</title>
+  <meta name="description" content="DecideCalc is a free, no-login, India-first platform of practical financial, career, health and life-planning calculators. Instant results from tools that are available today.">
+  <link rel="canonical" href="https://decidecalc.com/">
+  <meta property="og:title" content="DecideCalc — Calculate Before You Decide">
+  <meta property="og:description" content="Free, instant calculators for financial, career, health and life decisions. No login required.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.png">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- Layout (header) injected by layout.js -->
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal">⚡ India-First · No Login · Free Forever</span>
+        <h1 class="reveal d1">Calculate Before You <span class="hl">Decide</span>.</h1>
+        <p class="lead reveal d2">Practical calculators for life's biggest money, career, health and relationship decisions. Type your numbers and get a clear result in seconds — not just a number.</p>
+        <div class="hero-actions reveal d3">
+          <a href="#tools" class="btn btn-accent">Explore Calculators</a>
+          <a href="calculators/life-decision-scorer.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.4)">Score a Decision →</a>
+        </div>
+        <div class="hero-stats reveal d4">
+          <div class="hero-stat"><div class="num" data-count="72">72</div><div class="lbl">Live calculators</div></div>
+          <div class="hero-stat"><div class="num" data-count="12">12</div><div class="lbl">Categories</div></div>
+          <div class="hero-stat"><div class="num" data-count="2" data-suffix="s" data-dec="1">&lt;2s</div><div class="lbl">Load time</div></div>
+          <div class="hero-stat"><div class="num" data-count="100" data-suffix="%">100%</div><div class="lbl">Free, no login</div></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal d2">
+        <div class="hero-card hero-card-1">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <span style="width:34px;height:34px;border-radius:10px;background:var(--gradient-accent);display:grid;place-items:center;color:#04221d">📊</span>
+            <b style="font-size:.95rem">EMI Calculator</b>
+          </div>
+          <div class="row"><span>Loan Amount</span><b>₹10,00,000</b></div>
+          <div class="row"><span>Rate</span><b>8.5% / yr</b></div>
+          <div class="row"><span>Tenure</span><b>15 years</b></div>
+          <div class="row" style="padding-top:12px"><span style="font-weight:700">Monthly EMI</span><b style="color:var(--accent-600);font-size:1.15rem">₹9,847</b></div>
+        </div>
+        <div class="hero-card hero-card-2">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <span style="width:34px;height:34px;border-radius:10px;background:var(--gradient-warm);display:grid;place-items:center;color:#fff">🎯</span>
+            <b style="font-size:.95rem">Life Decision Score</b>
+          </div>
+          <div style="text-align:center;padding:6px 0">
+            <div style="font-size:2.4rem;font-weight:900;background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">82<span style="font-size:1rem">/100</span></div>
+            <span class="signal green" style="margin-top:8px">✓ Strong YES</span>
+          </div>
+        </div>
+        <div class="hero-badge">⚡ Instant result</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR THIS WEEK -->
+  <section class="popular-wrap" id="popular">
+    <div class="container">
+      <div class="center mb-4 reveal">
+        <span class="eyebrow">🔥 Most Popular</span>
+        <h2 class="mt-2">Popular <span class="gradient-text">this week</span></h2>
+        <p class="lead mt-2" style="max-width:600px;margin-left:auto;margin-right:auto">India's most-used DecideCalc calculators — pick one and decide in under 30 seconds.</p>
+      </div>
+      <div class="popular-scroll reveal" id="popularScroll"><!-- injected --></div>
+      <div class="reveal" id="personalRow" style="margin-top:22px;display:none">
+        <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:flex-start">
+          <div id="recentWrap" style="flex:1;min-width:280px;max-width:600px">
+            <h4 style="margin:0 0 8px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">Recently used</h4>
+            <div id="recentList" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+          </div>
+          <div id="favWrap" style="flex:1;min-width:280px;max-width:600px">
+            <h4 style="margin:0 0 8px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-accent)">★ Your favorites</h4>
+            <div id="favList" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item">⚡ Zero login required</div>
+    <div class="trust-item">📱 Mobile-first</div>
+    <div class="trust-item">🌙 Dark mode</div>
+    <div class="trust-item">📤 WhatsApp share</div>
+    <div class="trust-item">🖨️ PDF download</div>
+    <div class="trust-item">🇮🇳 India-first</div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>💰 Finance: EMI · SIP · Retirement · Rent vs Buy</span><span class="dot">●</span>
+      <span>💼 Career: Job Switch · Salary Hike · MBA ROI</span><span class="dot">●</span>
+      <span>❤️ Health: Real Age · Insurance Need</span><span class="dot">●</span>
+      <span>💍 Life: Wedding · Baby · Relocation</span><span class="dot">●</span>
+      <span>🚀 Unique: Life Decision Scorer — nowhere else on the internet</span><span class="dot">●</span>
+      <span>💰 Finance: EMI · SIP · Retirement · Rent vs Buy</span><span class="dot">●</span>
+      <span>💼 Career: Job Switch · Salary Hike · MBA ROI</span><span class="dot">●</span>
+      <span>❤️ Health: Real Age · Insurance Need</span><span class="dot">●</span>
+      <span>💍 Life: Wedding · Baby · Relocation</span><span class="dot">●</span>
+      <span>🚀 Unique: Life Decision Scorer — nowhere else on the internet</span><span class="dot">●</span>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="center mb-4 reveal">
+        <span class="eyebrow"><span id="categoryCount">12</span> Categories</span>
+        <h2 class="mt-2">Every life decision, <span class="gradient-text">one platform</span></h2>
+        <p class="lead mt-2" style="max-width:620px;margin-left:auto;margin-right:auto">From your next EMI to your next career move — pick a category and start calculating.</p>
+      </div>
+      <div class="grid grid-3" id="categoryGrid"><!-- injected --></div>
+    </div>
+  </section>
+
+  <!-- ALL TOOLS -->
+  <section class="section" id="tools" style="background:var(--bg-soft)">
+    <div class="container">
+      <div class="center mb-4 reveal">
+        <span class="eyebrow"><span id="liveCount">72</span> Live Calculators</span>
+        <h2 class="mt-2">Pick a tool & <span class="gradient-text">decide smarter</span></h2>
+        <p class="lead mt-2" style="max-width:640px;margin-left:auto;margin-right:auto">Every calculator gives you a real result — not just a number.</p>
+      </div>
+
+      <div class="reveal" style="max-width:560px;margin:0 auto 32px;position:relative">
+        <label class="sr-only" for="toolSearch">Search live calculators</label>
+        <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted)" id="searchIcon" aria-hidden="true"></span>
+        <input id="toolSearch" class="input" style="padding-left:44px" type="search" placeholder="Search calculators… e.g. EMI, SIP, retirement or GST">
+      </div>
+
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:30px" id="filterChips"></div>
+
+      <div class="grid grid-3" id="toolsGrid"><!-- injected --></div>
+      <div class="center mt-4" id="seeMoreWrap" hidden>
+        <button class="btn btn-ghost" id="seeMoreBtn" aria-expanded="false">See more tools <span aria-hidden="true">↓</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="center mb-4 reveal">
+        <span class="eyebrow">How It Works</span>
+        <h2 class="mt-2">Three steps to a <span class="gradient-text">smarter decision</span></h2>
+      </div>
+      <div class="steps">
+        <div class="step card reveal">
+          <div class="num-circle"></div>
+          <h3>Choose a calculator</h3>
+          <p>Pick from practical tools for finance, career, health and life events.</p>
+        </div>
+        <div class="step card reveal d1">
+          <div class="num-circle"></div>
+          <h3>Enter your numbers</h3>
+          <p>No signup. Just sliders & inputs tuned for the Indian context.</p>
+        </div>
+        <div class="step card reveal d2">
+          <div class="num-circle"></div>
+          <h3>Get a recommendation</h3>
+          <p>Instant result, a clear chart, and an actionable next step. Share or save it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MID-CONTENT AD -->
+  <div class="container" style="padding-top:8px;padding-bottom:8px">
+    <div class="ad-slot reveal" data-slot="midpage"></div>
+  </div>
+
+  <!-- WHY US -->
+  <section class="section" style="background:var(--primary-700);color:#fff">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center" class="why-split">
+        <div class="reveal">
+          <span class="eyebrow" style="background:rgba(59,130,246,.16);color:#cfe0ff;border-color:rgba(130,170,255,.3)">Why DecideCalc</span>
+          <h2 class="mt-2" style="color:#fff">Built different. <span style="color:var(--accent)">Built for India.</span></h2>
+          <p class="mt-2" style="color:rgba(255,255,255,.82);max-width:520px">Most calculator sites stop at a number. We give you a decision. Every tool ends with a recommendation, a comparison, or a green/yellow/red signal — so you actually know what to do next.</p>
+          <div class="mt-3" style="display:grid;grid-template-columns:1fr 1fr;gap:18px" id="whyFeatures"></div>
+          <a href="#tools" class="btn btn-primary mt-4">Start calculating <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="reveal d2">
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-lg);padding:30px">
+            <div style="font-size:.8rem;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:18px">DecideCalc vs others</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;font-size:.85rem;font-weight:700;color:rgba(255,255,255,.5)"><span>Feature</span><span style="text-align:center">Others</span><span style="text-align:center;color:var(--accent)">DecideCalc</span></div>
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;align-items:center;border-top:1px solid rgba(255,255,255,.12);padding-top:12px"><span style="color:#fff;font-size:.9rem">No login</span><span style="text-align:center;color:rgba(255,255,255,.4)">Often ❌</span><span style="text-align:center;color:var(--accent);font-weight:800">✅ Always</span></div>
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;align-items:center;border-top:1px solid rgba(255,255,255,.12);padding-top:12px"><span style="color:#fff;font-size:.9rem">Focused categories</span><span style="text-align:center;color:rgba(255,255,255,.4)">Often finance-only</span><span style="text-align:center;color:var(--accent);font-weight:800" id="catCompare">✅ 12 live groups</span></div>
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;align-items:center;border-top:1px solid rgba(255,255,255,.12);padding-top:12px"><span style="color:#fff;font-size:.9rem">WhatsApp share</span><span style="text-align:center;color:rgba(255,255,255,.4)">❌</span><span style="text-align:center;color:var(--accent);font-weight:800">✅</span></div>
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;align-items:center;border-top:1px solid rgba(255,255,255,.12);padding-top:12px"><span style="color:#fff;font-size:.9rem">Life Decision Scorer</span><span style="text-align:center;color:rgba(255,255,255,.4)">Nowhere</span><span style="text-align:center;color:var(--accent);font-weight:800">✅ Unique</span></div>
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;align-items:center;border-top:1px solid rgba(255,255,255,.12);padding-top:12px"><span style="color:#fff;font-size:.9rem">India-calibrated</span><span style="text-align:center;color:rgba(255,255,255,.4)">US-biased</span><span style="text-align:center;color:var(--accent);font-weight:800">✅ 100%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section center">
+    <div class="container">
+      <div class="reveal card" style="max-width:760px;margin:0 auto;padding:clamp(32px,5vw,56px);text-align:center;background:var(--gradient-hero);color:#fff;border:none">
+        <div id="ctaIcon" style="width:56px;height:56px;border-radius:16px;background:rgba(59,130,246,.2);display:grid;place-items:center;margin:0 auto 12px;color:#60A5FA"></div>
+        <h2 style="color:#fff">Got a big decision to make?</h2>
+        <p style="color:rgba(255,255,255,.85)" class="mt-2">Score it out of 100 in under 2 minutes. Get a clear YES / MAYBE / NO signal — with the top factors that should drive your choice.</p>
+        <a href="calculators/life-decision-scorer.html" class="btn btn-primary mt-3" style="font-size:1.05rem">Try the Life Decision Scorer <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/tools.js"></script>
+  <script src="assets/js/engagement.js"></script>
+  <script src="assets/js/ads.js"></script>
+  <script>
+    // Render this week's most-used calculators from the shared registry.
+    (function () {
+      const popular = document.getElementById('popularScroll');
+      popular.innerHTML = DC.popular(6).map(function (t, i) {
+        const cat = DC.catName(t.cat);
+        return '<a class="pop-card" href="calculators/' + t.slug + '.html" style="--cat-color:' + cat.color + '">' +
+          '<span class="pop-rank">0' + (i + 1) + '</span>' +
+          '<span class="pop-ic">' + DC.icon(t.icon) + '</span>' +
+          '<span class="pop-copy"><b>' + t.name + '</b><small>' + t.blurb + '</small></span>' +
+          '<span class="pop-arrow">→</span>' +
+        '</a>';
+      }).join('');
+    })();
+
+    // Render Why Us features with SVG icons
+    (function () {
+      var el = document.getElementById('whyFeatures');
+      if (!el) return;
+      var feats = [
+        { icon: 'check',   title: 'No login, ever',   desc: 'Privacy-first. Your data never leaves your device.' },
+        { icon: 'globe',   title: 'India-calibrated',  desc: 'GST slabs, tax regimes, city tiers, ₹ lakhs & crores.' },
+        { icon: 'zap',     title: 'Loads in <2s',      desc: 'Pure HTML/CSS/JS. Works on any phone, even slow data.' },
+        { icon: 'target',  title: 'A real answer',     desc: 'Not just math — a recommendation you can act on.' }
+      ];
+      el.innerHTML = feats.map(function (f) {
+        return '<div style="display:flex;gap:12px;align-items:flex-start">' +
+          '<span style="width:34px;height:34px;border-radius:10px;background:rgba(59,130,246,.18);display:grid;place-items:center;flex:0 0 auto;color:#60A5FA">' + DC.icon(f.icon) + '</span>' +
+          '<div><b style="color:#fff">' + f.title + '</b><br><span style="color:rgba(255,255,255,.7);font-size:.88rem">' + f.desc + '</span></div></div>';
+      }).join('');
+    })();
+
+    // Keep the visible calculator count in sync with the registry.
+    document.getElementById('liveCount').textContent = DC.tools.length;
+    document.getElementById('categoryCount').textContent = DC.categories.length;
+    var liveStat = document.querySelector('.hero-stat .num');
+    liveStat.setAttribute('data-count', DC.tools.length);
+    liveStat.removeAttribute('data-suffix');
+    liveStat.textContent = DC.tools.length;
+    var catCompare = document.getElementById('catCompare');
+    if (catCompare) catCompare.textContent = '✅ ' + DC.categories.length + ' live groups';
+
+    // Set search icon
+    document.getElementById('searchIcon').innerHTML = DC.icon('search');
+    // Set CTA icon
+    var ctaIcon = document.getElementById('ctaIcon');
+    if (ctaIcon) ctaIcon.innerHTML = DC.icon('compass');
+
+    // Render categories (sorted, with computed live counts)
+    (function () {
+      const grid = document.getElementById('categoryGrid');
+      const cats = DC.categoriesSorted();
+      grid.innerHTML = cats.map(function (c, i) {
+        const live = DC.catCount(c.id);
+        return '<a class="cat-card reveal d' + (i % 3) + '" href="#cat-' + c.id + '" data-cat="' + c.id + '" style="--cat-color:' + c.color + '">' +
+          '<div class="cat-icon">' + DC.icon(c.icon) + '</div>' +
+          '<h3>' + c.name + '</h3>' +
+          '<p>' + c.desc + '</p>' +
+          '<div class="cat-meta"><span>' + live + ' tool' + (live === 1 ? '' : 's') + '</span><span class="arrow">' + DC.icon('arrow') + '</span></div>' +
+        '</a>';
+      }).join('');
+      grid.querySelectorAll('.cat-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          const cat = card.getAttribute('data-cat');
+          setActiveFilter(cat);
+          if (window.history && window.history.replaceState) window.history.replaceState(null, '', '#cat-' + cat);
+          var tools = document.getElementById('tools');
+          if (tools) setTimeout(function () { tools.scrollIntoView({ behavior: 'smooth' }); }, 0);
+        });
+      });
+    })();
+
+    function chipId(cat) { return 'chip-' + cat; }
+
+    // Filter chips (sorted categories)
+    let activeFilter = 'all';
+    let activeQuery = '';
+    let seeMoreOpen = false;
+    (function () {
+      const wrap = document.getElementById('filterChips');
+      const chips = [{ id: 'all', name: 'All' }].concat(DC.categoriesSorted());
+      wrap.innerHTML = chips.map(function (c) {
+        return '<button class="chip' + (c.id === 'all' ? ' active' : '') + '" id="chip-' + c.id + '" data-cat="' + c.id + '" style="' + (c.id !== 'all' && c.color ? '--cat-color:' + c.color : '') + '">' + c.name + '</button>';
+      }).join('');
+      wrap.querySelectorAll('.chip').forEach(function (b) {
+        b.addEventListener('click', function () {
+          setActiveFilter(b.getAttribute('data-cat'));
+        });
+      });
+    })();
+
+    function setActiveFilter(cat) {
+      activeFilter = cat;
+      document.querySelectorAll('#filterChips .chip').forEach(function (x) {
+        x.classList.toggle('active', x.getAttribute('data-cat') === cat);
+      });
+      renderToolGrid();
+    }
+
+    function renderToolCard(t) {
+      const cat = DC.catName(t.cat);
+      return '<a class="tool-card" href="calculators/' + t.slug + '.html" data-slug="' + t.slug + '" style="--cat-color:' + cat.color + '">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+          '<span class="tool-ic">' + DC.icon(t.icon) + '</span>' +
+          '<span class="tag" style="color:var(--success);border-color:color-mix(in srgb,var(--success) 35%,var(--border));background:color-mix(in srgb,var(--success) 10%,transparent)">● Live</span>' +
+        '</div>' +
+        '<h3>' + t.name + '</h3>' +
+        '<p>' + t.blurb + '</p>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;font-size:.82rem;font-weight:700;color:' + cat.color + '">' +
+          '<span>' + cat.name.split(' ')[0] + '</span>' +
+          '<span>Open →</span>' +
+        '</div>' +
+      '</a>';
+    }
+
+    const toolsGrid = document.getElementById('toolsGrid');
+    const INITIAL_TOOLS = 50;
+    let toolLinks = []; // [{el, matches}]
+
+    function renderToolGrid() {
+      // First time: render all cards from the catalogue, in stable order.
+      if (!toolLinks.length) {
+        toolsGrid.innerHTML = DC.tools.map(renderToolCard).join('');
+        toolLinks = Array.prototype.map.call(toolsGrid.querySelectorAll('.tool-card'), function (el) {
+          const slug = el.getAttribute('data-slug');
+          const t = DC.tool(slug) || {};
+          return { el: el, cat: t.cat || '', hay: ((t.name || '') + ' ' + (t.blurb || '') + ' ' + (t.aliases || '')).toLowerCase() };
+        });
+      }
+      let visible = 0, totalMatch = 0;
+      toolLinks.forEach(function (l) {
+        const catOk = (activeFilter === 'all' || l.cat === activeFilter);
+        const qOk = (!activeQuery || l.hay.indexOf(activeQuery) !== -1);
+        const matches = catOk && qOk;
+        l.el.style.display = matches ? '' : 'none';
+        if (matches) totalMatch++;
+      });
+      // See more: when a filter/search is active, show every match; otherwise cap at INITIAL_TOOLS.
+      toolLinks.forEach(function (l, i) {
+        if (l.el.style.display === 'none') return;
+        const withinCap = (activeQuery || activeFilter !== 'all') || seeMoreOpen || (visible < INITIAL_TOOLS);
+        l.el.style.display = withinCap ? '' : 'none';
+        visible++;
+      });
+      const wrap = document.getElementById('seeMoreWrap');
+      const btn = document.getElementById('seeMoreBtn');
+      const showBtn = (activeQuery === '' && activeFilter === 'all') && DC.tools.length > INITIAL_TOOLS;
+      wrap.hidden = !showBtn;
+      if (btn) {
+        btn.setAttribute('aria-expanded', seeMoreOpen ? 'true' : 'false');
+        btn.innerHTML = (seeMoreOpen ? 'Show fewer tools' : 'See more tools') + ' <span aria-hidden="true">' + (seeMoreOpen ? '↑' : '↓') + '</span>';
+      }
+    }
+
+    document.getElementById('seeMoreBtn').addEventListener('click', function () {
+      seeMoreOpen = !seeMoreOpen;
+      renderToolGrid();
+    });
+
+    // Recently-used and Favorites rows (personal, localStorage-backed)
+    function renderPersonalRows() {
+      const recent = (DC.recent ? DC.recent(6) : []).filter(t => DC.tool(t.slug));
+      const favs = DC.favorites ? DC.favorites() : [];
+      const row = document.getElementById('personalRow');
+      const recentList = document.getElementById('recentList');
+      const favList = document.getElementById('favList');
+      const recentWrap = document.getElementById('recentWrap');
+      const favWrap = document.getElementById('favWrap');
+
+      recentList.innerHTML = recent.map(t =>
+        '<a class="chip" href="calculators/' + t.slug + '.html" style="text-decoration:none">' + t.name + '</a>'
+      ).join('');
+      favList.innerHTML = favs.map(t =>
+        '<a class="chip" href="calculators/' + t.slug + '.html" style="text-decoration:none">★ ' + t.name + '</a>'
+      ).join('');
+      recentWrap.style.display = recent.length ? '' : 'none';
+      favWrap.style.display = favs.length ? '' : 'none';
+      row.style.display = (recent.length || favs.length) ? '' : 'none';
+    }
+    renderPersonalRows();
+    // Update when tools window reports engagement events
+    window.addEventListener('storage', renderPersonalRows);
+
+    renderToolGrid();
+
+    // Search (composed with category filter)
+    document.getElementById('toolSearch').addEventListener('input', function (e) {
+      activeQuery = e.target.value.trim().toLowerCase();
+      if (activeQuery) {
+        document.querySelectorAll('#filterChips .chip').forEach(function (x) { x.classList.remove('active'); });
+        document.getElementById('chip-all').classList.add('active');
+        activeFilter = 'all';
+      }
+      renderToolGrid();
+    });
+
+    // Initialize category from URL hash, e.g. index.html#cat-finance
+    (function () {
+      var m = /cat-([a-z]+)/i.exec(window.location.hash || '');
+      if (m && DC.catName(m[1])) {
+        setActiveFilter(m[1]);
+        var tools = document.getElementById('tools');
+        if (tools) setTimeout(function () { tools.scrollIntoView({ behavior: 'smooth' }); }, 50);
+      }
+    })();
+
+    // Render layout (header/footer) — after content so it wraps correctly
+    DC.renderLayout();
+    // re-run reveal for newly injected elements
+    setTimeout(function () { DC.initReveal(); }, 0);
+  </script>
+</body>
+</html>

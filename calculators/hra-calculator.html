@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRA Calculator — House Rent Allowance Exemption (Section 10(13A)) | DecideCalc</title>
+  <meta name="description" content="Free HRA exemption calculator using the actual Section 10(13A) three-rule minimum. Old regime only — tells you which of the three rules applies and the exact exemption.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/hra-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>HRA Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>HRA Exemption Calculator</h1><div class="sub">Section 10(13A) — old tax regime only</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Basic salary (monthly, ₹)</label>
+            <div class="range-out"><span class="range-val" id="out-basic">₹50,000</span></div>
+            <input type="range" id="basic" min="10000" max="500000" step="1000" value="50000" data-prefix="₹">
+          </div>
+          <div class="field"><label>DA (monthly, ₹) — leave 0 if not applicable</label>
+            <input class="input" id="da" type="number" min="0" step="500" value="0">
+          </div>
+          <div class="field"><label>HRA received (monthly, ₹)</label>
+            <input class="input" id="hra" type="number" min="0" step="500" value="20000">
+          </div>
+          <div class="field"><label>Rent paid (monthly, ₹)</label>
+            <input class="input" id="rent" type="number" min="0" step="500" value="18000">
+          </div>
+          <input type="hidden" name="metro" value="no">
+          <div class="segmented" id="metro" data-target="metro">
+            <button type="button" data-value="yes" title="Delhi, Mumbai, Chennai, Kolkata">Metro city (50%)</button>
+            <button type="button" data-value="no" class="active" title="Other cities">Non-metro (40%)</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Exemption</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Annual HRA exemption</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rR1">—</div><div class="k">Rule 1: Actual HRA received</div></div>
+          <div class="result-stat"><div class="v" id="rR2">—</div><div class="k" id="rR2Label">Rule 2: 40% of basic+DA</div></div>
+          <div class="result-stat"><div class="v" id="rR3">—</div><div class="k">Rule 3: Rent − 10% of basic+DA</div></div>
+          <div class="result-stat"><div class="v" id="rTaxable">—</div><div class="k">HRA that becomes taxable</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Minimum of three rules wins</h4><p id="recoText">The exemption is the SMALLEST of: actual HRA received, 50%/40% of basic+DA, or rent-minus-10%-of-basic. Whichever is lowest becomes your exemption; the rest of the HRA is fully taxable.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Key reminders for HRA</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Old regime only:</b> HRA exemption isn't available under the new tax regime (post FY2023-24)</li>
+        <li><b>Landlord PAN mandatory:</b> if annual rent > ₹1 lakh</li>
+        <li><b>Rent through bank/UPI:</b> never cash — IT department actively queries cash rentals</li>
+        <li><b>Living with parents:</b> legally rent to parents, get rent receipts, parents declare the income — works if they're in a lower tax slab</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>The three-rule formula:</b> exemption = min(actual HRA, 50/40% of basic+DA, rent−10% of basic+DA). Most people don't know which rule bites them. If Rule 3 is lowest, your rent is too cheap relative to your salary.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'hra-calculator', faqs: [
+      { q: 'Can I claim HRA if I work from home (parents\' house)?', a: 'Yes — pay rent to your parents via bank/UPI, get signed rent receipts, and they declare it as rental income under \"Income from House Property\". They get 30% standard deduction, and if their total income is below ₹2.5L, effectively zero tax on the whole scheme.' },
+      { q: 'What is the metro list?', a: 'Only 4 cities qualify for 50%: Delhi, Mumbai, Chennai, Kolkata. Everywhere else (Bengaluru, Hyderabad, Pune, Gurugram, Noida, NCR satellites) is treated as non-metro at 40%. NCR municipalities do NOT get metro status.' },
+      { q: 'I pay rent but my company doesn\'t give HRA — can I still claim?', a: 'No HRA exemption without HRA component in salary. But Section 80GG allows a deduction up to ₹60,000/yr (₹5,000/mo) for rent paid — available to both salaried-without-HRA and self-employed people. Conditions: no house owned in the same city, no HRA in salary, and you/spouse/minor child doesn\'t own property where you work.' },
+      { q: 'What if rent changes mid-year?', a: 'Compute the exemption rule-by-rule for each period HRA rules changed, then sum. Most payroll software handles this automatically when you update rent declarations; manual computation is needed only if the employer missed an update.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    let isMetro = false;
+    document.getElementById('metro').addEventListener('segment:change', function(e){
+      isMetro = e.detail.value === 'yes';
+      document.getElementById('rR2Label').textContent = 'Rule 2: ' + (isMetro ? '50%' : '40%') + ' of basic+DA';
+      compute();
+    });
+
+    function compute() {
+      const basic = Math.max(0, DC.fnum(document.getElementById('basic').value));
+      const da    = Math.max(0, DC.fnum(document.getElementById('da').value));
+      const hra   = Math.max(0, DC.fnum(document.getElementById('hra').value));
+      const rent  = Math.max(0, DC.fnum(document.getElementById('rent').value));
+      document.getElementById('out-basic').textContent = DC.compact(basic);
+      if (basic + da <= 0 || hra <= 0) {
+        ['rMain','rR1','rR2','rR3','rTaxable'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const base = (basic + da) * 12;
+      const r1 = hra * 12;
+      const r2 = base * (isMetro ? 0.5 : 0.4);
+      const r3 = Math.max(0, rent * 12 - base * 0.10);
+      const exemption = Math.max(0, Math.min(r1, r2, r3));
+      const taxable = Math.max(0, r1 - exemption);
+
+      document.getElementById('rMain').textContent = DC.compact(exemption);
+      document.getElementById('rLbl').textContent = 'Annual HRA exemption';
+      document.getElementById('rR1').textContent = DC.compact(r1);
+      document.getElementById('rR2').textContent = DC.compact(r2);
+      document.getElementById('rR3').textContent = DC.compact(r3);
+      document.getElementById('rTaxable').textContent = DC.compact(taxable);
+
+      let winner = 'Rule 1 (actual HRA)';
+      if (exemption === r2 && r2 < r1) winner = 'Rule 2 (' + (isMetro?'50%':'40%') + ' cap)';
+      if (exemption === r3 && r3 < Math.min(r1, r2)) winner = 'Rule 3 (rent − 10% of basic)';
+      if (exemption === 0) winner = 'None — rent too low or HRA zero';
+
+      let title, text;
+      if (exemption === 0) {
+        title = 'No exemption available';
+        text = 'Rent minus 10% of basic is ' + DC.compact(Math.max(0, rent*12 - base*0.10)) + '. Either increase rent or negotiate a higher HRA in your salary structure.';
+      } else if (exemption === r3) {
+        title = 'Rule 3 bites — your rent is the bottleneck';
+        text = 'You receive ' + DC.compact(r1) + ' HRA, but only ' + DC.compact(r3) + ' is exempt because rent is the smallest of the three. Paying more rent (or shifting to a metro for the 50% rule) would increase the exemption.';
+      } else if (exemption === r2) {
+        title = 'Rule 2 caps you — the ' + (isMetro?'50':'40') + '% ceiling';
+        text = 'HRA exemption is stuck at ' + DC.compact(r2) + ' regardless of higher rent. This usually happens for very high basic salaries with moderate rents.';
+      } else {
+        title = 'Rule 1 wins — you get to claim everything received';
+        text = 'All ' + DC.compact(r1) + ' of your HRA goes tax-free because rent and percentage-cap both exceed the actual HRA you receive.';
+      }
+      document.getElementById('recoTitle').textContent = winner;
+      document.getElementById('recoText').textContent = title + ' — ' + text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['basic','da','hra','rent'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My HRA exemption: ' + document.getElementById('rMain').textContent + '/yr — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('HRA: exemption ' + document.getElementById('rMain').textContent + ', taxable ' + document.getElementById('rTaxable').textContent + ' (' + document.getElementById('recoTitle').textContent + ')'); });
+  </script>
+</body>
+</html>

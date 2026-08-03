@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NPS Calculator — National Pension Scheme Retirement Corpus | DecideCalc</title>
+  <meta name="description" content="Free NPS calculator with real rules: 60% lump-sum + mandatory 40% annuity purchase at age 60, tax benefits under 80CCD(1B), and post-retirement monthly pension estimate.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/nps-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>NPS Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>NPS Calculator</h1><div class="sub">National Pension Scheme — lump sum + annuity split</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Current age</label>
+            <div class="range-out"><span class="range-val" id="out-age">30 years</span></div>
+            <input type="range" id="age" min="18" max="59" value="30">
+          </div>
+          <div class="field"><label>Monthly contribution (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-sip">₹5,000</span></div>
+            <input type="range" id="sip" min="500" max="150000" step="500" value="5000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Expected return (% p.a.)</label>
+            <div class="range-out"><span class="range-val" id="out-rate">10%</span></div>
+            <input type="range" id="rate" min="6" max="14" step="0.5" value="10" data-suffix="%">
+          </div>
+          <div class="field"><label>Annuity rate at age 60 (% p.a.)</label>
+            <div class="range-out"><span class="range-val" id="out-ann">6%</span></div>
+            <input type="range" id="ann" min="4" max="9" step="0.25" value="6" data-suffix="%">
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate NPS Corpus</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Corpus at age 60</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rLump">—</div><div class="k">Lump sum (60%, tax-free)</div></div>
+          <div class="result-stat"><div class="v" id="rAnnBuy">—</div><div class="k">Annuity purchase (40%, mandatory)</div></div>
+          <div class="result-stat"><div class="v" id="rPension">—</div><div class="k">Est. monthly pension</div></div>
+          <div class="result-stat"><div class="v" id="rInvest">—</div><div class="k">Total invested</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The 40% annuity rule is the surprise</h4><p id="recoText">Most NPS calculators show you a huge corpus but forget that at retirement you're legally forced to buy an annuity with at least 40% of it. That annuity pays a monthly pension (6-8%/yr typical), taxed as income. The 60% lump sum is tax-free (Section 10(12A)).</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>NPS in three quick rules</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Tax:</b> 80CCD(1) under 80C's ₹1.5L + additional ₹50K under 80CCD(1B) — saves up to ₹15,600/yr for 30% bracket</li>
+        <li><b>Lock-in:</b> can't exit before 60 (except special circumstances) — genuinely locked money</li>
+        <li><b>At 60:</b> min 40% must buy an annuity (pension fund), the 60% rest is yours tax-free, full withdrawal only allowed if total corpus &lt; ₹5L</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Reality check:</b> if you're in the 30% bracket, the ₹50K 80CCD(1B) deduction saves ₹15,600/yr — over 30 years that's ₹4.7L of pure tax savings, separate from investment growth. This is what makes NPS a strong Tier-1 choice for salaried investors.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'nps-calculator', faqs: [
+      { q: 'What if my corpus is less than ₹5 lakh at retirement?', a: 'If total corpus at 60 is ≤ ₹5 lakh, you can withdraw 100% — no mandatory annuity purchase. Above ₹5L, the 40/60 split applies.' },
+      { q: 'Can I withdraw NPS before 60?', a: 'Partial: up to 25% of your OWN contributions for specific needs (child education, marriage, medical, home purchase) after 3 years, max 3 times ever. Full exit before 60 requires corpus >₹2.5L → 80% forced into annuity, 20% lump sum taxed as income.' },
+      { q: 'Is NPS better than EPF + mutual funds?', a: 'They solve different problems. NPS has the ₹50K extra deduction beyond 80C, but 40% is forced into an annuity that pays taxable income. MF has more liquidity and no annuity lock. Most advisors suggest: max EPF + 80C first, then ₹50K NPS for the extra deduction, then MF for the remainder.' },
+      { q: 'What if I choose aggressive (75% equity) vs conservative?', a: 'At 75% equity historically you see 10-11% vs 8.5-9.5% for conservative 25% equity. Over 30 years the difference between 9% and 11% on ₹5K/month is ₹68L vs ₹1.1Cr — 62% more corpus. But more volatility in middle years.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('shield');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const age = Math.max(0, DC.fnum(document.getElementById('age').value));
+      const sip = Math.max(0, DC.fnum(document.getElementById('sip').value));
+      const rate = Math.max(0, DC.fnum(document.getElementById('rate').value)) / 100;
+      const ann  = Math.max(0, DC.fnum(document.getElementById('ann').value)) / 100;
+      document.getElementById('out-age').textContent = age + ' years';
+      document.getElementById('out-sip').textContent = DC.compact(sip);
+      document.getElementById('out-rate').textContent = (rate*100).toFixed(1) + '%';
+      document.getElementById('out-ann').textContent = (ann*100).toFixed(2) + '%';
+      const yrs = Math.max(0, 60 - age);
+      if (yrs === 0 || sip <= 0) {
+        ['rMain','rLump','rAnnBuy','rPension','rInvest'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const n = yrs * 12;
+      const r = rate / 12;
+      let corpus = 0;
+      for (let m = 0; m < n; m++) corpus = (corpus + sip) * (1 + r);
+      const invested = sip * n;
+
+      const lump = corpus * 0.60;
+      const annBuy = corpus * 0.40;
+      const pension = annBuy * ann / 12;
+
+      document.getElementById('rMain').textContent = DC.compact(corpus);
+      document.getElementById('rLbl').textContent = 'Corpus at age 60 (' + yrs + ' years)';
+      document.getElementById('rLump').textContent = DC.compact(lump);
+      document.getElementById('rAnnBuy').textContent = DC.compact(annBuy);
+      document.getElementById('rPension').textContent = DC.inr(Math.round(pension)) + '/mo';
+      document.getElementById('rInvest').textContent = DC.compact(invested);
+
+      const ratio = corpus / (invested || 1);
+      let title, text;
+      if (ratio > 4) {
+        title = 'Long duration compounding is doing the heavy lifting';
+        text = 'Over ' + yrs + ' years even a modest ' + (rate*100).toFixed(1) + '% turns ' + DC.compact(invested) + ' into ' + DC.compact(corpus) + '. Don\'t over-tweak the equity mix — consistency wins.';
+      } else if (yrs < 10) {
+        title = 'Short runway — consider higher equity allocation';
+        text = 'With only ' + yrs + ' years to 60, the corpus won\'t compound much. If risk appetite allows, a Tier-I Active choice with 75% equity can materially close the gap.';
+      } else {
+        title = 'SWP from the 60% lump often beats the annuity';
+        text = 'Many retirees put the 60% lump in a balanced MF and use a Systematic Withdrawal Plan instead of relying only on the annuity pension — historically higher effective yield.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['age','sip','rate','ann'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My NPS corpus at 60: ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('NPS at 60: ' + document.getElementById('rMain').textContent + ' (lump: ' + document.getElementById('rLump').textContent + ', annuity: ' + document.getElementById('rAnnBuy').textContent + ', pension: ' + document.getElementById('rPension').textContent + ')'); });
+  </script>
+</body>
+</html>

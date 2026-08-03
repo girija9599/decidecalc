@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paycheck Calculator — Take-Home Pay After Tax Withholding | DecideCalc</title>
+  <meta name="description" content="Estimate your per-paycheck take-home pay. Federal brackets, state withholding by state, Social Security, Medicare, Additional Medicare Tax, pretax 401(k)/HSA/FSA, W-4 credits and various pay frequencies.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/paycheck-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>Paycheck Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Paycheck Calculator</h1><div class="sub">Gross → net per pay period · state-by-state withholding</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field"><label for="gross">Gross salary (per year)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="gross" type="number" min="0" step="any" value="90000" inputmode="decimal"></div></div>
+            <div class="field"><label>Pay frequency</label>
+              <input type="hidden" name="freq" value="biweekly">
+              <div class="segmented" id="freq" data-target="freq">
+                <button type="button" data-value="weekly">Weekly</button>
+                <button type="button" data-value="biweekly" class="active">Bi-weekly</button>
+                <button type="button" data-value="semi">Semi-monthly</button>
+                <button type="button" data-value="monthly">Monthly</button>
+              </div>
+              <div class="hint" id="freqHint">Bi-weekly → 26 checks/year</div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Filing status</label>
+              <input type="hidden" name="file" value="single">
+              <div class="segmented" id="file" data-target="file">
+                <button type="button" data-value="single" class="active">Single</button>
+                <button type="button" data-value="married">Married joint</button>
+                <button type="button" data-value="hoh">Head of household</button>
+              </div>
+            </div>
+            <div class="field"><label for="state">State</label>
+              <select class="select" id="state">
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX" selected>Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="k401">401(k) contribution (%)</label><input class="input" id="k401" type="number" min="0" max="50" step="any" value="6" inputmode="decimal"></div>
+            <div class="field"><label for="hsa">HSA / FSA ($/year, pre-tax)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="hsa" type="number" min="0" step="any" value="0" inputmode="decimal"></div></div>
+          </div>
+          <div class="field"><label for="dep">IRS dependents under 17 (W-4 credit)</label><input class="input" id="dep" type="number" min="0" max="10" step="1" value="0" inputmode="numeric"></div>
+          <p id="errBox" role="alert" aria-live="polite" style="min-height:1.3em;color:#DC2626;font-size:.84rem;margin:2px 0 10px"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate take-home</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rNet">—</div><div class="lbl" id="rNetLbl">Net take-home per paycheck</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rGrossPp">—</div><div class="k">Gross per paycheck</div></div>
+          <div class="result-stat"><div class="v" id="rFed">—</div><div class="k">Federal income tax</div></div>
+          <div class="result-stat"><div class="v" id="rState">—</div><div class="k">State income tax</div></div>
+          <div class="result-stat"><div class="v" id="rSS">—</div><div class="k">Social Security (6.2%)</div></div>
+          <div class="result-stat"><div class="v" id="rMed">—</div><div class="k">Medicare (1.45%)</div></div>
+          <div class="result-stat"><div class="v" id="rEff">—</div><div class="k">Effective total tax rate</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="payChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Raise your W-4 if the refund is too big</h4><p id="recoText">A large tax refund is an interest-free loan to the IRS. Refining your W-4 puts that money in your paycheck all year — where it can earn return instead.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>What's pulled from your paycheck, in order</h2>
+      <ol style="margin-top:10px;padding-left:20px;color:var(--text-soft)">
+        <li><b>Pre-tax deferrals</b> come out first: 401(k) plan contribution, then HSA/FSA, then pre-tax insurance premiums. These shrink taxes below.</li>
+        <li><b>Social Security — 6.2%</b> on wages up to the $176,100 wage base (2025). Over-the-base? No SS from that dollar on.</li>
+        <li><b>Medicare — 1.45%</b> on all earnings, plus <b>0.9% Additional Medicare Tax</b> on earnings over $200k single / $250k married.</li>
+        <li><b>Federal income tax</b> computed with 2025 progressive brackets and the $15,000 single / $30,000 married standard deduction, minus child/dependent tax credits at $2,000 each.</li>
+        <li><b>State income tax</b> using each state's progressive system (or flat rate where they have one). Alaska, Florida, Nevada, New Hampshire*, South Dakota, Tennessee, Texas, Washington and Wyoming have no wage income tax. (* NH taxes interest/dividends only.)</li>
+      </ol>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>This is an estimate</b> for a W-2 employee withholding scenario only — self-employment taxes, local city/county taxes (Detroit, Philadelphia, NYC, more than a dozen CO municipalities), FICA on equity comp, supplemental wage withholding and one-off bonus checks all move the number in real life. Your actual paystub is the source of truth.</div></div>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'paycheck-calculator', faqs: [
+      { q: 'What taxes are taken out of my paycheck?', a: 'Federal income tax, state income tax (most states), Social Security at 6.2% up to a wage cap, and Medicare at 1.45% on everything — plus 0.9% Additional Medicare Tax above $200k (single) or $250k (married). High earners may also see local taxes in a small set of cities and counties.' },
+      { q: 'How do I calculate my biweekly paycheck from annual salary?', a: 'Divide gross salary by 26. Then subtract pre-tax deferrals (401k, HSA/FSA, premiums), then Social Security, Medicare, federal and state withholding computed on the reduced base. The calculator does all five steps automatically and shows the result per pay period.' },
+      { q: 'What is the difference between bi-weekly and semi-monthly?', a: 'Bi-weekly means every two weeks — 26 paychecks a year, sometimes a magical 27th when January 1 lands right. Semi-monthly means twice a month on fixed dates (typically the 15th and last day) — always 24 paychecks. Bi-weekly checks are slightly smaller but the spendable-cash flow per month evens out.' },
+      { q: 'How much social security tax do I pay?', a: '6.2% of gross wages up to the 2025 wage base of $176,100 — a maximum of $10,918.20 per year. Once your year-to-date wages cross the cap, no more SS comes out. If you switch employers mid-year you may overpay, and the IRS will refund the excess at filing.' },
+      { q: 'Why is my first paycheck of the year different from my last?', a: 'Mid-year caps. Social Security stops once you hit the wage base (roughly September on a $200k salary), and 401(k) deferrals stop when they hit the $23,000 IRS limit. Checks before the caps are smaller; after them, they grow.' },
+      { q: 'How do pre-tax 401(k) contributions change my take-home?', a: 'Every dollar you defer cuts federal and state taxable wages (not Social Security/Medicare wages). At a 22% federal plus 5% state marginal rate, $100 into 401(k) shrinks take-home by about $73 — you bought $100 of savings for $73 of lifestyle. That asymmetry is the powerful lever.' },
+      { q: 'Should I use weekly, bi-weekly, semi-monthly or monthly pay frequency?', a: 'It is set by your employer — you don\'t choose. Bi-weekly yields 26 slightly smaller checks (every year the calendar grants you a "bonus" third check in two months). Semi-monthly yields 24 larger checks that arrive on the same dates every month. The annual sum is identical.' },
+      { q: 'I got a large refund — how do I fix my withholding?', a: 'A big refund means you over-withheld. File a new W-4 with Step 3 (claim dependents) and Step 4(b) (deductions) filled in to reduce withholding. Most employers let you update the W-4 electronically mid-year. Fixing it once makes every future paycheck larger.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('money');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function segVal(id){ var h=document.querySelector('[name="'+id+'"]'); return h ? h.value : null; }
+    function setSeg(id,v){ var seg=document.getElementById(id),h=document.querySelector('[name="'+id+'"]'); if(!seg||!h)return; h.value=v; seg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-value')===String(v)); }); }
+    function fmt(n){ if(!isFinite(n)) n=0; var v=Math.round(Math.abs(n)*100)/100; return (n<0?'−':'')+'$'+v.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+    function fmt2(n){ if(!isFinite(n)) n=0; return (n<0?'−':'')+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+
+    // 2025 federal brackets
+    var FED_BRACKETS = {
+      single: [ [11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[626350,0.35],[ Infinity,0.37 ] ],
+      married:[ [23850,0.10],[96950,0.12],[206700,0.22],[394600,0.24],[501050,0.32],[751600,0.35],[ Infinity,0.37 ] ],
+      hoh:    [ [17000,0.10],[64850,0.12],[103350,0.22],[197300,0.24],[250500,0.32],[626350,0.35],[ Infinity,0.37 ] ]
+    };
+    var FED_STD = { single: 15000, married: 30000, hoh: 22500 };
+
+    // State brackets 2025 (progressive, top rate; flat states listed linearly)
+    var STATES = {
+      AL:[ [500,.02],[3000,.04],[Infinity,.05] ],
+      AZ:[ [Infinity,.025] ],
+      AR:[ [4400,.02],[8800,.04],[Infinity,.039] ],
+      CA:[ [10756,.01],[25499,.02],[40245,.04],[55866,.06],[70606,.08],[360659,.093],[432787,.103],[721314,.113],[Infinity,.123] ],
+      CO:[ [Infinity,.044] ],
+      CT:[ [10000,.02],[50000,.045],[100000,.055],[200000,.06],[250000,.065],[500000,.069],[Infinity,.0699] ],
+      DE:[ [2000,0],[5000,.039],[10000,.048],[20000,.052],[25000,.0555],[60000,.066],[Infinity,.066] ],
+      GA:[ [750,.01],[2250,.02],[3750,.03],[5250,.04],[7000,.05],[Infinity,.0549] ],
+      HI:[ [2400,.014],[4800,.032],[9600,.055],[14400,.064],[19200,.068],[24000,.072],[36000,.076],[48000,.079],[150000,.0825],[175000,.09],[Infinity,.11] ],
+      ID:[ [Infinity,.05695] ],
+      IL:[ [Infinity,.0495] ],
+      IN:[ [Infinity,.03] ],
+      IA:[ [Infinity,.038] ],
+      KS:[ [230,t=>0],[23320,.052],[Infinity,.0558] ],
+      KY:[ [Infinity,.04] ],
+      LA:[ [Infinity,.03] ],
+      ME:[ [26050,.058],[61600,.0675],[Infinity,.0715] ],
+      MD:[ [1000,.02],[2000,.03],[3000,.04],[100000,.0475],[125000,.05],[150000,.0525],[250000,.055],[Infinity,.0575] ],
+      MA:[ [Infinity,.05] ],
+      MI:[ [Infinity,.0425] ],
+      MN:[ [31690,.0535],[104090,.068],[193240,.0785],[Infinity,.0985] ],
+      MS:[ [Infinity,.044] ],
+      MO:[ [1273,.02],[2546,.025],[3819,.03],[5092,.035],[6365,.04],[7638,.045],[8911,.05],[Infinity,.048] ],
+      MT:[ [Infinity,.057] ],
+      NE:[ [2550,.0246],[18370,.0351],[29590,.0501],[46000,.0584],[Infinity,.052] ],
+      NJ:[ [20000,.014],[35000,.0175],[40000,.035],[75000,.05525],[500000,.0637],[1000000,.0897],[Infinity,.1075] ],
+      NM:[ [5500,.017],[11000,.032],[16000,.047],[210000,.049],[Infinity,.059] ],
+      NY:[ [8500,.04],[11700,.045],[13900,.0525],[21400,.0585],[80650,.0625],[215400,.0685],[1077550,.0965],[5000000,.103],[25000000,.109],[Infinity,.093] ],
+      NC:[ [Infinity,.0425] ],
+      ND:[ [44725,.0195],[225975,.024],[Infinity,.025] ],
+      OH:[ [26050,.0],[100000,.0275],[Infinity,.035] ],
+      OK:[ [1000,.0025],[2500,.0075],[3750,.0175],[4900,.0275],[7200,.0475],[Infinity,.0475] ],
+      OR:[ [4300,.0475],[10750,.0675],[125000,.0875],[Infinity,.099] ],
+      PA:[ [Infinity,.0307] ],
+      RI:[ [79900,.0375],[181650,.0475],[Infinity,.0599] ],
+      SC:[ [3460,t=>0],[17330,.03],[Infinity,.062] ],
+      UT:[ [Infinity,.0455] ],
+      VT:[ [45400,.0335],[110050,.066],[229550,.076],[Infinity,.0875] ],
+      VA:[ [3000,.02],[5000,.03],[17000,.05],[Infinity,.0575] ],
+      WV:[ [10000,.0236],[25000,.0315],[40000,.0354],[60000,.0472],[Infinity,.0512] ],
+      WI:[ [14320,.035],[28640,.044],[315310,.053],[Infinity,.0765] ]
+    };
+    var NO_TAX = ['AK','FL','NV','NH','SD','TN','TX','WA','WY'];
+
+    function bracketTax(income, table) {
+      // table entries: [upperBound, rate] OR [upperBound, fn(inc)=>rate_override_effective]
+      var tax = 0, lo = 0;
+      for (var i = 0; i < table.length; i++) {
+        var ub = table[i][0], spec = table[i][1];
+        if (income <= lo) break;
+        var slice = Math.min(income, ub) - lo;
+        if (slice <= 0) break;
+        var rate = typeof spec === 'function' ? spec(income) : spec;
+        tax += slice * rate;
+        lo = ub;
+      }
+      return tax;
+    }
+
+    function stateRate(state, income) {
+      if (NO_TAX.indexOf(state) !== -1) return 0;
+      var tb = STATES[state];
+      if (!tb) return 0;
+      return bracketTax(income, tb);
+    }
+
+    function compute() {
+      var gross = Number(document.getElementById('gross').value);
+      var dep = parseInt(document.getElementById('dep').value, 10) || 0;
+      var k401 = Number(document.getElementById('k401').value);
+      var hsa = Number(document.getElementById('hsa').value);
+      var state = document.getElementById('state').value;
+      var filing = segVal('file') || 'single';
+      var freq = segVal('freq') || 'biweekly';
+
+      var err = [];
+      if (!isFinite(gross) || gross <= 0) err.push('Enter a gross salary greater than zero.');
+      if (!isFinite(dep) || dep < 0 || dep > 10) err.push('Dependents must be 0–10.');
+      if (!isFinite(k401) || k401 < 0 || k401 > 50) err.push('401(k) % must be 0–50.');
+      if (!isFinite(hsa) || hsa < 0) err.push('HSA/FSA cannot be negative.');
+      document.getElementById('errBox').textContent = err.join(' ');
+      if (err.length) {
+        ['rNet','rGrossPp','rFed','rState','rSS','rMed','rEff'].forEach(function (id){ document.getElementById(id).textContent='—'; });
+        if (DC.charts&&DC.charts.payChart){ DC.charts.payChart.destroy(); delete DC.charts.payChart; }
+        return;
+      }
+
+      // annual figures
+      var k401Cap = 23500;
+      var k401AmtYr = Math.min(gross * k401 / 100, k401Cap);
+      var hsaYr = hsa;
+      var fedStd = FED_STD[filing];
+      var taxableFed = Math.max(0, gross - k401AmtYr - hsaYr - fedStd);
+      var fedTax = bracketTax(taxableFed, FED_BRACKETS[filing]);
+      fedTax = Math.max(0, fedTax - dep * 2000);
+      var ssYr = Math.min(gross, 176100) * 0.062;
+      var medYr = gross * 0.0145;
+      var medAddlYr = Math.max(0, gross - (filing === 'married' ? 250000 : 200000)) * 0.009;
+      var taxableState = Math.max(0, gross - k401AmtYr - hsaYr);
+      var stateYr = stateRate(state, taxableState);
+      var netYr = gross - k401AmtYr - hsaYr - fedTax - stateYr - ssYr - medYr - medAddlYr;
+
+      // per-check
+      var periods = freq === 'weekly' ? 52 : freq === 'biweekly' ? 26 : freq === 'semi' ? 24 : 12;
+      var netPp = netYr / periods;
+      var grossPp = gross / periods;
+      var fedPp = fedTax / periods;
+      var statePp = stateYr / periods;
+      var ssPp = ssYr / periods;
+      var medPp = (medYr + medAddlYr) / periods;
+      var eff = gross > 0 ? (fedTax + stateYr + ssYr + medYr + medAddlYr) / gross * 100 : 0;
+
+      var freqLbl = document.getElementById('freqHint');
+      freqLbl.textContent = (freq === 'weekly' ? 'Weekly → 52 checks/yr' : freq === 'biweekly' ? 'Bi-weekly → 26 checks/yr' : freq === 'semi' ? 'Semi-monthly → 24 checks/yr' : 'Monthly → 12 checks/yr');
+
+      document.getElementById('rNet').textContent = fmt(netPp);
+      document.getElementById('rNetLbl').textContent = 'Net per ' + (freq === 'weekly' ? 'weekly' : freq === 'biweekly' ? 'bi-weekly' : freq === 'semi' ? 'semi-monthly' : 'monthly') + ' check';
+      document.getElementById('rGrossPp').textContent = fmt(grossPp);
+      document.getElementById('rFed').textContent = fmt(fedPp);
+      document.getElementById('rState').textContent = fmt(statePp);
+      document.getElementById('rSS').textContent = fmt(ssPp);
+      document.getElementById('rMed').textContent = fmt(medPp);
+      document.getElementById('rEff').textContent = eff.toFixed(1) + '%';
+
+      DC.makeChart('payChart', {
+        type: 'doughnut',
+        data: {
+          labels: ['Take-home', 'Federal', 'State', 'Social Security', 'Medicare', '401(k)/HSA'],
+          datasets: [{ data: [Math.round(netPp), Math.round(fedPp), Math.round(statePp), Math.round(ssPp), Math.round(medPp), Math.round((k401AmtYr + hsaYr) / periods)], backgroundColor: ['#22C55E','#3B82F6','#A855F7','#F59E0B','#EF4444','#8B5CF6'], borderWidth: 0, hoverOffset: 8 }]
+        },
+        options: {
+          cutout: '62%',
+          plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c){ return c.label + ': ' + fmt(c.raw); } } } }
+        }
+      });
+
+      var titleEl = document.getElementById('recoTitle'), textEl = document.getElementById('recoText');
+      if (eff < 20) titleEl.textContent = 'Efficient withholding';
+      else if (eff < 28) titleEl.textContent = 'Typical withholding level';
+      else if (eff < 35) titleEl.textContent = 'Heavy withholding — expect refund';
+      else titleEl.textContent = 'Verify inputs with your paystub';
+      var noTaxTxt = NO_TAX.indexOf(state) !== -1 ? ' Your state has no income tax, so every extra dollar stays with you.' : '';
+      textEl.textContent = 'Effective rate ' + eff.toFixed(1) + '%. Bumping 401(k) deferral by another 1% costs roughly $' + Math.round((gross/periods)*0.01*(1-eff/100)) + '/check (after saved tax) but adds $' + Math.round((gross/periods)*0.01) + '/check into long-term savings — an instant ~' + (100/(1-eff/100)).toFixed(0) + '% instant return.' + noTaxTxt;
+
+      window.__lastPay = {
+        net: fmt(netPp), grossPp: fmt(grossPp), fed: fmt(fedPp), state: fmt(statePp),
+        ss: fmt(ssPp), med: fmt(medPp), eff: eff.toFixed(1) + '%', period: freq,
+        k401: fmt((k401AmtYr+hsaYr)/periods)
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['gross','dep','k401','hsa','state'].forEach(function (id) {
+      var el = document.getElementById(id);
+      el.addEventListener('input', compute);
+      el.addEventListener('change', compute);
+    });
+    document.getElementById('freq').addEventListener('segment:change', compute);
+    document.getElementById('file').addEventListener('segment:change', compute);
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('gross').value = '90000';
+      document.getElementById('dep').value = '0';
+      document.getElementById('k401').value = '6';
+      document.getElementById('hsa').value = '0';
+      document.getElementById('state').value = 'TX';
+      setSeg('file', 'single');
+      setSeg('freq', 'biweekly');
+      compute();
+      DC.toast('Inputs reset', 'success');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastPay; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('My ' + r.period.replace('biweekly','bi-weekly') + ' take-home: ' + r.net + ' (effective rate ' + r.eff + ', after 401(k)/HSA ' + r.k401 + '). Run yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastPay; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult('Paycheck ' + r.period + ' summary\nNet take-home: ' + r.net + '\nGross per check: ' + r.grossPp + '\nFederal: ' + r.fed + '\nState: ' + r.state + '\nSocial Security: ' + r.ss + '\nMedicare: ' + r.med + '\n401(k)/HSA per check: ' + r.k401 + '\nEffective total rate: ' + r.eff);
+    });
+
+    compute();
+  </script>
+</body>
+</html>

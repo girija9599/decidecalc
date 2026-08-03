@@ -1,0 +1,154 @@
+// DecideCalc Service Worker — PWA offline support
+const CACHE = 'decidecalc-v32';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/about.html',
+  '/privacy.html',
+  '/terms.html',
+  '/contact.html',
+  '/blog/index.html',
+  '/blog/blog.css',
+  '/blog/emi-vs-sip-which-is-better-india.html',
+  '/blog/how-much-health-insurance-need-india.html',
+  '/blog/rent-or-buy-house-2026-india.html',
+  '/calculators/emi-calculator.html',
+  '/calculators/sip-calculator.html',
+  '/calculators/income-tax-calculator.html',
+  '/calculators/rent-vs-buy.html',
+  '/calculators/loan-vs-investment.html',
+  '/calculators/retirement-calculator.html',
+  '/calculators/fd-vs-mutual-fund.html',
+  '/calculators/home-loan-eligibility.html',
+  '/calculators/ppf-calculator.html',
+  '/calculators/gratuity-calculator.html',
+  '/calculators/compound-interest-calculator.html',
+  '/calculators/job-switch-decision.html',
+  '/calculators/salary-hike-negotiator.html',
+  '/calculators/career-switch-roi.html',
+  '/calculators/bmi-calculator.html',
+  '/calculators/real-age-calculator.html',
+  '/calculators/health-insurance-need.html',
+  '/calculators/pregnancy-due-date.html',
+  '/calculators/wedding-budget-planner.html',
+  '/calculators/baby-cost-calculator.html',
+  '/calculators/gst-calculator.html',
+  '/calculators/fuel-cost-calculator.html',
+  '/calculators/life-decision-scorer.html',
+  '/calculators/age-calculator.html',
+  '/calculators/date-difference-calculator.html',
+  '/calculators/business-days-calculator.html',
+  '/calculators/leap-year-checker.html',
+  '/calculators/unit-converter.html',
+  '/calculators/currency-converter.html',
+  '/calculators/word-counter.html',
+  '/calculators/case-converter.html',
+  '/calculators/json-formatter.html',
+  '/calculators/password-generator.html',
+  '/calculators/percentage-calculator.html',
+  '/calculators/cgpa-calculator.html',
+  '/calculators/base64-tool.html',
+  '/calculators/slug-generator.html',
+  '/calculators/time-duration-calculator.html',
+  '/calculators/fd-calculator.html',
+  '/calculators/simple-interest-calculator.html',
+  '/calculators/inflation-calculator.html',
+  '/calculators/cagr-calculator.html',
+  '/calculators/calorie-calculator.html',
+  '/calculators/water-intake-calculator.html',
+  '/calculators/ideal-weight-calculator.html',
+  '/calculators/marks-percentage-calculator.html',
+  '/calculators/lorem-ipsum-generator.html',
+  '/calculators/number-to-words.html',
+  '/calculators/markdown-to-html.html',
+  '/calculators/rd-calculator.html',
+  '/calculators/rule-of-72.html',
+  '/calculators/random-number-generator.html',
+  '/calculators/rent-affordability-calculator.html',
+  '/calculators/nps-calculator.html',
+  '/calculators/epf-calculator.html',
+  '/calculators/ssy-calculator.html',
+  '/calculators/hra-calculator.html',
+  '/calculators/home-loan-comparison.html',
+  '/calculators/brokerage-calculator.html',
+  '/calculators/countdown-timer.html',
+  '/calculators/financial-year-calculator.html',
+  '/calculators/week-number-calculator.html',
+  '/calculators/stamp-duty-calculator.html',
+  '/calculators/professional-tax-calculator.html',
+  '/calculators/sleep-calculator.html',
+  '/calculators/body-fat-calculator.html',
+  '/calculators/pace-calculator.html',
+  '/calculators/password-strength-meter.html',
+  '/calculators/jwt-decoder.html',
+  '/calculators/uuid-generator.html',
+  '/calculators/hash-generator.html',
+  '/calculators/pregnancy-week-tracker.html',
+  '/calculators/apy-calculator.html',
+  '/calculators/scss-calculator.html',
+  '/calculators/mortgage-calculator.html',
+  '/calculators/debt-to-income-calculator.html',
+  '/calculators/net-worth-calculator.html',
+  '/calculators/esi-contribution-calculator.html',
+  '/calculators/credit-utilization-calculator.html',
+  '/calculators/emergency-fund-calculator.html',
+  '/calculators/kvp-calculator.html',
+  '/calculators/nsc-calculator.html',
+  '/calculators/savings-goal-calculator.html',
+  '/calculators/budget-50-30-20-calculator.html',
+  '/calculators/student-loan-calculator.html',
+  '/calculators/401k-calculator.html',
+  '/calculators/ira-calculator.html',
+  '/calculators/paycheck-calculator.html',
+  '/calculators/mssc-calculator.html',
+  '/calculators/pmay-clss-subsidy-calculator.html',
+  '/assets/css/main.css',
+  '/assets/js/core.js',
+  '/assets/js/layout.js',
+  '/assets/js/tools.js',
+  '/assets/js/calc-page.js',
+  '/assets/js/engagement.js',
+  '/assets/js/toolkit.js',
+  '/assets/js/ads.js',
+  '/assets/img/decidecalc-mark.svg',
+  '/assets/img/icon-192.svg',
+  '/assets/img/icon-512.svg',
+  '/assets/img/og.png',
+  '/assets/img/blog-emi-vs-sip.png',
+  '/assets/img/blog-health-insurance-cover.png',
+  '/assets/img/blog-rent-vs-buy-2026.png',
+  '/manifest.json'
+];
+
+// Install — cache all static assets
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS).then(() => self.skipWaiting())));
+});
+
+// Activate — clean old caches
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))).then(() => self.clients.claim())));
+});
+
+// Fetch — cache-first for static, network-first for CDN
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  if (url.hostname === 'cdn.jsdelivr.net') {
+    e.respondWith(fetch(e.request).then(res => {
+      const clone = res.clone();
+      caches.open(CACHE).then(c => c.put(e.request, clone));
+      return res;
+    }).catch(() => caches.match(e.request)));
+    return;
+  }
+  e.respondWith(caches.match(e.request).then(cached => {
+    if (cached) return cached;
+    return fetch(e.request).then(res => {
+      if (res.ok) {
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+      }
+      return res;
+    });
+  }));
+});

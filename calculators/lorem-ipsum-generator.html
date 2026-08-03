@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorem Ipsum Generator — Placeholder Text, Free & Offline | DecideCalc</title>
+  <meta name="description" content="Generate Lorem Ipsum placeholder paragraphs, sentences or words. Copy-paste ready for design mockups, Word documents and CMS previews. 100% offline.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/lorem-ipsum-generator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-text">Text Tools</a><span class="sep">/</span><span>Lorem Ipsum Generator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Lorem Ipsum Generator</h1><div class="sub">Placeholder copy for mockups & docs</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="unit" value="paragraphs">
+          <div class="segmented" id="unit" data-target="unit">
+            <button type="button" data-value="paragraphs" class="active">Paragraphs</button>
+            <button type="button" data-value="sentences">Sentences</button>
+            <button type="button" data-value="words">Words</button>
+          </div>
+          <div style="height:14px"></div>
+          <div class="field"><label>How many? <span id="lblCount" style="color:var(--muted)">(paragraphs)</span></label>
+            <input type="range" id="count" min="1" max="20" step="1" value="3">
+            <div style="text-align:center;font-weight:700;font-size:1.1rem;color:var(--accent-600)" id="countOut">3</div>
+          </div>
+          <label class="check" style="margin:4px 0 10px"><input type="checkbox" id="classic" checked> Start with classic "Lorem ipsum dolor sit amet…"</label>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-primary btn-block" id="genBtn">Generate</button>
+            <button class="btn btn-ghost" id="regenBtn" title="Another random set">↻</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="calc-header"><div><h2 style="font-size:1.05rem;margin:0">Output</h2><div class="sub"><span id="rWords">0</span> words · <span id="rChars">0</span> chars</div></div></div>
+        <div class="calc-body" style="padding-top:12px;max-height:340px;overflow-y:auto">
+          <div id="out" style="font-size:.92rem;line-height:1.6;color:var(--text)"></div>
+        </div>
+        <div class="result-actions" style="padding:0 22px 22px">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy text</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>Why Lorem Ipsum?</h4><p>Used since the 1500s by typesetters — its even letter distribution doesn't distract from layout decisions the way real text does. Perfect for wireframes and CMS previews.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Where placeholder text shines</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Design mockups:</b> Figma, Sketch, XD — fill text frames without writing real copy yet</li>
+        <li><b>WordPress/dev previews:</b> see how a template handles long vs short content</li>
+        <li><b>Print layouts:</b> test column balance and font readability without writer's block</li>
+        <li><b>Demo videos & screenshots:</b> realistic-looking filler that won't be quoted out of context</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Fun fact:</b> the original "Lorem ipsum" passage comes from Cicero's <i>De Finibus Bonorum et Malorum</i> (45 BC), with words scrambled to remove meaning.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'lorem-ipsum-generator', faqs: [
+      { q: 'Is the generated text always the same?', a: 'No — each click on Generate or ↻ produces a fresh random combination of Latin words from the classic vocabulary. The only fixed line is the opening "Lorem ipsum dolor sit amet…" when that toggle is on.' },
+      { q: 'Can I use this for actual content?', a: 'It\'s placeholder text — Latin-derived nonsense. Use it only where the meaning doesn\'t matter (mockups, demos). For real writing, try our Word Counter to plan actual content.' },
+      { q: 'Why is it called "Lorem ipsum"?', a: 'From the first two words of the standard passage. The original text was a 1st-century BC philosophical work by Cicero; typesetters scrambled it centuries ago to make filler that looks like real text.' },
+      { q: 'Is there a Hindi or English filler version?', a: 'This tool generates the classic Latin-style filler universally recognised by designers. For real English copy, draft your content and use the Word Counter to track length.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const WORDS = ('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum').split(' ');
+    const OPENING = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+    let unit = 'paragraphs';
+
+    document.getElementById('unit').addEventListener('segment:change', function (e) {
+      unit = e.detail.value;
+      document.getElementById('lblCount').textContent = '(' + unit + ')';
+      const max = unit === 'words' ? 200 : (unit === 'sentences' ? 30 : 20);
+      const inp = document.getElementById('count');
+      inp.max = max;
+      if (parseInt(inp.value,10) > max) inp.value = max;
+      document.getElementById('countOut').textContent = inp.value;
+    });
+    document.getElementById('count').addEventListener('input', function () { document.getElementById('countOut').textContent = this.value; });
+
+    function rand(n) { return Math.floor(Math.random() * n); }
+    function word() { return WORDS[rand(WORDS.length)]; }
+    function sentence() {
+      const len = 8 + rand(10);
+      let s = '';
+      for (let i = 0; i < len; i++) s += (i ? ' ' : '') + word();
+      return s.charAt(0).toUpperCase() + s.slice(1) + '.';
+    }
+    function paragraph() {
+      const sCount = 4 + rand(4);
+      let arr = [];
+      for (let i = 0; i < sCount; i++) arr.push(sentence());
+      return arr.join(' ');
+    }
+    function generate() {
+      const n = parseInt(document.getElementById('count').value, 10);
+      const classic = document.getElementById('classic').checked;
+      let html = '';
+      if (unit === 'paragraphs') {
+        for (let i = 0; i < n; i++) {
+          let p = paragraph();
+          if (i === 0 && classic) p = OPENING + ', ' + p.charAt(0).toLowerCase() + p.slice(1);
+          html += '<p style="margin:0 0 12px">' + p + '</p>';
+        }
+      } else if (unit === 'sentences') {
+        const arr = [];
+        for (let i = 0; i < n; i++) arr.push(sentence());
+        if (classic) arr[0] = OPENING + '.';
+        html = '<p style="margin:0">' + arr.join(' ') + '</p>';
+      } else {
+        const arr = [];
+        for (let i = 0; i < n; i++) arr.push(word());
+        if (classic) arr[0] = 'Lorem', arr[1] = 'ipsum', arr[2] = 'dolor', arr[3] = 'sit', arr[4] = 'amet';
+        html = '<p style="margin:0">' + arr.join(' ') + '.</p>';
+      }
+      const out = document.getElementById('out');
+      out.innerHTML = html;
+      const txt = out.textContent;
+      document.getElementById('rWords').textContent = txt.trim().split(/\s+/).length.toLocaleString('en-IN');
+      document.getElementById('rChars').textContent = txt.length.toLocaleString('en-IN');
+    }
+    document.getElementById('genBtn').addEventListener('click', generate);
+    document.getElementById('regenBtn').addEventListener('click', generate);
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      document.getElementById('out').innerHTML = '<p style="color:var(--muted)">Click Generate.</p>';
+      document.getElementById('rWords').textContent = '0';
+      document.getElementById('rChars').textContent = '0';
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const t = document.getElementById('out').textContent.trim();
+      if (!t || t === 'Click Generate.') { DC.toast('Generate something first', 'error'); return; }
+      DC.copyResult(t);
+    });
+    generate();
+  </script>
+</body>
+</html>

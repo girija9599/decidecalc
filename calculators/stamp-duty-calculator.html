@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indian Stamp Duty & Registration Calculator — Property by State | DecideCalc</title>
+  <meta name="description" content="Free stamp duty & registration charge calculator for Indian property purchases. State-wise rates for Maharashtra, Karnataka, Tamil Nadu, Delhi, UP, Gujarat & more. Includes buyer-gender concessions.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/stamp-duty-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Stamp Duty Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Stamp Duty Calculator</h1><div class="sub">State-wise Indian property charges</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>State</label>
+            <select class="input" id="state">
+              <option value="mh" selected>Maharashtra</option>
+              <option value="ka">Karnataka</option>
+              <option value="tn">Tamil Nadu</option>
+              <option value="dl">Delhi (NCT)</option>
+              <option value="up">Uttar Pradesh</option>
+              <option value="gj">Gujarat</option>
+              <option value="wb">West Bengal</option>
+              <option value="rj">Rajasthan</option>
+              <option value="ts">Telangana</option>
+              <option value="ap">Andhra Pradesh</option>
+              <option value="kl">Kerala</option>
+              <option value="mp">Madhya Pradesh</option>
+              <option value="hr">Haryana</option>
+              <option value="pb">Punjab</option>
+              <option value="ga">Goa</option>
+              <option value="ot">Other / generic (6% + 1% reg)</option>
+            </select>
+          </div>
+          <div class="field"><label>Property price / circle rate (₹) — use higher of the two</label>
+            <div class="range-out"><span class="range-val" id="out-price">₹50,00,000</span></div>
+            <input type="range" id="price" min="500000" max="100000000" step="100000" value="5000000" data-prefix="₹">
+          </div>
+          <input type="hidden" name="gender" value="male">
+          <div class="segmented" id="gender" data-target="gender">
+            <button type="button" data-value="male" class="active">Male buyer</button>
+            <button type="button" data-value="female">Female buyer</button>
+            <button type="button" data-value="joint">Joint (M+F)</button>
+          </div>
+          <input type="hidden" name="ptype" value="urban">
+          <div class="segmented" id="ptype" data-target="ptype">
+            <button type="button" data-value="urban" class="active">Urban property</button>
+            <button type="button" data-value="rural">Rural / agricultural</button>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Stamp Duty</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Total stamp + registration</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rStamp">—</div><div class="k">Stamp duty</div></div>
+          <div class="result-stat"><div class="v" id="rReg">—</div><div class="k">Registration fee</div></div>
+          <div class="result-stat"><div class="v" id="rSurcharge">—</div><div class="k">Surcharges / cess</div></div>
+          <div class="result-stat"><div class="v" id="rTotal">—</div><div class="k">Grand total</div></div>
+          <div class="result-stat"><div class="v" id="rPct">—</div><div class="k">Effective % of price</div></div>
+          <div class="result-stat"><div class="v" id="rSaved">—</div><div class="k">Gender/joint rebate applied</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Always pay on the higher of price or circle rate</h4><p id="recoText">Sub-registrars stamp on the HIGHER of (agreement value, circle rate). Under-reporting triggers penalty + income-tax consequences under Section 50C/56(2)(x). Never sign a dual-price agreement.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Stamp duty rates snapshot (2025-26)</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Maharashtra:</b> 6% M / 5% F (urban) + 1% metro cess in Mumbai — often the country's most expensive</li>
+        <li><b>Karnataka:</b> 5% (>₹45L), 3% (₹20-45L), 2% (<₹20L) — slabbed rates unique</li>
+        <li><b>Tamil Nadu:</b> 7% + 3% registration (joint highest total)</li>
+        <li><b>Delhi:</b> 6% M / 4% F + 1% reg — joint (M+F) gets 5%</li>
+        <li><b>UP:</b> 7% — flat, no discounts</li>
+        <li><b>Telangana:</b> 7.5% + 1% reg — flat</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Rates change frequently.</b> Always verify against the State Revenue Department's latest notification before registering. Use this calculator for estimates, not payment.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'stamp-duty-calculator', faqs: [
+      { q: 'How do I find my circle rate?', a: 'Each state publishes circle/jantri/collector rates on its Revenue or IGR (Inspector General of Registration) portal. Search [state name] + \"circle rate\" + [city/locality]. It\'s publicly available and free.' },
+      { q: 'Stamp duty on gift deed to family — is it cheaper?', a: 'Yes, dramatically so. Most states charge 1-3% for gift deeds to blood relatives vs 5-8% for sales. But the recipient pays income tax on the value if not a \"relative\" per Section 56(2)(x) — parents/siblings/spouse are exempt; cousins and in-laws may not be.' },
+      { q: 'What about resale flats vs new construction?', a: 'Resale: stamp on agreement value or circle rate, whichever higher, with age-based depreciation sometimes applicable. Under-construction: stamp on agreement value; some states (MH) credit stamp duty paid on land by builder. Always ask builder if stamp on land component was already paid.' },
+      { q: 'Is registration mandatory for rent agreements?', a: 'Rental agreements ≥ 12 months must be registered (in most states). Shorter agreements can be notarized. Fines for non-registration vary by state — Maharashtra fines 10x the stamp duty + ₹1000 penalty.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    // rates per state (2025 approximations) — { stamp: {M,F,joint}, reg, metroCess }
+    const RATES = {
+      mh: { stamp: { male:6, female:5, joint:5.5 }, reg: 1, cess: 1, cessNote: 'Metro cess applies in Mumbai/Thane/Pune/Nagpur (₹30L+, urban)', urbanOnly: true },
+      ka: { slab: [ {upto:2000000, stampPC:2}, {upto:4500000, stampPC:3}, {upto:Infinity, stampPC:5} ], reg: 1 },
+      tn: { stamp: { male:7, female:7, joint:7 }, reg: 3 },
+      dl: { stamp: { male:6, female:4, joint:5 }, reg: 1 },
+      up: { stamp: { male:7, female:7, joint:7 }, reg: 1 },
+      gj: { stamp: { male:4.9, female:4.9, joint:4.9 }, reg: 1 },
+      wb: { stamp: { male:7, female:7, joint:7 }, reg: 1 },
+      rj: { stamp: { male:5, female:4, joint:5 }, reg: 1 },
+      ts: { stamp: { male:7.5, female:7.5, joint:7.5 }, reg: 1 },
+      ap: { stamp: { male:5, female:5, joint:5 }, reg: 1 },
+      kl: { stamp: { male:8, female:8, joint:8 }, reg: 2 },
+      mp: { stamp: { male:5.5, female:5.5, joint:5.5 }, reg: 1 },
+      hr: { stamp: { male:7, female:5, joint:6 }, reg: 1 },
+      pb: { stamp: { male:6, female:6, joint:6 }, reg: 1 },
+      ga: { stamp: { male:4, female:4, joint:4 }, reg: 1 },
+      ot: { stamp: { male:6, female:6, joint:6 }, reg: 1 }
+    };
+
+    let gender = 'male', ptype = 'urban';
+    document.getElementById('gender').addEventListener('segment:change', function(e){ gender = e.detail.value; compute(); });
+    document.getElementById('ptype').addEventListener('segment:change', function(e){ ptype = e.detail.value; compute(); });
+
+    function compute() {
+      const state = document.getElementById('state').value;
+      const price = Math.max(0, DC.fnum(document.getElementById('price').value));
+      document.getElementById('out-price').textContent = DC.compact(price);
+      if (price <= 0) {
+        ['rMain','rStamp','rReg','rSurcharge','rTotal','rPct','rSaved'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const cfg = RATES[state];
+      let stampPct, regPct = cfg.reg, cess = 0;
+
+      if (cfg.slab) {
+        // Karnataka slab
+        for (const s of cfg.slab) {
+          if (price <= s.upto) { stampPct = s.stampPC; break; }
+        }
+      } else {
+        stampPct = cfg.stamp[gender] || cfg.stamp.male;
+      }
+      if (cfg.urbanOnly && ptype === 'urban' && cfg.cess) cess = cfg.cess;
+      if (ptype === 'rural') {
+        // rural typically 1-2% less
+        stampPct = Math.max(stampPct - 2, 2);
+        cess = 0;
+      }
+
+      const stamp = price * stampPct / 100;
+      const reg = price * regPct / 100;
+      const sur = price * cess / 100;
+      const total = stamp + reg + sur;
+
+      const maleBase = cfg.stamp ? cfg.stamp.male : (cfg.slab ? cfg.slab[cfg.slab.length-1].stampPC : 6);
+      const saved = (price * maleBase / 100) - stamp;
+
+      document.getElementById('rMain').textContent = DC.compact(total);
+      document.getElementById('rLbl').textContent = 'Total for ' + price.toLocaleString('en-IN') + ' in ' + document.querySelector('#state option:checked').textContent;
+      document.getElementById('rStamp').textContent = DC.compact(stamp) + ' (' + stampPct.toFixed(1) + '%)';
+      document.getElementById('rReg').textContent = DC.compact(reg) + ' (' + regPct.toFixed(1) + '%)';
+      document.getElementById('rSurcharge').textContent = cess > 0 ? DC.compact(sur) + ' (' + cess.toFixed(1) + '%)' : '—';
+      document.getElementById('rTotal').textContent = DC.compact(total);
+      document.getElementById('rPct').textContent = (total / price * 100).toFixed(2) + '%';
+      document.getElementById('rSaved').textContent = saved > 0 ? DC.compact(saved) : '—';
+
+      let title, text;
+      if (saved > 0) {
+        title = 'Female/joint registration saves ' + DC.compact(saved);
+        text = 'Some companies and states legally encourage registering under the woman\'s name. Joint registration shares the saving while splitting ownership risk.';
+      } else if (ptype === 'rural') {
+        title = 'Rural property saves ' + (2) + '% on stamp';
+        text = 'Rural/agricultural land typically has lower stamp rates but conversion to residential is restricted — confirm with the Tehsildar before purchase.';
+      } else if (cess > 0) {
+        title = 'Metro cess adds another 1% on top';
+        text = 'In Mumbai/Thane/Pune/Nagpur, metro cess applies on urban properties — already included. Factor this when comparing state options for the same property budget.';
+      } else {
+        title = 'Standard rate applies';
+        text = 'No gender or location rebate at this combination. Verify with the sub-registrar at the actual office — local variations exist.';
+      }
+      document.getElementById('recoTitle').textContent = title;
+      document.getElementById('recoText').textContent = text;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['price','state'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('Stamp duty: ' + document.getElementById('rMain').textContent + ' on ' + document.getElementById('out-price').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult('Stamp: ' + document.getElementById('rStamp').textContent + ' | Reg: ' + document.getElementById('rReg').textContent + ' | Total: ' + document.getElementById('rTotal').textContent); });
+  </script>
+</body>
+</html>

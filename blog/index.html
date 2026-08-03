@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DecideCalc Blog — Smarter Money & Life Decisions for India</title>
+  <meta name="description" content="Practical India-first guides for EMIs, investing, health insurance and home buying. Understand the decision, then calculate your next move.">
+  <link rel="canonical" href="https://decidecalc.com/blog/">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="../assets/img/decidecalc-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="blog.css">
+  <meta property="og:title" content="DecideCalc Blog — Smarter Money & Life Decisions for India">
+  <meta property="og:description" content="Practical India-first guides for EMIs, investing, health insurance and home buying. Read the guide, calculate your next move.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://decidecalc.com/blog/">
+  <meta property="og:image" content="https://decidecalc.com/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DecideCalc Blog — Smarter Money & Life Decisions for India">
+  <meta name="twitter:description" content="Practical India-first guides for EMIs, investing, health insurance and home buying. Read the guide, calculate your next move.">
+  <meta name="twitter:image" content="https://decidecalc.com/assets/img/og.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Blog","name":"DecideCalc Blog","url":"https://decidecalc.com/blog/","description":"India-first practical guides for financial and life decisions.","image":"https://decidecalc.com/assets/img/og.png","publisher":{"@type":"Organization","name":"DecideCalc","logo":{"@type":"ImageObject","url":"https://decidecalc.com/assets/img/decidecalc-mark.svg"}}}
+  </script>
+</head>
+<body>
+  <section class="blog-hero">
+    <div class="container">
+      <span class="eyebrow reveal">Decision guides for India</span>
+      <h1 class="reveal d1 mt-2">Less confusion. <span class="hl">Better next moves.</span></h1>
+      <p class="lead reveal d2">Clear, number-led explainers for the money and life decisions that matter. Read the guide, use the calculator, decide with confidence.</p>
+      <label class="blog-search reveal d3" aria-label="Search articles"><span id="searchIcon"></span><input id="blogSearch" type="search" placeholder="Search guides: EMI, insurance, rent or buy…"></label>
+    </div>
+  </section>
+
+  <main class="container section">
+    <div class="center mb-4 reveal">
+      <span class="eyebrow">Featured guides</span>
+      <h2 class="mt-2">Read it. <span class="gradient-text">Calculate it.</span> Act on it.</h2>
+    </div>
+    <div class="blog-grid" id="blogGrid">
+      <article class="card blog-card reveal" data-search="emi sip investment loan mutual fund india">
+        <div class="blog-card-top"><img src="../assets/img/blog-emi-vs-sip.png" alt="EMI versus SIP decision guide" loading="lazy"><span class="blog-card-icon" id="articleIcon1"></span></div>
+        <div class="blog-card-body">
+          <div class="blog-meta"><span>Personal finance</span><span class="dot"></span><span>7 min read</span></div>
+          <h2>EMI vs SIP: Which should come first in India?</h2>
+          <p>A practical framework for choosing between prepaying debt and putting the same money into investments.</p>
+          <a class="blog-read" href="emi-vs-sip-which-is-better-india.html">Read the guide →</a>
+        </div>
+      </article>
+      <article class="card blog-card reveal d1" data-search="health insurance cover family floater medical india">
+        <div class="blog-card-top"><img src="../assets/img/blog-health-insurance-cover.png" alt="Health insurance cover decision guide" loading="lazy"><span class="blog-card-icon" id="articleIcon2"></span></div>
+        <div class="blog-card-body">
+          <div class="blog-meta"><span>Health & family</span><span class="dot"></span><span>6 min read</span></div>
+          <h2>How much health insurance cover do you need in India?</h2>
+          <p>Build an adequate cover amount for your city, family, employer cover and rising hospital costs.</p>
+          <a class="blog-read" href="how-much-health-insurance-need-india.html">Read the guide →</a>
+        </div>
+      </article>
+      <article class="card blog-card reveal d2" data-search="rent buy house home loan property real estate india 2026">
+        <div class="blog-card-top"><img src="../assets/img/blog-rent-vs-buy-2026.png" alt="Rent or buy home decision guide" loading="lazy"><span class="blog-card-icon" id="articleIcon3"></span></div>
+        <div class="blog-card-body">
+          <div class="blog-meta"><span>Home & property</span><span class="dot"></span><span>8 min read</span></div>
+          <h2>Rent or buy a house in India? A 2026 decision framework</h2>
+          <p>Compare the real cost, flexibility and wealth impact before committing to a long home loan.</p>
+          <a class="blog-read" href="rent-or-buy-house-2026-india.html">Read the guide →</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    DC.renderLayout();
+    document.getElementById('searchIcon').innerHTML = DC.icon('search');
+    document.getElementById('articleIcon1').innerHTML = DC.icon('trending');
+    document.getElementById('articleIcon2').innerHTML = DC.icon('shield');
+    document.getElementById('articleIcon3').innerHTML = DC.icon('home');
+    document.getElementById('blogSearch').addEventListener('input', function () {
+      const q = this.value.trim().toLowerCase();
+      document.querySelectorAll('#blogGrid .blog-card').forEach(function (card) {
+        card.style.display = !q || card.getAttribute('data-search').indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+    setTimeout(function () { DC.initReveal(); }, 0);
+  </script>
+</body>
+</html>

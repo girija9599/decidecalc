@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running Pace Calculator — Speed ↔ Pace ↔ Race Time Predictor | DecideCalc</title>
+  <meta name="description" content="Free running pace calculator. Convert between min/km, min/mile, km/h, mph — plus race-time predictions for 5K, 10K, half-marathon and marathon using Riegel's formula.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/pace-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-health">Health & Lifestyle</a><span class="sep">/</span><span>Pace Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Running Pace Calculator</h1><div class="sub">Pace ↔ speed ↔ race time</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Distance</label>
+            <select class="input" id="dist">
+              <option value="1">1 km</option>
+              <option value="5" selected>5 km</option>
+              <option value="10">10 km</option>
+              <option value="21.0975">Half marathon (21.0975 km)</option>
+              <option value="42.195">Marathon (42.195 km)</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="field" id="customField" style="display:none"><label>Custom distance (km)</label>
+            <input class="input" id="custom" type="number" min="0.1" step="0.1" value="7">
+          </div>
+          <div class="row-2">
+            <div class="field"><label>Hours</label><input class="input" id="hh" type="number" min="0" max="23" value="0"></div>
+            <div class="field"><label>Minutes</label><input class="input" id="mm" type="number" min="0" max="59" value="25"></div>
+          </div>
+          <div class="row-2">
+            <div class="field"><label>Seconds</label><input class="input" id="ss" type="number" min="0" max="59" value="0"></div>
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Pace & Predictions</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">minutes per km</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rPerKm">—</div><div class="k">Pace per km</div></div>
+          <div class="result-stat"><div class="v" id="rPerMi">—</div><div class="k">Pace per mile</div></div>
+          <div class="result-stat"><div class="v" id="rKmh">—</div><div class="k">Speed (km/h)</div></div>
+          <div class="result-stat"><div class="v" id="rMph">—</div><div class="k">Speed (mph)</div></div>
+          <div class="result-stat"><div class="v" id="r5K">—</div><div class="k">5K predicted</div></div>
+          <div class="result-stat"><div class="v" id="r10K">—</div><div class="k">10K predicted</div></div>
+          <div class="result-stat"><div class="v" id="rHM">—</div><div class="k">Half-marathon predicted</div></div>
+          <div class="result-stat"><div class="v" id="rM">—</div><div class="k">Marathon predicted</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Predictions use Riegel's formula</h4><p id="recoText">T₂ = T₁ × (D₂ / D₁)^1.06. Trained runners match within 2-3%; beginners typically go 5-10% slower at longer distances because the fatigue factor isn't fully captured. Use the prediction as floor, not goal.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Pace benchmarks for amateur runners</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Beginner 5K:</b> 7:30 – 8:30 min/km</li>
+        <li><b>Recreational:</b> 5:30 – 7:00 min/km typical training pace</li>
+        <li><b>Sub-25 5K:</b> 5:00 min/km</li>
+        <li><b>Sub-4 marathon:</b> 5:41 min/km sustained</li>
+        <li><b>Boston qualifier (M <35):</b> 3:00 marathon = 4:16 min/km</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Heat penalty:</b> every +5°C above ~10°C slows you ~1-2% per km for races. Most Indian road races run 18-30°C — expect your prediction to look \"fast\" vs what you can actually run on race day.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'pace-calculator', faqs: [
+      { q: 'How accurate are the race predictions?', a: 'Riegel\'s formula is the most widely validated. For well-trained runners it\'s accurate to ±2-3%. For beginners running their first long race, expect to be 5-10% slower than prediction — the formula assumes you\'ve trained for that distance.' },
+      { q: 'Why do marathon predictions look so slow?', a: 'Most amateur runners slow down disproportionately beyond half-marathon because aerobic base takes years to build. The 1.06 exponent is empirically the best fit, but marathon pacing strategy (negative splits, walk breaks) hugely impacts actual result.' },
+      { q: 'What pace should my easy runs be?', a: '80/20 rule: 80% of weekly volume at a conversational pace — typically 1:00 to 1:30 min/km SLOWER than your 5K race pace. Most injury and burnout comes from running easy days too fast.' },
+      { q: 'Treadmill pace vs outdoor pace?', a: 'Treadmill typically reads 20-30 sec/km fast due to no wind resistance and belt assistance. Set 1% incline to approximate outdoor effort. For race training, do your long runs outdoors.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('zap');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function fmtHMS(totalSeconds) {
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = Math.round(totalSeconds % 60);
+      return h > 0 ? h + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0')
+                   : m + ':' + String(s).padStart(2,'0');
+    }
+    function fmtPace(b) {
+      const m = Math.floor(b), s = Math.round((b - m) * 60);
+      return m + ':' + String(s).padStart(2,'0') + '/km';
+    }
+    document.getElementById('dist').addEventListener('change', function(){
+      document.getElementById('customField').style.display = document.getElementById('dist').value === 'custom' ? '' : 'none';
+      compute();
+    });
+
+    function compute() {
+      const distSel = document.getElementById('dist').value;
+      const dKm = distSel === 'custom' ? Math.max(0.1, DC.fnum(document.getElementById('custom').value)) : parseFloat(distSel);
+      const hh = Math.max(0, DC.fnum(document.getElementById('hh').value));
+      const mm = Math.max(0, DC.fnum(document.getElementById('mm').value));
+      const ss = Math.max(0, DC.fnum(document.getElementById('ss').value));
+      const tSec = hh * 3600 + mm * 60 + ss;
+      if (dKm <= 0 || tSec <= 0) {
+        ['rMain','rPerKm','rPerMi','rKmh','rMph','r5K','r10K','rHM','rM'].forEach(function(id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const tMin = tSec / 60;
+      const paceKm = tMin / dKm;             // min per km
+      const paceMi = paceKm * 1.60934;
+      const kmh = dKm / (tSec / 3600);
+      const mph = kmh * 0.621371;
+      // Riegel predictions from this input
+      const T1 = tSec, D1 = dKm;
+      function pred(d) { return T1 * Math.pow(d / D1, 1.06); }
+
+      document.getElementById('rMain').textContent = fmtPace(paceKm);
+      document.getElementById('rLbl').textContent = 'sustained pace';
+      document.getElementById('rPerKm').textContent = fmtPace(paceKm);
+      document.getElementById('rPerMi').textContent = Math.floor(paceMi) + ':' + String(Math.round((paceMi % 1) * 60)).padStart(2,'0') + '/mi';
+      document.getElementById('rKmh').textContent = kmh.toFixed(2) + ' km/h';
+      document.getElementById('rMph').textContent = mph.toFixed(2) + ' mph';
+      document.getElementById('r5K').textContent = fmtHMS(pred(5));
+      document.getElementById('r10K').textContent = fmtHMS(pred(10));
+      document.getElementById('rHM').textContent = fmtHMS(pred(21.0975));
+      document.getElementById('rM').textContent = fmtHMS(pred(42.195));
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['custom','hh','mm','ss'].forEach(function(id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('My pace: ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult('Pace ' + document.getElementById('rPerKm').textContent + ' | ' + document.getElementById('rKmh').textContent + ' | Marathon pred ' + document.getElementById('rM').textContent); });
+  </script>
+</body>
+</html>

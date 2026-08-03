@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Interest Calculator — SI Formula, Monthly & Yearly | DecideCalc</title>
+  <meta name="description" content="Free simple interest calculator: I = P×R×T/100. Compare with compound interest side-by-side. For loans, deposits & informal lending.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/simple-interest-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Simple Interest Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Simple Interest Calculator</h1><div class="sub">I = P × R × T / 100</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Principal (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-amt">₹50,000</span></div>
+            <input type="range" id="amt" min="1000" max="5000000" step="1000" value="50000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Annual interest rate (%)</label><input class="input" id="rate" type="number" min="0.1" max="36" step="0.1" value="8"></div>
+          <div class="field-row">
+            <div class="field"><label>Years</label><input class="input" id="yrs" type="number" min="0" max="30" step="1" value="2"></div>
+            <div class="field"><label>Months (+)</label><input class="input" id="mo" type="number" min="0" max="11" step="1" value="6"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Total amount (P + SI)</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInt">—</div><div class="k">Interest only (SI)</div></div>
+          <div class="result-stat"><div class="v" id="rPrin">—</div><div class="k">Principal</div></div>
+          <div class="result-stat"><div class="v" id="rMo">—</div><div class="k">Monthly interest</div></div>
+          <div class="result-stat"><div class="v" id="rVsCI">—</div><div class="k">vs Compound (SI < CI by)</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">When SI applies</h4><p id="recoText">Car loans, some personal loans & informal lending use simple interest. SI is friendlier for borrowers: ₹50,000 at 8% SI for 2.5 yrs = ₹10,000 interest. Compounded monthly, same money costs ₹10,632.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>SI vs CI — the key difference</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>SI</b>: interest computed only on the original principal. Linear growth.</li>
+        <li><b>CI</b>: interest on principal + accumulated interest. Exponential growth.</li>
+        <li>After <b>1 year</b> SI and CI are identical at annual compounding. Beyond 1 year CI pulls ahead.</li>
+        <li>Borrowing → prefer SI. Lending/investing → prefer CI.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula check:</b> ₹1L at 10% SI for 5 yrs = ₹1,50,000. Same money at 10% compounded annually = ₹1,61,051. The 10-year gap is ₹59,374. 20 years: ₹3,72,750. Exponential isn't linear.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'simple-interest-calculator', faqs: [
+      { q: 'Which loans use simple interest in India?', a: 'Most car loans are quoted at flat/simple rates (which look attractive but convert to much higher effective EMI rates). Always ask for the reducing-balance APR to compare fairly.' },
+      { q: 'How do I convert months to the T in formula?', a: 'Divide months by 12. 6 months = 0.5 yrs, 18 months = 1.5 yrs. Days / 365 works too.' },
+      { q: 'Can R be a monthly rate?', a: 'Only if T is in months and you skip ÷ 100 (use ÷ 1). Cleaner: convert everything to an annual rate and use years.' },
+      { q: 'Why does CI always beat SI for investors?', a: 'Because CI "interest on interest" accelerates. The gap grows dramatically with time — 10-yr ₹1L at 10%: SI yields ₹1L interest, CI yields ₹1.59L.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('percent');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const P = DC.fnum(document.getElementById('amt').value);
+      const r = DC.fnum(document.getElementById('rate').value);
+      const yrs = DC.fnum(document.getElementById('yrs').value);
+      const mo = DC.fnum(document.getElementById('mo').value);
+      const t = yrs + mo / 12;
+      if (P <= 0 || r <= 0 || t <= 0) {
+        ['rMain','rInt','rPrin','rMo','rVsCI'].forEach(function (id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const interest = P * r * t / 100;
+      const total = P + interest;
+      const monthly = interest / (t * 12);
+      const ci = P * Math.pow(1 + r / 100, t);
+      const ciGap = ci - total;
+
+      document.getElementById('rMain').textContent = DC.compact(total);
+      document.getElementById('rLbl').textContent = 'Total in ' + (yrs?yrs+' yr'+(yrs!==1?'s':''):'')+(mo?(yrs?' ':'')+mo+' mo':'');
+      document.getElementById('rInt').textContent = DC.compact(interest);
+      document.getElementById('rPrin').textContent = DC.compact(P);
+      document.getElementById('rMo').textContent = DC.compact(monthly);
+      document.getElementById('rVsCI').textContent = DC.compact(ciGap);
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amt','rate','yrs','mo'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('amt').addEventListener('input', function () { document.getElementById('out-amt').textContent = '₹' + parseInt(this.value,10).toLocaleString('en-IN'); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Simple interest: ₹ result ' + document.getElementById('rInt').textContent + ' — DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('SI Result\nPrincipal: ' + document.getElementById('rPrin').textContent + '\nInterest: ' + document.getElementById('rInt').textContent + '\nTotal: ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

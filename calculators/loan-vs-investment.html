@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan vs Investment Calculator — Repay or Invest? | DecideCalc</title>
+  <meta name="description" content="Should you repay your loan early or invest the money instead? Compare returns vs interest saved over 10 years with a clear projection chart.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/loan-vs-investment.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>Loan vs Investment</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Loan vs Investment</h1><div class="sub">Prepay loan or invest the money?</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label>Lump Sum Amount</label>
+            <div class="range-out"><span class="range-val" id="out-amt" data-range-out="amount">₹5,00,000</span></div>
+            <input type="range" id="amount" min="10000" max="5000000" step="10000" value="500000" data-prefix="₹" data-dec="0">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Outstanding Loan Rate (%)</label><input class="input" id="loanRate" type="number" value="9" step="0.1"></div>
+            <div class="field"><label>Remaining Tenure (years)</label><input class="input" id="tenure" type="number" value="10"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Expected Investment Return (%)</label><input class="input" id="invReturn" type="number" value="12" step="0.5"></div>
+            <div class="field"><label>Tax on Returns (%)</label><input class="input" id="tax" type="number" value="12.5" step="0.5"></div>
+          </div>
+          <div class="note"><span id="fIcon"></span><div><b>Core logic:</b> if after-tax investment return &gt; loan rate, investing mathematically wins. If loan rate is higher, repay first. Tax changes the picture significantly.</div></div>
+          <button class="btn btn-primary btn-block mt-3" id="calcBtn">Decide</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="lbl" style="margin-bottom:10px">Smart move</div>
+          <span class="signal green" id="signal">INVEST THE MONEY</span>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInvest">₹15.5 L</div><div class="k">If you Invest</div></div>
+          <div class="result-stat"><div class="v" id="rPrepay">₹8.1 L</div><div class="k">Interest Saved</div></div>
+          <div class="result-stat"><div class="v" id="rDiff">₹7.4 L</div><div class="k">Net Advantage</div></div>
+          <div class="result-stat"><div class="v" id="rGap">3.0%</div><div class="k">Return − Loan Rate</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="cmpChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Why invest wins here</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>The math, simply</h2>
+      <p class="mt-2">You have a lump sum. You can either <b>prepay your loan</b> (saving future interest) or <b>invest it</b> (earning future returns). The winner depends on:</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Loan interest rate</b> — a guaranteed "return" if you prepay.</li>
+        <li><b>After-tax investment return</b> — uncertain but often higher for equities.</li>
+        <li><b>Time horizon</b> — longer horizons favour investing (compounding + risk premium).</li>
+        <li><b>Risk tolerance</b> — prepaying is risk-free; investing is not.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon2"></span><div><b>Hybrid approach:</b> split the amount — prepay part to reduce EMI stress, invest part to keep wealth compounding. Many financial planners recommend this.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'loan-vs-investment', faqs: [
+      { q: 'Should I always prepay high-interest loans first?', a: 'Yes — credit card debt (36-42%) and personal loans (12-24%) almost always warrant prepayment before investing. Returns rarely beat those rates reliably.' },
+      { q: 'What about home loan tax benefits?', a: 'Home loan principal (₹1.5L under 80C) and interest (₹2L under Section 24) give deductions. This effectively lowers your loan rate — factor it in before prepaying.' },
+      { q: 'Is a 12% investment return guaranteed?', a: 'No. Equity returns are volatile. Over 7-10 years they\'ve averaged 11-13% in India, but short-term can be negative. Use conservative assumptions.' },
+      { q: 'What is the safest approach?', a: 'Build an emergency fund first, then prepay any loan above 11%, then invest surplus in a mix of equity and debt matching your goals.' },
+      { q: 'Why does tax matter here?', a: 'Investment gains are taxed (LTCG 12.5% on equity over ₹1.25L, slab rate on debt). This reduces your effective return, sometimes flipping the decision toward prepayment.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('scale');
+    document.getElementById('recoIc').innerHTML = DC.icon('trending');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+    document.getElementById('fIcon2').innerHTML = DC.icon('sparkle');
+
+    function compute() {
+      const amt = DC.fnum(document.getElementById('amount').value);
+      const loanRate = DC.fnum(document.getElementById('loanRate').value) / 100;
+      const tenure = DC.fnum(document.getElementById('tenure').value);
+      const invReturn = DC.fnum(document.getElementById('invReturn').value) / 100;
+      const tax = DC.fnum(document.getElementById('tax').value) / 100;
+      const afterTax = invReturn * (1 - tax);
+
+      // Correct comparison: what does the lump-sum grow to?
+      // OPTION A (Prepay): you avoid future interest AND free up the principal for redeployment.
+      //   The principal amount was going toward the loan, but now stays in your pocket.
+      //   Effective benefit = amt compounded at loanRate over tenure (avoided future EIs).
+      // OPTION B (Invest): grows at afterTax rate.
+      const interestSaved = amt * (Math.pow(1 + loanRate, tenure) - 1);
+      const investVal = amt * Math.pow(1 + afterTax, tenure);
+      const prepayTotal = amt + interestSaved; // total saving vs. holding the loan
+      const diff = investVal - prepayTotal;
+
+      document.getElementById('rInvest').textContent = DC.compact(investVal);
+      document.getElementById('rPrepay').textContent = DC.compact(prepayTotal);
+      document.getElementById('rDiff').textContent = DC.compact(Math.abs(diff));
+      document.getElementById('rGap').textContent = DC.pct((afterTax - loanRate) * 100, 1);
+
+      const sig = document.getElementById('signal'), title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (afterTax > loanRate) {
+        sig.className = 'signal green'; sig.textContent = 'INVEST THE MONEY';
+        title.textContent = 'Investing wins by ' + DC.compact(diff);
+        txt.textContent = 'Your after-tax return (' + DC.pct(afterTax * 100) + ') beats the loan rate (' + DC.pct(loanRate * 100) + '). Over ' + tenure + ' years, investing builds ' + DC.compact(diff) + ' more. But ensure your investment can actually deliver that return.'; 
+      } else {
+        sig.className = 'signal yellow'; sig.textContent = 'PREPAY THE LOAN';
+        title.textContent = 'Prepaying wins by ' + DC.compact(Math.abs(diff));
+        txt.textContent = 'Your loan rate (' + DC.pct(loanRate * 100) + ') is higher than your after-tax return (' + DC.pct(afterTax * 100) + '). Clearing the loan is a guaranteed win — no investment risk involved.';
+      }
+
+      // projection chart
+      const labels = [], invSer = [], preSer = [];
+      for (let y = 0; y <= tenure; y++) {
+        labels.push('Yr ' + y);
+        invSer.push(Math.round(amt * Math.pow(1 + afterTax, y)));
+        preSer.push(Math.round(amt * Math.pow(1 + loanRate, y)));
+      }
+      DC.makeChart('cmpChart', {
+        type: 'line',
+        data: { labels: labels, datasets: [
+          { label: 'Investment value (after tax)', data: invSer, borderColor: '#00C2A8', backgroundColor: 'rgba(0,194,168,.15)', fill: true, tension: .35, borderWidth: 2.5, pointRadius: 0 },
+          { label: 'Interest saved (prepay)', data: preSer, borderColor: '#1B3A6B', backgroundColor: 'rgba(27,58,107,.1)', fill: true, tension: .35, borderWidth: 2, pointRadius: 0 }
+        ]},
+        options: { scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } }, plugins: { tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + DC.compact(c.raw); } } } } }
+      });
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['amount','loanRate','tenure','invReturn','tax'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('Loan vs Investment: ' + document.getElementById('signal').textContent + ' — ' + document.getElementById('recoTitle').textContent + '. Decide on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult(document.getElementById('signal').textContent + '\n' + document.getElementById('recoTitle').textContent); });
+  </script>
+</body>
+</html>

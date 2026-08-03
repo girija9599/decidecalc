@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GST Calculator — Add/Remove GST for All Slabs | DecideCalc</title>
+  <meta name="description" content="Free India GST calculator. Add or remove GST (5%, 12%, 18%, 28%) from any amount. See base price, GST amount, total & CGST+SGST split instantly.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/gst-calculator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-business">Business Tools</a><span class="sep">/</span><span>GST Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>GST Calculator</h1><div class="sub">Add / remove GST · CGST+SGST split</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Mode</label>
+            <div class="segmented" data-target="mode">
+              <button data-val="add" class="active">Add GST</button>
+              <button data-val="remove">Remove GST</button>
+            </div>
+            <input type="hidden" name="mode" value="add">
+          </div>
+          <div class="field"><label>Amount (₹)</label>
+            <div class="input-wrap"><span class="prefix">₹</span><input class="input with-prefix" id="amount" type="number" value="10000" step="any"></div>
+          </div>
+          <div class="field"><label>GST Rate</label>
+            <div class="chip-group" id="rateChips">
+              <label><input type="radio" name="rate" value="0" hidden><span class="chip">0%</span></label>
+              <label><input type="radio" name="rate" value="0.25" hidden><span class="chip">0.25%</span></label>
+              <label><input type="radio" name="rate" value="3" hidden><span class="chip">3%</span></label>
+              <label><input type="radio" name="rate" value="5" hidden><span class="chip">5%</span></label>
+              <label><input type="radio" name="rate" value="12" hidden><span class="chip">12%</span></label>
+              <label><input type="radio" name="rate" value="18" checked hidden><span class="chip active">18%</span></label>
+              <label><input type="radio" name="rate" value="28" hidden><span class="chip">28%</span></label>
+            </div>
+          </div>
+          <div class="field"><label>Or custom rate (%)</label><input class="input" id="customRate" type="number" value="" placeholder="e.g. 18" min="0" max="100" step="0.01"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate GST</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="big" id="rTotal">₹11,800</div>
+          <div class="lbl" id="rTotalLbl">Total (with GST)</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rBase">₹10,000</div><div class="k">Base Price</div></div>
+          <div class="result-stat"><div class="v" id="rGst">₹1,800</div><div class="k">GST Amount</div></div>
+          <div class="result-stat"><div class="v" id="rCgst">₹900</div><div class="k">CGST (50%)</div></div>
+          <div class="result-stat"><div class="v" id="rSgst">₹900</div><div class="k">SGST (50%)</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="gstChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button><button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">GST slab guide</h4><p id="recoText"></p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>GST rates in India — quick reference</h2>
+      <table class="breakdown mt-2">
+        <thead><tr><th>Rate</th><th>Common items</th></tr></thead>
+        <tbody>
+          <tr><td><b>0%</b></td><td>Unbranded food grains, fresh produce, books, education, healthcare</td></tr>
+          <tr><td><b>0.25%</b></td><td>Rough precious stones, semiprecious stones</td></tr>
+          <tr><td><b>3%</b></td><td>Gold, silver, jewellery</td></tr>
+          <tr><td><b>5%</b></td><td>Branded food, footwear up to ₹1000, medicines, economy flights</td></tr>
+          <tr><td><b>12%</b></td><td>Processed food, computers, mobile phones, business class flights</td></tr>
+          <tr><td><b>18%</b></td><td>Most goods & services, AC restaurants, IT services, hair oil, soaps</td></tr>
+          <tr><td><b>28%</b></td><td>Luxury cars, bikes, tobacco, aerated drinks, 5-star hotels</td></tr>
+        </tbody>
+      </table>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>CGST vs SGST vs IGST:</b> intra-state sales split GST equally into CGST + SGST. Inter-state sales charge IGST (full amount) instead. The total is the same.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'gst-calculator', faqs: [
+      { q: 'What is GST?', a: 'Goods and Services Tax — India\'s unified indirect tax on the supply of goods and services, replacing VAT, service tax, excise and many others since 1 July 2017.' },
+      { q: 'How do I add GST to a price?', a: 'Total = Base × (1 + GST%/100). For ₹10,000 at 18%: Total = 10000 × 1.18 = ₹11,800. GST amount = ₹1,800.' },
+      { q: 'How do I remove GST from a price?', a: 'Base = Total ÷ (1 + GST%/100). For ₹11,800 at 18%: Base = 11800 ÷ 1.18 = ₹10,000. GST amount = ₹1,800.' },
+      { q: 'What is CGST and SGST?', a: 'For sales within a state, GST splits equally into Central GST (CGST) and State GST (SGST). Both 50% of the total. For inter-state sales, IGST (Integrated GST) applies instead.' },
+      { q: 'Who needs to register for GST?', a: 'Businesses with annual turnover above ₹40 lakh (goods) or ₹20 lakh (services) must register. Special category states and some services have lower thresholds. Voluntary registration is also allowed.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('percent');
+    document.getElementById('recoIc').innerHTML = DC.icon('bank');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function currentRate() {
+      const custom = parseFloat(document.getElementById('customRate').value);
+      if (!isNaN(custom)) return custom;
+      const sel = document.querySelector('input[name="rate"]:checked');
+      return sel ? parseFloat(sel.value) : 18;
+    }
+
+    function showInvalid(message) {
+      document.getElementById('rTotal').textContent = '—';
+      document.getElementById('rTotalLbl').textContent = 'Enter valid values';
+      document.getElementById('recoTitle').textContent = 'Check your input';
+      document.getElementById('recoText').textContent = message;
+    }
+
+    // radio chip visual sync
+    document.querySelectorAll('#rateChips input[name="rate"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        document.getElementById('customRate').value = '';
+        document.querySelectorAll('#rateChips .chip').forEach(function (c) { c.classList.remove('active'); });
+        r.nextElementSibling.classList.add('active');
+        compute();
+      });
+    });
+    document.getElementById('customRate').addEventListener('input', function () {
+      document.querySelectorAll('#rateChips .chip').forEach(function (c) { c.classList.remove('active'); });
+      document.querySelectorAll('#rateChips input').forEach(function (i) { i.checked = false; });
+      compute();
+    });
+    document.querySelectorAll('.segmented button').forEach(function (b) { b.addEventListener('click', function () { setTimeout(compute, 30); }); });
+
+    function compute() {
+      const amount = DC.fnum(document.getElementById('amount').value);
+      const rate = currentRate();
+      const mode = document.querySelector('[name="mode"]').value;
+      if (!isFinite(amount) || amount < 0 || !isFinite(rate) || rate < 0 || rate > 100 || (mode === 'remove' && rate <= -100)) {
+        showInvalid('Use a non-negative amount and a GST rate from 0% to 100%.');
+        return;
+      }
+      let base, gst, total;
+      if (mode === 'add') { base = amount; gst = amount * rate / 100; total = amount + gst; }
+      else { total = amount; base = amount / (1 + rate / 100); gst = total - base; }
+      const cgst = gst / 2, sgst = gst / 2;
+
+      document.getElementById('rBase').textContent = DC.inr(base, base % 1 === 0 ? 0 : 2);
+      document.getElementById('rGst').textContent = DC.inr(gst, gst % 1 === 0 ? 0 : 2);
+      document.getElementById('rCgst').textContent = DC.inr(cgst, cgst % 1 === 0 ? 0 : 2);
+      document.getElementById('rSgst').textContent = DC.inr(sgst, sgst % 1 === 0 ? 0 : 2);
+      document.getElementById('rTotal').textContent = DC.inr(mode === 'add' ? total : base, (mode === 'add' ? total : base) % 1 === 0 ? 0 : 2);
+      document.getElementById('rTotalLbl').textContent = mode === 'add' ? 'Total (with GST)' : 'Base Price (without GST)';
+
+      DC.makeChart('gstChart', {
+        type: 'doughnut',
+        data: { labels: ['Base Price', 'GST (' + rate + '%)'], datasets: [{ data: [base, gst], backgroundColor: ['#1B3A6B', '#00C2A8'], borderWidth: 0, hoverOffset: 6 }] },
+        options: { cutout: '62%', plugins: { tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.inr(c.raw, c.raw % 1 === 0 ? 0 : 2); } } } } }
+      });
+
+      const slabInfo = { '0': 'Zero-rated — essentials like unbranded food grains, books, healthcare.', '0.25': 'Special rate for rough/semi-precious stones.', '3': 'Applies to gold, silver and jewellery.', '5': 'Essential goods — branded food, medicines, footwear under ₹1000.', '12': 'Standard-I — processed food, computers, mobiles, 12% services.', '18': 'Standard-II — most goods & services, AC restaurants, IT services.', '28': 'Highest slab — luxury cars, tobacco, aerated drinks, 5-star hotels.' };
+      document.getElementById('recoTitle').textContent = rate + '% GST slab';
+      document.getElementById('recoText').textContent = slabInfo[String(rate)] || ('A custom rate of ' + rate + '% — verify this is the correct rate for your goods or service before invoicing.');
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('amount').addEventListener('input', compute);
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('GST calc: ₹' + DC.fnum(document.getElementById('amount').value).toLocaleString('en-IN') + ' @ ' + currentRate() + '% → ' + document.getElementById('rTotal').textContent + ' — try DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('GST Result:\nBase: ' + document.getElementById('rBase').textContent + '\nGST: ' + document.getElementById('rGst').textContent + '\nCGST: ' + document.getElementById('rCgst').textContent + '\nSGST: ' + document.getElementById('rSgst').textContent + '\nTotal: ' + document.getElementById('rTotal').textContent); });
+  </script>
+</body>
+</html>

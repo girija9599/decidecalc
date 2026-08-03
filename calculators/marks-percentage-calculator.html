@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marks to Percentage Calculator — Board & University Formula | DecideCalc</title>
+  <meta name="description" content="Convert marks to percentage instantly: total marks, obtained marks, optional subject-wise breakout with weighted totals. Works for School, CBSE, State Boards, Universities.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/marks-percentage-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-weight='bold' font-family='Arial' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-education">Education Tools</a><span class="sep">/</span><span>Marks to Percentage</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Marks to Percentage</h1><div class="sub">Simple + subject-wise modes</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="mode" value="simple">
+          <div class="segmented" id="mode" data-target="mode">
+            <button type="button" data-value="simple" class="active">Simple total</button>
+            <button type="button" data-value="subjects">Subject-wise</button>
+          </div>
+          <div style="height:14px"></div>
+          <div id="box-simple">
+            <div class="field-row">
+              <div class="field"><label>Marks obtained</label><input class="input" id="obt" type="number" min="0" step="any" placeholder="472"></div>
+              <div class="field"><label>Total marks</label><input class="input" id="tot" type="number" min="1" step="any" placeholder="500"></div>
+            </div>
+          </div>
+          <div id="box-subjects" style="display:none">
+            <div id="subjRows">
+              <div class="field-row subj-row"><div class="field"><label>Subject marks 1</label><input class="input subj-obt" type="number" min="0" step="any" placeholder="92"></div><div class="field"><label>Out of</label><input class="input subj-tot" type="number" min="1" step="any" placeholder="100"></div></div>
+              <div class="field-row subj-row"><div class="field"><label>Subject marks 2</label><input class="input subj-obt" type="number" min="0" step="any" placeholder="88"></div><div class="field"><label>Out of</label><input class="input subj-tot" type="number" min="1" step="any" placeholder="100"></div></div>
+              <div class="field-row subj-row"><div class="field"><label>Subject marks 3</label><input class="input subj-obt" type="number" min="0" step="any" placeholder="95"></div><div class="field"><label>Out of</label><input class="input subj-tot" type="number" min="1" step="any" placeholder="100"></div></div>
+            </div>
+            <button class="btn btn-ghost btn-block" id="addSubj" type="button">+ Add subject</button>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn" style="margin-top:14px">Calculate Percentage</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Percentage</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rOb">—</div><div class="k">Marks obtained</div></div>
+          <div class="result-stat"><div class="v" id="rTot">—</div><div class="k">Out of</div></div>
+          <div class="result-stat"><div class="v" id="rGrade">—</div><div class="k">Grade band</div></div>
+          <div class="result-stat"><div class="v" id="rLost">—</div><div class="k">Marks lost</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Weighted percentages</h4><p id="recoText">Add all obtained marks ÷ sum of out-of marks — simple percentage. For subject-wise grading with different max marks, the Subject-wise tab sums each column and divides.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Standard grade bands (India)</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>90%+ — Outstanding / Distinction</b> (top 2–5 percentile usually)</li>
+        <li><b>75–89% — First Class with Distinction</b> (merit-list eligible at many boards)</li>
+        <li><b>60–74% — First Class</b></li>
+        <li><b>50–59% — Second Class</b></li>
+        <li><b>40–49% — Pass / Third Class</b></li>
+        <li><b>Below 40% — typically needs re-attempt</b> (varies by board)</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>University councils vary.</b> CBSE, ICSE, state boards and universities each publish their own grade cutoffs — check your specific mark sheet rubric.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'marks-percentage-calculator', faqs: [
+      { q: 'Is 472/500 = 94.4%?', a: 'Yes — 472 ÷ 500 × 100 = 94.4%. For boards that use a grade-point system, convert each subject\'s grade to %, then sum & divide — but most board marksheets already print a total percentage.' },
+      { q: 'Why is subject-wise percentage different from sum-of-marks?', a: 'If out-of marks differ per subject (Theory 80 + Practical 20, for example), total-mark percentage weights low-max subjects less — each mode shown in this calculator handles it correctly.' },
+      { q: 'Best-of-5 rule?', a: 'Some boards (like ICSE for streams) take best 5 of 6 subjects. Identify your top 5 scores, then sum those and divide by their totals.' },
+      { q: 'Is this valid for CBSE?', a: 'Yes when totals match. CBSE prints its own % on the mark sheet; this calculator is a cross-check tool and works for any board where total marks are explicit.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('graduation');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    let mode = 'simple';
+    document.getElementById('mode').addEventListener('segment:change', function (e) {
+      mode = e.detail.value;
+      document.getElementById('box-simple').style.display   = mode === 'simple'   ? '' : 'none';
+      document.getElementById('box-subjects').style.display = mode === 'subjects' ? '' : 'none';
+      compute();
+    });
+    let subjCount = 3;
+    document.getElementById('addSubj').addEventListener('click', function () {
+      subjCount++;
+      const row = document.createElement('div');
+      row.className = 'field-row subj-row';
+      row.innerHTML = '<div class="field"><label>Subject marks ' + subjCount + '</label><input class="input subj-obt" type="number" min="0" step="any" placeholder="90"></div><div class="field"><label>Out of</label><input class="input subj-tot" type="number" min="1" step="any" placeholder="100"></div>';
+      document.getElementById('subjRows').appendChild(row);
+      row.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', compute); });
+    });
+
+    function band(p) {
+      if (p >= 90) return 'Outstanding';
+      if (p >= 75) return 'First w/ Dist.';
+      if (p >= 60) return 'First Class';
+      if (p >= 50) return 'Second Class';
+      if (p >= 40) return 'Pass / Third';
+      return 'Below pass';
+    }
+    function setInvalid(msg) {
+      ['rMain','rOb','rTot','rGrade','rLost'].forEach(function (id){document.getElementById(id).textContent='—';});
+      if (msg) document.getElementById('recoText').textContent = msg;
+    }
+    function compute() {
+      let obt, tot;
+      if (mode === 'simple') {
+        obt = DC.fnum(document.getElementById('obt').value);
+        tot = DC.fnum(document.getElementById('tot').value);
+        if (!isFinite(obt) || !isFinite(tot) || tot <= 0 || obt < 0 || obt > tot) return setInvalid('Check: marks obtained can\'t exceed total; totals must be positive.');
+      } else {
+        const obs = Array.prototype.slice.call(document.querySelectorAll('.subj-obt'));
+        const tos = Array.prototype.slice.call(document.querySelectorAll('.subj-tot'));
+        obt = 0; tot = 0; let filled = 0;
+        for (let i = 0; i < obs.length; i++) {
+          const o = DC.fnum(obs[i].value), t = DC.fnum(tos[i].value);
+          if ((!isFinite(o) || o === 0) && (!isFinite(t) || t === 0)) continue;
+          if (!isFinite(o) || !isFinite(t) || t <= 0 || o < 0 || o > t) return setInvalid('Subject ' + (i+1) + ': obtained must be ≥ 0 and ≤ out-of; out-of must be > 0.');
+          obt += o; tot += t; filled++;
+        }
+        if (filled === 0) return setInvalid('Enter at least one subject\'s marks.');
+      }
+      const p = obt / tot * 100;
+      document.getElementById('rMain').textContent = p.toFixed(2) + '%';
+      document.getElementById('rLbl').textContent = 'Percentage';
+      document.getElementById('rOb').textContent = obt.toLocaleString('en-IN');
+      document.getElementById('rTot').textContent = tot.toLocaleString('en-IN');
+      document.getElementById('rGrade').textContent = band(p);
+      document.getElementById('rLost').textContent = (tot - obt).toLocaleString('en-IN');
+      document.getElementById('recoTitle').textContent = p.toFixed(2) + '% — ' + band(p);
+      const need = tot * 0.75 - obt;
+      document.getElementById('recoText').textContent = p >= 75 ? 'You\'re inside the distinction band. Keep this average to stay merit-eligible.' :
+        (need > 0 ? 'To reach First-class-with-Distinction (75%) you need ' + Math.ceil(need * 100)/100 + ' more aggregate marks.' : 'Pass threshold reached — focus on consistency for next cycle.');
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['obt','tot'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    document.getElementById('subjRows').addEventListener('input', compute);
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My percentage: ' + document.getElementById('rMain').textContent + ' (' + document.getElementById('rGrade').textContent + ') — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Marks %: ' + document.getElementById('rOb').textContent + '/' + document.getElementById('rTot').textContent + ' = ' + document.getElementById('rMain').textContent + ' · ' + document.getElementById('rGrade').textContent); });
+  </script>
+</body>
+</html>

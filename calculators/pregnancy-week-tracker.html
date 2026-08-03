@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pregnancy Week Tracker — Current Week, Trimester, Milestones | DecideCalc</title>
+  <meta name="description" content="Free pregnancy week tracker. Enter due date or LMP — see current week, trimester, baby size comparison, and key milestones ahead.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/pregnancy-week-tracker.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-life">Life Planning</a><span class="sep">/</span><span>Pregnancy Week Tracker</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Pregnancy Week Tracker</h1><div class="sub">Current week, trimester, what's next</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="based" value="lmp">
+          <div class="segmented" id="based" data-target="based">
+            <button type="button" data-value="lmp" class="active">From LMP date</button>
+            <button type="button" data-value="due">From due date</button>
+          </div>
+          <div class="field" style="margin-top:14px">
+            <label id="dateLabel">Last menstrual period (LMP) date</label>
+            <input class="input" id="date" type="date">
+          </div>
+          <div style="height:8px"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Where am I in the journey?</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="big" id="rMain">—</div>
+          <div class="lbl" id="rLbl">weeks pregnant</div>
+          <div style="margin-top:14px;background:var(--surface-3);border-radius:8px;overflow:hidden;height:14px">
+            <div id="rBar" style="height:100%;background:linear-gradient(90deg,var(--accent),#10b981);width:0%;transition:width .5s ease"></div>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rTrim">—</div><div class="k">Trimester</div></div>
+          <div class="result-stat"><div class="v" id="rSized">—</div><div class="k">Baby size (approx)</div></div>
+          <div class="result-stat"><div class="v" id="rDue">—</div><div class="k">Due date</div></div>
+          <div class="result-stat"><div class="v" id="rLeft">—</div><div class="k">Days remaining</div></div>
+          <div class="result-stat"><div class="v" id="rDone">—</div><div class="k">% of journey done</div></div>
+          <div class="result-stat"><div class="v" id="rNext">—</div><div class="k">Next milestone</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">40 weeks is the average, not the deadline</h4><p id="recoText">Only ~5% of babies arrive on their due date. The "term" window is medically 37-42 weeks — anything inside that window is normal. Most first babies come at 41+ weeks.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Trimester guide for Indian mothers</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>1st trimester (0-13 weeks):</b> folic acid 400mcg daily, dating scan at 7-8 weeks, NT scan at 11-14 weeks</li>
+        <li><b>2nd trimester (14-27 weeks):</b> anomaly scan at 18-22 weeks, glucose tolerance at 24-28, GTT test</li>
+        <li><b>3rd trimester (28-40 weeks):</b> growth scans every 4-6 weeks, Group B strep at 35-37, hospital bag packed by week 35</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Indian context:</b> under Janani Suraksha Yojana, pregnant women in BPL households get ₹1400 (rural) or ₹1000 (urban) as cash assistance for institutional delivery. Registered under PMMVY for additional ₹5000.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'pregnancy-week-tracker', faqs: [
+      { q: 'Is the due date from LMP accurate?', a: 'LMP dating (Naegele\'s rule) assumes a 28-day cycle with ovulation on day 14. If your cycle is longer or shorter, dating scan at 7-8 weeks is more accurate — the CRl (crown-rump length) measurement trumps LMP.' },
+      { q: 'My cycle is 35 days — does the calculation change?', a: 'Yes. LMP dating overestimates pregnancy by ~1 week in this case (ovulation likely on day 21 instead of day 14). Your doctor will adjust EDD after the dating scan. Until then this calculator follows the standard 28-day assumption.' },
+      { q: 'Why does the trimester end at week 13 (not 12)?', a: 'Different sources split at 12 or 13 — the WHO convention is "weeks 0-13 inclusive" for first trimester. Some OBs say 1st trimester ends at 12+6; the difference is purely editorial.' },
+      { q: 'What is "quickening"?', a: 'First felt baby movements — typically 18-22 weeks for first pregnancies, 16-18 for subsequent. Initially feels like butterflies or bubbles; becomes kicks by week 24-26.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('baby');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('heart');
+
+    const SIZES = [
+      'poppy seed', 'sesame seed', 'lentil', 'blueberry', 'raspberry',
+      'kidney bean', 'grape', 'kumquat', 'fig', 'lime',
+      'plum', 'strawberry', 'lemon', 'apple',
+      'orange', 'avocado', 'mango', 'banana', 'large tomato',
+      'pomegranate', 'papaya', 'bell pepper', 'eggplant', 'cauliflower',
+      'lettuce head', 'corn cob', 'squash', 'cabbage', 'coconut',
+      'pineapple', 'cantaloupe', 'honeydew melon', 'romaine lettuce', 'swiss chard bundle',
+      'swede', 'watermelon', 'small watermelon', 'pumpkin', 'watermelon',
+      'pumpkin', 'watermelon'
+    ];
+    const MILESTONES = [
+      [5, 'Heartbeat detectable on ultrasound'],
+      [8, 'Dating scan complete — official EDD'],
+      [12, 'First-trimester NT scan window'],
+      [14, 'Second trimester begins'],
+      [20, 'Anomaly scan (anatomy scan)'],
+      [24, 'Viability milestone'],
+      [27, 'Glucose screening (GTT)'],
+      [32, 'Frequent growth scans begin'],
+      [37, 'Full-term window opens'],
+      [40, 'Expected due date']
+    ];
+
+    let based = 'lmp';
+    document.getElementById('based').addEventListener('segment:change', function(e){
+      based = e.detail.value;
+      document.getElementById('dateLabel').textContent = based === 'lmp' ? 'Last menstrual period (LMP) date' : 'Expected due date (EDD)';
+      compute();
+    });
+
+    function fmt(d) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function compute() {
+      const dStr = document.getElementById('date').value;
+      const today = new Date();
+      if (!dStr) {
+        ['rMain','rTrim','rSized','rDue','rLeft','rDone','rNext'].forEach(function(id){document.getElementById(id).textContent='—';});
+        document.getElementById('rBar').style.width = '0';
+        return;
+      }
+      const d = new Date(dStr + 'T00:00:00');
+      if (isNaN(d.getTime())) return;
+
+      let lmpDate, dueDate;
+      if (based === 'lmp') {
+        lmpDate = d;
+        dueDate = new Date(d.getTime() + 280 * 24 * 3600 * 1000);
+      } else {
+        dueDate = d;
+        lmpDate = new Date(d.getTime() - 280 * 24 * 3600 * 1000);
+      }
+
+      const totalMs = dueDate - lmpDate;
+      const soFarMs = today - lmpDate;
+      const daysPreg = Math.floor(soFarMs / (24 * 3600 * 1000));
+      const weeksPreg = Math.floor(daysPreg / 7);
+      const daysLeft = Math.ceil((dueDate - today) / (24 * 3600 * 1000));
+      const pctDone = Math.max(0, Math.min(100, (soFarMs / totalMs) * 100));
+      const trim = weeksPreg < 14 ? 'First (1-13)' : weeksPreg < 28 ? 'Second (14-27)' : 'Third (28-40)';
+      const size = weeksPreg >= 0 && weeksPreg < SIZES.length ? SIZES[weeksPreg] : 'watermelon+';
+      const nextM = MILESTONES.find(m => m[0] > weeksPreg);
+
+      document.getElementById('rMain').textContent = weeksPreg + 'w ' + (daysPreg % 7) + 'd';
+      document.getElementById('rLbl').textContent = 'pregnant (' + daysPreg + ' days total)';
+      document.getElementById('rBar').style.width = pctDone.toFixed(1) + '%';
+      document.getElementById('rTrim').textContent = trim;
+      document.getElementById('rSized').textContent = size;
+      document.getElementById('rDue').textContent = fmt(dueDate);
+      document.getElementById('rLeft').textContent = daysLeft;
+      document.getElementById('rDone').textContent = pctDone.toFixed(1) + '%';
+      document.getElementById('rNext').textContent = nextM ? ('Week ' + nextM[0]) : '—';
+      document.getElementById('recoTitle').textContent = nextM ? nextM[1] : 'You\'re past the typical list';
+      document.getElementById('recoText').textContent = nextM
+        ? 'Next major medical milestone: week ' + nextM[0] + ' — ' + nextM[1].toLowerCase() + '. Book the scan/checkup if not already scheduled.'
+        : 'You\'re inside the 40-week window. If past 41 weeks, your doctor will likely discuss induction.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('date').addEventListener('input', compute);
+
+    document.getElementById('shareBtn').addEventListener('click', function(){ DC.shareWhatsApp('Currently ' + document.getElementById('rMain').textContent + ' — via DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function(){ DC.copyResult(document.getElementById('rMain').textContent + ' | ' + document.getElementById('rTrim').textContent + ' | Due: ' + document.getElementById('rDue').textContent); });
+  </script>
+</body>
+</html>

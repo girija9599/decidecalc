@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>401(k) Calculator — Balance at Retirement, Match &amp; Roth/Traditional | DecideCalc</title>
+  <meta name="description" content="Free 401(k) calculator: project your balance at retirement with employer match, FEIE, IRA cap, SECURE 2.0 catch-up and auto-escalation. Compare traditional vs Roth side-by-side.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/401k-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <style>
+    .k401-table{width:100%;border-collapse:separate;border-spacing:0;font-size:.88rem}
+    .k401-table th{font-size:.74rem;text-transform:uppercase;letter-spacing:.6px;color:var(--text-soft);padding:12px 10px;text-align:left;background:var(--surface-2,#F8F9FF);border-bottom:1px solid var(--border)}
+    .k401-table th.num,.k401-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+    .k401-table td{padding:12px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+    .k401-table tbody tr:last-child td{border-bottom:none}
+    .k401-table tr.match-row td{background:rgba(34,197,94,.06)}
+    .k401-pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.3px}
+    .k401-pill.max{background:#DCFCE7;color:#166534}
+    .k401-pill.below{background:#FEF3C7;color:#92400E}
+    @media (max-width:640px){.k401-table thead{display:none}.k401-table,.k401-table tbody,.k401-table tr,.k401-table td{display:block;width:100%}.k401-table td{border-bottom:none;padding:6px 10px}.k401-table tr{margin-bottom:14px;border:1px solid var(--border);border-radius:10px;overflow:hidden;padding-bottom:8px}}
+  </style>
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>401(k) Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>401(k) Calculator</h1><div class="sub">Match · IRS cap · auto-escalation · traditional vs Roth</div></div></div>
+        <div class="calc-body">
+          <div class="field-row">
+            <div class="field"><label for="age">Current age</label><input class="input" id="age" type="number" min="18" max="75" step="1" value="30" inputmode="numeric"></div>
+            <div class="field"><label for="ret">Retirement age</label><input class="input" id="ret" type="number" min="55" max="75" step="1" value="60" inputmode="numeric"></div>
+          </div>
+          <div class="field"><label for="salary">Annual salary (gross)</label>
+            <div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="salary" type="number" min="0" step="any" value="80000" inputmode="decimal"></div>
+          </div>
+          <div class="field"><label for="curBal">Current 401(k) balance</label>
+            <div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="curBal" type="number" min="0" step="any" value="0" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label>Contribution type</label>
+            <input type="hidden" name="ctype" value="traditional">
+            <div class="segmented" id="ctype" data-target="ctype">
+              <button type="button" data-value="traditional" class="active">Traditional (pre-tax)</button>
+              <button type="button" data-value="roth">Roth (after-tax)</button>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="empPct">You contribute (% of salary)</label><input class="input" id="empPct" type="number" min="0" max="100" step="any" value="6" inputmode="decimal"></div>
+            <div class="field"><label for="esc">Auto-escalation (%/yr)</label><input class="input" id="esc" type="number" min="0" max="5" step="any" value="0" inputmode="decimal"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="matchPct">Employer matches</label>
+              <select class="select" id="matchPct">
+                <option value="0.5" selected>50% of what you put in</option>
+                <option value="1">100% of what you put in (dollar-for-dollar)</option>
+                <option value="0">No match</option>
+              </select>
+            </div>
+            <div class="field"><label for="matchCap">…up to % of salary</label><input class="input" id="matchCap" type="number" min="0" max="15" step="any" value="3" inputmode="decimal"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="retRate">Expected return (%/yr)</label><input class="input" id="retRate" type="number" min="0" max="15" step="any" value="7" inputmode="decimal"></div>
+            <div class="field"><label for="taxRate">Tax rate in retirement (%)</label><input class="input" id="taxRate" type="number" min="0" max="50" step="any" value="22" inputmode="decimal"></div>
+          </div>
+          <div class="field"><label for="mtrNow">Marginal tax rate now (%)</label><input class="input" id="mtrNow" type="number" min="0" max="50" step="any" value="22" inputmode="decimal">
+            <div class="hint">Used for the traditional-vs-Roth comparison. Enter the rate on your <i>next</i> dollar of income (most workers are 12%, 22% or 24%).</div>
+          </div>
+          <p id="errBox" role="alert" aria-live="polite" style="min-height:1.3em;color:#DC2626;font-size:.84rem;margin:2px 0 10px"></p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Project my 401(k)</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rBal">—</div><div class="lbl" id="rBalLbl">Projected balance at age 60</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rMine">—</div><div class="k">Your contributions</div></div>
+          <div class="result-stat"><div class="v" id="rMatch">—</div><div class="k">Employer match</div></div>
+          <div class="result-stat"><div class="v" id="rTaxNow">—</div><div class="k">Take-home cost per year (after-tax)</div></div>
+          <div class="result-stat"><div class="v" id="rTaxBack">—</div><div class="k">Tax saved per year (traditional)</div></div>
+          <div class="result-stat"><div class="v" id="rRoth">—</div><div class="k">Roth equivalent balance</div></div>
+          <div class="result-stat"><div class="v" id="rWinner">—</div><div class="k">Traditional vs Roth verdict</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="k401Chart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn" type="button">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">First goal: capture every matching dollar</h4><p id="recoText">Before you do anything else, contribute at least enough to hit the full match — at a 50% match up to 3% of salary, contributing 3% earns an instant, risk-free 50% return on that slice.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Year-by-year projection <span style="font-size:.8rem;font-weight:400;color:var(--text-soft)">(IRS cap + catch-up + auto-escalation applied)</span></h2>
+      <p class="mt-2">The IRS deferral limit is $23,000 in 2025 (SECURE 2.0 raises catch-up to $7,500 at 50+ and up to $11,250 between ages 60–63). Total employee + employer contributions are capped at $70,000/year. The table uses these, then your own escalation and salary growth.</p>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="k401-table" aria-label="401(k) projection by year">
+          <thead>
+            <tr><th>Age</th><th class="num">Your contribution</th><th class="num">Employer match</th><th class="num">IRS deferral cap</th><th class="num">Account year-end</th></tr>
+          </thead>
+          <tbody id="projBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--muted)">Calculate to see the projection table.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note mt-2" style="margin-top:16px"><span id="fIcon"></span><div><b>Roth catch-up rule (SECURE 2.0):</b> from 2026, if you earn more than <b>$145,000</b> in FICA wages in the prior year, your catch-up contributions must be Roth (after-tax). This page tracks the cap and the tax comparison, not per-account contribution mechanics.</div></div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Traditional vs Roth at a glance</h2>
+      <div class="result-grid" style="margin-top:14px">
+        <div class="result-stat"><div class="v">Traditional</div><div class="k">Contribute pre-tax now · pay income tax on withdrawals in retirement</div></div>
+        <div class="result-stat"><div class="v">Roth</div><div class="k">Contribute after-tax now · withdrawals in retirement are tax-free</div></div>
+        <div class="result-stat"><div class="v" id="rDiff">—</div><div class="k">Difference at retirement (after-tax)</div></div>
+      </div>
+      <h3 class="mt-3" style="font-size:1.1rem">Rules of thumb that actually hold up</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Current rate &gt; expected retirement rate → traditional.</b> Skip tax at 24% today, pay it at 12% later — the math usually wins.</li>
+        <li><b>Current rate &lt; expected retirement rate → Roth.</b> Pay the lower known rate now to dodge a higher unknown one later.</li>
+        <li><b>Match is always pre-tax</b> — even a Roth 401(k) match lands in a traditional bucket and is taxed on the way out.</li>
+        <li><b>Young, low-income, room to grow → Roth.</b> Your 12% bracket is one of the cheapest tax-locks you will ever buy.</li>
+        <li><b>When in doubt, split.</b> Hedge the tax bet: part traditional, part Roth. Flexibility at withdrawal time is its own asset.</li>
+      </ul>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: '401k-calculator', faqs: [
+      { q: 'How much should I contribute to my 401(k)?', a: 'The floor is whatever captures the full employer match — that is an instant 50–100% return with zero market risk. After that, many advisors suggest 10%–15% of income total (including the match), but even 1% more per year moves the needle substantially.' },
+      { q: 'What is the 401(k) contribution limit for 2025?', a: 'Employee elective deferrals: $23,000 (under age 50). Catch-up: additional $7,500 at 50+. Under SECURE 2.0, ages 60–63 may add $11,250 (or 150% of the standard catch-up, whichever is greater). The combined employee + employer cap is $70,000 (plus catch-up).' },
+      { q: 'What is the difference between a traditional and Roth 401(k)?', a: 'Traditional — contributions go in pre-tax now, you pay ordinary income tax on withdrawals in retirement. Roth — contributions are after-tax now, qualified withdrawals are tax-free. The right choice depends mainly on whether your tax rate is lower now or in retirement.' },
+      { q: 'What is a 401(k) employer match and how does it work?', a: 'Your employer adds money when you contribute — typically 50% of what you put in up to 3% of salary, or 100% up to 3–6%. Capturing the full match is the single highest-return decision most employees can make; not taking it is leaving part of your compensation unclaimed.' },
+      { q: 'When can I withdraw from my 401(k) without penalty?', a: 'Generally at age 59½ (penalty-free, still taxable if pre-tax). Early withdrawals usually add a 10% IRS penalty on top of income tax, with exceptions — disability, QDRO in divorce, substantially equal periodic payments (72(t)), certain medical expenses, and the Rule of 55 if you leave your job in or after the year you turn 55.' },
+      { q: 'What is the Rule of 55?', a: 'If you leave your employer (quit, laid off, fired) in or after the calendar year you turn 55, you may take penalty-free distributions from <i>that</i> employer\'s 401(k). It applies only to the current job\'s plan — not to IRAs, old 401(k)s you rolled over, or accounts from previous employers.' },
+      { q: 'Should I roll my old 401(k) into an IRA?', a: 'Often yes — IRA fees are usually lower and fund choices far wider. But keep job flexibility in mind: the Rule of 55 penalty-free access requires money to stay in the current employer\'s plan, and large pre-tax balances complicate future backdoor Roth IRAs. Direct rollover to a traditional IRA is tax-free.' },
+      { q: 'What happens to my 401(k) if I change jobs?', a: 'Four options: leave it behind (works if balance ≥ $5k–$7k, but fees vary), roll it to the new employer\'s 401(k), roll it to an IRA (usually the best), or cash out (often the worst — taxes + 10% penalty if under 59½, plus lost compounding).' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('piggy');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function segVal(id){ var h=document.querySelector('[name="'+id+'"]'); return h ? h.value : null; }
+    function setSeg(id,v){ var seg=document.getElementById(id),h=document.querySelector('[name="'+id+'"]'); if(!seg||!h)return; h.value=v; seg.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-value')===String(v));}); }
+    function fmt(n){ if(!isFinite(n)) n=0; var v=Math.round(Math.abs(n)); return (n<0?'−':'')+'$'+v.toLocaleString('en-US'); }
+    function money(x){ return '$'+Math.round(x).toLocaleString('en-US'); }
+
+    function employeeCap(age) {
+      if (age >= 50 && age <= 59) return 23500 + 7500;
+      if (age >= 60 && age <= 63) return 23500 + 11250;
+      if (age >= 64) return 23500 + 7500;
+      return 23500;
+    }
+
+    function compute() {
+      var age = Number(document.getElementById('age').value);
+      var retAge = Number(document.getElementById('ret').value);
+      var salary = Number(document.getElementById('salary').value);
+      var curBal = Number(document.getElementById('curBal').value);
+      var empPct = Number(document.getElementById('empPct').value);
+      var esc = Number(document.getElementById('esc').value);
+      var matchRatio = Number(document.getElementById('matchPct').value);
+      var matchCap = Number(document.getElementById('matchCap').value);
+      var retRate = Number(document.getElementById('retRate').value) / 100;
+      var taxRate = Number(document.getElementById('taxRate').value) / 100;
+      var mtrNow = Number(document.getElementById('mtrNow').value) / 100;
+      var ctype = segVal('ctype') || 'traditional';
+
+      var err = [];
+      if (!isFinite(age) || age < 18 || age > 75) err.push('Current age must be 18–75.');
+      if (!isFinite(retAge) || retAge <= age || retAge > 75) err.push('Retirement age must be after current age and ≤ 75.');
+      if (!isFinite(salary) || salary <= 0) err.push('Enter a salary greater than zero.');
+      if (!isFinite(curBal) || curBal < 0) err.push('Balance cannot be negative.');
+      if (!isFinite(empPct) || empPct < 0 || empPct > 100) err.push('Your contribution must be 0–100%.');
+      if (!isFinite(esc) || esc < 0 || esc > 5) err.push('Auto-escalation must be 0–5% per year.');
+      if (!isFinite(matchCap) || matchCap < 0 || matchCap > 15) err.push('Match cap must be 0–15%.');
+      if (!isFinite(retRate) || retRate < 0 || retRate > 0.15) err.push('Return rate must be 0–15%.');
+      if (!isFinite(taxRate) || taxRate < 0 || taxRate > 0.5) err.push('Retirement tax rate must be 0–50%.');
+      if (!isFinite(mtrNow) || mtrNow < 0 || mtrNow > 0.5) err.push('Marginal rate must be 0–50%.');
+      var errBoxEl = document.getElementById('errBox');
+      errBoxEl.textContent = err.join(' ');
+      if (err.length) {
+        ['rBal','rMine','rMatch','rTaxNow','rTaxBack','rRoth','rWinner'].forEach(function (id){ document.getElementById(id).textContent='—'; });
+        document.getElementById('projBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted)">Fix the inputs above to see the projection.</td></tr>';
+        if (DC.charts&&DC.charts.k401Chart){ DC.charts.k401Chart.destroy(); delete DC.charts.k401Chart; }
+        return;
+      }
+
+      var years = retAge - age;
+      var sal = salary, bal = curBal;
+      var rows = [];
+      var totalMine = 0, totalMatch = 0, totalGrowth = curBal;
+      var yearlyFlow = [];
+
+      for (var y = 0; y < years; y++) {
+        var ageAtYr = age + y;
+        var capEE = employeeCap(ageAtYr);
+        var newPct = Math.min(100, empPct + esc * y);
+        var newDollar = sal * newPct / 100;
+        var contribute = Math.min(newDollar, capEE);
+        var capped = contribute < newDollar - 0.01;
+        var matchCapDollar = sal * Math.min(matchCap, empPct + esc * y) / 100 * matchRatio;
+        var match = Math.min(matchCapDollar, sal * matchCap / 100 * matchRatio);
+        if (match > 0) {
+          var totalCap = 70000 + (ageAtYr >= 50 ? (ageAtYr >= 60 && ageAtYr <= 63 ? 11250 : 7500) : 0);
+          match = Math.min(match, Math.max(0, totalCap - contribute));
+        }
+        var growthThisYear = (bal + contribute * 0.5 + match * 0.5) * retRate; // mid-year convention
+        bal = bal + contribute + match + growthThisYear;
+        totalMine += contribute; totalMatch += match;
+        rows.push({ age: ageAtYr, contribute: contribute, match: match, cap: capEE, endBal: bal, capped: capped });
+        yearlyFlow.push(bal);
+        sal = sal * 1.03;
+      }
+
+      var balAfter = bal * (1 - taxRate);
+
+      // build a parallel Roth model: same net paycheck, so a fair Roth equivalent puts the same pre-tax dollars in and pays tax on them now
+      var balR = curBal; var salR = salary;
+      var rowsR = [];
+      for (var y3 = 0; y3 < years; y3++) {
+        var ageR = age + y3;
+        var capEER = employeeCap(ageR);
+        var pctR = Math.min(100, empPct + esc * y3);
+        var dR = Math.min(salR * pctR / 100, capEER);
+        var matchDR = Math.min(salR * Math.min(matchCap, pctR) / 100 * matchRatio, salR * matchCap / 100 * matchRatio);
+        if (matchDR > 0) var tCapR = 70000 + (ageR >= 50 ? (ageR >= 60 && ageR <= 63 ? 11250 : 7500) : 0); else tCapR = 70000;
+        matchDR = Math.min(matchDR, Math.max(0, tCapR - dR));
+        var gR = (balR + dR * 0.5 + matchDR * 0.5) * retRate;
+        balR = balR + dR + matchDR + gR;
+        salR = salR * 1.03;
+      }
+      var rothAfter = balR;
+
+      var firstYear = rows[0];
+      var takeHomeHit = ctype === 'traditional' ? firstYear.contribute * (1 - mtrNow) : firstYear.contribute;
+      var taxBackYr = ctype === 'traditional' ? firstYear.contribute * mtrNow : 0;
+
+      document.getElementById('rBal').textContent = fmt(bal);
+      document.getElementById('rBalLbl').textContent = 'Projected balance at age ' + retAge + ' (before ' + taxRate*100 + '% tax = ' + fmt(balAfter) + ')';
+      document.getElementById('rMine').textContent = fmt(totalMine);
+      document.getElementById('rMatch').textContent = fmt(totalMatch);
+      document.getElementById('rTaxNow').textContent = fmt(takeHomeHit);
+      document.getElementById('rTaxBack').textContent = ctype === 'traditional' ? fmt(taxBackYr) : 'N/A';
+      document.getElementById('rRoth').textContent = fmt(rothAfter);
+      var diff = balAfter - rothAfter;
+      var winner = diff > 0 ? 'Traditional +' : (diff < 0 ? 'Roth +' : 'Equal');
+      document.getElementById('rWinner').textContent = winner + fmt(Math.abs(diff));
+      document.getElementById('rDiff').textContent = winner + ' ' + fmt(Math.abs(diff)) + ' retire-side';
+
+      // projection table
+      document.getElementById('projBody').innerHTML = rows.map(function (r) {
+        var pill = r.capped ? '<span class="k401-pill max">Cap $' + (r.cap/1000).toFixed(1) + 'k</span>' : '<span class="k401-pill below">Below</span>';
+        return '<tr><td>' + r.age + '</td><td class="num">' + money(r.contribute) + '</td><td class="num">' + money(r.match) + '</td><td class="num">' + pill + '</td><td class="num">' + money(r.endBal) + '</td></tr>';
+      }).join('');
+
+      // chart — balance growth
+      var labels = yearlyFlow.map(function (_, i) { return 'Age ' + (age + i + 1); });
+      labels.unshift('Now');
+      var dataSeries = [curBal].concat(yearlyFlow);
+      DC.makeChart('k401Chart', {
+        type: 'line',
+        data: { labels: labels, datasets: [{ label: 'Balance', data: dataSeries, borderColor: '#4338CA', backgroundColor: 'rgba(67,56,202,.12)', fill: true, tension: .3, pointRadius: 0, borderWidth: 2 }] },
+        options: {
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c){ return fmt(c.raw); } } } },
+          scales: { y: { ticks: { callback: function (v){ return '$' + (v >= 1000000 ? (v/1000000).toFixed(1) + 'M' : v >= 1000 ? (v/1000).toFixed(0) + 'k' : v); } } } }
+        }
+      });
+
+      // recommendation
+      var titleEl = document.getElementById('recoTitle'), textEl = document.getElementById('recoText');
+      var matchAvailable = matchCap > 0 && matchRatio > 0;
+      var belowMatch = matchAvailable && empPct < matchCap;
+      var pctOfMine = totalMine / (totalMine + (bal - curBal - totalMine - totalMatch)) || 0;
+      if (totalMatch > 0) {
+        var matchShare = totalMatch / (totalMine + totalMatch);
+        var matchNote = 'The match alone contributes ' + (matchShare * 100).toFixed(1) + '% of everything going in — found money on top of your own contributions.';
+      } else matchNote = '';
+      if (belowMatch) {
+        var toFullMatch = salary * (matchCap - empPct) / 100;
+        titleEl.textContent = '⚠ You are leaving match dollars unclaimed';
+        textEl.textContent = 'Raising your deferral by ' + (matchCap - empPct).toFixed(1) + '% of salary ($' + Math.round(toFullMatch).toLocaleString('en-US') + '/yr) captures the full employer match. That is an instant, risk-free return first investments anywhere.';
+      } else if (ctype === 'traditional' && mtrNow < taxRate) {
+        titleEl.textContent = 'Roth likely favors you';
+        textEl.textContent = 'Your rate now (' + (mtrNow*100) + '%) is below your expected retirement rate (' + (taxRate*100) + '%) — the model shows Roth ahead by ' + fmt(rothAfter - balAfter) + ' at retirement. Lock in today\'s cheap rate.';
+      } else if (ctype === 'roth' && mtrNow > taxRate) {
+        titleEl.textContent = 'Traditional likely favors you';
+        textEl.textContent = 'You\'re paying ' + (mtrNow*100) + '% now to dodge ' + (taxRate*100) + '% later — the model shows traditional ahead by ' + fmt(balAfter - rothAfter) + ' at retirement. Paying a higher known rate to avoid a lower unknown one usually loses.';
+      } else if (ctype === 'traditional') {
+        titleEl.textContent = 'Traditional stacked the odds right';
+        textEl.textContent = 'You skip tax at ' + (mtrNow*100) + '% now and expect to pay ' + (taxRate*100) + '% at withdrawal. ' + matchNote + ' Keep increasing the deferral 1% a year until the retirement paycheck is comfortable.';
+      } else {
+        titleEl.textContent = 'Roth stacks the odds right';
+        textEl.textContent = 'Pay ' + (mtrNow*100) + '% now, withdraw tax-free in retirement at an expected ' + (taxRate*100) + '%. ' + matchNote + ' Remember the match still lands in the traditional bucket.';
+      }
+
+      window.__last401 = {
+        bal: fmt(bal), balAfter: fmt(balAfter), mine: fmt(totalMine), match: fmt(totalMatch),
+        taxNow: fmt(takeHomeHit), taxBack: ctype === 'traditional' ? fmt(taxBackYr) : 'N/A',
+        roth: fmt(rothAfter), diff: winner + ' ' + fmt(Math.abs(diff)), ctype: ctype
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['age','ret','salary','curBal','empPct','esc','matchCap','retRate','taxRate','mtrNow'].forEach(function (id) {
+      var el = document.getElementById(id);
+      el.addEventListener('input', compute);
+      el.addEventListener('change', compute);
+    });
+    document.getElementById('matchPct').addEventListener('change', compute);
+    document.getElementById('ctype').addEventListener('segment:change', compute);
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('age').value = '30';
+      document.getElementById('ret').value = '60';
+      document.getElementById('salary').value = '80000';
+      document.getElementById('curBal').value = '0';
+      document.getElementById('empPct').value = '6';
+      document.getElementById('esc').value = '0';
+      document.getElementById('matchPct').value = '0.5';
+      document.getElementById('matchCap').value = '3';
+      document.getElementById('retRate').value = '7';
+      document.getElementById('taxRate').value = '22';
+      document.getElementById('mtrNow').value = '22';
+      setSeg('ctype', 'traditional');
+      compute();
+      DC.toast('Inputs reset', 'success');
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__last401; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.shareWhatsApp('My 401(k) lands at ' + r.bal + ' at retirement (' + r.mine + ' mine + ' + r.match + ' match, Roth equivalent ' + r.roth + '). Run yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__last401; if (!r) { DC.toast('Calculate first', 'error'); return; }
+      DC.copyResult('401(k) Projection (' + r.ctype + ')\nBalance at retirement: ' + r.bal + '\nAfter-tax at withdrawal: ' + r.balAfter + '\nYour contributions: ' + r.mine + '\nEmployer match: ' + r.match + '\nYearly take-home hit: ' + r.taxNow + '\nYearly tax saved: ' + r.taxBack + '\nRoth equivalent: ' + r.roth + '\nVerdict: ' + r.diff);
+    });
+
+    compute();
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAGR Calculator — Compound Annual Growth Rate | DecideCalc</title>
+  <meta name="description" content="Free CAGR calculator. Find the actual compound annual growth rate of any investment from start and end values. Essential for stocks, mutual funds, business revenue.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/cagr-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>CAGR Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>CAGR Calculator</h1><div class="sub">Smooth the bumps, see the true rate</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Starting value (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-s">₹1,00,000</span></div>
+            <input type="range" id="startV" min="1000" max="100000000" step="1000" value="100000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Ending value (₹)</label>
+            <div class="range-out"><span class="range-val" id="out-e">₹2,00,000</span></div>
+            <input type="range" id="endV" min="1000" max="100000000" step="1000" value="200000" data-prefix="₹">
+          </div>
+          <div class="field"><label>Duration (years)</label>
+            <div class="range-out"><span class="range-val" id="out-y">5 yrs</span></div>
+            <input type="range" id="yrs" min="1" max="30" step="1" value="5" data-suffix=" yrs">
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate CAGR</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Compound annual growth rate</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rTot">—</div><div class="k">Total return</div></div>
+          <div class="result-stat"><div class="v" id="rMult">—</div><div class="k">Wealth multiple</div></div>
+          <div class="result-stat"><div class="v" id="rDouble">—</div><div class="k">Years to double</div></div>
+          <div class="result-stat"><div class="v" id="rBenchmark">—</div><div class="k">vs Nifty 12%</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">CAGR ≠ average return</h4><p id="recoText">A stock that gains 50% one year then loses 50% has a 0% average — but a -13.4% CAGR since you've lost 25% net. CAGR is the only honest measure.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>CAGR formula & interpretation</h2>
+      <p class="mt-2">CAGR = (End ÷ Start)<sup>1/years</sup> − 1. It answers: "If growth had been perfectly steady, what annual rate would take me from start to end?"</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>₹1L → ₹2L in 5 yrs = <b>14.87% CAGR</b> (not 20%)</li>
+        <li>₹1L → ₹3L in 10 yrs = <b>11.61% CAGR</b></li>
+        <li>₹1L → ₹10L in 25 yrs = <b>9.65% CAGR</b> — slow and steady wins long-term</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Benchmarks to compare against:</b> Nifty 50 long-run ~12%, FD 6-7%, gold 9-10%, CPI inflation ~6%. Any CAGR under 6% is actually losing real value.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'cagr-calculator', faqs: [
+      { q: 'What\'s a "good" CAGR?', a: 'Above 6% beats inflation (stays even in real terms). Above 10% starts genuinely building wealth. Above 15% sustained for decades is excellent. Above 25% sustained = top 1% of assets.' },
+      { q: 'Can CAGR be negative?', a: 'Yes — if ending value is below starting value, CAGR is negative. ₹1L dropping to ₹60K in 3 yrs = -15.7% CAGR.' },
+      { q: 'Does CAGR work for SIPs?', a: 'No — CAGR assumes one lump-sum investment. For regular investments use XIRR (extended internal rate of return), which accounts for each instalment\'s timing.' },
+      { q: 'How many years until my money doubles?', a: 'Use "Rule of 72": 72 ÷ CAGR% ≈ years to double. At 12% CAGR, doubling takes 6 years. At 6%, 12 years. At 24%, only 3 years.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('trending');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    function compute() {
+      const s = DC.fnum(document.getElementById('startV').value);
+      const e = DC.fnum(document.getElementById('endV').value);
+      const t = Math.max(1, DC.fnum(document.getElementById('yrs').value));
+      document.getElementById('out-s').textContent = DC.compact(s);
+      document.getElementById('out-e').textContent = DC.compact(e);
+      document.getElementById('out-y').textContent = t + ' yrs';
+      if (s <= 0 || e <= 0) {
+        ['rMain','rTot','rMult','rDouble','rBenchmark'].forEach(function (id){document.getElementById(id).textContent='—';});
+        return;
+      }
+      const cagr = (Math.pow(e / s, 1 / t) - 1) * 100;
+      const totRet = (e / s - 1) * 100;
+      const mult = e / s;
+      const dbl = 72 / Math.max(0.1, cagr);
+      const vsNifty = cagr - 12;
+
+      document.getElementById('rMain').textContent = cagr.toFixed(2) + '%';
+      document.getElementById('rMain').style.color = cagr >= 12 ? '#10B981' : (cagr >= 6 ? '#3B82F6' : (cagr >= 0 ? '#F59E0B' : '#EF4444'));
+      document.getElementById('rTot').textContent = (totRet >= 0 ? '+' : '') + totRet.toFixed(1) + '%';
+      document.getElementById('rMult').textContent = mult.toFixed(2) + '×';
+      document.getElementById('rDouble').textContent = cagr > 0 ? dbl.toFixed(1) + ' yrs' : 'Never';
+      document.getElementById('rBenchmark').textContent = (vsNifty >= 0 ? '+' : '') + vsNifty.toFixed(1) + ' pts';
+
+      let verdict;
+      if (cagr < 0) verdict = 'Lost value — money shrunk by ' + (-cagr).toFixed(1) + '% per year.';
+      else if (cagr < 6) verdict = 'Below inflation. Real purchasing power declined over ' + t + ' years.';
+      else if (cagr < 10) verdict = 'Modest growth — keeps pace with inflation but doesn\'t build serious wealth.';
+      else if (cagr < 15) verdict = 'Good. Beats Indian inflation + typical Mutual Fund long-run averages.';
+      else verdict = 'Excellent. Consistently rare outside top-decile equity or concentrated business ownership.';
+      document.getElementById('recoTitle').textContent = cagr.toFixed(2) + '% CAGR — ' + (cagr >= 12 ? 'beating Nifty' : cagr >= 6 ? 'above inflation' : 'below target');
+      document.getElementById('recoText').textContent = verdict;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['startV','endV','yrs'].forEach(function (id){document.getElementById(id).addEventListener('input', compute);});
+    compute();
+
+    document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My CAGR: ' + document.getElementById('rMain').textContent + ' over ' + document.getElementById('out-y').textContent + ' — DecideCalc'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('CAGR: ' + document.getElementById('rMain').textContent + ' | Mult: ' + document.getElementById('rMult').textContent + ' | Total return: ' + document.getElementById('rTot').textContent); });
+  </script>
+</body>
+</html>

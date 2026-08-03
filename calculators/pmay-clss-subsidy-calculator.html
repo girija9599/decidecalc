@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMAY CLSS Subsidy Calculator — Credit Linked Subsidy Scheme | DecideCalc</title>
+  <meta name="description" content="Free PMAY-Urban CLSS subsidy calculator: EWS/LIG 6.5% on ₹6L, MIG-I 4% on ₹9L, MIG-II 3% on ₹12L. Compute your upfront NPV subsidy, reduced loan principal, new EMI and monthly savings.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/pmay-clss-subsidy-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>PMAY CLSS Subsidy Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>PMAY CLSS Subsidy Calculator</h1><div class="sub">Credit Linked Subsidy Scheme — Pradhan Mantri Awas Yojana (Urban)</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Annual household income (₹)</label>
+            <input class="input" id="income" type="number" min="0" max="5000000" step="10000" value="800000" inputmode="numeric">
+          </div>
+          <div class="field"><label>Home loan amount (₹)</label>
+            <input class="input" id="loan" type="number" min="50000" max="10000000" step="10000" value="900000" inputmode="numeric">
+          </div>
+          <div class="field"><label>Loan tenure (years)</label>
+            <input class="input" id="years" type="number" min="1" max="30" step="1" value="20" inputmode="numeric">
+          </div>
+          <div class="field"><label>Lender's interest rate (% per year)</label>
+            <input class="input" id="rate" type="number" min="1" max="20" step="0.05" value="9" inputmode="decimal">
+          </div>
+          <div class="field"><label>Category (auto-detected from income)</label>
+            <select class="select" id="cat">
+              <option value="EWS">EWS — income up to ₹3,00,000 (6.5% on ₹6L)</option>
+              <option value="LIG">LIG — income ₹3–6,00,000 (6.5% on ₹6L)</option>
+              <option value="MIG1" selected>MIG-I — income ₹6–12,00,000 (4% on ₹9L)</option>
+              <option value="MIG2">MIG-II — income ₹12–18,00,000 (3% on ₹12L)</option>
+              <option value="NONE">Above ₹18,00,000 — not eligible</option>
+            </select>
+          </div>
+          <details style="margin:4px 0 14px;font-size:.86rem;color:var(--muted)">
+            <summary style="cursor:pointer">Advanced: NPV discount rate (default 9%)</summary>
+            <p style="margin:8px 0 6px">The government computes the upfront subsidy as the NPV of your EMI savings, discounted at this rate (NHB norm ≈ 9%). Edit to compare scenarios.</p>
+            <input class="input" id="disc" type="number" min="1" max="20" step="0.05" value="9" inputmode="decimal">
+          </details>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate My Subsidy</button>
+          <button class="btn btn-ghost btn-block" id="resetBtn" style="margin-top:10px">Reset</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Upfront subsidy credited to your loan</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rEmiOld">—</div><div class="k">EMI before subsidy</div></div>
+          <div class="result-stat"><div class="v" id="rEmiNew">—</div><div class="k">EMI after subsidy</div></div>
+          <div class="result-stat"><div class="v" id="rSave">—</div><div class="k">Monthly EMI saving</div></div>
+          <div class="result-stat"><div class="v" id="rInt">—</div><div class="k">Total interest saved</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="pmayChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Eligibility</h4><p id="recoText">—</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How the CLSS subsidy works</h2>
+      <p class="mt-2">Under PMAY-Urban's Credit Linked Subsidy Scheme, the interest subsidy is not paid monthly — it is credited to your loan account <b>upfront</b> as a lump sum equal to the Net Present Value (NPV) of all your future EMI savings from the subsidised rate. Your outstanding principal drops immediately, and your EMI falls accordingly.</p>
+      <div style="overflow-x:auto;margin-top:16px">
+        <table class="breakdown">
+          <thead><tr><th>Category</th><th class="num">Household income</th><th class="num">Interest subsidy</th><th class="num">Max loan amount subsidised</th><th class="num">Max carpet area</th></tr></thead>
+          <tbody>
+            <tr><td><b>EWS</b></td><td class="num">Up to ₹3 lakh</td><td class="num">6.5%</td><td class="num">₹6,00,000</td><td class="num">30 sq.m</td></tr>
+            <tr><td><b>LIG</b></td><td class="num">₹3–6 lakh</td><td class="num">6.5%</td><td class="num">₹6,00,000</td><td class="num">60 sq.m</td></tr>
+            <tr><td><b>MIG-I</b></td><td class="num">₹6–12 lakh</td><td class="num">4%</td><td class="num">₹9,00,000</td><td class="num">120 sq.m*</td></tr>
+            <tr><td><b>MIG-II</b></td><td class="num">₹12–18 lakh</td><td class="num">3%</td><td class="num">₹12,00,000</td><td class="num">150 sq.m*</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2" style="font-size:.85rem;color:var(--muted)">*Carpet area limits were enhanced for MIG categories in later notifications. Subsidy applies to tenure up to 20 years (or actual loan tenure if lower), on the subsidised portion only — if your loan exceeds the cap, only the capped portion gets the subsidy.</p>
+
+      <div class="note mt-2" style="margin-top:16px"><span id="nIcon1"></span><div><b>Who counts as a beneficiary household?</b> A family comprising husband, wife and unmarried children. The household must not own a pucca house anywhere in India, and must not have availed central assistance under any housing scheme before.</div></div>
+      <div class="note mt-2"><span id="nIcon2"></span><div><b>Key rule — first pucca house:</b> for EWS/LIG, ownership in the name of a female family member (or co-ownership) is required for new construction. The subsidy applies for purchase, construction, or extension/improvement of the first pucca house.</div></div>
+      <div class="note mt-2"><span id="nIcon3"></span><div><b>How is the subsidy credited?</b> Your lender sends the claim to the nodal agency (NHB/HUDCO). The NPV subsidy is released to your loan account upfront — this reduces your principal on day one, which is why the EMI and interest savings compound over the full tenure.</div></div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = {
+      slug: 'pmay-clss-subsidy-calculator',
+      faqs: [
+        { q: 'What is the PMAY CLSS subsidy?', a: 'Under the Credit Linked Subsidy Scheme of Pradhan Mantri Awas Yojana (Urban), first-time home buyers in eligible income groups get an interest subsidy on their home loan. The subsidy is credited upfront to the loan account as the NPV of future EMI savings, which immediately reduces the principal and lowers the EMI.' },
+        { q: 'How much subsidy can I get?', a: 'It depends on your household income category: EWS and LIG (income up to ₹6 lakh) get 6.5% subsidy on a loan of up to ₹6 lakh; MIG-I (₹6–12 lakh) get 4% on up to ₹9 lakh; MIG-II (₹12–18 lakh) get 3% on up to ₹12 lakh. For a 20-year loan at 9%, the upfront credit works out to roughly ₹2.4–2.5 lakh in each category.' },
+        { q: 'What is NPV and why is my subsidy "upfront"?', a: 'Net Present Value converts all your future monthly savings into one lump sum today. Instead of paying a subsidised EMI over 20 years, the government computes what those savings are worth now (discounting at roughly 9%) and pays that amount into your loan on day one — so your principal drops immediately.' },
+        { q: 'What if my loan is bigger than the subsidised amount?', a: 'Only the capped portion attracts the subsidy. For example, an EWS borrower with a ₹15 lakh loan gets the 6.5% subsidy calculated on ₹6 lakh only; the remaining ₹9 lakh is priced at the lender\'s normal rate. The NPV credit is computed on the subsidised portion.' },
+        { q: 'What are the eligibility conditions?', a: 'You must be a first-time owner of a pucca house (no family member should own a pucca house anywhere in India), fall within an eligible income band, and the property must meet carpet-area norms (30/60 sq.m for EWS/LIG, 120/150 sq.m for MIG-I/II). For EWS/LIG new construction, female ownership or co-ownership is required.' },
+        { q: 'Does the subsidy apply to resale or under-construction flats?', a: 'The scheme covers purchase of new or resale homes, construction on owned land, and extension or improvement of an existing house — as long as it is the household\'s first pucca house and other criteria are met. Properties acquired under PMAY carry a lock-in: selling within 5 years usually requires refunding the subsidy.' },
+        { q: 'Is the PMAY-Urban subsidy still open?', a: 'The mission has been extended in phases with revised guidelines over time (PMAY-U 2.0). Subsidy rates and caps above reflect the CLSS vertical as notified. Always confirm current sanction status, timelines and exact benefits with your lender or the official PMAY (pmaymis.gov.in) portal before applying.' }
+      ]
+    };
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('nIcon1').innerHTML = DC.icon('shield');
+    document.getElementById('nIcon2').innerHTML = DC.icon('home');
+    document.getElementById('nIcon3').innerHTML = DC.icon('money');
+
+    var CATS = {
+      EWS:  { min: 0,      max: 300000,  sub: 6.5, capLoan: 600000,  name: 'EWS'   },
+      LIG:  { min: 300000, max: 600000,  sub: 6.5, capLoan: 600000,  name: 'LIG'   },
+      MIG1: { min: 600000, max: 1200000, sub: 4.0, capLoan: 900000,  name: 'MIG-I' },
+      MIG2: { min: 1200000,max: 1800000, sub: 3.0, capLoan: 1200000, name: 'MIG-II'}
+    };
+    var elIncome = document.getElementById('income');
+    var elLoan = document.getElementById('loan');
+    var elYears = document.getElementById('years');
+    var elRate = document.getElementById('rate');
+    var elCat = document.getElementById('cat');
+    var elDisc = document.getElementById('disc');
+
+    function emiCalc(p, annual, months) {
+      var r = annual / 12 / 100;
+      if (r <= 0) return p / months;
+      var f = Math.pow(1 + r, months);
+      return p * r * f / (f - 1);
+    }
+
+    function autoCat(income) {
+      if (income <= 0) return 'NONE';
+      if (income <= 300000) return 'EWS';
+      if (income <= 600000) return 'LIG';
+      if (income <= 1200000) return 'MIG1';
+      if (income <= 1800000) return 'MIG2';
+      return 'NONE';
+    }
+
+    function showPlaceholder(msg) {
+      ['rMain','rEmiOld','rEmiNew','rSave','rInt'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      document.getElementById('recoTitle').textContent = 'Eligibility';
+      document.getElementById('recoText').textContent = msg || '—';
+      if (DC.charts.pmayChart) { DC.charts.pmayChart.destroy(); delete DC.charts.pmayChart; }
+    }
+
+    function compute() {
+      var rawInc = elIncome.value.trim();
+      var rawLoan = elLoan.value.trim();
+      var rawY = elYears.value.trim();
+      var rawR = elRate.value.trim();
+      var rawD = elDisc.value.trim();
+      var income = parseFloat(rawInc);
+      var loan = parseFloat(rawLoan);
+      var years = parseFloat(rawY);
+      var rate = parseFloat(rawR);
+      var disc = parseFloat(rawD);
+
+      var bad = rawInc === '' || !isFinite(income) || income < 0 || income > 5000000 ||
+                rawLoan === '' || !isFinite(loan) || loan < 50000 || loan > 10000000 ||
+                rawY === '' || !isFinite(years) || years < 1 || years > 30 ||
+                rawR === '' || !isFinite(rate) || rate <= 0 || rate > 20 ||
+                (rawD !== '' && (!isFinite(disc) || disc <= 0 || disc > 20));
+      if (bad) { showPlaceholder('Enter valid income, loan, tenure and rates to see the subsidy.'); return; }
+      if (rawD === '') disc = 9;
+
+      var catKey = elCat.value;
+      var rt = document.getElementById('recoTitle');
+      var rx = document.getElementById('recoText');
+
+      if (catKey === 'NONE' || !CATS[catKey]) {
+        // not eligible — still show plain EMI for context
+        var monthsN = Math.round(Math.min(years, 30) * 12);
+        var emiPlain = emiCalc(loan, rate, monthsN);
+        document.getElementById('rMain').textContent = DC.inr(0);
+        document.getElementById('rLbl').textContent = 'No subsidy — income above ₹18 lakh';
+        document.getElementById('rEmiOld').textContent = DC.inr(Math.round(emiPlain));
+        document.getElementById('rEmiNew').textContent = DC.inr(Math.round(emiPlain));
+        document.getElementById('rSave').textContent = DC.inr(0);
+        document.getElementById('rInt').textContent = DC.inr(0);
+        rt.textContent = 'Not eligible under CLSS';
+        rx.textContent = 'Household income above ₹18,00,000 per year falls outside all four PMAY-Urban CLSS categories. You can still claim standard home loan tax deductions (80C principal up to ₹1.5L; Section 24(b) interest up to ₹2L).';
+        if (DC.charts.pmayChart) { DC.charts.pmayChart.destroy(); delete DC.charts.pmayChart; }
+        window.__lastPmay = null;
+        return;
+      }
+
+      var cat = CATS[catKey];
+      var subPortion = Math.min(loan, cat.capLoan);
+      var effYears = Math.min(years, 20); // subsidy tenure capped at 20 years
+      var months = Math.round(effYears * 12);
+      var loanMonths = Math.round(years * 12);
+
+      // NPV of EMI savings on subsidised portion over subsidy tenure
+      var emiFull = emiCalc(subPortion, rate, months);
+      var emiSubd = emiCalc(subPortion, rate - cat.sub, months);
+      var monthlySavingSub = emiFull - emiSubd;
+      var dr = disc / 12 / 100;
+      var npv = 0;
+      for (var m = 1; m <= months; m++) npv += monthlySavingSub / Math.pow(1 + dr, m);
+
+      // After upfront credit: principal reduced by subsidy; EMI recomputed over original tenure
+      var newPrincipal = loan - npv;
+      var emiBefore = emiCalc(loan, rate, loanMonths);
+      var emiAfter = emiCalc(Math.max(newPrincipal, 0), rate, loanMonths);
+      var saveMonth = emiBefore - emiAfter;
+      var intBefore = emiBefore * loanMonths - loan;
+      var intAfter = emiAfter * loanMonths - Math.max(newPrincipal, 0);
+      var intSavedTotal = intBefore - intAfter; // includes subsidy credit effect
+
+      document.getElementById('rMain').textContent = DC.inr(Math.round(npv));
+      document.getElementById('rLbl').textContent = 'Upfront subsidy credited to your loan (' + cat.name + ')';
+      document.getElementById('rEmiOld').textContent = DC.inr(Math.round(emiBefore));
+      document.getElementById('rEmiNew').textContent = DC.inr(Math.round(emiAfter));
+      document.getElementById('rSave').textContent = DC.inr(Math.round(saveMonth)) + '/mo';
+      document.getElementById('rInt').textContent = DC.inr(Math.round(intSavedTotal));
+
+      // chart: principal before vs after subsidy + EMI comparison
+      DC.makeChart('pmayChart', {
+        type: 'bar',
+        data: {
+          labels: ['Loan principal', 'After subsidy credit'],
+          datasets: [{
+            label: 'Amount (₹)',
+            data: [Math.round(loan), Math.round(Math.max(newPrincipal, 0))],
+            backgroundColor: ['#94A3B8', '#3B82F6'],
+            borderRadius: 8
+          }]
+        },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+
+      // warning if chosen category doesn't match income
+      var auto = autoCat(income);
+      var mismatch = (auto !== catKey);
+      var extra = '';
+      if (mismatch && auto !== 'NONE' && CATS[auto]) {
+        extra = ' Heads-up: your income of ' + DC.inr(income) + ' places you in ' + CATS[auto].name + ', not ' + cat.name + ' — the dropdown above lets you compare, but claims are sanctioned per income proof.';
+      } else if (auto === 'NONE' && income > 1800000) {
+        extra = ' Heads-up: income above ₹18 lakh is not eligible — selection kept for comparison only.';
+      }
+
+      var overCap = loan > cat.capLoan;
+      rt.textContent = cat.name + ': ' + cat.sub + '% subsidy on ' + DC.inr(cat.capLoan);
+      rx.textContent = 'Subsidy NPV of ' + DC.inr(Math.round(npv)) + ' is credited upfront at ' + disc + '% discount over ' + effYears + ' years' +
+        (overCap ? ' (only ' + DC.inr(cat.capLoan) + ' of your ' + DC.inr(loan) + ' loan qualifies — the rest is at the normal rate)' : ' (your entire ' + DC.inr(loan) + ' loan qualifies)') +
+        '. Your EMI falls by ' + DC.inr(Math.round(saveMonth)) + '/month and total interest outgo drops by ' + DC.inr(Math.round(intSavedTotal)) + ' over ' + years + ' years.' + extra;
+
+      window.__lastPmay = {
+        npv: DC.inr(Math.round(npv)),
+        cat: cat.name, sub: cat.sub,
+        emiOld: DC.inr(Math.round(emiBefore)),
+        emiNew: DC.inr(Math.round(emiAfter)),
+        save: DC.inr(Math.round(saveMonth)),
+        intSaved: DC.inr(Math.round(intSavedTotal)),
+        portion: DC.inr(Math.round(subPortion)),
+        years: years
+      };
+    }
+
+    // auto-select category when income changes (only if it would change eligibility)
+    elIncome.addEventListener('input', function () {
+      var inc = parseFloat(elIncome.value);
+      if (isFinite(inc) && inc > 0) {
+        var auto = autoCat(inc);
+        if (elCat.value !== auto) elCat.value = auto;
+      }
+      compute();
+    });
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      elIncome.value = '800000'; elLoan.value = '900000'; elYears.value = '20';
+      elRate.value = '9'; elCat.value = 'MIG1'; elDisc.value = '9';
+      compute(); DC.toast('Reset to defaults');
+    });
+    [elLoan, elYears, elRate, elDisc].forEach(function (el) { el.addEventListener('input', compute); });
+    elCat.addEventListener('change', compute);
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastPmay;
+      if (!r) { DC.toast('Nothing to share yet', 'error'); return; }
+      DC.shareWhatsApp('My PMAY CLSS subsidy estimate (' + r.cat + '):\nUpfront subsidy: ' + r.npv + ' (on ' + r.portion + ' @ ' + r.sub + '% subsidy)\nEMI: ' + r.emiOld + ' → ' + r.emiNew + ' (saving ' + r.save + '/mo)\nTotal interest saved: ' + r.intSaved + '\nhttps://decidecalc.com/calculators/pmay-clss-subsidy-calculator.html');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastPmay;
+      if (!r) { DC.toast('Nothing to copy yet', 'error'); return; }
+      DC.copyResult('PMAY CLSS Subsidy (' + r.cat + ')\nUpfront NPV subsidy credited: ' + r.npv + '\nSubsidised portion: ' + r.portion + ' at ' + r.sub + '% subsidy\nEMI before: ' + r.emiOld + ' | EMI after: ' + r.emiNew + '\nMonthly saving: ' + r.save + '\nTotal interest saved over ' + r.years + ' yrs: ' + r.intSaved);
+    });
+
+    compute();
+  </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatter & Validator — Beautify, Minify, Find Errors | DecideCalc</title>
+  <meta name="description" content="Free online JSON formatter and validator. Beautify or minify JSON, find syntax errors with exact line numbers. Runs fully offline in your browser.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/json-formatter.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-dev">Developer Tools</a><span class="sep">/</span><span>JSON Formatter</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>JSON Formatter</h1><div class="sub">Validate · beautify · minify — offline</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="input">Paste JSON</label><textarea class="input" id="input" rows="10" placeholder='{"name":"DecideCalc","tools":25}' style="font-family:monospace;font-size:.88rem"></textarea></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary btn-sm" id="fmtBtn" style="flex:1">Format (2-space)</button>
+            <button class="btn btn-ghost btn-sm" id="minBtn" style="flex:1">Minify</button>
+            <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="calc-header"><div><h2 style="font-size:1.05rem;margin:0">Output</h2><div class="sub" id="status">Waiting for input…</div></div></div>
+        <div class="calc-body" style="padding-top:12px">
+          <textarea class="input" id="output" rows="11" readonly style="font-family:monospace;font-size:.85rem"></textarea>
+        </div>
+        <div class="result-grid" style="padding:0 22px 12px">
+          <div class="result-stat"><div class="v" id="rKeys">—</div><div class="k">Total keys</div></div>
+          <div class="result-stat"><div class="v" id="rDepth">—</div><div class="k">Max depth</div></div>
+          <div class="result-stat"><div class="v" id="rSize">—</div><div class="k">Size</div></div>
+        </div>
+        <div class="result-actions" style="padding:0 22px 22px">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy output</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4>Privacy for API secrets</h4><p>API responses often contain tokens or customer data. Everything here runs in your browser — nothing is transmitted, so production payloads stay private.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Common JSON errors this catches</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>Trailing commas: <code>{"a": 1,}</code> — invalid JSON (fine in JS objects).</li>
+        <li>Single quotes: <code>{'a': 1}</code> — JSON requires double quotes.</li>
+        <li>Unquoted keys: <code>{a: 1}</code> — keys must be in double quotes.</li>
+        <li>Comments: <code>// note</code> — the JSON spec allows none.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Error lines:</b> when validation fails, the status shows the parser's error position so you can jump straight to the problem.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'json-formatter', faqs: [
+      { q: 'Is my JSON uploaded anywhere?', a: 'No. Formatting uses your browser\'s built-in JSON parser — the data never leaves this page. Safe for API responses with tokens or personal data.' },
+      { q: 'Why does my JSON fail even though it looks fine?', a: 'The usual culprits: trailing commas, single quotes, unquoted keys, or tab/newline characters pasted inside strings. The error status points you to the exact parser position.' },
+      { q: 'What does Minify do?', a: 'Removes all whitespace and indentation, producing the smallest possible text — ideal for APIs and config files.' },
+      { q: 'Can it format very large files?', a: 'Your device memory is the only limit. Multi-megabyte payloads format instantly on modern phones and laptops.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('code') || DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('check');
+
+    function countStats(obj, depth, stats) {
+      depth = depth || 1; stats = stats || { keys: 0, maxDepth: 1 };
+      stats.maxDepth = Math.max(stats.maxDepth, depth);
+      if (obj !== null && typeof obj === 'object') {
+        const vals = Array.isArray(obj) ? obj : Object.values(obj);
+        if (!Array.isArray(obj)) stats.keys += Object.keys(obj).length;
+        vals.forEach(function (v) { countStats(v, depth + 1, stats); });
+      }
+      return stats;
+    }
+    function prettyBytes(n) {
+      if (n < 1024) return n + ' B';
+      if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+      return (n / 1048576).toFixed(2) + ' MB';
+    }
+    function parseOrFail() {
+      const raw = document.getElementById('input').value;
+      if (!raw.trim()) { setStatus('Waiting for input…', ''); return null; }
+      try {
+        const obj = JSON.parse(raw);
+        return obj;
+      } catch (err) {
+        let pos = '';
+        const m = String(err.message).match(/position (\d+)/i);
+        const m2 = String(err.message).match(/line (\d+) column (\d+)/i);
+        if (m) { const p = parseInt(m[1], 10); pos = ' (line ' + (raw.slice(0, p).split('\n').length) + ', col ' + (p - raw.slice(0, p).lastIndexOf('\n')) + ')'; }
+        else if (m2) pos = ' (line ' + m2[1] + ', col ' + m2[2] + ')';
+        setStatus('✗ Invalid JSON: ' + err.message + pos, '#EF4444');
+        document.getElementById('output').value = '';
+        ['rKeys','rDepth','rSize'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+        return null;
+      }
+    }
+    function setStatus(msg, color) {
+      const s = document.getElementById('status');
+      s.textContent = msg; s.style.color = color || 'var(--text-soft)';
+    }
+    function run(minify) {
+      const obj = parseOrFail();
+      if (obj === null) {
+        if (document.getElementById('input').value.trim()) return;
+        document.getElementById('output').value = '';
+        return;
+      }
+      const outStr = minify ? JSON.stringify(obj) : JSON.stringify(obj, null, 2);
+      document.getElementById('output').value = outStr;
+      const st = countStats(obj);
+      document.getElementById('rKeys').textContent = st.keys.toLocaleString('en-IN');
+      document.getElementById('rDepth').textContent = st.maxDepth;
+      document.getElementById('rSize').textContent = prettyBytes(new Blob([outStr]).size);
+      setStatus('✓ Valid JSON — ' + (minify ? 'minified' : 'formatted'), '#10B981');
+    }
+    document.getElementById('fmtBtn').addEventListener('click', function () { run(false); });
+    document.getElementById('minBtn').addEventListener('click', function () { run(true); });
+    document.getElementById('input').addEventListener('input', function () { run(false); });
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      document.getElementById('input').value = ''; document.getElementById('output').value = '';
+      setStatus('Waiting for input…', '');
+      ['rKeys','rDepth','rSize'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+      document.getElementById('input').focus();
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const o = document.getElementById('output').value;
+      if (!o) { DC.toast('Format some JSON first', 'error'); return; }
+      DC.copyResult(o);
+    });
+  </script>
+</body>
+</html>

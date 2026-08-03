@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Days Calculator — Working Days Between Dates | DecideCalc</title>
+  <meta name="description" content="Free business days calculator. Count working days between two dates excluding Saturdays and Sundays, or add/subtract business days from a start date.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/business-days-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Business Days Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Business Days Calculator</h1><div class="sub">Excludes Saturday & Sunday</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="start">Start date</label><input class="input" id="start" type="date"></div>
+          <div class="field"><label for="end">End date</label><input class="input" id="end" type="date"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Business days (Mon–Fri)</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rCal">—</div><div class="k">Calendar days</div></div>
+          <div class="result-stat"><div class="v" id="rWe">—</div><div class="k">Weekend days</div></div>
+          <div class="result-stat"><div class="v" id="rWk">—</div><div class="k">Business weeks</div></div>
+          <div class="result-stat"><div class="v" id="rDir">—</div><div class="k">Direction</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Weekend = Saturday & Sunday</h4><p id="recoText">This counts Monday to Friday as business days. Public/festival holidays vary by state and company, so subtract those manually if needed.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How business days are counted</h2>
+      <p class="mt-2">Both the start and end date are included in the calendar-day count. Every date that falls on a Saturday or Sunday is removed to get the business-day total. If the end date is before the start date, the result shows how many business days have already passed.</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Tip for SLAs:</b> "delivery in 5 business days" means Mon–Fri only. A Friday evening promise usually lands mid-next-week — count the business days here to pin the real date.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'business-days-calculator', faqs: [
+      { q: 'Does this include public holidays?', a: 'No. Public holidays differ by state and employer, so this tool only removes Saturdays and Sundays. Subtract your holiday list manually for exact company deadlines.' },
+      { q: 'Is the start date counted?', a: 'Yes, both start and end dates are included if they are weekdays. If both fall on the same Monday, the answer is 1 business day.' },
+      { q: 'What if the end date is earlier than the start date?', a: 'The calculator shows a negative count, which reads as "N business days ago/passed". The calendar and weekend counts are absolute totals between the two dates.' },
+      { q: 'How do I find the date N business days from now?', a: 'Enter today as the start date and keep moving the end date until the business-days result equals N — the end date is your target date.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('clock');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function parseDate(id) {
+      const v = document.getElementById(id).value;
+      if (!v) return null;
+      const d = new Date(v + 'T00:00:00');
+      return isNaN(d.getTime()) ? null : d;
+    }
+    function setInvalid(msg) {
+      ['rMain','rCal','rWe','rWk','rDir'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      if (msg) document.getElementById('recoText').textContent = msg;
+    }
+
+    function compute() {
+      const s = parseDate('start'), e = parseDate('end');
+      if (!s || !e) return setInvalid('Pick both a start date and an end date to count business days.');
+
+      const a = s <= e ? s : e, b = s <= e ? e : s;
+      let total = 0, weekend = 0, business = 0;
+      const d = new Date(a);
+      while (d <= b) {
+        total++;
+        const day = d.getDay();
+        if (day === 0 || day === 6) weekend++; else business++;
+        d.setDate(d.getDate() + 1);
+      }
+      const sign = s <= e ? 1 : -1;
+      document.getElementById('rMain').textContent = (sign * business) + (sign * business === 1 ? ' day' : ' days');
+      document.getElementById('rCal').textContent = total;
+      document.getElementById('rWe').textContent = weekend;
+      document.getElementById('rWk').textContent = Math.floor(business / 5) + ' wk + ' + (business % 5) + ' d';
+      document.getElementById('rDir').textContent = sign > 0 ? 'Forward' : 'End is before start';
+
+      document.getElementById('recoTitle').textContent = business + ' business day' + (business === 1 ? '' : 's') + ' (Mon–Fri)';
+      document.getElementById('recoText').textContent = 'Between ' + a.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) + ' and ' + b.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) + ' there are ' + total + ' calendar days: ' + business + ' weekdays + ' + weekend + ' weekend days.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['start','end'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('resetBtn').addEventListener('click', function () { document.getElementById('start').value = ''; document.getElementById('end').value = ''; compute(); });
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Pick both dates first', 'error'); return; }
+      DC.shareWhatsApp('Business days between the two dates: ' + v + ' (Mon–Fri, excl. weekends) — via DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const lines = ['Business Days Result',
+        'Business days: ' + document.getElementById('rMain').textContent,
+        'Calendar days: ' + document.getElementById('rCal').textContent,
+        'Weekend days: ' + document.getElementById('rWe').textContent];
+      DC.copyResult(lines.join('\n'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# Local agent and editor state
+.zcode/
+.gui-test-screenshots/
+gui-test-screenshots/
+
+# Dependencies and build outputs
+node_modules/
+dist/
+build/
+coverage/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and local environment
+*.log
+.env
+.env.*
+!.env.example

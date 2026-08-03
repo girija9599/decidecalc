@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leap Year Checker — Is This Year a Leap Year? | DecideCalc</title>
+  <meta name="description" content="Free leap year checker. See whether any year is a leap year with the exact rules (Gregorian calendar), previous and next leap years, and days in February.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/leap-year-checker.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Leap Year Checker</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Leap Year Checker</h1><div class="sub">Gregorian calendar rules explained</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="year">Year (CE)</label><input class="input" id="year" type="number" min="1" max="9999" step="1" placeholder="e.g. 2026"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Check Leap Year</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rMainLbl">Result</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rFeb">—</div><div class="k">Days in February</div></div>
+          <div class="result-stat"><div class="v" id="rPrev">—</div><div class="k">Previous leap year</div></div>
+          <div class="result-stat"><div class="v" id="rNext">—</div><div class="k">Next leap year</div></div>
+          <div class="result-stat"><div class="v" id="rRule">—</div><div class="k">Rule applied</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">The 3-step rule</h4><p id="recoText">A year is a leap year if (1) divisible by 4, AND (2) NOT divisible by 100, OR (3) divisible by 400. So 1900 was NOT a leap year but 2000 was.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Why do leap years exist?</h2>
+      <p class="mt-2">Earth's year is ~365.2422 days, not exactly 365. Adding a leap day every 4 years keeps the calendar aligned with the seasons. Without adjustment, July would drift into winter within a few hundred years.</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li>Divisible by <b>4</b> → leap year (e.g., 2024)</li>
+        <li>Divisible by <b>100</b> but NOT 400 → NOT a leap year (e.g., 1900, 2100)</li>
+        <li>Divisible by <b>400</b> → leap year (e.g., 2000, 2400)</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Common gotcha:</b> people assume every 4 years is leap. The century rule (100 but not 400) makes 1900, 2100, 2200 NOT leap years even though they're divisible by 4.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'leap-year-checker', faqs: [
+      { q: 'Is 2026 a leap year?', a: 'No. 2026 is not divisible by 4 (2026 ÷ 4 = 506.5), so it has 365 days. The next leap years after 2024 are 2028, 2032, 2036, and so on.' },
+      { q: 'Was 1900 a leap year?', a: 'No. Although 1900 is divisible by 4, the century rule excludes it: years divisible by 100 are NOT leap years unless they are also divisible by 400. So 1900, 2100, 2200 are not leap years.' },
+      { q: 'Was 2000 a leap year?', a: 'Yes. 2000 is divisible by 400, which overrides the century rule. That\'s why we had Feb 29, 2000.' },
+      { q: 'How often do we skip leap years?', a: 'Three times every 400 years — specifically in the years divisible by 100 but not 400 (1700, 1800, 1900 were skipped; 2100, 2200, 2300 will be skipped).' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('clock');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function isLeap(y) {
+      return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+    }
+    function ruleFor(y) {
+      if (y % 400 === 0) return 'divisible by 400 → leap';
+      if (y % 100 === 0) return 'divisible by 100, not 400 → not leap';
+      if (y % 4 === 0) return 'divisible by 4 → leap';
+      return 'not divisible by 4 → not leap';
+    }
+    function setInvalid(msg) {
+      ['rMain','rFeb','rPrev','rNext','rRule'].forEach(id => document.getElementById(id).textContent = '—');
+      if (msg) document.getElementById('recoText').textContent = msg;
+      document.getElementById('recoTitle').textContent = 'Enter a year';
+    }
+
+    function compute() {
+      const raw = document.getElementById('year').value;
+      if (!raw) return setInvalid('Type a year between 1 and 9999 to check.');
+      const y = parseInt(raw, 10);
+      if (!isFinite(y) || y < 1 || y > 9999) return setInvalid('Year must be between 1 and 9999.');
+
+      const leap = isLeap(y);
+      document.getElementById('rMain').textContent = leap ? 'YES — Leap Year' : 'NO — Common Year';
+      document.getElementById('rMainLbl').textContent = y + (leap ? ' has 366 days' : ' has 365 days');
+      document.getElementById('rFeb').textContent = leap ? '29 days' : '28 days';
+      let prev = y - 1; while (prev > 0 && !isLeap(prev)) prev--;
+      let next = y + 1; while (next <= 9999 && !isLeap(next)) next++;
+      document.getElementById('rPrev').textContent = prev > 0 ? prev : '—';
+      document.getElementById('rNext').textContent = next <= 9999 ? next : '—';
+      document.getElementById('rRule').textContent = ruleFor(y);
+
+      document.getElementById('recoTitle').textContent = leap ? y + ' is a leap year' : y + ' is a common year';
+      document.getElementById('recoText').textContent = leap
+        ? 'February ' + y + ' has 29 days. ' + y + ' has 366 days total. Next: ' + (next <= 9999 ? next : '—') + '.'
+        : 'February ' + y + ' has the standard 28 days. The reason: ' + ruleFor(y) + '.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('year').addEventListener('input', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () { document.getElementById('year').value = ''; compute(); });
+
+    document.getElementById('shareBtn').addEventListener('click', function () { const v = document.getElementById('rMain').textContent; if (v === '—') { DC.toast('Enter a year first', 'error'); return; } DC.shareWhatsApp(document.getElementById('year').value + ' is ' + (isLeap(parseInt(document.getElementById('year').value)) ? 'a LEAP' : 'a COMMON') + ' year — via DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult(document.getElementById('rMain').textContent + ' (' + document.getElementById('rRule').textContent + ')'); });
+  </script>
+</body>
+</html>

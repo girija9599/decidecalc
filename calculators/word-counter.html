@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter — Words, Characters, Sentences, Reading Time | DecideCalc</title>
+  <meta name="description" content="Free online word counter. Count words, characters (with and without spaces), sentences, paragraphs, reading and speaking time instantly — works offline, nothing leaves your browser.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/word-counter.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-text">Text Tools</a><span class="sep">/</span><span>Word Counter</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Word Counter</h1><div class="sub">Live counts as you type — 100% private</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="text">Your text</label><textarea class="input" id="text" rows="9" placeholder="Type or paste your text here…"></textarea></div>
+          <button class="btn btn-ghost btn-block" id="clearBtn">Clear text</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rWords">0</div><div class="lbl">Words</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rChars">0</div><div class="k">Characters</div></div>
+          <div class="result-stat"><div class="v" id="rNoSpace">0</div><div class="k">Chars (no spaces)</div></div>
+          <div class="result-stat"><div class="v" id="rSent">0</div><div class="k">Sentences</div></div>
+          <div class="result-stat"><div class="v" id="rPara">0</div><div class="k">Paragraphs</div></div>
+          <div class="result-stat"><div class="v" id="rRead">0 min</div><div class="k">Reading time</div></div>
+          <div class="result-stat"><div class="v" id="rSpeak">0 min</div><div class="k">Speaking time</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy counts</button>
+          <button class="btn btn-ghost btn-sm" id="copyTextBtn">Copy text</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Fully private</h4><p id="recoText">Everything happens inside your browser. Your text is never sent anywhere — safe for drafts, essays and confidential notes.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How counts are calculated</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Words:</b> sequences separated by whitespace — matching how MS Word counts.</li>
+        <li><b>Sentences:</b> text split on full stops, question and exclamation marks.</li>
+        <li><b>Reading time:</b> based on an average 200 words per minute silent-reading speed.</li>
+        <li><b>Speaking time:</b> based on 130 words per minute — a comfortable presentation pace.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Essay limits:</b> colleges often specify word limits — paste your draft here to check before submission.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'word-counter', faqs: [
+      { q: 'Are hyphenated words counted as one or two?', a: 'One — "well-known" counts as a single word, matching MS Word behavior. Numbers like "1,000" also count as one word.' },
+      { q: 'How accurate is the reading-time estimate?', a: 'It uses the widely accepted 200 wpm average for adult silent reading. Actual speed ranges from 150-300 wpm depending on text difficulty.' },
+      { q: 'Does it count words in other languages?', a: 'Yes — any script separated by spaces works (Hindi written in Roman script, French, etc.). Devanagari text counts space-separated words too.' },
+      { q: 'Is my text stored or sent to a server?', a: 'Never. DecideCalc runs entirely on your device — even offline once loaded. Clear the box and it\'s gone.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('sparkle');
+    document.getElementById('recoIc').innerHTML = DC.icon('shield');
+    document.getElementById('fIcon').innerHTML = DC.icon('check');
+
+    function fnum2(n) { return n.toLocaleString('en-IN'); }
+
+    function fmtMin(w, wpm) {
+      if (w === 0) return '0 min';
+      const secs = Math.max(1, Math.round(w / wpm * 60));
+      const m = Math.floor(secs / 60), s = secs % 60;
+      if (m === 0) return s + ' sec';
+      return m + ' min' + (s ? ' ' + s + 's' : '');
+    }
+    function compute() {
+      const t = document.getElementById('text').value;
+      const trimmed = t.trim();
+      const words = trimmed ? trimmed.split(/\s+/).length : 0;
+      const chars = t.length;
+      const noSpace = t.replace(/\s/g, '').length;
+      const sentences = trimmed ? trimmed.split(/[.!?]+/).filter(function (p) { return p.trim().length > 0; }).length : 0;
+      const paras = trimmed ? trimmed.split(/\n\s*\n/).filter(function (p) { return p.trim().length > 0; }).length : 0;
+      document.getElementById('rWords').textContent = fnum2(words);
+      document.getElementById('rChars').textContent = fnum2(chars);
+      document.getElementById('rNoSpace').textContent = fnum2(noSpace);
+      document.getElementById('rSent').textContent = fnum2(sentences);
+      document.getElementById('rPara').textContent = fnum2(paras);
+      document.getElementById('rRead').textContent = fmtMin(words, 200);
+      document.getElementById('rSpeak').textContent = fmtMin(words, 130);
+    }
+    document.getElementById('text').addEventListener('input', compute);
+    document.getElementById('clearBtn').addEventListener('click', function () { document.getElementById('text').value = ''; compute(); document.getElementById('text').focus(); });
+    compute();
+
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      DC.copyResult(['Word Counter Result',
+        'Words: ' + document.getElementById('rWords').textContent,
+        'Characters: ' + document.getElementById('rChars').textContent,
+        'Characters (no spaces): ' + document.getElementById('rNoSpace').textContent,
+        'Sentences: ' + document.getElementById('rSent').textContent,
+        'Paragraphs: ' + document.getElementById('rPara').textContent,
+        'Reading time: ' + document.getElementById('rRead').textContent,
+        'Speaking time: ' + document.getElementById('rSpeak').textContent].join('\n'));
+    });
+    document.getElementById('copyTextBtn').addEventListener('click', function () {
+      const t = document.getElementById('text').value;
+      if (!t.trim()) { DC.toast('Nothing to copy', 'error'); return; }
+      DC.copyResult(t);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator — Exact Age in Years, Months & Days | DecideCalc</title>
+  <meta name="description" content="Calculate your exact age in years, months and days from date of birth. Free India-first age calculator with zodiac & day-of-week fun facts.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/age-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-datetime">Date & Time</a><span class="sep">/</span><span>Age Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Age Calculator</h1><div class="sub">Exact age · next birthday</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label for="dob">Date of Birth</label><input class="input" id="dob" type="date"></div>
+          <div class="field"><label for="asof">Age as on (default: today)</label><input class="input" id="asof" type="date"></div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Age</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Your age</div></div>
+        <div class="result-grid" id="resultGrid">
+          <div class="result-stat"><div class="v" id="rYears">—</div><div class="k">Years</div></div>
+          <div class="result-stat"><div class="v" id="rMonths">—</div><div class="k">Months</div></div>
+          <div class="result-stat"><div class="v" id="rDays">—</div><div class="k">Days</div></div>
+          <div class="result-stat"><div class="v" id="rTotalDays">—</div><div class="k">Total days lived</div></div>
+          <div class="result-stat"><div class="v" id="rTotalMonths">—</div><div class="k">Total months</div></div>
+          <div class="result-stat"><div class="v" id="rTotalWeeks">—</div><div class="k">Total weeks</div></div>
+          <div class="result-stat"><div class="v" id="rDayOfWeek">—</div><div class="k">Born on a</div></div>
+          <div class="result-stat"><div class="v" id="rNextBday">—</div><div class="k">Days to next birthday</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">How your age is calculated</h4><p id="recoText">Age is your date of birth to the reference date, broken into completed years, whole remaining months, and leftover days.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How is age calculated?</h2>
+      <p class="mt-2">We subtract your birth date from the reference date while accounting for varying month lengths and leap years. Year-month-day breakdown matches the standard civil age used on documents.</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> your "completed years" plus months/days is what shows on official forms. Total days/weeks are useful for interest calculations and tenancy agreements.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'age-calculator', faqs: [
+      { q: 'Why does this differ from my informal age?', a: 'Informal age often rounds up at half-birthdays or counts the year you\'re "running." Civil age strictly counts completed years — this is the standard used for visas, government forms and pension/senior-citizen benefits.' },
+      { q: 'Does this handle leap years?', a: 'Yes. Indian civil age rules count leap day (Feb 29) birthdays on March 1 in non-leap years. Total day counts implicitly include leap years (365 vs 366 days).' },
+      { q: 'Can I check someone else\'s age on a past date?', a: 'Yes — set the "Age as on" field to any date. Useful for checking eligibility cutoffs (e.g., exam age as on 1 Aug 2025).' },
+      { q: 'What\'s the difference between total days and years?', a: 'Total days is the raw calendar difference. Years-months-days breaks it into readable blocks. Days ÷ 365.2425 is approximate years; for legal matters always use calendar years.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('cake');
+    document.getElementById('recoIc').innerHTML = DC.icon('clock');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+    const isLeap = y => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+
+    function compute() {
+      const dobStr = document.getElementById('dob').value;
+      const asofStr = document.getElementById('asof').value;
+      const asof = asofStr ? new Date(asofStr + 'T00:00:00') : new Date();
+      if (!dobStr) return reset();
+      const dob = new Date(dobStr + 'T00:00:00');
+      if (isNaN(dob.getTime()) || dob > asof) return reset('DOB must be in the past');
+
+      let y = asof.getFullYear() - dob.getFullYear();
+      let m = asof.getMonth() - dob.getMonth();
+      let d = asof.getDate() - dob.getDate();
+      if (d < 0) { m--; const prevM = (asof.getMonth() - 1 + 12) % 12; const prevY = asof.getMonth() === 0 ? asof.getFullYear() - 1 : asof.getFullYear(); d += daysInMonth[prevM] + (prevM === 1 && isLeap(prevY) ? 1 : 0); }
+      if (m < 0) { y--; m += 12; }
+
+      const totalDays = Math.floor((asof - dob) / 86400000);
+      const totalWeeks = Math.floor(totalDays / 7);
+      const totalMonths = (asof.getFullYear() - dob.getFullYear()) * 12 + (asof.getMonth() - dob.getMonth());
+
+      const nextBday = new Date(asof.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBday <= asof) {
+        nextBday.setFullYear(asof.getFullYear() + 1);
+        // handle feb 29 next year
+        if (dob.getMonth() === 1 && dob.getDate() === 29 && !isLeap(nextBday.getFullYear())) nextBday.setDate(28);
+      }
+      const daysToBday = Math.ceil((nextBday - asof) / 86400000);
+
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      document.getElementById('rMain').textContent = y + 'y ' + m + 'm ' + d + 'd';
+      document.getElementById('rYears').textContent = y;
+      document.getElementById('rMonths').textContent = m;
+      document.getElementById('rDays').textContent = d;
+      document.getElementById('rTotalDays').textContent = totalDays.toLocaleString('en-IN');
+      document.getElementById('rTotalMonths').textContent = totalMonths.toLocaleString('en-IN');
+      document.getElementById('rTotalWeeks').textContent = totalWeeks.toLocaleString('en-IN');
+      document.getElementById('rDayOfWeek').textContent = days[dob.getDay()];
+      document.getElementById('rNextBday').textContent = daysToBday + (daysToBday === 0 ? ' — today! 🎉' : ' days');
+
+      const title = document.getElementById('recoTitle');
+      if (y < 18) title.textContent = 'Minor age on record';
+      else if (y >= 60) title.textContent = 'Senior citizen age (60+)';
+      else if (y >= 18) title.textContent = 'Adult (voting age in India)';
+      else title.textContent = 'How your age is calculated';
+      document.getElementById('recoText').textContent = 'You are ' + y + ' y ' + m + ' m ' + d + ' d — that\'s ' + totalDays.toLocaleString('en-IN') + ' total days. Next birthday in ' + daysToBday + ' days.';
+    }
+    function reset(msg) {
+      ['rMain','rYears','rMonths','rDays','rTotalDays','rTotalMonths','rTotalWeeks','rDayOfWeek','rNextBday'].forEach(id => document.getElementById(id).textContent = '—');
+      if (msg) document.getElementById('recoText').textContent = msg;
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['dob','asof'].forEach(id => document.getElementById(id).addEventListener('change', compute));
+    document.getElementById('resetBtn').addEventListener('click', function() { document.getElementById('dob').value = ''; document.getElementById('asof').value = ''; compute(); });
+
+    document.getElementById('shareBtn').addEventListener('click', function () { const v = document.getElementById('rMain').textContent; if (v === '—') { DC.toast('Enter a date first', 'error'); return; } DC.shareWhatsApp('I am ' + v + ' old (' + document.getElementById('rTotalDays').textContent + ' days) — check on DecideCalc!'); });
+    document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Age: ' + document.getElementById('rMain').textContent); });
+  </script>
+</body>
+</html>

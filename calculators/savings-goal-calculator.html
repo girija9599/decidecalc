@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Savings Goal Calculator — Required Monthly Savings by Target Date | DecideCalc</title>
+  <meta name="description" content="Reverse SIP calculator: enter a savings target, deadline and expected return to see the exact monthly saving needed, how much is interest, and whether your goal is reachable.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/savings-goal-calculator.html">
+  <meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231B3A6B'/><text x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='%2300C2A8' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance &amp; Tax</a><span class="sep">/</span><span>Savings Goal Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Savings Goal Calculator</h1><div class="sub">Target amount · deadline · monthly saving needed</div></div></div>
+        <div class="calc-body">
+          <div class="field">
+            <label for="ccy">Currency</label>
+            <select class="select" id="ccy">
+              <option value="USD" selected>USD — US Dollar ($)</option>
+              <option value="INR">INR — Indian Rupee (&#8377;)</option>
+              <option value="EUR">EUR — Euro (&euro;)</option>
+              <option value="GBP">GBP — British Pound (&pound;)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="target">Target amount</label>
+            <input class="input" id="target" type="number" min="1" step="any" value="50000" placeholder="e.g. 50000" inputmode="decimal">
+            <div class="hint">How much do you want to have at the deadline?</div>
+          </div>
+          <div class="field">
+            <label for="current">Current savings toward this goal</label>
+            <input class="input" id="current" type="number" min="0" step="any" value="5000" placeholder="e.g. 5000" inputmode="decimal">
+            <div class="hint">Amount already saved — grows at the same return.</div>
+          </div>
+          <div class="field">
+            <label for="deadline">Target deadline</label>
+            <input class="input" id="deadline" type="date">
+            <div class="hint">Pick any future date — we convert it into months.</div>
+          </div>
+          <div class="field">
+            <label for="yearsAlt">…or set duration instead</label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <div style="flex:1;min-width:130px"><input class="input" id="yearsAlt" type="number" min="0" max="60" step="1" placeholder="Years" inputmode="numeric"></div>
+              <div style="flex:1;min-width:130px"><input class="input" id="monthsAlt" type="number" min="0" max="11" step="1" placeholder="Months (0–11)" inputmode="numeric"></div>
+            </div>
+            <div class="hint">Leave blank when using the date picker. Typing here overrides the date.</div>
+          </div>
+          <div class="field">
+            <label for="rate">Expected annual return (%)</label>
+            <input class="input" id="rate" type="number" min="0" max="50" step="any" value="8" inputmode="decimal">
+            <div class="hint">Use 0 for a plain savings account with no interest.</div>
+          </div>
+          <div id="errBox" class="note" style="display:none;border-color:#DC2626;background:color-mix(in srgb,#DC2626 8%,var(--card))">
+            <span aria-hidden="true">&#9888;&#65039;</span><div id="errText"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate required saving</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero">
+          <div class="big" id="rMonthly">—</div>
+          <div class="lbl">Required monthly saving (SIP)</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rTime">—</div><div class="k">Time to goal</div></div>
+          <div class="result-stat"><div class="v" id="rContrib">—</div><div class="k">Total contributed</div></div>
+          <div class="result-stat"><div class="v" id="rInterest">—</div><div class="k">Interest earned</div></div>
+          <div class="result-stat"><div class="v" id="rGrowth">—</div><div class="k">Growth from interest</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="goalChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+        </div>
+        <div class="reco">
+          <span class="ric" id="recoIc"></span>
+          <div><h4 id="recoTitle">Feasibility check</h4><p id="recoText">Set your target, deadline and return to see exactly what monthly saving is required.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How “required monthly saving” is computed</h2>
+      <p class="mt-2">This tool runs the SIP future-value formula <i>backwards</i>. Given a target amount (FV), what you already have (PV), a monthly return i, and n months to go, the required monthly contribution is:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula (annuity reversed):</b> PMT = (FV − PV × (1+i)<sup>n</sup>) ÷ [((1+i)<sup>n</sup> − 1) ÷ i], where i = annual return ÷ 12 and n = months to deadline. If the return is 0%, it reduces to PMT = (FV − PV) ÷ n — simple division.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Practical goal-planning tips</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Match return to risk and horizon.</b> Use 0–2% for pure cash goals under a year, 4–7% for debt, 10–12% only for long equity horizons.</li>
+        <li><b>Short horizons are unforgiving.</b> If your deadline is under a year, interest barely helps — the required contribution is mostly just target ÷ months.</li>
+        <li><b>More time beats more return.</b> Doubling your timeline roughly halves the required monthly saving; doubling the return does much less.</li>
+        <li><b>Already have savings? Count them.</b> Existing savings compound too — entering them honestly can cut hundreds off the monthly requirement.</li>
+        <li><b>If the number looks impossible,</b> extend the deadline or raise contributions later (step-up) rather than assuming unrealistic returns.</li>
+      </ul>
+    </section>
+
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'savings-goal-calculator', faqs: [
+      { q: 'How is the required monthly saving calculated?', a: 'We invert the SIP future-value formula. Your target minus the grown value of current savings is divided by the annuity factor [((1+i)^n − 1) ÷ i], where i is the monthly return and n is the months to your deadline. At 0% return it is simple division: gap ÷ months.' },
+      { q: 'What if my current savings already cover the goal?', a: 'Then you do not need to save anything more — the tool shows a required contribution of zero and confirms the goal is reachable even without new savings.' },
+      { q: 'What does it mean when the tool says the goal is impossible?', a: 'Even with reasonable assumptions, some target/date/savings combinations require an unrealistic monthly amount. When the required saving exceeds 80% of the target per month of horizon, we flag it and suggest extending the deadline or raising contributions.' },
+      { q: 'Should I use the date picker or years/months?', a: 'Either works. The date picker converts the deadline into whole months from today. If you type years or months, those override the date — useful for round horizons like "5 years".' },
+      { q: 'What annual return should I assume?', a: 'Match it to where the money actually sits. High-yield cash: 0–5%; debt funds / fixed deposits: 5–8%; diversified equity funds: 10–12% for 5+ year horizons. Do not plan on above-market returns.' }
+    ]};
+    DC.initCalcPage();
+
+    document.getElementById('ic').innerHTML = DC.icon('target');
+    document.getElementById('recoIc').innerHTML = DC.icon('sparkle');
+    document.getElementById('fIcon').innerHTML = DC.icon('scale');
+
+    var ccys = { USD: '$', INR: '₹', EUR: '€', GBP: '£' };
+    function sym() { return ccys[document.getElementById('ccy').value] || '$'; }
+    function fmt(n, dec) {
+      if (!isFinite(n)) n = 0;
+      return sym() + Number(n).toLocaleString('en-US', { maximumFractionDigits: dec == null ? 0 : dec, minimumFractionDigits: dec == null ? 0 : dec });
+    }
+    function compactMoney(n) {
+      if (!isFinite(n)) n = 0;
+      n = Number(n);
+      if (Math.abs(n) >= 1000000) return sym() + (n / 1000000).toFixed(2) + 'M';
+      if (Math.abs(n) >= 1000) return sym() + (n / 1000).toFixed(1) + 'K';
+      return sym() + Math.round(n);
+    }
+    function showErr(msg) {
+      var b = document.getElementById('errBox');
+      document.getElementById('errText').textContent = msg || '';
+      b.style.display = msg ? '' : 'none';
+    }
+    function resetOut() {
+      ['rMonthly','rTime','rContrib','rInterest','rGrowth'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+      if (DC.charts && DC.charts.goalChart) { DC.charts.goalChart.destroy(); delete DC.charts.goalChart; }
+    }
+    function monthsFromDate(dstr) {
+      if (!dstr) return null;
+      var d = new Date(dstr + 'T00:00:00');
+      if (isNaN(d.getTime())) return null;
+      var now = new Date(); now.setHours(0,0,0,0);
+      var m = (d.getFullYear() - now.getFullYear()) * 12 + (d.getMonth() - now.getMonth());
+      if (d.getDate() > now.getDate()) m += 0; else m = m; /* whole-month convention */
+      return m <= 0 ? 0 : m;
+    }
+    function monthsFromAlt() {
+      var y = parseFloat(document.getElementById('yearsAlt').value);
+      var m = parseFloat(document.getElementById('monthsAlt').value);
+      if (isNaN(y) && isNaN(m)) return null;
+      y = isNaN(y) ? 0 : y; m = isNaN(m) ? 0 : m;
+      return y * 12 + m;
+    }
+    function fmtDur(months) {
+      var y = Math.floor(months / 12), m = months % 12;
+      if (y && m) return y + 'y ' + m + 'm';
+      if (y) return y + (y === 1 ? ' year' : ' years');
+      return m + (m === 1 ? ' month' : ' months');
+    }
+
+    function compute() {
+      var symv = sym();
+      var target = parseFloat(document.getElementById('target').value);
+      var current = parseFloat(document.getElementById('current').value);
+      var rate = parseFloat(document.getElementById('rate').value);
+      current = isNaN(current) ? 0 : current;
+      rate = isNaN(rate) ? 0 : rate;
+
+      var title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+
+      /* ---------- strict validation ---------- */
+      if (isNaN(target) || !(target > 0)) { showErr('Enter a target amount greater than zero.'); resetOut(); return; }
+      if (!(current >= 0)) { showErr('Current savings cannot be negative.'); resetOut(); return; }
+      if (!(rate >= 0) || rate > 50) { showErr('Expected annual return must be between 0% and 50%.'); resetOut(); return; }
+
+      var nAlt = monthsFromAlt();
+      var n;
+      if (nAlt != null) {
+        if (nAlt <= 0) { showErr('Duration must be at least 1 month.'); resetOut(); return; }
+        n = Math.round(nAlt);
+      } else {
+        var dstr = document.getElementById('deadline').value;
+        if (!dstr) { showErr('Pick a target deadline date or enter years/months.'); resetOut(); return; }
+        var d = new Date(dstr + 'T00:00:00');
+        if (isNaN(d.getTime())) { showErr('That date is not valid.'); resetOut(); return; }
+        var now = new Date(); now.setHours(0,0,0,0);
+        if (d <= now) { showErr('Deadline must be in the future.'); resetOut(); return; }
+        n = monthsFromDate(dstr);
+        if (n < 1) n = 1;
+      }
+      showErr('');
+
+      /* ---------- core math ---------- */
+      var i = rate / 12 / 100;
+      var grownCurrent = current * Math.pow(1 + i, n);
+      var gap = target - grownCurrent;
+      var pmt;
+      if (gap <= 0) {
+        pmt = 0;
+      } else if (i === 0) {
+        pmt = gap / n;
+      } else {
+        pmt = gap * i / (Math.pow(1 + i, n) - 1);
+      }
+      if (!isFinite(pmt) || isNaN(pmt)) { pmt = gap > 0 ? gap / n : 0; }
+      pmt = Math.max(0, pmt);
+
+      var totalContrib = current + pmt * n;
+      var interest = target - totalContrib;
+      if (interest < 0) { interest = 0; totalContrib = target; }
+      var intPct = totalContrib + interest > 0 ? (interest / (totalContrib + interest)) * 100 : 0;
+
+      document.getElementById('rMonthly').textContent = fmt(pmt);
+      document.getElementById('rTime').textContent = fmtDur(n);
+      document.getElementById('rContrib').textContent = compactMoney(totalContrib);
+      document.getElementById('rInterest').textContent = compactMoney(interest);
+      document.getElementById('rGrowth').textContent = intPct.toFixed(1) + '%';
+
+      /* ---------- doughnut: contributed vs interest ---------- */
+      DC.makeChart('goalChart', {
+        type: 'doughnut',
+        data: {
+          labels: ['You contribute', 'Interest does the rest'],
+          datasets: [{ data: [Math.round(totalContrib), Math.round(interest)], backgroundColor: ['#1B3A6B', '#00C2A8'], borderWidth: 0, hoverOffset: 8 }]
+        },
+        options: { cutout: '64%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + fmt(c.raw); } } } } }
+      });
+
+      /* ---------- feasibility guidance ---------- */
+      if (gap <= 0) {
+        title.textContent = '✅ Goal already covered';
+        txt.textContent = 'Your current savings of ' + fmt(current) + ' will grow to about ' + fmt(grownCurrent) + ' by your deadline — no extra monthly saving needed. Consider parking it safely.';
+      } else if (pmt > target / n * 0.98) {
+        title.textContent = '⚠ Extend deadline or raise contribution';
+        txt.textContent = 'At ' + rate + '% return, interest barely helps: you would need to set aside nearly the entire gap yourself (' + fmt(pmt) + '/month). Extending the deadline by a few years or accepting a higher return asset class makes this far more achievable.';
+      } else if (pmt > target / 6 && n < 24) {
+        title.textContent = '⚠ Tight window — consider more time';
+        txt.textContent = 'The required saving of ' + fmt(pmt) + '/month is large relative to the goal because the deadline is only ' + fmtDur(n) + ' away. Extending the deadline even 1–2 years would cut the monthly amount substantially.';
+      } else {
+        title.textContent = '✨ Achievable plan';
+        txt.textContent = 'Save ' + fmt(pmt) + ' per month at ' + rate + '%/year and you reach ' + fmt(target) + ' in ' + fmtDur(n) + ' — interest contributes ' + intPct.toFixed(1) + '% of the final amount.';
+      }
+
+      window.__lastGoalResult = {
+        currency: symv, target: fmt(target), monthly: fmt(pmt), time: fmtDur(n),
+        contrib: compactMoney(totalContrib), interest: compactMoney(interest), rate: rate
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['target','current','rate','deadline','yearsAlt','monthsAlt','ccy'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', compute);
+      document.getElementById(id).addEventListener('change', compute);
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.getElementById('target').value = '50000';
+      document.getElementById('current').value = '5000';
+      document.getElementById('rate').value = '8';
+      document.getElementById('deadline').value = defaultDeadline();
+      document.getElementById('yearsAlt').value = '';
+      document.getElementById('monthsAlt').value = '';
+      document.getElementById('ccy').value = 'USD';
+      compute();
+      DC.toast('Inputs reset', 'success');
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastGoalResult; if (!r) return;
+      DC.shareWhatsApp('My savings goal of ' + r.target + ' needs ' + r.monthly + '/month for ' + r.time + ' — plan yours on DecideCalc!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastGoalResult;
+      if (!r) { DC.toast('Nothing to copy yet', 'error'); return; }
+      DC.copyResult(
+        'Savings Goal Plan (' + r.currency + ')\n' +
+        'Target: ' + r.target + '\n' +
+        'Required monthly saving: ' + r.monthly + '\n' +
+        'Time to goal: ' + r.time + '\n' +
+        'Total contributed: ' + r.contrib + '\n' +
+        'Interest earned: ' + r.interest
+      );
+    });
+
+    function defaultDeadline() {
+      var d = new Date(); d.setFullYear(d.getFullYear() + 5);
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      return d.getFullYear() + '-' + m + '-' + day;
+    }
+    document.getElementById('deadline').value = defaultDeadline();
+    (function () {
+      var t = new Date(); t.setDate(t.getDate() + 1);
+      document.getElementById('deadline').min = t.toISOString().slice(0, 10);
+    })();
+    compute();
+  </script>
+</body>
+</html>

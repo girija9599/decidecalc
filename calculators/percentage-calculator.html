@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Percentage Calculator — Marks, Discount, Growth, Change | DecideCalc</title>
+  <meta name="description" content="Free percentage calculator: X% of Y, what % is X of Y, percentage change, increase/decrease and discount price. Instant results with formulas explained.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/percentage-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-education">Education Tools</a><span class="sep">/</span><span>Percentage Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Percentage Calculator</h1><div class="sub">Four modes — one tool</div></div></div>
+        <div class="calc-body">
+          <input type="hidden" name="mode" value="of">
+          <div class="segmented" id="mode" data-target="mode">
+            <button type="button" data-value="of" class="active">X% of Y</button>
+            <button type="button" data-value="what">What %?</button>
+            <button type="button" data-value="change">% Change</button>
+            <button type="button" data-value="discount">Discount</button>
+          </div>
+          <div style="height:16px"></div>
+
+          <div id="box-of">
+            <p class="field-caption">Find <b>X%</b> of <b>Y</b> — e.g. 18% of ₹4,500 (GST)</p>
+            <div class="field-row">
+              <div class="field"><label for="a1">X (%)</label><input class="input" id="a1" type="number" step="any" placeholder="18"></div>
+              <div class="field"><label for="b1">Y (value)</label><input class="input" id="b1" type="number" step="any" placeholder="4500"></div>
+            </div>
+          </div>
+          <div id="box-what" style="display:none">
+            <p class="field-caption"><b>X</b> is what percent of <b>Y</b>? — e.g. 72 out of 80 marks</p>
+            <div class="field-row">
+              <div class="field"><label for="a2">X (part)</label><input class="input" id="a2" type="number" step="any" placeholder="72"></div>
+              <div class="field"><label for="b2">Y (whole)</label><input class="input" id="b2" type="number" step="any" placeholder="80"></div>
+            </div>
+          </div>
+          <div id="box-change" style="display:none">
+            <p class="field-caption">Percentage change from <b>old</b> to <b>new</b> — price, salary, marks</p>
+            <div class="field-row">
+              <div class="field"><label for="a3">Old value</label><input class="input" id="a3" type="number" step="any" placeholder="50000"></div>
+              <div class="field"><label for="b3">New value</label><input class="input" id="b3" type="number" step="any" placeholder="56000"></div>
+            </div>
+          </div>
+          <div id="box-discount" style="display:none">
+            <p class="field-caption">Price after <b>X%</b> discount — sale maths, instantly</p>
+            <div class="field-row">
+              <div class="field"><label for="a4">Original price</label><input class="input" id="a4" type="number" step="any" placeholder="2999"></div>
+              <div class="field"><label for="b4">Discount (%)</label><input class="input" id="b4" type="number" step="any" placeholder="40"></div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Result</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rExtra1">—</div><div class="k" id="kExtra1">Worked formula</div></div>
+          <div class="result-stat"><div class="v" id="rExtra2">—</div><div class="k" id="kExtra2">Complement</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="shareBtn">Share</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Why percentages confuse people</h4><p id="recoText">A 40% discount + extra 20% off is NOT 60% off. Discounts stack multiplicatively: final price = price × 0.60 × 0.80 = 48% of original (52% off). This calculator keeps the maths honest.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>The four formulas</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>X% of Y</b> = (X ÷ 100) × Y</li>
+        <li><b>X is what % of Y</b> = (X ÷ Y) × 100</li>
+        <li><b>% change</b> = ((new − old) ÷ old) × 100 — positive = increase, negative = decrease</li>
+        <li><b>Discount</b> = price × (1 − discount% ÷ 100)</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Salary-hike nuance:</b> a 20% hike followed by a 20% cut doesn't return you to the start — you're 4% below where you began.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'percentage-calculator', faqs: [
+      { q: 'How do I convert marks to percentage?', a: 'Use "What %?" mode: put scored marks in X, total marks in Y. 72 out of 80 = 90%.' },
+      { q: 'Is 40% + 20% discount = 60% off?', a: 'No. Successive discounts multiply, not add. ₹1,000 with 40% off → ₹600; then 20% off that → ₹480. Total saving = 52%, not 60%.' },
+      { q: 'How do I calculate percentage increase in salary?', a: 'Use "% Change": old salary in the first box, new salary in the second. Going from ₹50,000 to ₹56,000 shows a 12% increase.' },
+      { q: 'What if old value is 0?', a: 'Percentage change from zero is undefined (division by zero). The calculator will show "—" and ask for a valid non-zero base value.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('percent');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    let mode = 'of';
+    document.getElementById('mode').addEventListener('segment:change', function (e) {
+      mode = e.detail.value;
+      ['of','what','change','discount'].forEach(function (m) { document.getElementById('box-' + m).style.display = m === mode ? '' : 'none'; });
+      clearResult();
+    });
+    function num(id) { const v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : null; }
+    function fmtN(n, suffix) {
+      if (!isFinite(n)) return '—';
+      return (Math.round(n * 10000) / 10000).toLocaleString('en-IN', { maximumFractionDigits: 2 }) + (suffix || '');
+    }
+    function clearResult() {
+      document.getElementById('rMain').textContent = '—';
+      document.getElementById('rLbl').textContent = 'Result';
+      document.getElementById('rExtra1').textContent = '—';
+      document.getElementById('rExtra2').textContent = '—';
+    }
+    function fail(msg) {
+      clearResult();
+      document.getElementById('recoText').textContent = msg;
+    }
+    function compute() {
+      const R = { main: null, lbl: '', f1: '', f2: '', k2: '' };
+      if (mode === 'of') {
+        const x = num('a1'), y = num('b1');
+        if (x === null || y === null) return fail('Enter both X (%) and Y.');
+        const res = x / 100 * y;
+        R.main = fmtN(res); R.lbl = x + '% of ' + fmtN(y);
+        R.f1 = '(' + x + ' ÷ 100) × ' + fmtN(y) + ' = ' + fmtN(res);
+        R.k2 = 'Remaining (' + (100 - x) + '%)';
+        R.f2 = fmtN(y - res);
+      } else if (mode === 'what') {
+        const x = num('a2'), y = num('b2');
+        if (x === null || y === null) return fail('Enter both X (part) and Y (whole).');
+        if (y === 0) return fail('Y (whole) cannot be zero.');
+        const res = x / y * 100;
+        R.main = fmtN(res, '%'); R.lbl = fmtN(x) + ' is ' + fmtN(res, '%') + ' of ' + fmtN(y);
+        R.f1 = '(' + fmtN(x) + ' ÷ ' + fmtN(y) + ') × 100';
+        R.k2 = 'Shortfall vs 100%';
+        R.f2 = fmtN(100 - res, '%');
+      } else if (mode === 'change') {
+        const a = num('a3'), b = num('b3');
+        if (a === null || b === null) return fail('Enter both old and new values.');
+        if (a === 0) return fail('Old value cannot be zero — % change is undefined from a zero base.');
+        const res = (b - a) / a * 100;
+        R.main = (res >= 0 ? '+' : '') + fmtN(res, '%'); R.lbl = res >= 0 ? 'Increase' : 'Decrease';
+        R.f1 = '((' + fmtN(b) + ' − ' + fmtN(a) + ') ÷ ' + fmtN(a) + ') × 100';
+        R.k2 = 'Absolute change';
+        R.f2 = fmtN(b - a);
+      } else {
+        const p = num('a4'), d = num('b4');
+        if (p === null || d === null) return fail('Enter both price and discount %.');
+        if (p < 0 || d < 0 || d > 100) return fail('Price must be ≥ 0 and discount between 0% and 100%.');
+        const finalP = p * (1 - d / 100);
+        R.main = fmtN(finalP); R.lbl = 'Final price after ' + fmtN(d, '%') + ' off';
+        R.f1 = fmtN(p) + ' × (1 − ' + d + '/100)';
+        R.k2 = 'You save';
+        R.f2 = fmtN(p - finalP);
+      }
+      document.getElementById('rMain').textContent = R.main;
+      document.getElementById('rLbl').textContent = R.lbl;
+      document.getElementById('rExtra1').textContent = R.f1;
+      document.getElementById('kExtra1').textContent = 'Worked formula';
+      document.getElementById('rExtra2').textContent = R.f2;
+      document.getElementById('kExtra2').textContent = R.k2;
+      document.getElementById('recoTitle').textContent = 'Answer: ' + R.main;
+      document.getElementById('recoText').textContent = R.f1 + (R.f2 ? ' · ' + R.k2.toLowerCase() + ': ' + R.f2 : '');
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['a1','b1','a2','b2','a3','b3','a4','b4'].forEach(function (id) { document.getElementById(id).addEventListener('input', function () { });
+      document.getElementById(id).addEventListener('change', compute);
+    });
+    ['a1','b1','a2','b2','a3','b3','a4','b4'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      ['a1','b1','a2','b2','a3','b3','a4','b4'].forEach(function (id) { document.getElementById(id).value = ''; });
+      clearResult();
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Calculate something first', 'error'); return; }
+      DC.copyResult(document.getElementById('rLbl').textContent + ' = ' + v);
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Calculate something first', 'error'); return; }
+      DC.shareWhatsApp(document.getElementById('rLbl').textContent + ' = ' + v + ' (DecideCalc)');
+    });
+  </script>
+</body>
+</html>

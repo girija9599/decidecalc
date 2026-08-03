@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSSC Calculator — Mahila Samman Savings Certificate Maturity | DecideCalc</title>
+  <meta name="description" content="Free MSSC calculator: Mahila Samman Savings Certificate maturity at 7.5% p.a. compounded quarterly over 2 years. Max ₹2 lakh deposit, 40% partial withdrawal after 1 year, premature closure rules — all computed.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/mssc-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>MSSC Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>MSSC Calculator</h1><div class="sub">Mahila Samman Savings Certificate — 2-year, 7.5% p.a. quarterly</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Deposit amount (₹) — min ₹1,000, max ₹2,00,000 per account</label>
+            <input class="input" id="amt" type="number" min="1000" max="200000" step="1" value="200000" inputmode="numeric">
+          </div>
+          <div class="field"><label>Interest rate (% per year, compounded quarterly)</label>
+            <input class="input" id="rate" type="number" min="0.1" max="15" step="0.05" value="7.5" inputmode="decimal">
+          </div>
+          <div class="field"><label>Tenure</label>
+            <select class="select" id="tenure" disabled>
+              <option value="24" selected>2 years (fixed for MSSC)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Maturity</button>
+          <button class="btn btn-ghost btn-block" id="resetBtn" style="margin-top:10px">Reset</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Maturity value after 2 years</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInt">—</div><div class="k">Total interest earned</div></div>
+          <div class="result-stat"><div class="v" id="rDep">—</div><div class="k">Amount deposited</div></div>
+          <div class="result-stat"><div class="v" id="rEff">—</div><div class="k">Effective annual yield</div></div>
+          <div class="result-stat"><div class="v" id="rWd">—</div><div class="k">Max partial withdrawal (month 12)</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="msscChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Scheme snapshot</h4><p id="recoText">—</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Quarter-wise growth</h2>
+      <p class="mt-2">MSSC compounds <b>quarterly</b> — every 3 months the interest is credited and itself starts earning interest. That is why 7.5% quarterly-compounded beats a plain 7.5% simple or annual rate over the same 2 years.</p>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="breakdown" id="growthTable">
+          <thead><tr><th>Quarter</th><th class="num">Opening balance</th><th class="num">Interest credited</th><th class="num">Closing balance</th></tr></thead>
+          <tbody id="growthBody">
+            <tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter a deposit amount to see the 8-quarter schedule.</td></tr>
+          </tbody>
+          <tfoot id="growthFoot" style="display:none"><tr><td>Total</td><td class="num"></td><td class="num" id="footInt"></td><td class="num" id="footClose"></td></tr></tfoot>
+        </table>
+      </div>
+
+      <div class="note mt-2" style="margin-top:16px"><span id="nIcon1"></span><div><b>Partial withdrawal:</b> after the account completes 1 year, you may withdraw up to <b>40% of the eligible balance</b> once before maturity. The remaining amount keeps compounding till the 2-year maturity.</div></div>
+      <div class="note mt-2"><span id="nIcon2"></span><div><b>Premature closure:</b> no closure in the first 6 months. Between 6 months and 2 years the account can be closed, but interest is paid at the scheme rate <b>minus 2%</b> (i.e. 5.5% if the scheme rate is 7.5%) for completed quarters. Death of the holder or life-threatening illness of the holder/guardian allows closure at full rate.</div></div>
+      <div class="note mt-2"><span id="nIcon3"></span><div><b>Who can open it:</b> any woman or girl (a guardian may open for a minor girl). One person can hold multiple MSSC accounts, but the combined deposits across all of them cannot exceed <b>₹2,00,000</b>, and a second account needs a 3-month gap from the first.</div></div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = {
+      slug: 'mssc-calculator',
+      faqs: [
+        { q: 'What is the current MSSC interest rate?', a: '7.5% per year, compounded quarterly. The rate is notified by the government and fixed at the time of deposit for the full 2-year tenure. This calculator defaults to 7.5% — if the notified rate changes, you can edit it above.' },
+        { q: 'What is the maximum I can deposit in MSSC?', a: '₹2,00,000 in aggregate across all Mahila Samman accounts held by one depositor. The minimum deposit is ₹1,000. If you hold more than one account, a gap of 3 months is required between opening accounts.' },
+        { q: 'Who is eligible to open an MSSC account?', a: 'Any woman can open an account in her own name, and a guardian can open one on behalf of a minor girl. It is available at post offices and authorised banks.' },
+        { q: 'Can I withdraw money before 2 years?', a: 'A one-time partial withdrawal of up to 40% of the eligible balance is allowed after the account completes 1 year. Full premature closure is not allowed in the first 6 months; between 6 months and maturity it is permitted but interest is paid at the scheme rate minus 2%. Closure at full rate is allowed on the death of the holder or in cases of extreme compassionate grounds such as life-threatening illness.' },
+        { q: 'Is MSSC interest taxable?', a: 'Interest earned is taxable under "Income from Other Sources" at your slab rate. For small deposits, TDS applies only if total interest from the institution crosses the threshold (₹40,000 per financial year for most depositors, ₹50,000 for senior citizens). Unlike PPF/SSY there is no Section 80C deduction notified for MSSC deposits.' },
+        { q: 'MSSC vs FD vs NSC — which is better for 2 years?', a: 'For a 2-year horizon, MSSC\'s 7.5% quarterly-compounded rate usually beats most bank FDs of the same tenure, and unlike NSC (5-year lock-in) your money is free in 2 years. The trade-off is the ₹2 lakh cap and the fact that interest is fully taxable with no 80C benefit.' }
+      ]
+    };
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('heart');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('nIcon1').innerHTML = DC.icon('money');
+    document.getElementById('nIcon2').innerHTML = DC.icon('lock');
+    document.getElementById('nIcon3').innerHTML = DC.icon('shield');
+
+    var elAmt = document.getElementById('amt');
+    var elRate = document.getElementById('rate');
+    var CAP = 200000;
+
+    function showPlaceholder() {
+      ['rMain','rInt','rDep','rEff','rWd'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      document.getElementById('growthBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter a valid deposit (₹1,000 – ₹2,00,000) and rate to see the 8-quarter schedule.</td></tr>';
+      document.getElementById('growthFoot').style.display = 'none';
+      document.getElementById('recoTitle').textContent = 'Scheme snapshot';
+      document.getElementById('recoText').textContent = '—';
+      if (DC.charts.msscChart) { DC.charts.msscChart.destroy(); delete DC.charts.msscChart; }
+    }
+
+    function compute() {
+      var rawAmt = elAmt.value.trim();
+      var rawRate = elRate.value.trim();
+      var P = parseFloat(rawAmt);
+      var rate = parseFloat(rawRate);
+
+      var amtBad = rawAmt === '' || !isFinite(P) || P < 1000 || P > CAP;
+      var rateBad = rawRate === '' || !isFinite(rate) || rate <= 0 || rate > 15;
+      if (amtBad || rateBad) { showPlaceholder(); return; }
+      P = Math.round(P);
+
+      var qr = rate / 100 / 4; // quarterly rate
+      var quarters = 8;        // 2 years fixed
+      var rows = [];
+      var bal = P;
+      var balQ12 = null; // balance after 4 quarters (1 year) for withdrawal calc
+      for (var q = 1; q <= quarters; q++) {
+        var open = bal;
+        var intr = open * qr;
+        bal = open + intr;
+        rows.push({ q: q, open: open, intr: intr, close: bal });
+        if (q === 4) balQ12 = bal;
+      }
+
+      var maturity = bal;
+      var totalInt = maturity - P;
+      var effYield = (Math.pow(1 + qr, 4) - 1) * 100; // effective annualised
+      var maxWd = balQ12 * 0.40;
+
+      document.getElementById('rMain').textContent = DC.inr ? DC.inr(Math.round(maturity)) : ('₹' + Math.round(maturity).toLocaleString('en-IN'));
+      document.getElementById('rLbl').textContent = 'Maturity value after 2 years';
+      document.getElementById('rInt').textContent = DC.inr(Math.round(totalInt));
+      document.getElementById('rDep').textContent = DC.inr(Math.round(P));
+      document.getElementById('rEff').textContent = effYield.toFixed(2) + '%';
+      document.getElementById('rWd').textContent = DC.inr(Math.round(maxWd));
+
+      // table
+      var html = rows.map(function (r) {
+        return '<tr><td>Q' + r.q + '</td><td class="num">' + DC.inr(Math.round(r.open)) + '</td><td class="num">' + DC.inr(Math.round(r.intr)) + '</td><td class="num">' + DC.inr(Math.round(r.close)) + '</td></tr>';
+      }).join('');
+      document.getElementById('growthBody').innerHTML = html;
+      document.getElementById('footInt').textContent = DC.inr(Math.round(totalInt));
+      document.getElementById('footClose').textContent = DC.inr(Math.round(maturity));
+      document.getElementById('growthFoot').style.display = '';
+
+      // chart
+      DC.makeChart('msscChart', {
+        type: 'line',
+        data: {
+          labels: rows.map(function (r) { return 'Q' + r.q; }),
+          datasets: [{
+            label: 'Balance',
+            data: rows.map(function (r) { return Math.round(r.close); }),
+            borderColor: '#3B82F6',
+            backgroundColor: 'rgba(59,130,246,0.12)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 3
+          }]
+        },
+        options: { plugins: { legend: { display: false } } }
+      });
+
+      // recommendation
+      var rt = document.getElementById('recoTitle');
+      var rx = document.getElementById('recoText');
+      if (P >= CAP) {
+        rt.textContent = 'You are at the ₹2 lakh scheme cap';
+        rx.textContent = 'Depositing the full ' + DC.inr(CAP) + ' earns you ' + DC.inr(Math.round(totalInt)) + ' in 2 years at ' + rate + '% quarterly — an effective annual yield of ' + effYield.toFixed(2) + '%. Additional surplus can go into PPF (tax-free) or a bank FD beyond this cap.';
+      } else {
+        rt.textContent = 'Headroom available: ' + DC.inr(CAP - P);
+        rx.textContent = 'Your ' + DC.inr(P) + ' grows to ' + DC.inr(Math.round(maturity)) + ' (' + DC.inr(Math.round(totalInt)) + ' interest) at ' + effYield.toFixed(2) + '% effective annual yield. You still have ' + DC.inr(CAP - P) + ' of deposit headroom under the ₹2 lakh aggregate cap if you want to add more before maturity.';
+      }
+
+      window.__lastMssc = {
+        maturity: DC.inr(Math.round(maturity)),
+        interest: DC.inr(Math.round(totalInt)),
+        deposit: DC.inr(Math.round(P)),
+        eff: effYield.toFixed(2) + '%',
+        wd: DC.inr(Math.round(maxWd)),
+        rate: rate
+      };
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      elAmt.value = '200000'; elRate.value = '7.5'; compute(); DC.toast('Reset to defaults');
+    });
+    [elAmt, elRate].forEach(function (el) { el.addEventListener('input', compute); });
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var r = window.__lastMssc;
+      if (!r) { DC.toast('Nothing to share yet', 'error'); return; }
+      DC.shareWhatsApp('MSSC (Mahila Samman Savings Certificate) plan:\nDeposit: ' + r.deposit + ' @ ' + r.rate + '% quarterly\nMaturity (2 yrs): ' + r.maturity + '\nInterest earned: ' + r.interest + '\nEffective yield: ' + r.eff + '\nMax 40% withdrawal at 1 yr: ' + r.wd + '\nhttps://decidecalc.com/calculators/mssc-calculator.html');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var r = window.__lastMssc;
+      if (!r) { DC.toast('Nothing to copy yet', 'error'); return; }
+      DC.copyResult('MSSC Maturity\nDeposit: ' + r.deposit + '\nRate: ' + r.rate + '% p.a. (quarterly)\nMaturity after 2 years: ' + r.maturity + '\nTotal interest: ' + r.interest + '\nEffective annual yield: ' + r.eff + '\nMax partial withdrawal (after 1 yr, 40%): ' + r.wd);
+    });
+
+    compute();
+  </script>
+</body>
+</html>

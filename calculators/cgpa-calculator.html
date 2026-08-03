@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CGPA Calculator — CGPA to Percentage & SGPA to CGPA | DecideCalc</title>
+  <meta name="description" content="Free CGPA calculator: convert SGPA to CGPA with credits, CGPA to percentage (9.5 / 10 / university-specific multipliers). CBSE, VTU, Anna University supported.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/cgpa-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-education">Education Tools</a><span class="sep">/</span><span>CGPA Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>CGPA Calculator</h1><div class="sub">Credits-weighted CGPA + % conversion</div></div></div>
+        <div class="calc-body">
+          <p class="field-caption">Enter each semester's SGPA alongside its total credits.</p>
+          <div id="semRows">
+            <div class="field-row sem-row"><div class="field"><label>SGPA (Sem 1)</label><input class="input sem-gpa" type="number" min="0" max="10" step="0.01" placeholder="8.5"></div><div class="field"><label>Credits</label><input class="input sem-cr" type="number" min="1" max="60" step="1" placeholder="24"></div></div>
+            <div class="field-row sem-row"><div class="field"><label>SGPA (Sem 2)</label><input class="input sem-gpa" type="number" min="0" max="10" step="0.01" placeholder="8.8"></div><div class="field"><label>Credits</label><input class="input sem-cr" type="number" min="1" max="60" step="1" placeholder="24"></div></div>
+          </div>
+          <button class="btn btn-ghost btn-block" id="addSem" type="button">+ Add another semester</button>
+          <div style="height:14px"></div>
+          <div class="field"><label for="mult">Percentage multiplier</label>
+            <select class="select" id="mult">
+              <option value="9.5" selected>× 9.5 (CBSE / standard)</option>
+              <option value="10">× 10 (AICTE / some state universities)</option>
+              <option value="9.25">× 9.25 (Anna University standard)</option>
+              <option value="7.1">× 7.1 + 11 (VTU conversion)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate CGPA</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">CGPA</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rPct">—</div><div class="k">Equivalent percentage</div></div>
+          <div class="result-stat"><div class="v" id="rCr">—</div><div class="k">Total credits</div></div>
+          <div class="result-stat"><div class="v" id="rSems">—</div><div class="k">Semesters</div></div>
+          <div class="result-stat"><div class="v" id="rGrade">—</div><div class="k">Classification</div></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="copyBtn">Copy result</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">How CGPA is weighted</h4><p id="recoText">CGPA = Σ(SGPA × credits) ÷ Σ(credits). Semesters with more credits (heavy lab/project work) pull the final number harder — enter credits accurately.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Why credits matter</h2>
+      <p class="mt-2">Not all semesters are equal: a final-year project-heavy semester might carry 28 credits while a light semester has 18. The credit-weighted formula ensures heavy semesters move the CGPA more accurately than a simple average.</p>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>8.5+ CGPA</b> → usually meets competitive placement cutoffs (TCS, Infosys, Wipro first screens)</li>
+        <li><b>7.5+ CGPA</b> → meets most PSU/GATE eligibility corridors</li>
+        <li><b>6.5+ CGPA</b> → eligible for most private-sector campus jobs</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Check your university:</b> VTU, Anna University, Mumbai University and CBSE all use slightly different multipliers. Use the dropdown to match yours.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'cgpa-calculator', faqs: [
+      { q: 'Is 8 CGPA equal to 76%?', a: 'Under the standard CBSE-style ×9.5 rule, 8 × 9.5 = 76%. Some universities (VTU, Anna University) use different formulas — always use the multiplier your institution specifies.' },
+      { q: 'How do I calculate CGPA without credits?', a: 'If all semesters carry equal credits, enter the same number for each semester — the calculator will effectively average the SGPAs.' },
+      { q: 'What is the difference between SGPA and CGPA?', a: 'SGPA measures one semester\'s performance; CGPA averages all completed semesters, weighted by each semester\'s credit load.' },
+      { q: 'Do backlogs affect CGPA?', a: 'Once cleared, most universities replace the fail grade with the passing grade points. Enter the final SGPA reported on your latest marksheet.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('graduation');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('sparkle');
+
+    let semCount = 2;
+    document.getElementById('addSem').addEventListener('click', function () {
+      semCount++;
+      const row = document.createElement('div');
+      row.className = 'field-row sem-row';
+      row.innerHTML = '<div class="field"><label>SGPA (Sem ' + semCount + ')</label><input class="input sem-gpa" type="number" min="0" max="10" step="0.01" placeholder="8.5"></div><div class="field"><label>Credits</label><input class="input sem-cr" type="number" min="1" max="60" step="1" placeholder="24"></div>';
+      document.getElementById('semRows').appendChild(row);
+      row.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', compute); });
+    });
+
+    function classify(cg) {
+      if (cg >= 9) return 'Outstanding';
+      if (cg >= 8) return 'First Class w/ Dist.';
+      if (cg >= 7) return 'First Class';
+      if (cg >= 6) return 'Second Class';
+      if (cg >= 5) return 'Pass Class';
+      return 'Below Pass';
+    }
+    function setInvalid(msg) {
+      ['rMain','rPct','rCr','rSems','rGrade'].forEach(function (id){ document.getElementById(id).textContent = '—'; });
+      if (msg) document.getElementById('recoText').textContent = msg;
+    }
+    function compute() {
+      const gpas = Array.prototype.slice.call(document.querySelectorAll('.sem-gpa'));
+      const crs = Array.prototype.slice.call(document.querySelectorAll('.sem-cr'));
+      let sumW = 0, sumCr = 0, filled = 0;
+      for (let i = 0; i < gpas.length; i++) {
+        const g = parseFloat(gpas[i].value), c = parseFloat(crs[i].value);
+        if (!isFinite(g) && !isFinite(c)) continue; // empty row
+        if (!isFinite(g) || g < 0 || g > 10) return setInvalid('Each entered semester needs an SGPA between 0 and 10.');
+        if (!isFinite(c) || c <= 0 || c > 60) return setInvalid('Each entered semester needs credits between 1 and 60.');
+        sumW += g * c; sumCr += c; filled++;
+      }
+      if (filled === 0) return setInvalid('Enter at least one semester\'s SGPA and credits.');
+      const cgpa = sumW / sumCr;
+      const multSel = document.getElementById('mult');
+      let pct, mLabel;
+      const m = multSel.value;
+      if (m === '7.1') { pct = (cgpa - 0.75) * 10; mLabel = 'VTU: (CGPA − 0.75) × 10'; }
+      else { pct = cgpa * parseFloat(m); mLabel = '× ' + m; }
+      document.getElementById('rMain').textContent = cgpa.toFixed(2);
+      document.getElementById('rLbl').textContent = 'CGPA (' + filled + ' sem' + (filled > 1 ? 's' : '') + ')';
+      document.getElementById('rPct').textContent = pct.toFixed(1) + '%';
+      document.getElementById('rCr').textContent = sumCr;
+      document.getElementById('rSems').textContent = filled;
+      document.getElementById('rGrade').textContent = classify(cgpa);
+      document.getElementById('recoTitle').textContent = 'CGPA ' + cgpa.toFixed(2) + ' ≈ ' + pct.toFixed(1) + '%';
+      document.getElementById('recoText').textContent = 'Weighted by credits across ' + filled + ' semester(s). Percentage uses formula "' + mLabel + '". Classification: ' + classify(cgpa) + '.';
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    document.getElementById('mult').addEventListener('change', compute);
+    document.getElementById('semRows').addEventListener('input', compute);
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      document.querySelectorAll('.sem-gpa, .sem-cr').forEach(function (i) { i.value = ''; });
+      compute();
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Enter SGPA + credits first', 'error'); return; }
+      DC.copyResult('CGPA: ' + v + ' (' + document.getElementById('rPct').textContent + '), Class: ' + document.getElementById('rGrade').textContent + ' — via DecideCalc');
+    });
+  </script>
+</body>
+</html>

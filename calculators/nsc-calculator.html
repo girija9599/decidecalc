@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSC Calculator — National Savings Certificate Maturity & 80C | DecideCalc</title>
+  <meta name="description" content="Free NSC calculator: National Savings Certificate maturity value at 7.7% p.a. compounded annually over 5 years. Year-wise growth table, 80C deduction limits and tax treatment explained.">
+  <link rel="canonical" href="https://decidecalc.com/calculators/nsc-calculator.html">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>NSC Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>NSC Calculator</h1><div class="sub">National Savings Certificate — 5-year, 7.7% p.a.</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Investment amount (₹) — min ₹1,000, multiples of 100</label>
+            <input class="input" id="amt" type="number" min="1000" max="10000000" step="100" value="100000" inputmode="numeric">
+          </div>
+          <div class="field"><label>Interest rate (% per year, compounded annually)</label>
+            <input class="input" id="rate" type="number" min="0.1" max="20" step="0.1" value="7.7" inputmode="decimal">
+          </div>
+          <div class="field"><label>Tenure</label>
+            <select class="select" id="tenure" disabled>
+              <option value="5" selected>5 years (fixed under NSC VIII Issue)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Maturity</button>
+          <button class="btn btn-ghost btn-block" id="resetBtn" style="margin-top:10px">Reset</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl" id="rLbl">Maturity value after 5 years</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rInt">—</div><div class="k">Total interest</div></div>
+          <div class="result-stat"><div class="v" id="rDep">—</div><div class="k">Amount invested</div></div>
+          <div class="result-stat"><div class="v" id="rEff">—</div><div class="k">Effective annual yield</div></div>
+          <div class="result-stat"><div class="v" id="rRatio">—</div><div class="k">Growth multiple</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="nscChart"></canvas></div>
+        <div class="result-actions">
+          <button class="btn btn-accent btn-sm" id="shareBtn">Share on WhatsApp</button>
+          <button class="btn btn-ghost btn-sm" id="copyBtn">Copy result</button>
+        </div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">80C: ₹1.5L per year limit</h4><p id="recoText">Your NSC deposit qualifies for deduction under Section 80C — but only up to the combined ₹1.5 lakh/year 80C ceiling (shared with EPF, PPF, ELSS, life insurance, etc.). Amounts above the limit get no fresh deduction.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Year-wise growth</h2>
+      <p class="mt-2">NSC compounds annually — each year's interest is added to the certificate and itself earns interest. The reinvested interest for years 1–4 also counts as a fresh 80C investment each year (year-5 interest doesn't, since it matures).</p>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="breakdown" id="growthTable">
+          <thead><tr><th>Year</th><th class="num">Opening balance</th><th class="num">Interest earned</th><th class="num">Closing balance</th></tr></thead>
+          <tbody id="growthBody">
+            <tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter an investment amount to see the 5-year schedule.</td></tr>
+          </tbody>
+          <tfoot id="growthFoot" style="display:none"><tr><td>Total</td><td class="num"></td><td class="num" id="footInt"></td><td class="num" id="footClose"></td></tr></tfoot>
+        </table>
+      </div>
+      <div class="note mt-2" style="margin-top:16px"><span id="nIcon1"></span><div><b>Tax on interest:</b> NSC interest is taxable under "Income from Other Sources" each year on an accrual basis. However, because years 1–4 interest is deemed reinvested in NSC, it also qualifies for 80C deduction in that year (subject to the ₹1.5L cap). The final year's interest is fully taxable with no fresh deduction.</div></div>
+      <div class="note mt-2"><span id="nIcon2"></span><div><b>Premature closure:</b> NSC cannot be closed before 5 years except in three exceptional cases — (1) death of the holder, (2) court order, or (3) forfeiture by a Gazetted Government Officer when pledged as security.</div></div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/calc-page.js"></script>
+  <script>
+    DC.page = {
+      slug: 'nsc-calculator',
+      faqs: [
+        { q: 'What is the current NSC interest rate?', a: '7.7% p.a. compounded annually for the NSC VIII Issue (the rate is reviewed by the government every quarter). The rate applicable on the day you buy stays locked for the full 5-year tenure.' },
+        { q: 'Is NSC investment eligible for Section 80C deduction?', a: 'Yes — the deposit qualifies under Section 80C, but only up to the combined ₹1.5 lakh/year ceiling shared with EPF, PPF, ELSS, life insurance premiums and other 80C instruments. The reinvested annual interest (years 1–4) also counts as fresh 80C investment each year, except the final year\'s interest.' },
+        { q: 'Is NSC interest taxable?', a: 'Yes. Interest is taxable annually on an accrual basis under "Income from Other Sources" at your slab rate. For years 1–4, the tax hit is softened because the same interest qualifies for 80C deduction as deemed reinvestment. The 5th year\'s interest is fully taxable. No TDS is deducted by the post office — you must declare it in your ITR.' },
+        { q: 'Can I close my NSC before 5 years?', a: 'No, except in three exceptional cases: (1) death of the certificate holder, (2) forfeiture by a Gazetted Government Officer to whom it was pledged, or (3) under a court order. There is no other liquidity — plan your cash flow assuming the full 5-year lock-in.' },
+        { q: 'What is the minimum and maximum I can invest in NSC?', a: 'Minimum ₹1,000, and thereafter in multiples of ₹100. There is no maximum investment limit — but the 80C tax benefit stops at ₹1.5 lakh per year, and the interest stays taxable regardless of the amount.' }
+      ]
+    };
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('shield');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('nIcon1').innerHTML = DC.icon('percent');
+    document.getElementById('nIcon2').innerHTML = DC.icon('lock');
+
+    var elAmt = document.getElementById('amt');
+    var elRate = document.getElementById('rate');
+
+    function showPlaceholder() {
+      ['rMain','rInt','rDep','rEff','rRatio'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      document.getElementById('growthBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter a valid amount (min ₹1,000, in multiples of 100) and rate to see the 5-year schedule.</td></tr>';
+      document.getElementById('growthFoot').style.display = 'none';
+      if (DC.charts.nscChart) { DC.charts.nscChart.destroy(); delete DC.charts.nscChart; }
+    }
+
+    function compute() {
+      var rawAmt = elAmt.value.trim();
+      var rawRate = elRate.value.trim();
+      var P = parseFloat(rawAmt);
+      var rate = parseFloat(rawRate);
+
+      // Strict validation: blank, non-numeric, zero, below minimum, or not a multiple of 100 → placeholder, not fake numbers.
+      var amtBad = rawAmt === '' || !isFinite(P) || P < 1000 || P > 10000000 || Math.round(P) % 100 !== 0;
+      var rateBad = rawRate === '' || !isFinite(rate) || rate <= 0 || rate > 20;
+      if (amtBad || rateBad) { showPlaceholder(); return; }
+      P = Math.round(P);
+
+      var r = rate / 100;
+      var rows = [];
+      var bal = P;
+      for (var y = 1; y <= 5; y++) {
+        var interest = bal * r;
+        var closing = bal + interest;
+        rows.push({ year: y, opening: bal, interest: interest, closing: closing });
+        bal = closing;
+      }
+      var maturity = bal;
+      var totalInt = maturity - P;
+
+      document.getElementById('rMain').textContent = DC.inr(maturity);
+      document.getElementById('rLbl').textContent = 'Maturity after 5 yrs @ ' + rate + '% (was ' + DC.compact(P) + ')';
+      document.getElementById('rInt').textContent = DC.inr(totalInt) + ' (' + DC.compact(totalInt) + ')';
+      document.getElementById('rDep').textContent = DC.inr(P);
+      document.getElementById('rEff').textContent = rate.toFixed(2) + '% (annual compounding)';
+      document.getElementById('rRatio').textContent = (maturity / P).toFixed(3) + 'x';
+
+      // Year-wise growth table
+      document.getElementById('growthBody').innerHTML = rows.map(function (rw) {
+        return '<tr><td>Year ' + rw.year + '</td><td class="num">' + DC.inr(Math.round(rw.opening)) + '</td><td class="num">' + DC.inr(Math.round(rw.interest)) + '</td><td class="num">' + DC.inr(Math.round(rw.closing)) + '</td></tr>';
+      }).join('');
+      document.getElementById('footInt').textContent = DC.inr(Math.round(totalInt));
+      document.getElementById('footClose').textContent = DC.inr(Math.round(maturity));
+      document.getElementById('growthFoot').style.display = '';
+
+      // Growth chart
+      DC.makeChart('nscChart', {
+        type: 'bar',
+        data: {
+          labels: ['Invested', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+          datasets: [{
+            label: 'NSC value',
+            data: [Math.round(P)].concat(rows.map(function (rw) { return Math.round(rw.closing); })),
+            backgroundColor: ['rgba(15,21,51,.55)', 'rgba(67,56,202,.65)', 'rgba(59,130,246,.65)', 'rgba(37,99,235,.7)', 'rgba(29,78,216,.75)', 'rgba(139,92,246,.8)'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          scales: { y: { ticks: { callback: function (v) { return DC.compact(v); } } } },
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return DC.inr(c.raw); } } } }
+        }
+      });
+
+      // Contextual 80C recommendation
+      var title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      if (P > 150000) {
+        title.textContent = 'Heads up: over the 80C limit';
+        txt.textContent = 'Only ₹1.5L per year gets the 80C deduction (shared with EPF, PPF, ELSS etc.). The remaining ' + DC.compact(P - 150000) + ' still earns ' + rate + '% but with no tax break — and all interest stays taxable.';
+      } else if (P === 150000) {
+        title.textContent = 'You have maxed out 80C with NSC';
+        txt.textContent = 'A ₹1.5L NSC deposit alone fills the entire 80C limit for the year. EPF, PPF or ELSS on top of this will not add any further deduction — and remember NSC interest is taxable at maturity accrual.';
+      } else {
+        title.textContent = '80C: ₹1.5L per year limit';
+        txt.textContent = 'This ' + DC.compact(P) + ' deposit fits inside your ₹1.5L/year 80C ceiling — you still have ' + DC.compact(150000 - P) + ' of headroom left for EPF, PPF, ELSS or insurance before the cap applies.';
+      }
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    elAmt.addEventListener('input', compute);
+    elRate.addEventListener('input', compute);
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      elAmt.value = '';
+      elRate.value = '7.7';
+      compute();
+      DC.toast('Reset — enter an investment amount', '');
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Enter a valid amount first', 'error'); return; }
+      DC.shareWhatsApp('NSC: ' + document.getElementById('rDep').textContent + ' grows to ' + v + ' in 5 years (' + document.getElementById('rInt').textContent.split(' (')[0] + ' interest) — try the DecideCalc NSC Calculator!');
+    });
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var v = document.getElementById('rMain').textContent;
+      if (v === '—') { DC.toast('Nothing to copy — enter a valid amount', 'error'); return; }
+      var lines = ['NSC Result', 'Invested: ' + document.getElementById('rDep').textContent, 'Rate: ' + elRate.value + '% p.a. compounded annually', 'Maturity (5 yrs): ' + v, 'Total interest: ' + document.getElementById('rInt').textContent.split(' (')[0]];
+      var bodyRows = document.querySelectorAll('#growthBody tr');
+      lines.push('Year-wise:');
+      bodyRows.forEach(function (tr) {
+        var tds = tr.querySelectorAll('td');
+        if (tds.length === 4) lines.push(tds[0].textContent + ': open ' + tds[1].textContent + ', interest ' + tds[2].textContent + ', close ' + tds[3].textContent);
+      });
+      DC.copyResult(lines.join('\n'));
+    });
+
+    compute();
+  </script>
+</body>
+</html>
