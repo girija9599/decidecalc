@@ -1,0 +1,19 @@
+{
+  "name": "decidecalc",
+  "version": "1.0.0",
+  "description": "DecideCalc - Free Life Decision Calculators",
+  "type": "module",
+  "scripts": {
+    "install": "npm install"
+  },
+  "keywords": [
+    "calculator",
+    "finance",
+    "decision-making"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  }
+}

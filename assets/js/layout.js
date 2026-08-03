@@ -169,4 +169,28 @@
 
   // base path detection
     DC.base = (window.location.pathname.indexOf('/calculators/') !== -1 || window.location.pathname.indexOf('/blog/') !== -1) ? '../' : '';
+
+  // Initialize Vercel Speed Insights
+  // Speed Insights tracks web vitals and performance metrics
+  // Must be enabled in Vercel dashboard for data collection
+  DC.initSpeedInsights = function () {
+    // Initialize the Speed Insights queue
+    window.si = window.si || function () { 
+      (window.siq = window.siq || []).push(arguments); 
+    };
+    
+    // Load the Speed Insights script
+    // This will be automatically configured by Vercel when deployed
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = '/_vercel/speed-insights/script.js';
+    document.head.appendChild(script);
+  };
+
+  // Initialize Speed Insights on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', DC.initSpeedInsights);
+  } else {
+    DC.initSpeedInsights();
+  }
 })();
