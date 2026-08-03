@@ -9,7 +9,11 @@
   "background_color": "#F6F8FC",
   "theme_color": "#1B3A6B",
   "lang": "en-IN",
-  "categories": ["finance", "productivity", "utilities"],
+  "categories": [
+    "finance",
+    "productivity",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "assets/img/icon-192.svg",
@@ -25,9 +29,21 @@
     }
   ],
   "shortcuts": [
-    { "name": "EMI Calculator", "url": "/calculators/emi-calculator.html" },
-    { "name": "SIP Calculator", "url": "/calculators/sip-calculator.html" },
-    { "name": "Life Decision Scorer", "url": "/calculators/life-decision-scorer.html" },
-    { "name": "GST Calculator", "url": "/calculators/gst-calculator.html" }
+    {
+      "name": "EMI Calculator",
+      "url": "/calculators/emi-calculator"
+    },
+    {
+      "name": "SIP Calculator",
+      "url": "/calculators/sip-calculator"
+    },
+    {
+      "name": "Life Decision Scorer",
+      "url": "/calculators/life-decision-scorer"
+    },
+    {
+      "name": "GST Calculator",
+      "url": "/calculators/gst-calculator"
+    }
   ]
 }

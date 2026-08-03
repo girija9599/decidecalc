@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Planning Calculators — Free &amp; Instant | DecideCalc</title>
+  <meta name="description" content="Weddings, babies, pregnancy — plan life's biggest moments. Free, instant life planning calculators on DecideCalc — no login, works on any device.">
+  <link rel="canonical" href="https://decidecalc.com/categories/life">
+  <meta property="og:title" content="Life Planning Calculators — Free &amp; Instant | DecideCalc">
+  <meta property="og:description" content="Weddings, babies, pregnancy — plan life's biggest moments. Free, instant life planning calculators on DecideCalc — no login, works on any device.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://decidecalc.com/categories/life">
+  <meta property="og:image" content="https://decidecalc.com/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="manifest" href="../../manifest.json">
+</head>
+<body>
+  <main class="container" style="padding-top:40px;padding-bottom:80px">
+    <nav class="breadcrumb"><a href="../../">Home</a><span class="sep">/</span><a href="../">Categories</a><span class="sep">/</span><span>Life Planning</span></nav>
+    <span class="badge reveal" id="catCount"></span>
+    <h1 class="reveal d1" style="margin-top:12px">Life Planning</h1>
+    <p class="lead reveal d2 mt-2" style="max-width:640px">Weddings, babies, pregnancy — plan life's biggest moments.</p>
+    <div class="search-box reveal d3" style="max-width:460px">
+      <input id="toolSearch" class="input" type="search" placeholder="Search life planning tools…" autocomplete="off" aria-label="Search Life Planning tools">
+    </div>
+    <div class="grid grid-3" id="toolsGrid" style="margin-top:26px"></div>
+    <p id="noResults" hidden style="color:var(--muted);margin-top:18px">No tools match your search. Try a different term or <a href="../">browse all categories</a>.</p>
+  </main>
+  <noscript><p style="max-width:720px;margin:40px auto;padding:0 20px">The Life Planning tool list needs JavaScript. All calculators also run 100% in your browser.</p></noscript>
+  <script src="../../assets/js/core.js"></script>
+  <script src="../../assets/js/tools.js"></script>
+  <script src="../../assets/js/layout.js"></script>
+  <script src="../../assets/js/ads.js"></script>
+  <script>
+    (function () {
+      var list = DC.tools.filter(function (t) { return t.cat === 'life'; });
+      document.getElementById('catCount').textContent = list.length + ' live tool' + (list.length === 1 ? '' : 's');
+      
+    function toolCard(t) {
+      var cat = DC.catName(t.cat);
+      return '<a class="tool-card reveal" href="../../calculators/' + t.slug + '" style="--cat-color:' + cat.color + '">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+          '<span class="tool-ic">' + DC.icon(t.icon) + '</span>' +
+          '<span class="tag" style="color:var(--success);border-color:color-mix(in srgb,var(--success) 35%,var(--border));background:color-mix(in srgb,var(--success) 10%,transparent)">● Live</span>' +
+        '</div>' +
+        '<h3>' + t.name + '</h3>' +
+        '<p>' + t.blurb + '</p>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;font-size:.82rem;font-weight:700;color:' + cat.color + '">' +
+          '<span>' + cat.name.split(' ')[0] + '</span><span>Open →</span>' +
+        '</div>' +
+      '</a>';
+    }
+      var grid = document.getElementById('toolsGrid');
+      grid.innerHTML = list.map(toolCard).join('');
+      var cards = Array.prototype.slice.call(grid.children);
+      document.getElementById('toolSearch').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase(), shown = 0;
+        cards.forEach(function (el, i) {
+          var t = list[i];
+          var ok = !q || ((t.name + ' ' + t.blurb + ' ' + (t.aliases || '')).toLowerCase().indexOf(q) !== -1);
+          el.style.display = ok ? '' : 'none';
+          if (ok) shown++;
+        });
+        document.getElementById('noResults').hidden = shown !== 0;
+      });
+      DC.renderLayout();
+      setTimeout(function () { DC.initReveal(); }, 0);
+    })();
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Life Planning Calculators","url":"https://decidecalc.com/categories/life","description":"Weddings, babies, pregnancy — plan life's biggest moments.","isPartOf":{"@type":"WebSite","name":"DecideCalc","url":"https://decidecalc.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://decidecalc.com/"},{"@type":"ListItem","position":2,"name":"Categories","item":"https://decidecalc.com/categories"},{"@type":"ListItem","position":3,"name":"Life Planning"}]}</script>
+</body>
+</html>

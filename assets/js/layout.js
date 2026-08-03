@@ -64,15 +64,15 @@
 
   DC.renderLayout = function (opts) {
     opts = opts || {};
-    const here = (window.location.pathname.split('/').pop() || 'index.html');
+    const here = (window.location.pathname.split('/').pop() || './');
     const inCalc = window.location.pathname.indexOf('/calculators/') !== -1;
     const inBlog = window.location.pathname.indexOf('/blog/') !== -1;
     const nav = [
-      { href: DC.base + 'index.html', label: 'Home' },
-      { href: DC.base + 'index.html#categories', label: 'Categories' },
-      { href: DC.base + 'index.html#tools', label: 'All Tools' },
-      { href: DC.base + 'blog/index.html', label: 'Blog' },
-      { href: DC.base + 'index.html#how', label: 'How It Works' }
+      { href: DC.base || '/', label: 'Home', key: 'home' },
+      { href: DC.base + 'categories', label: 'Categories', key: 'categories' },
+      { href: DC.base + 'tools', label: 'All Tools', key: 'tools' },
+      { href: DC.base + 'blog/', label: 'Blog', key: 'blog' },
+      { href: DC.base + 'how-it-works', label: 'How It Works', key: 'how' }
     ];
     const navHTML = nav.map(function (n) {
       return '<a href="' + n.href + '">' + n.label + '</a>';
@@ -81,13 +81,13 @@
     const header =
       '<header class="site-header">' +
         '<div class="container nav">' +
-          '<a class="brand" href="' + DC.base + 'index.html" aria-label="DecideCalc home">' +
+          '<a class="brand" href="' + (DC.base || '/') + '" aria-label="DecideCalc home">' +
             '<span class="brand-mark"><img src="' + DC.base + 'assets/img/decidecalc-mark.svg" width="36" height="36" alt="" aria-hidden="true"></span>' +
             '<span class="brand-copy"><span class="brand-name">Decide<span>Calc</span></span><small>Calculate Before You Decide</small></span>' +
           '</a>' +
           '<nav class="nav-links">' + navHTML + '</nav>' +
           '<div class="nav-actions">' +
-            '<a href="' + DC.base + 'index.html#tools" class="btn btn-primary btn-sm">Explore Tools <span aria-hidden="true">→</span></a>' +
+            '<a href="' + DC.base + 'tools" class="btn btn-primary btn-sm">Explore Tools <span aria-hidden="true">→</span></a>' +
             '<button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav">' +
               '<span></span><span></span><span></span>' +
             '</button>' +
@@ -97,56 +97,57 @@
             '</button>' +
           '</div>' +
         '</div>' +
-        '<div class="mobile-nav" id="mobileNav" aria-hidden="true">' +
-          '<div class="container mobile-nav-inner">' + navHTML +
-            '<a href="' + DC.base + 'index.html#tools" class="btn btn-primary mobile-nav-cta">Explore all tools <span aria-hidden="true">→</span></a>' +
-          '</div>' +
-        '</div>' +
       '</header>' +
-      '<div class="nav-backdrop" aria-hidden="true"></div>' +
-      '<div class="ad-bar ad-header-bar"><ins class="ad-slot" data-slot="header"></ins></div>';
+      // Mobile drawer + backdrop live OUTSIDE the sticky header. A fixed
+      // element inside a position:sticky + backdrop-filter header is
+      // trapped by that containing block and never paints correctly.
+      '<div class="mobile-nav" id="mobileNav" aria-hidden="true">' +
+        '<div class="container mobile-nav-inner">' + navHTML +
+          '<a href="' + DC.base + 'tools" class="btn btn-primary mobile-nav-cta">Explore all tools <span aria-hidden="true">→</span></a>' +
+        '</div>' +
+      '</div>' +
+      '<div class="nav-backdrop" aria-hidden="true"></div>';
 
     const year = new Date().getFullYear();
     const footer =
-      '<div class="ad-bar ad-footer-bar"><ins class="ad-slot" data-slot="footer"></ins></div>' +
       '<footer class="site-footer">' +
         '<div class="container">' +
           '<div class="footer-grid">' +
             '<div class="footer-brand">' +
-              '<a class="brand footer-logo" href="' + DC.base + 'index.html" aria-label="DecideCalc home">' +
+              '<a class="brand footer-logo" href="' + (DC.base || '/') + '" aria-label="DecideCalc home">' +
                 '<span class="brand-mark"><img src="' + DC.base + 'assets/img/decidecalc-mark.svg" width="40" height="40" alt="" aria-hidden="true"></span>' +
                 '<span class="brand-copy"><span class="brand-name">Decide<span>Calc</span></span><small>Calculate Before You Decide</small></span>' +
               '</a>' +
               '<p style="color:rgba(255,255,255,.72);max-width:300px">DecideCalc is a free, no-login, India-first platform of practical life-decision calculators. Every listed tool works — instant results, real recommendations.</p>' +
             '</div>' +
             '<div><h4>Categories</h4>' +
-              '<a href="' + DC.base + 'index.html#cat-finance">Finance & Tax</a>' +
-              '<a href="' + DC.base + 'index.html#cat-career">Career & Salary</a>' +
-              '<a href="' + DC.base + 'index.html#cat-health">Health & Lifestyle</a>' +
-              '<a href="' + DC.base + 'index.html#cat-life">Life Planning</a>' +
-              '<a href="' + DC.base + 'index.html#cat-business">Business Tools</a>' +
-              '<a href="' + DC.base + 'index.html#cat-datetime">Date & Time</a>' +
-              '<a href="' + DC.base + 'index.html#cat-converter">Unit & Currency</a>' +
-              '<a href="' + DC.base + 'index.html#cat-text">Text Tools</a>' +
-              '<a href="' + DC.base + 'index.html#cat-dev">Developer Tools</a>' +
-              '<a href="' + DC.base + 'index.html#cat-utility">Utility Tools</a>' +
-              '<a href="' + DC.base + 'index.html#cat-education">Education Tools</a>' +
-              '<a href="' + DC.base + 'index.html#cat-unique">Decision Tools</a>' +
+              '<a href="' + DC.base + 'categories/finance">Finance & Tax</a>' +
+              '<a href="' + DC.base + 'categories/career">Career & Salary</a>' +
+              '<a href="' + DC.base + 'categories/health">Health & Lifestyle</a>' +
+              '<a href="' + DC.base + 'categories/life">Life Planning</a>' +
+              '<a href="' + DC.base + 'categories/business">Business Tools</a>' +
+              '<a href="' + DC.base + 'categories/datetime">Date & Time</a>' +
+              '<a href="' + DC.base + 'categories/converter">Unit & Currency</a>' +
+              '<a href="' + DC.base + 'categories/text">Text Tools</a>' +
+              '<a href="' + DC.base + 'categories/dev">Developer Tools</a>' +
+              '<a href="' + DC.base + 'categories/utility">Utility Tools</a>' +
+              '<a href="' + DC.base + 'categories/education">Education Tools</a>' +
+              '<a href="' + DC.base + 'categories/unique">Decision Tools</a>' +
             '</div>' +
             '<div><h4>Popular Tools</h4>' +
-              '<a href="' + DC.base + 'calculators/emi-calculator.html">EMI Calculator</a>' +
-              '<a href="' + DC.base + 'calculators/sip-calculator.html">SIP Returns</a>' +
-              '<a href="' + DC.base + 'calculators/income-tax-calculator.html">Income Tax</a>' +
-              '<a href="' + DC.base + 'calculators/retirement-calculator.html">Retirement Age</a>' +
-              '<a href="' + DC.base + 'calculators/life-decision-scorer.html">Life Decision Scorer</a>' +
-              '<a href="' + DC.base + 'calculators/gst-calculator.html">GST Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/emi-calculator">EMI Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/sip-calculator">SIP Returns</a>' +
+              '<a href="' + DC.base + 'calculators/income-tax-calculator">Income Tax</a>' +
+              '<a href="' + DC.base + 'calculators/retirement-calculator">Retirement</a>' +
+              '<a href="' + DC.base + 'calculators/life-decision-scorer">Life Decision Scorer</a>' +
+              '<a href="' + DC.base + 'calculators/gst-calculator">GST Calculator</a>' +
             '</div>' +
             '<div><h4>Company</h4>' +
-              '<a href="' + DC.base + 'blog/index.html">Blog</a>' +
-              '<a href="' + DC.base + 'about.html">About Us</a>' +
-              '<a href="' + DC.base + 'privacy.html">Privacy Policy</a>' +
-              '<a href="' + DC.base + 'terms.html">Terms of Use</a>' +
-              '<a href="' + DC.base + 'contact.html">Contact</a>' +
+              '<a href="' + DC.base + 'blog/">Blog</a>' +
+              '<a href="' + DC.base + 'about">About Us</a>' +
+              '<a href="' + DC.base + 'privacy">Privacy Policy</a>' +
+              '<a href="' + DC.base + 'terms">Terms of Use</a>' +
+              '<a href="' + DC.base + 'contact">Contact</a>' +
             '</div>' +
           '</div>' +
           '<div class="footer-bottom">' +

@@ -49,7 +49,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://decidecalc.com/" },
-        { "@type": "ListItem", "position": 2, "name": cat.name, "item": "https://decidecalc.com/#cat-" + cat.id },
+        { "@type": "ListItem", "position": 2, "name": cat.name, "item": "https://decidecalc.com/categories/" + cat.id },
         { "@type": "ListItem", "position": 3, "name": tool.name }
       ]
     };
@@ -66,7 +66,7 @@
       const rel = DC.related(tool.slug, 3);
       relWrap.innerHTML = rel.map(function (r) {
         const rc = DC.catName(r.cat);
-        return '<a class="mini-card" href="' + r.slug + '.html" style="--cat-color:' + rc.color + '">' +
+        return '<a class="mini-card" href="' + r.slug + '" style="--cat-color:' + rc.color + '">' +
           '<span class="mic">' + DC.icon(r.icon) + '</span>' +
           '<span><h4>' + r.name + '</h4><span>' + rc.name + '</span></span>' +
         '</a>';

@@ -7,6 +7,17 @@
   'use strict';
   const DC = window.DC = window.DC || {};
 
+  /* ---------- Safe helpers ---------- */
+  DC.escape = function (value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  };
+  DC.uid = function (prefix) {
+    DC._uid = (DC._uid || 0) + 1;
+    return (prefix || 'dc') + '-' + DC._uid;
+  };
+
   /* ---------- Theme (dark mode) ---------- */
   DC.applyTheme = function (t) {
     document.documentElement.setAttribute('data-theme', t);
@@ -32,7 +43,7 @@
     const backdrop = document.querySelector('.nav-backdrop');
     if (!toggle || !menu || !backdrop || toggle.dataset.bound) return;
     toggle.dataset.bound = 'true';
-    const blocked = function () { return document.querySelectorAll('main, .ad-bar, .site-footer'); };
+      const blocked = function () { return document.querySelectorAll('main, .site-footer'); };
     const setBackgroundState = function (open) {
       blocked().forEach(function (el) {
         if ('inert' in el) el.inert = open;
@@ -274,35 +285,205 @@
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
     return {
       text: dark ? '#B7C4DC' : '#44546A',
+      textStrong: dark ? '#F3F7FF' : '#14213D',
       grid: dark ? 'rgba(255,255,255,.07)' : 'rgba(16,27,45,.07)',
+      card: dark ? '#131E33' : '#FFFFFF',
       tip: dark ? '#131E33' : '#FFFFFF',
       tipBorder: dark ? '#324767' : '#CBD5E6'
     };
   };
+
+  DC._deepMerge = function (target) {
+    target = target || {};
+    for (let i = 1; i < arguments.length; i++) {
+      const source = arguments[i] || {};
+      Object.keys(source).forEach(function (key) {
+        const value = source[key];
+        if (value && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Function)) {
+          target[key] = DC._deepMerge(target[key] && typeof target[key] === 'object' && !Array.isArray(target[key]) ? target[key] : {}, value);
+        } else {
+          target[key] = value;
+        }
+      });
+    }
+    return target;
+  };
+
+  DC._chartRows = function (config) {
+    const data = config && config.data || {};
+    const labels = data.labels || [];
+    const datasets = data.datasets || [];
+    const rows = [];
+    if (config.type === 'doughnut' || config.type === 'pie' || config.type === 'radar') {
+      const ds = datasets[0] || { data: [] };
+      labels.forEach(function (label, index) {
+        rows.push([label, ds.data[index]]);
+      });
+      return rows;
+    }
+    labels.forEach(function (label, index) {
+      const row = [label];
+      datasets.forEach(function (set) { row.push((set.data || [])[index]); });
+      rows.push(row);
+    });
+    return rows;
+  };
+
+  DC._palette = function (index) {
+    const colors = ['#3B82F6', '#22C55E', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4', '#EC4899', '#84CC16'];
+    return colors[index % colors.length];
+  };
+
+  DC._chartValuePlugin = function (config) {
+    return {
+      id: 'decidecalcValueLabels',
+      afterDatasetsDraw: function (chart) {
+        const settings = (config && config.dcChart && config.dcChart.valueLabels) || {};
+        if (settings.display === false) return;
+        const ctx = chart.ctx, c = DC.themeColors();
+        ctx.save();
+        ctx.font = '600 11px Inter, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        if (chart.config.type === 'bar') {
+          chart.data.datasets.forEach(function (set, si) {
+            chart.getDatasetMeta(si).data.forEach(function (el, di) {
+              const raw = set.data[di];
+              if (!isFinite(raw)) return;
+              const text = typeof settings.formatter === 'function' ? settings.formatter(raw, di, si) : String(raw);
+              ctx.fillStyle = c.textStrong;
+              ctx.fillText(text, el.x, el.y - 4);
+            });
+          });
+        } else if (chart.config.type === 'line' && settings.points === 'ends') {
+          chart.data.datasets.forEach(function (set, si) {
+            const meta = chart.getDatasetMeta(si);
+            for (let di = meta.data.length - 1; di >= 0; di--) {
+              const raw = set.data[di];
+              if (!isFinite(raw)) continue;
+              const point = meta.data[di];
+              const text = typeof settings.formatter === 'function' ? settings.formatter(raw, di, si) : String(raw);
+              ctx.fillStyle = c.textStrong;
+              ctx.textAlign = di === 0 ? 'left' : 'right';
+              ctx.fillText(text, point.x, point.y - 6);
+              break;
+            }
+          });
+        } else if (chart.config.type === 'doughnut' || chart.config.type === 'pie') {
+          chart.getDatasetMeta(0).data.forEach(function (el, di) {
+            const raw = (chart.data.datasets[0].data || [])[di];
+            if (!isFinite(raw)) return;
+            const value = typeof settings.formatter === 'function' ? settings.formatter(raw, di, 0) : String(raw);
+            const pos = el.tooltipPosition();
+            const metrics = ctx.measureText(value);
+            const width = metrics.width + 10;
+            ctx.fillStyle = c.card;
+            ctx.strokeStyle = c.grid;
+            ctx.beginPath();
+            ctx.roundRect(pos.x - width / 2, pos.y - 17, width, 21, 7);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = c.textStrong;
+            ctx.textBaseline = 'middle';
+            ctx.fillText(value, pos.x, pos.y - 6);
+          });
+        }
+        ctx.restore();
+      }
+    };
+  };
+
+  DC._renderChartAlt = function (id, canvas, config) {
+    const meta = (config && config.dcChart) || {};
+    const title = meta.title || (document.title.split('|')[0] || 'Chart').trim();
+    const rows = DC._chartRows(config);
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', title);
+    const host = canvas.closest('.chart-wrap') || canvas.parentElement;
+    if (!host) return;
+
+    let alt = document.getElementById(id + '-chart-alt');
+    if (!alt) {
+      alt = document.createElement('div');
+      alt.className = 'chart-alt';
+      alt.id = id + '-chart-alt';
+      canvas.insertAdjacentElement('afterend', alt);
+    }
+    canvas.setAttribute('aria-describedby', alt.id + '-desc');
+
+    const descId = alt.id + '-desc';
+    const tableId = alt.id + '-table';
+    const originalPlugin = (config.plugins || []).filter(function (plugin) { return plugin && plugin.id !== 'decidecalcValueLabels'; });
+    const labels = config.data.labels || [];
+    let head = '';
+    let body = '';
+    if (config.type === 'doughnut' || config.type === 'pie' || config.type === 'radar') {
+      head = '<tr><th>Label</th><th>Value</th></tr>';
+      body = rows.map(function (row) {
+        return '<tr><td>' + DC.escape(row[0]) + '</td><td>' + DC.escape(typeof meta.tableFormatter === 'function' ? meta.tableFormatter(row[1], row[0]) : row[1]) + '</td></tr>';
+      }).join('');
+    } else {
+      head = '<tr><th>Period</th>' + ((config.data.datasets || []).map(function (set) { return '<th>' + DC.escape(set.label || 'Value') + '</th>'; }).join('')) + '</tr>';
+      body = rows.map(function (row) {
+        return '<tr><td>' + DC.escape(row[0]) + '</td>' + row.slice(1).map(function (value) {
+          return '<td>' + DC.escape(typeof meta.tableFormatter === 'function' ? meta.tableFormatter(value, row[0]) : value) + '</td>';
+        }).join('') + '</tr>';
+      }).join('');
+    }
+    const summary = typeof meta.summaryFormatter === 'function'
+      ? meta.summaryFormatter(labels, config.data.datasets || [], rows)
+      : (meta.summary || 'This chart visualises the current calculated values.');
+    alt.innerHTML =
+      '<div id="' + descId + '" class="chart-desc">' + DC.escape(summary) + '</div>' +
+      '<button class="chart-data-toggle" type="button" aria-expanded="false" aria-controls="' + tableId + '">View chart data</button>' +
+      '<div id="' + tableId + '" class="chart-data-panel" hidden><table class="breakdown"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
+    const toggle = alt.querySelector('.chart-data-toggle');
+    const panel = alt.querySelector('.chart-data-panel');
+    toggle.onclick = function () {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      toggle.textContent = open ? 'View chart data' : 'Hide chart data';
+      panel.hidden = open;
+    };
+    config.plugins = originalPlugin.concat([DC._chartValuePlugin(config)]);
+  };
+
   DC.charts = {}; // registry for destroy/re-render on theme change
   DC.makeChart = function (id, config) {
     const canvas = (typeof id === 'string') ? document.getElementById(id) : id;
     if (!canvas || !window.Chart) return null;
     if (DC.charts[id]) { DC.charts[id].destroy(); }
     const c = DC.themeColors();
-    const merged = Object.assign({}, config, {
-      options: Object.assign({
+    const merged = DC._deepMerge({
+      options: {
         responsive: true, maintainAspectRatio: false,
         plugins: {
-          legend: Object.assign({ display: true, position: 'bottom', labels: { color: c.text, usePointStyle: true, padding: 16, font: { weight: '600' } } }, (config.options && config.options.plugins && config.options.plugins.legend) || {}),
-          tooltip: Object.assign({ backgroundColor: c.tip, titleColor: c.text, bodyColor: c.text, borderColor: c.tipBorder, borderWidth: 1, padding: 12, cornerRadius: 8, displayColors: true, usePointStyle: true }, (config.options && config.options.plugins && config.options.plugins.tooltip) || {})
+          legend: { display: true, position: 'bottom', labels: { color: c.text, usePointStyle: true, padding: 16, font: { weight: '600' } } },
+          tooltip: { backgroundColor: c.tip, titleColor: c.text, bodyColor: c.text, borderColor: c.tipBorder, borderWidth: 1, padding: 12, cornerRadius: 8, displayColors: true, usePointStyle: true }
         },
         animation: { duration: 900, easing: 'easeOutQuart' }
-      }, (config.options || {}))
-    });
-    // apply default scales colors if scales exist
-    if (config.type === 'bar' || config.type === 'line') {
-      merged.options.scales = Object.assign({
+      }
+    }, config || {});
+
+    if (merged.type === 'bar' || merged.type === 'line') {
+      merged.options.scales = DC._deepMerge({
         x: { ticks: { color: c.text, font: { weight: '600' } }, grid: { display: false }, border: { color: c.grid } },
         y: { ticks: { color: c.text }, grid: { color: c.grid }, border: { display: false } }
-      }, config.options && config.options.scales || {});
+      }, merged.options.scales || {});
     }
-    const ch = new Chart(canvas, merged);
+
+    merged._dcChart = JSON.parse(JSON.stringify(config.dcChart || {}));
+    DC._renderChartAlt(canvas.id || id, canvas, merged);
+    const plugins = merged.plugins || [];
+    delete merged.plugins;
+    const ch = new Chart(canvas, Object.assign({}, merged, { plugins: plugins }));
+    ch.$dcChartConfig = {
+      type: merged.type,
+      data: merged.data,
+      options: merged.options,
+      dcChart: merged._dcChart,
+      plugins: plugins
+    };
     DC.charts[id] = ch;
     return ch;
   };
@@ -310,10 +491,11 @@
   /* Re-render charts on theme change */
   DC._rerenderCharts = function () {
     Object.keys(DC.charts).forEach(function (k) {
-      const ch = DC.charts[k]; if (!ch) return;
-      const cfg = ch.config;
-      ch.destroy(); DC.charts[k] = null;
-      DC.makeChart(ch.canvas.id, { type: cfg.type, data: cfg.data, options: cfg.options });
+      const ch = DC.charts[k]; if (!ch || !ch.$dcChartConfig) return;
+      const cfg = ch.$dcChartConfig;
+      ch.destroy();
+      delete DC.charts[k];
+      DC.makeChart(ch.canvas.id, { type: cfg.type, data: cfg.data, options: cfg.options, dcChart: cfg.dcChart, plugins: [] });
     });
   };
 

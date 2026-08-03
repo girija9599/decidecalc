@@ -1,5 +1,5 @@
 // DecideCalc Service Worker — PWA offline support
-const CACHE = 'decidecalc-v32';
+const CACHE = 'decidecalc-v33';
 const ASSETS = [
   '/',
   '/index.html',
@@ -102,6 +102,21 @@ const ASSETS = [
   '/calculators/paycheck-calculator.html',
   '/calculators/mssc-calculator.html',
   '/calculators/pmay-clss-subsidy-calculator.html',
+  '/tools/index.html',
+  '/categories/index.html',
+  '/how-it-works/index.html',
+  '/categories/finance/index.html',
+  '/categories/career/index.html',
+  '/categories/health/index.html',
+  '/categories/life/index.html',
+  '/categories/business/index.html',
+  '/categories/datetime/index.html',
+  '/categories/converter/index.html',
+  '/categories/text/index.html',
+  '/categories/dev/index.html',
+  '/categories/utility/index.html',
+  '/categories/education/index.html',
+  '/categories/unique/index.html',
   '/assets/css/main.css',
   '/assets/js/core.js',
   '/assets/js/layout.js',

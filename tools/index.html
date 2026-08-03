@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All 90+ Free Calculators &amp; Tools — DecideCalc</title>
+  <meta name="description" content="Every live DecideCalc calculator in one directory: finance, tax, career, health, life planning, date &amp; time, converters, text, developer, utility and education tools. Search and filter instantly.">
+  <link rel="canonical" href="https://decidecalc.com/tools">
+  <meta property="og:title" content="All 90+ Free Calculators &amp; Tools — DecideCalc">
+  <meta property="og:description" content="Every live DecideCalc calculator in one directory: finance, tax, career, health, life planning, date &amp; time, converters, text, developer, utility and education tools. Search and filter instantly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://decidecalc.com/tools">
+  <meta property="og:image" content="https://decidecalc.com/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="manifest" href="../manifest.json">
+</head>
+<body>
+  <main class="container" style="padding-top:40px;padding-bottom:80px">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><span>All Tools</span></nav>
+    <span class="badge reveal" id="toolCount"></span>
+    <h1 class="reveal d1" style="margin-top:12px">All <span style="color:var(--primary)">Calculators &amp; Tools</span></h1>
+    <p class="lead reveal d2 mt-2" style="max-width:640px">Search by name or tap a category chip. Every tool here is live — instant results, real recommendations, no login.</p>
+    <div class="search-box reveal d3" style="max-width:480px">
+      <input id="toolSearch" class="input" type="search" placeholder="Search: EMI, SIP, tax, BMI, age, password…" autocomplete="off" aria-label="Search all tools">
+    </div>
+    <div class="chip-group reveal" id="filterChips" style="margin-top:14px"></div>
+    <div class="grid grid-3" id="toolsGrid" style="margin-top:26px"></div>
+    <p id="noResults" hidden style="color:var(--muted);margin-top:18px">No tools match your search — try a broader term like “loan”, “tax” or “health”.</p>
+  </main>
+  <noscript><p style="max-width:720px;margin:40px auto;padding:0 20px">The tool directory needs JavaScript. Visit <a href="../categories">Categories</a> for grouped listings.</p></noscript>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/tools.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    (function () {
+      var activeFilter = 'all', activeQuery = '';
+      document.getElementById('toolCount').textContent = DC.tools.length + ' live tools';
+      var wrap = document.getElementById('filterChips');
+      var chips = [{ id: 'all', name: 'All' }].concat(DC.categoriesSorted());
+      wrap.innerHTML = chips.map(function (c) {
+        return '<button type="button" class="chip' + (c.id === 'all' ? ' active' : '') + '" data-cat="' + c.id + '"' + (c.color ? ' style="--cat-color:' + c.color + '"' : '') + '>' + c.name + '</button>';
+      }).join('');
+      wrap.querySelectorAll('.chip').forEach(function (b) {
+        b.addEventListener('click', function () {
+          activeFilter = b.getAttribute('data-cat');
+          wrap.querySelectorAll('.chip').forEach(function (x) { x.classList.toggle('active', x === b); });
+          apply();
+        });
+      });
+      
+    function toolCard(t) {
+      var cat = DC.catName(t.cat);
+      return '<a class="tool-card reveal" href="../calculators/' + t.slug + '" style="--cat-color:' + cat.color + '">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+          '<span class="tool-ic">' + DC.icon(t.icon) + '</span>' +
+          '<span class="tag" style="color:var(--success);border-color:color-mix(in srgb,var(--success) 35%,var(--border));background:color-mix(in srgb,var(--success) 10%,transparent)">● Live</span>' +
+        '</div>' +
+        '<h3>' + t.name + '</h3>' +
+        '<p>' + t.blurb + '</p>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;font-size:.82rem;font-weight:700;color:' + cat.color + '">' +
+          '<span>' + cat.name.split(' ')[0] + '</span><span>Open →</span>' +
+        '</div>' +
+      '</a>';
+    }
+      var grid = document.getElementById('toolsGrid');
+      grid.innerHTML = DC.tools.map(toolCard).join('');
+      var cards = Array.prototype.slice.call(grid.children);
+      function apply() {
+        var shown = 0;
+        cards.forEach(function (el, i) {
+          var t = DC.tools[i];
+          var ok = (activeFilter === 'all' || t.cat === activeFilter) &&
+            (!activeQuery || (t.name + ' ' + t.blurb + ' ' + (t.aliases || '')).toLowerCase().indexOf(activeQuery) !== -1);
+          el.style.display = ok ? '' : 'none';
+          if (ok) shown++;
+        });
+        document.getElementById('noResults').hidden = shown !== 0;
+      }
+      document.getElementById('toolSearch').addEventListener('input', function (e) {
+        activeQuery = e.target.value.trim().toLowerCase();
+        apply();
+      });
+      DC.renderLayout();
+      setTimeout(function () { DC.initReveal(); }, 0);
+    })();
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"All Calculators & Tools","url":"https://decidecalc.com/tools","isPartOf":{"@type":"WebSite","name":"DecideCalc","url":"https://decidecalc.com/"}}</script>
+</body>
+</html>

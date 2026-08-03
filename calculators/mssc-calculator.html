@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MSSC Calculator — Mahila Samman Savings Certificate Maturity | DecideCalc</title>
   <meta name="description" content="Free MSSC calculator: Mahila Samman Savings Certificate maturity at 7.5% p.a. compounded quarterly over 2 years. Max ₹2 lakh deposit, 40% partial withdrawal after 1 year, premature closure rules — all computed.">
-  <link rel="canonical" href="https://decidecalc.com/calculators/mssc-calculator.html">
+  <link rel="canonical" href="https://decidecalc.com/calculators/mssc-calculator">
   <meta name="theme-color" content="#0F1533">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
   <main class="container" style="padding-top:30px;padding-bottom:60px">
-    <nav class="breadcrumb"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#cat-finance">Finance & Tax</a><span class="sep">/</span><span>MSSC Calculator</span></nav>
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../categories/finance">Finance & Tax</a><span class="sep">/</span><span>MSSC Calculator</span></nav>
 
     <div class="calc-layout">
       <div class="calc-shell reveal">
@@ -203,7 +203,7 @@
     document.getElementById('shareBtn').addEventListener('click', function () {
       var r = window.__lastMssc;
       if (!r) { DC.toast('Nothing to share yet', 'error'); return; }
-      DC.shareWhatsApp('MSSC (Mahila Samman Savings Certificate) plan:\nDeposit: ' + r.deposit + ' @ ' + r.rate + '% quarterly\nMaturity (2 yrs): ' + r.maturity + '\nInterest earned: ' + r.interest + '\nEffective yield: ' + r.eff + '\nMax 40% withdrawal at 1 yr: ' + r.wd + '\nhttps://decidecalc.com/calculators/mssc-calculator.html');
+      DC.shareWhatsApp('MSSC (Mahila Samman Savings Certificate) plan:\nDeposit: ' + r.deposit + ' @ ' + r.rate + '% quarterly\nMaturity (2 yrs): ' + r.maturity + '\nInterest earned: ' + r.interest + '\nEffective yield: ' + r.eff + '\nMax 40% withdrawal at 1 yr: ' + r.wd + '/nhttps://decidecalc.com/calculators/mssc-calculator');
     });
     document.getElementById('copyBtn').addEventListener('click', function () {
       var r = window.__lastMssc;
