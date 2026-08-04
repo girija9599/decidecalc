@@ -24,9 +24,9 @@ for (const t of tools) {
   const page = `calculators/${t.slug}.html`;
   if (!exists(page)) { errors.push(`Missing calculator page: ${page}`); continue; }
   const html = read(page);
-  const canon = `https://decidecalc.com/calculators/${t.slug}`;
+  const canon = `https://www.decidecalc.com/calculators/${t.slug}`;
   if (!html.includes(`<link rel="canonical" href="${canon}">`)) errors.push(`Missing canonical: ${t.slug}`);
-  if (!smLocal(`https://decidecalc.com/calculators/${t.slug}`)) errors.push(`Missing sitemap URL: ${t.slug}`);
+  if (!smLocal(`https://www.decidecalc.com/calculators/${t.slug}`)) errors.push(`Missing sitemap URL: ${t.slug}`);
   if (!sw.includes(`'/${page}'`)) errors.push(`Missing SW asset: ${page}`);
   if (!html.includes(`slug:'${t.slug}'`) && !html.includes(`slug: '${t.slug}'`)) errors.push(`Page slug mismatch: ${t.slug}`);
 }

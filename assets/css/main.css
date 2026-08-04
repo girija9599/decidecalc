@@ -133,6 +133,26 @@ ul { list-style: none; }
   .breakdown, .k401-table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .card { overflow-wrap:anywhere; }
   .breakdown th, .breakdown td { padding: 9px 10px; font-size:.88rem; }
+  /* Compress category cards on mobile */
+  .cat-card { padding: 20px 18px; border-radius: 14px; }
+  .cat-icon { width: 48px; height: 48px; margin-bottom: 12px; border-radius: 12px; }
+  .cat-icon svg { width: 22px; height: 22px; }
+  .cat-card h3 { font-size: 1rem; margin-bottom: 5px; }
+  .cat-card p { font-size: .85rem; }
+  .cat-card .cat-meta { margin-top: 12px; }
+  /* Scale tool cards proportionally */
+  .tool-card { padding: 18px 16px; }
+  .tool-card .tool-ic { width: 40px; height: 40px; flex-shrink: 0; }
+  .tool-card .tool-ic svg { width: 20px; height: 20px; }
+  /* Footer compact stacking on mobile */
+  .site-footer { padding-top: 48px; padding-bottom: 36px; }
+  .footer-grid { gap: 26px; }
+  .footer-grid h4 { margin-bottom: 10px; }
+  .footer-grid a { padding: 3px 0; }
+  /* Ensure brand mark doesn't get oversized/blurry */
+  .brand-mark img { width: 32px; height: 32px; }
+  .site-footer .brand-mark img { width: 36px; height: 36px; }
+  .brand-copy small { display: none; }
 }
 
 /* ---------- Typography ---------- */

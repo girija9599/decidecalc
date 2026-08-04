@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = process.cwd();
-const SITE = 'https://decidecalc.com';
+const SITE = 'https://www.decidecalc.com';
 
 /* Category meta mirrored from assets/js/tools.js */
 const CATS = [

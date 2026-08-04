@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Markdown to HTML Converter — Live Preview, Free | DecideCalc</title>
   <meta name="description" content="Convert Markdown to clean HTML instantly with live preview. Supports headings, bold, italic, lists, links, code blocks, tables, blockquotes. 100% offline in your browser.">
-  <link rel="canonical" href="https://decidecalc.com/calculators/markdown-to-html">
+  <link rel="canonical" href="https://www.decidecalc.com/calculators/markdown-to-html">
   <meta name="theme-color" content="#0F1533">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
   <link rel="stylesheet" href="/assets/css/main.css">
@@ -62,7 +62,7 @@
   </main>
 
   <script src="/assets/js/core.js"></script>
-  <script src="/assets/js/layout.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
   <script src="/assets/js/tools.js"></script>
   <script src="/assets/js/calc-page.js"></script>
   <script>
@@ -144,7 +144,7 @@
     }
     document.getElementById('input').addEventListener('input', update);
     document.getElementById('sampleBtn').addEventListener('click', function () {
-      document.getElementById('input').value = '# Sample Article\n\nA **bold** word, an *italic* word, and some `inline code`.\n\n## Subheading\n\n- First bullet\n- Second bullet with a [link](https://decidecalc.com)\n- Third\n\n1. Numbered one\n2. Numbered two\n\n> A wise quote.\n\n```\nconst x = 42;\nconsole.log(x);\n```\n\n---\n\nThat\'s a horizontal rule.';
+      document.getElementById('input').value = '# Sample Article\n\nA **bold** word, an *italic* word, and some `inline code`.\n\n## Subheading\n\n- First bullet\n- Second bullet with a [link](https://www.decidecalc.com)\n- Third\n\n1. Numbered one\n2. Numbered two\n\n> A wise quote.\n\n```\nconst x = 42;\nconsole.log(x);\n```\n\n---\n\nThat\'s a horizontal rule.';
       update();
     });
     document.getElementById('clearBtn').addEventListener('click', function () { document.getElementById('input').value = ''; update(); });

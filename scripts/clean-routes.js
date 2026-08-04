@@ -13,7 +13,7 @@ const PAGES = [
 ];
 const JS = fs.readdirSync(path.join(ROOT, 'assets/js')).filter(f => f.endsWith('.js')).map(f => path.join(ROOT, 'assets/js', f));
 const FILES = [...PAGES, ...JS, path.join(ROOT, 'sitemap.xml'), path.join(ROOT, 'robots.txt')];
-const SITE = 'https://decidecalc.com';
+const SITE = 'https://www.decidecalc.com';
 const PUBLIC_PAGES = ['about', 'contact', 'privacy', 'terms', 'sitemap'];
 
 function depth(file) {

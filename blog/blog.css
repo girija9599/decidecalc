@@ -58,4 +58,32 @@
 .article-cta .btn { flex:0 0 auto; }
 .article-faq { margin-top:42px; }
 @media (max-width:900px) { .blog-grid { grid-template-columns:repeat(2,1fr); } }
-@media (max-width:640px) { .blog-grid { grid-template-columns:1fr; } .article-wrap { width:min(100% - 28px, 900px); } .article-visual { min-height:200px; } .article-cta { align-items:flex-start; flex-direction:column; } }
+@media (max-width:640px) {
+  .blog-grid { grid-template-columns:1fr; }
+  /* Tighter hero — text shouldn't be crushed below the fold */
+  .blog-hero { padding: 46px 0 42px; }
+  .blog-hero h1 { font-size: clamp(1.85rem, 7vw, 2.6rem); line-height: 1.12; }
+  /* Search box: constrain the icon and input so it doesn't dominate */
+  .blog-search { margin-top: 20px; padding: 4px 6px 4px 12px; border-radius: 12px; }
+  .blog-search svg { width: 18px; }
+  .blog-search input { font-size: .95rem; padding: 9px 0; }
+  /* Cards: more compact media + body */
+  .blog-card .blog-card-top { min-height: 130px; }
+  .blog-card .blog-card-top > img { min-height: 130px; }
+  .blog-card-body { padding: 18px 16px; }
+  .blog-card-icon { width: 40px; height: 40px; left: 14px; bottom: 14px; border-radius: 12px; }
+  .blog-card-icon svg { width: 20px; }
+  /* Article internals: tighten wrap, reduce decorative circles + icon height */
+  .article-wrap { width:min(100% - 28px, 900px); padding:22px 0 48px; }
+  .article-head { padding: 24px 0 20px; }
+  .article-head h1 { font-size: clamp(1.5rem, 6vw, 2rem); line-height: 1.2; letter-spacing: -.028em; }
+  .article-byline { margin-top: 16px; font-size: .8rem; flex-wrap: wrap; gap: 8px; }
+  .article-visual { min-height: 200px; margin: 22px 0 26px; }
+  .article-visual::before { width: 240px; height: 240px; top: -140px; right: -60px; }
+  .article-visual::after { width: 160px; height: 160px; bottom: -90px; left: -40px; }
+  .article-visual .article-visual-icon { width: 72px; height: 72px; border-radius: 20px; }
+  .article-visual svg { width: 38px; }
+  .article-content h2 { font-size: 1.3rem; margin: 30px 0 10px; }
+  .article-note { padding: 14px 16px; margin: 20px 0; }
+  .article-cta { align-items:flex-start; flex-direction:column; padding: 18px; gap: 14px; margin: 24px 0; }
+}

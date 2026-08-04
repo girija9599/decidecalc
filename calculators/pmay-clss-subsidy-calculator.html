@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PMAY CLSS Subsidy Calculator — Credit Linked Subsidy Scheme | DecideCalc</title>
   <meta name="description" content="Free PMAY-Urban CLSS subsidy calculator: EWS/LIG 6.5% on ₹6L, MIG-I 4% on ₹9L, MIG-II 3% on ₹12L. Compute your upfront NPV subsidy, reduced loan principal, new EMI and monthly savings.">
-  <link rel="canonical" href="https://decidecalc.com/calculators/pmay-clss-subsidy-calculator">
+  <link rel="canonical" href="https://www.decidecalc.com/calculators/pmay-clss-subsidy-calculator">
   <meta name="theme-color" content="#0F1533">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F1533'/><text x='50' y='70' font-size='58' font-family='Arial' font-weight='bold' fill='%233B82F6' text-anchor='middle'>D</text></svg>">
   <link rel="stylesheet" href="/assets/css/main.css">
@@ -93,7 +93,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js"></script>
-  <script src="/assets/js/layout.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
   <script src="/assets/js/tools.js"></script>
   <script src="/assets/js/calc-page.js"></script>
   <script>
@@ -287,7 +287,7 @@
     document.getElementById('shareBtn').addEventListener('click', function () {
       var r = window.__lastPmay;
       if (!r) { DC.toast('Nothing to share yet', 'error'); return; }
-      DC.shareWhatsApp('My PMAY CLSS subsidy estimate (' + r.cat + '):\nUpfront subsidy: ' + r.npv + ' (on ' + r.portion + ' @ ' + r.sub + '% subsidy)\nEMI: ' + r.emiOld + ' → ' + r.emiNew + ' (saving ' + r.save + '/mo)\nTotal interest saved: ' + r.intSaved + '/nhttps://decidecalc.com/calculators/pmay-clss-subsidy-calculator');
+      DC.shareWhatsApp('My PMAY CLSS subsidy estimate (' + r.cat + '):\nUpfront subsidy: ' + r.npv + ' (on ' + r.portion + ' @ ' + r.sub + '% subsidy)\nEMI: ' + r.emiOld + ' → ' + r.emiNew + ' (saving ' + r.save + '/mo)\nTotal interest saved: ' + r.intSaved + '/nhttps://www.decidecalc.com/calculators/pmay-clss-subsidy-calculator');
     });
     document.getElementById('copyBtn').addEventListener('click', function () {
       var r = window.__lastPmay;

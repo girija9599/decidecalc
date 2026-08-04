@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://decidecalc.com/sitemap.xml
+Sitemap: https://www.decidecalc.com/sitemap.xml
