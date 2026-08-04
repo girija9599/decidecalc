@@ -24,7 +24,7 @@
     <h1 class="reveal d1" style="margin-top:12px">All <span style="color:var(--primary)">Calculators &amp; Tools</span></h1>
     <p class="lead reveal d2 mt-2" style="max-width:640px">Search by name or tap a category chip. Every tool here is live — instant results, real recommendations, no login.</p>
     <div class="search-box reveal d3" style="max-width:480px">
-      <input id="toolSearch" class="input" type="search" placeholder="Search: EMI, SIP, tax, BMI, age, password…" autocomplete="off" aria-label="Search all tools">
+      <input id="toolSearch" name="q" class="input" type="search" placeholder="Search: EMI, SIP, tax, BMI, age, password…" autocomplete="off" aria-label="Search all tools">
     </div>
     <div class="chip-group reveal" id="filterChips" style="margin-top:14px"></div>
     <div class="grid grid-3" id="toolsGrid" style="margin-top:26px"></div>
@@ -37,7 +37,10 @@
   <script src="../assets/js/ads.js"></script>
   <script>
     (function () {
-      var activeFilter = 'all', activeQuery = '';
+      var searchInput = document.getElementById('toolSearch');
+      var activeFilter = 'all', activeQuery = new URLSearchParams(window.location.search).get('q') || '';
+      searchInput.value = activeQuery;
+      activeQuery = activeQuery.trim().toLowerCase();
       document.getElementById('toolCount').textContent = DC.tools.length + ' live tools';
       var wrap = document.getElementById('filterChips');
       var chips = [{ id: 'all', name: 'All' }].concat(DC.categoriesSorted());
@@ -80,10 +83,15 @@
         });
         document.getElementById('noResults').hidden = shown !== 0;
       }
-      document.getElementById('toolSearch').addEventListener('input', function (e) {
+      searchInput.addEventListener('input', function (e) {
         activeQuery = e.target.value.trim().toLowerCase();
+        var url = new URL(window.location.href);
+        if (activeQuery) url.searchParams.set('q', e.target.value.trim());
+        else url.searchParams.delete('q');
+        history.replaceState(null, '', url.pathname + url.search);
         apply();
       });
+      apply();
       DC.renderLayout();
       setTimeout(function () { DC.initReveal(); }, 0);
     })();
