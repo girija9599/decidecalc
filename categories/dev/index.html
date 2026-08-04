@@ -14,12 +14,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0F1533">
-  <link rel="stylesheet" href="../../assets/css/main.css">
-  <link rel="manifest" href="../../manifest.json">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
   <main class="container" style="padding-top:40px;padding-bottom:80px">
-    <nav class="breadcrumb"><a href="../../">Home</a><span class="sep">/</span><a href="../">Categories</a><span class="sep">/</span><span>Developer Tools</span></nav>
+    <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/">Categories</a><span class="sep">/</span><span>Developer Tools</span></nav>
     <span class="badge reveal" id="catCount"></span>
     <h1 class="reveal d1" style="margin-top:12px">Developer Tools</h1>
     <p class="lead reveal d2 mt-2" style="max-width:640px">JSON formatter, Base64, and other everyday dev utilities.</p>
@@ -27,13 +27,13 @@
       <input id="toolSearch" class="input" type="search" placeholder="Search developer tools tools…" autocomplete="off" aria-label="Search Developer Tools tools">
     </div>
     <div class="grid grid-3" id="toolsGrid" style="margin-top:26px"></div>
-    <p id="noResults" hidden style="color:var(--muted);margin-top:18px">No tools match your search. Try a different term or <a href="../">browse all categories</a>.</p>
+    <p id="noResults" hidden style="color:var(--muted);margin-top:18px">No tools match your search. Try a different term or <a href="/">browse all categories</a>.</p>
   </main>
   <noscript><p style="max-width:720px;margin:40px auto;padding:0 20px">The Developer Tools tool list needs JavaScript. All calculators also run 100% in your browser.</p></noscript>
-  <script src="../../assets/js/core.js"></script>
-  <script src="../../assets/js/tools.js"></script>
-  <script src="../../assets/js/layout.js"></script>
-  <script src="../../assets/js/ads.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/layout.js"></script>
+  <script src="/assets/js/ads.js"></script>
   <script>
     (function () {
       var list = DC.tools.filter(function (t) { return t.cat === 'dev'; });
@@ -41,7 +41,7 @@
       
     function toolCard(t) {
       var cat = DC.catName(t.cat);
-      return '<a class="tool-card reveal" href="../../calculators/' + t.slug + '" style="--cat-color:' + cat.color + '">' +
+      return '<a class="tool-card reveal" href="/calculators/' + t.slug + '" style="--cat-color:' + cat.color + '">' +
         '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
           '<span class="tool-ic">' + DC.icon(t.icon) + '</span>' +
           '<span class="tag" style="color:var(--success);border-color:color-mix(in srgb,var(--success) 35%,var(--border));background:color-mix(in srgb,var(--success) 10%,transparent)">● Live</span>' +

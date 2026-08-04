@@ -68,11 +68,11 @@
     const inCalc = window.location.pathname.indexOf('/calculators/') !== -1;
     const inBlog = window.location.pathname.indexOf('/blog/') !== -1;
     const nav = [
-      { href: DC.base || '/', label: 'Home', key: 'home' },
-      { href: DC.base + 'categories', label: 'Categories', key: 'categories' },
-      { href: DC.base + 'tools', label: 'All Tools', key: 'tools' },
-      { href: DC.base + 'blog/', label: 'Blog', key: 'blog' },
-      { href: DC.base + 'how-it-works', label: 'How It Works', key: 'how' }
+      { href: '/', label: 'Home', key: 'home' },
+      { href: '/categories', label: 'Categories', key: 'categories' },
+      { href: '/tools', label: 'All Tools', key: 'tools' },
+      { href: '/blog', label: 'Blog', key: 'blog' },
+      { href: '/how-it-works', label: 'How It Works', key: 'how' }
     ];
     const navHTML = nav.map(function (n) {
       return '<a href="' + n.href + '">' + n.label + '</a>';
@@ -87,7 +87,7 @@
           '</a>' +
           '<nav class="nav-links">' + navHTML + '</nav>' +
           '<div class="nav-actions">' +
-            '<a href="' + DC.base + 'tools" class="btn btn-primary btn-sm">Explore Tools <span aria-hidden="true">→</span></a>' +
+            '<a href="/tools" class="btn btn-primary btn-sm">Explore Tools <span aria-hidden="true">→</span></a>' +
             '<button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav">' +
               '<span></span><span></span><span></span>' +
             '</button>' +
@@ -168,6 +168,9 @@
     setTimeout(function () { if (DC.initAds) DC.initAds(); }, 0);
   };
 
-  // base path detection
-    DC.base = (window.location.pathname.indexOf('/calculators/') !== -1 || window.location.pathname.indexOf('/blog/') !== -1) ? '../' : '';
+  // base path: always site root. Using an absolute '/' here prevents the
+  // class of bugs caused by cleanUrls:true + trailingSlash:false where '/blog'
+  // and '/blog/' resolve the same HTML but the browser's relative-path base
+  // differs (leading to 404s on nested pages for scripts/styles/nav links).
+  DC.base = '/';
 })();

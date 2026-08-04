@@ -33,7 +33,11 @@ for (const f of files) {
     const rel = u.split('#')[0].split('?')[0];
     if (!rel) continue;
     checked++;
-    const target = path.normalize(path.join(dir, rel));
+    // Root-absolute URLs (starting with '/') resolve against the site root,
+    // never against the page's directory — crucial for Vercel cleanUrls.
+    const target = rel.startsWith('/')
+      ? path.normalize(path.join(ROOT, rel.slice(1)))
+      : path.normalize(path.join(dir, rel));
     if (fs.existsSync(target)) continue;
     if (fs.existsSync(target + '.html')) continue;
     if (fs.existsSync(path.join(target, 'index.html'))) continue;
