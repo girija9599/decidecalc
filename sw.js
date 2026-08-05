@@ -1,5 +1,5 @@
 // DecideCalc Service Worker — PWA offline support
-const CACHE = 'decidecalc-v35';
+const CACHE = 'decidecalc-v36';
 const ASSETS = [
   '/',
   '/index.html',
