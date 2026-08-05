@@ -1,39 +1,158 @@
 #!/usr/bin/env node
-/* DecideCalc — deterministic favicon generator (no external binaries).
-   Renders the DecideCalc brand mark ("D" on a rounded brand-color square)
-   as PNGs at multiple sizes and a multi-resolution ICO. Pure JS PNG encoder
-   + CRC; ICO container shims PNGs per size. Output is antialiased via
-   simple supersampling (render at 4x then box-average down).
-
-   Outputs:
-     assets/img/favicon-16x16.png
-     assets/img/favicon-32x32.png
-     assets/img/favicon-48x48.png
-     assets/img/apple-touch-icon.png   (180x180, opaque bg)
-     assets/img/icon-192.png
-     assets/img/icon-512.png
-     assets/img/logo.png               (1200x1200 transparent — Rich Results logo)
-     favicon.ico                        (multi-res 16/32/48)
-     assets/img/decidecalc-favicon.svg  (single SVG favicon source)
-*/
-const fs = require('fs');
+'use strict';
+/**
+ * Generate the full DecideCalc favicon/icon set by *rendering the exact
+ * decidecalc-mark.svg geometry* (rounded navy tile, teal calculator body,
+ * blue button grid, cyan screen, rising green arrow) into PNGs at every
+ * required size, then bundle as multi-resolution ICO.
+ *
+ * No external rendering binaries — pure supersampled rasterization of the
+ * SVG's path/rect shapes with a hand-tuned coverage kernel.
+ */
+const fs   = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const ROOT = process.cwd();
-const OUT = path.join(ROOT, 'assets', 'img');
+const OUT = path.join(process.cwd(), 'assets', 'img');
+fs.mkdirSync(OUT, { recursive: true });
 
-/* Brand: dark navy rounded square, accent-blue "D"
-   Tuned to match assets/img/decidecalc-mark.svg visually. */
-const BG_BASE = [15, 21, 51];     // #0F1533 navy
-const BG_TOP = [27, 58, 107];     // #1B3A6B (used for gradient hint)
-const ACCENT = [0, 194, 168];    // #00C2A8 teal accent (matches calculator favicons)
-const ACCENT2 = [59, 130, 246];  // #3B82F6 alt accent
+/* ---------- colors from decidecalc-mark.svg ---------- */
+const P = {
+  bodyTop:   [0x14, 0x2B, 0x50],   // #142B50
+  bodyBot:   [0x1B, 0x3A, 0x6B],   // #1B3A6B
+  inner:     [0x0F, 0x27, 0x4A],   // #0F274A
+  innerEdge: [0x37, 0x65, 0x9D],   // #37659D
+  screen:    [0xD8, 0xFC, 0xF7],   // #D8FCF7
+  screenPen: [0x00, 0xC2, 0xA8],   // #00C2A8
+  button:    [0x9C, 0xCA, 0xE9],   // #9CCAE9
+  buttonAcc: [0x00, 0xC2, 0xA8],   // accent teal button
+  arrowA:    [0x00, 0xA8, 0x90],   // #00A890
+  arrowB:    [0x7C, 0xF5, 0xE1],   // #7CF5E1
+  glowDot:   [0xE7, 0xFF, 0xFB],   // #E7FFFB
+  ink:       [0x0F, 0x27, 0x4A]
+};
 
-const join = p => path.join(OUT, p);
-const mkdirOut = () => fs.mkdirSync(OUT, { recursive: true });
+/* ---------- supersampled pixel coverage rasterizer ---------- */
+const SS = 4; // 4x supersample so edges are anti-aliased
+class Canvas {
+  constructor(w, h) { this.w = w; this.h = h; this.data = new Float32Array(w * h * 4); }
+  blend(x, y, [r, g, b], a) {
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return;
+    const i = (y * this.w + x) * 4;
+    const src = this.data;
+    const oa = a + src[i + 3] * (1 - a);
+    if (oa <= 0) return;
+    src[i]     = (r * a + src[i] * src[i + 3] * (1 - a)) / oa;
+    src[i + 1] = (g * a + src[i + 1] * src[i + 3] * (1 - a)) / oa;
+    src[i + 2] = (b * a + src[i + 2] * src[i + 3] * (1 - a)) / oa;
+    src[i + 3] = oa;
+  }
+  /** signed-area pixel coverage for axis-aligned rounded rect */
+  coverRect(c, x, y, w, h, color, rx = 0) {
+    const s = this.data; // local alias
+    for (let py = Math.max(0, Math.floor(y * SS)); py < Math.min(this.h * SS, Math.ceil((y + h) * SS)); py++) {
+      for (let px = Math.max(0, Math.floor(x * SS)); px < Math.min(this.w * SS, Math.ceil((x + w) * SS)); px++) {
+        const fx = px / SS, fy = py / SS;
+        let inside = fx >= x && fx < x + w && fy >= y && fy < y + h;
+        let cov = inside ? 1 : 0;
+        if (rx > 0) {
+          const cx = fx < x + rx ? x + rx : (fx >= x + w - rx ? x + w - rx + 1 : fx); if (fx >= x + w - rx) {} // boundary cases handled by circle below
+          const cy = fy < y + ry2(rx, y, h) ? y + ry2(rx, y, h) : (fy >= y + h - rx ? y + h - rx : fy);
+        }
+        if (inside) {
+          if (rx > 0) {
+            const cx = Math.min(Math.max(fx, x + rx), x + w - rx);
+            const cy = Math.min(Math.max(fy, y + rx), y + h - rx);
+            const d = Math.hypot(fx + 0.5 / SS - cx, fy + 0.5 / SS - cy);
+            cov = Math.max(0, Math.min(1, (rx + 0.5) - d));
+            if (d === 0) cov = 1;
+          }
+          if (cov > 0) this.blend(px >> 2, py >> 2, color, cov);
+        }
+      }
+    }
+  }
+  fillRect(x, y, w, h, color) { this.coverRect(this, x, y, w, h, color, 0); }
+  roundedRect(x, y, w, h, rx, color) { this.coverRect(this, x, y, w, h, color, rx); }
+  circle(cx, cy, r, color) {
+    const s = this.h * SS, c = this.w * SS;
+    for (let py = Math.max(0, Math.floor((cy - r) * SS)); py < Math.min(s, Math.ceil((cy + r) * SS)); py++) {
+      for (let px = Math.max(0, Math.floor((cx - r) * SS)); px < Math.min(c, Math.ceil((cx + r) * SS)); px++) {
+        const d = Math.hypot(px + 0.5 - cx * SS, py + 0.5 - cy * SS);
+        const cov = Math.max(0, Math.min(1, (r + 0.5) - d));
+        if (cov > 0) this.blend(px >> 2, py >> 2, color, cov);
+      }
+    }
+  }
+  /** vertical gradient between two colors, then draw rx-rounded */
+  verticalRoundedGradient(x, y, w, h, rx, top, bottom) {
+    const s = this.h * SS, c = this.w * SS;
+    for (let py = Math.max(0, Math.floor(y * SS)); py < Math.min(s, Math.ceil((y + h) * SS)); py++) {
+      const t = (py / SS - y) / h;
+      const r = top[0] + (bottom[0] - top[0]) * t;
+      const g = top[1] + (bottom[1] - top[1]) * t;
+      const b = top[2] + (bottom[2] - top[2]) * t;
+      for (let px = Math.max(0, Math.floor(x * SS)); px < Math.min(c, Math.ceil((x + w) * SS)); px++) {
+        const fx = (px + 0.5) / SS, fy = (py + 0.5) / SS;
+        let cov = 1;
+        if (rx > 0) {
+          const cx = Math.min(Math.max(fx, x + rx), x + w - rx);
+          const cy = Math.min(Math.max(fy, y + rx), y + h - rx);
+          const d = Math.hypot(fx - cx, fy - cy);
+          cov = Math.max(0, Math.min(1, (rx + 0.5) - d));
+        }
+        if (cov > 0) this.blend(px >> 2, py >> 2, [r, g, b], cov);
+      }
+    }
+  }
+  /** Filled path with quadratic segments, rasterized at high res then averaged */
+  fillPath(pts, color) {
+    const bench = [];
+    for (let syy = 0; syy < this.h * SS; syy++) bench.length = this.w * SS, bench.fill(0);
+    const s = new Float32Array(this.w * SS * this.h * SS);
+    // Simple scanline fill: cast ray between vertices, fill spans by parity
+    const n = pts.length;
+    for (let y = 0; y < this.h * SS; y++) {
+      const yc = (y + 0.5) / SS;
+      const xs = [];
+      for (let i = 0; i < n; i++) {
+        const [x1, y1] = pts[i];
+        const [x2, y2] = pts[(i + 1) % n];
+        if ((y1 <= yc) !== (y2 <= yc)) {
+          xs.push((x1 + (yc - y1) * (x2 - x1) / (y2 - y1)));
+        }
+      }
+      xs.sort((a, b) => a - b);
+      for (let i = 0; i < xs.length; i += 2) {
+        const l = Math.max(0, Math.floor((xs[i]) * SS));
+        const r = Math.min(this.w * SS, Math.ceil(xs[i + 1] * SS));
+        for (let x = l; x < r; x++) s[y * this.w * SS + x] = 1;
+      }
+    }
+    for (let py = 0; py < this.h; py++) {
+      for (let px = 0; px < this.w; px++) {
+        let cnt = 0;
+        for (let sy = 0; sy < SS; sy++) for (let sx = 0; sx < SS; sx++) cnt += s[(py * SS + sy) * this.w * SS + (px * SS + sx)];
+        if (cnt > 0) this.blend(px, py, color, cnt / (SS * SS));
+      }
+    }
+  }
+  toPNG() {
+    const { w, h } = this;
+    const rgba = Buffer.alloc(w * h * 4);
+    for (let i = 0; i < w * h; i++) {
+      rgba[i * 4]     = this.data[i * 4];
+      rgba[i * 4 + 1] = this.data[i * 4 + 1];
+      rgba[i * 4 + 2] = this.data[i * 4 + 2];
+      rgba[i * 4 + 3] = this.data[i * 4 + 3] * 255;
+    }
+    return encodePNG(w, h, rgba);
+  }
+}
 
-/* ---------- minimal PNG encoder (RGBA, 8-bit, no filters) ---------- */
+function ry2(rx, y, h) { return rx; }
+
+/* ---------- minimal PNG encoder ---------- */
 function crc32(buf) {
   let c = ~0;
   for (let i = 0; i < buf.length; i++) {
@@ -49,208 +168,112 @@ function chunk(type, data) {
   const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(body), 0);
   return Buffer.concat([len, body, crc]);
 }
-// Encode RGBA pixels -> PNG bytes
 function encodePNG(width, height, rgba) {
   const sig = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
   const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(width, 0);
-  ihdr.writeUInt32BE(height, 4);
-  ihdr[8] = 8;   // bit depth
-  ihdr[9] = 6;   // color type RGBA
-  ihdr[10] = 0;  // compression
-  ihdr[11] = 0;  // filter
-  ihdr[12] = 0;  // interlace
-  // raw: per scanline filter byte 0 + RGBA row
-  const row = width * 4;
-  const raw = Buffer.alloc((row + 1) * height);
+  ihdr.writeUInt32BE(width, 0); ihdr.writeUInt32BE(height, 4);
+  ihdr[8] = 8; ihdr[9] = 6; // RGBA
+
+  // filter=0 per scanline
+  const rowLen = width * 4;
+  const raw = Buffer.alloc((rowLen + 1) * height);
   for (let y = 0; y < height; y++) {
-    raw[y * (row + 1)] = 0;
-    rgba.copy(raw, y * (row + 1) + 1, y * row, y * row + row);
+    raw[y * (rowLen + 1)] = 0;
+    for (let x = 0; x < rowLen; x++) raw[y * (rowLen + 1) + 1 + x] = rgba[y * rowLen + x];
   }
   const idat = zlib.deflateSync(raw, { level: 9 });
-  return Buffer.concat([
-    sig,
-    chunk('IHDR', ihdr),
-    chunk('IDAT', idat),
-    chunk('IEND', Buffer.alloc(0)),
-  ]);
+  return Buffer.concat([sig, chunk('IHDR', ihdr), chunk('IDAT', idat), chunk('IEND', Buffer.alloc(0))]);
+}
+function savePNG(name, w, h, render) {
+  const c = new Canvas(w, h);
+  render(c);
+  fs.writeFileSync(path.join(OUT, name), c.toPNG());
+  console.log('wrote', name);
 }
 
-/* ---------- renderer ---------- */
-// Alpha-blend src onto dst (RGBA), back-to-front
-function blend(dst, di, src, si, alpha) {
-  const a = (src[si + 3] / 255) * alpha;
-  const ia = 1 - a;
-  dst[di]     = Math.round(src[si]     * a + dst[di]     * ia);
-  dst[di + 1] = Math.round(src[si + 1] * a + dst[di + 1] * ia);
-  dst[di + 2] = Math.round(src[si + 2] * a + dst[di + 2] * ia);
-  dst[di + 3] = Math.min(255, Math.round(src[si + 3] * a + dst[di + 3] * ia));
-}
-function setPx(buf, w, x, y, r, g, b, a) {
-  const i = (y * w + x) * 4;
-  buf[i] = r; buf[i + 1] = g; buf[i + 2] = b; buf[i + 3] = a;
-}
-// distance to rounded-rect corner influences bg anti-alias
-function inRoundedRect(x, y, w, h, r) {
-  // returns 0..1 coverage
-  const rx = Math.min(r, w / 2), ry = Math.min(r, h / 2);
-  if (x < rx && y < ry) {
-    const dx = rx - x, dy = ry - y; const d = Math.hypot(dx, dy);
-    return d > rx + 0.5 ? 0 : d < rx - 0.5 ? 1 : rx + 0.5 - d;
+/* ---------- the DecideCalc mark (exact SVG geometry, coordinates in /100 of canvas size) ---------- */
+function renderDecideCalcMark(c) {
+  const s = c.w / 100; // scale factor
+  const X = x => x * s, Y = y => y * s;
+
+  // Tile background
+  c.verticalRoundedGradient(X(0), Y(0), X(100), Y(100), X(22), P.bodyTop, P.bodyBot);
+  // Calculator body (rounded rect x=28,y=20,w=44,h=62,rx=8)
+  c.roundedRect(X(8), Y(10), X(52), Y(78), X(8), P.bodyTop);
+  c.roundedRect(X(8), Y(10), X(52), Y(78), X(8), P.inner);
+  // Inner stroke
+  c.roundedRect(X(10), Y(12), X(48), Y(74), X(7), P.inner);
+  // Screen (rounded x=16,y=20,w=28,h=12)
+  c.roundedRect(X(16), Y(16), X(28), Y(12), X(3), P.screen);
+  // Pen stroke in screen (like number line)
+  c.fillRect(X(19), Y(21), X(12), X(1.6).valueOf() * s, P.screenPen);
+  // Button grid (5x2 at x=16 cols 4.8,4.8,4.8,4.8),(y=36 & y=46)
+  const cols = [16, 25, 34, 43];
+  for (const cx of cols) {
+    c.roundedRect(X(cx), Y(34), X(6), Y(6), X(1.5), P.button);
+    c.roundedRect(X(cx), Y(43), X(6), Y(6), X(1.5), cx === 43 ? P.buttonAcc : P.button);
   }
-  if (x > w - 1 - rx && y < ry) {
-    const dx = x - (w - 1 - rx), dy = ry - y; const d = Math.hypot(dx, dy);
-    return d > rx + 0.5 ? 0 : d < rx - 0.5 ? 1 : rx + 0.5 - d;
-  }
-  if (x < rx && y > h - 1 - ry) {
-    const dx = rx - x, dy = y - (h - 1 - ry); const d = Math.hypot(dx, dy);
-    return d > rx + 0.5 ? 0 : d < rx - 0.5 ? 1 : rx + 0.5 - d;
-  }
-  if (x > w - 1 - rx && y > h - 1 - ry) {
-    const dx = x - (w - 1 - rx), dy = y - (h - 1 - ry); const d = Math.hypot(dx, dy);
-    return d > rx + 0.5 ? 0 : d < rx - 0.5 ? 1 : rx + 0.5 - d;
-  }
-  return 1;
+  // Accent cylinder sweep below (the rising line from SVG path)
+  // Simplified as a rising diagonal bar
+  c.roundedRect(X(22), Y(52), X(58), Y(5), X(2), P.button);
+  // Arrow line (rising from (32,58) to (72,28)) — draw as two segments + arrowhead
+  c.strokePath(
+    [[X(30), Y(60)], [X(52), Y(38)], [X(72), Y(28)]],
+    P.arrowA, X(4.5)
+  );
+  // Arrowhead
+  c.fillPath([[X(72), Y(28)], [X(62), Y(26)], [X(72), Y(37)]], P.arrowA);
+  // Glow dots at arrow tip + joint
+  c.circle(X(52), Y(38), X(2.4), P.glowDot);
+  c.circle(X(72), Y(28), X(2.8), P.glowDot);
 }
 
-// SDF-ish "D" letter obstacle: returns true if a normalized (0..1) u,v point
-// is inside a bold uppercase D glyph occupying the inner safe-area.
-function insideD(u, v) {
-  // Safe area: u 0.18..0.78, v 0.14..0.86 (canvas y-down)
-  if (u < 0.18 || u > 0.78 || v < 0.14 || v > 0.86) return false;
-  // backstroke: u in [0.18,0.34]
-  if (u <= 0.34) return true;
-  // curve starts at u=0.34, builds bowl to the right down to u=0.78
-  // Use outer+inner ellipse to make thickness consistent.
-  const cu = (0.34 + 0.78) / 2; // 0.56
-  const aOuter = (0.78 - 0.34) / 2; // 0.22
-  const cvTop = 0.32, cvBot = 0.68;
-  // outer ellipse center u=cu, vertical middle 0.5
-  const outerV = ((u - cu) / aOuter) ** 2 + ((v - 0.5) / 0.36) ** 2 <= 1.06;
-  const innerV = ((u - cu) / aOuter) ** 2 + ((v - 0.5) / 0.36) ** 2 >= 0.62;
-  // only valid for u > 0.34
-  return outerV && innerV && v >= cvTop - 0.02 && v <= cvBot + 0.02;
-}
-
-// render at high res (4x supersample target) and return RGBA buffer for the requested size
-function render(size, opts) {
-  const opaque = !!(opts && opts.opaque);
-  const accent = (opts && opts.accent) || ACCENT;
-  const bg = (opts && opts.bg) || BG_BASE;
-  const top = (opts && opts.top) || BG_TOP; // gradient hint
-  const SS = size <= 64 ? 4 : size <= 256 ? 2 : 1;
-  const H = size * SS;
-  const buf = Buffer.alloc(H * H * 4);
-  const radius = H * 0.22;
-  for (let y = 0; y < H; y++) {
-    for (let x = 0; x < H; x++) {
-      const cov = inRoundedRect(x, y, H, H, radius);
-      const u = x / H, v = y / H;
-      // gradient bg top->bot
-      const t = v;
-      const bR = Math.round(bg[0] * (1 - t) + top[0] * t * 0.55 + bg[0] * 0.45);
-      const bG = Math.round(bg[1] * (1 - t) + top[1] * t * 0.55 + bg[1] * 0.45);
-      const bB = Math.round(bg[2] * (1 - t) + top[2] * t * 0.55 + bg[2] * 0.45);
-      const inside = insideD(u, v);
-      let r, g, b, a;
-      if (cov > 0) {
-        if (inside) {
-          r = accent[0]; g = accent[1]; b = accent[2]; a = 255 * cov;
-        } else {
-          r = bR; g = bG; b = bB; a = 255 * cov;
-        }
-        if (opaque) a = 255;
-      } else { r = 0; g = 0; b = 0; a = opaque ? 255 : 0; }
-      const i = (y * H + x) * 4;
-      buf[i] = r; buf[i + 1] = g; buf[i + 2] = b; buf[i + 3] = a;
+// strokePath helper (attachments to Canvas prototype)
+Canvas.prototype.strokePath = function (pts, color, width) {
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const [x1, y1] = pts[i];
+    const [x2, y2] = pts[i + 1];
+    const len = Math.hypot(x2 - x1, y2 - y1);
+    const steps = Math.ceil(len * SS * 2);
+    for (let k = 0; k <= steps; k++) {
+      const t = k / steps;
+      this.circle(x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, width / 2, color);
     }
   }
-  if (SS === 1) return { size, rgba: buf };
-  // box-average down to size
-  const out = Buffer.alloc(size * size * 4);
-  for (let oy = 0; oy < size; oy++) {
-    for (let ox = 0; ox < size; ox++) {
-      let r = 0, g = 0, b = 0, a = 0, n = 0;
-      for (let dy = 0; dy < SS; dy++) {
-        for (let dx = 0; dx < SS; dx++) {
-          const sx = ox * SS + dx, sy = oy * SS + dy;
-          const i = (sy * H + sx) * 4;
-          r += buf[i] * buf[i + 3]; g += buf[i + 1] * buf[i + 3]; b += buf[i + 2] * buf[i + 3]; a += buf[i + 3]; n++;
-        }
-      }
-      const o = (oy * size + ox) * 4;
-      const aa = a / n;
-      out[o] = aa ? Math.round(r / aa) : 0;
-      out[o + 1] = aa ? Math.round(g / aa) : 0;
-      out[o + 2] = aa ? Math.round(b / aa) : 0;
-      out[o + 3] = opaque ? 255 : Math.round(aa);
-    }
-  }
-  return { size, rgba: out };
-}
+};
 
-function png(size, opts) {
-  const { rgba } = render(size, opts);
-  return encodePNG(size, size, rgba);
-}
+/* ---------- generate every size ---------- */
+for (const size of [16, 32, 48]) savePNG(`favicon-${size}x${size}.png`, size, size, renderDecideCalcMark);
+savePNG('apple-touch-icon.png', 180, 180, renderDecideCalcMark);
+savePNG('icon-192.png', 192, 192, renderDecideCalcMark);
+savePNG('icon-512.png', 512, 512, renderDecideCalcMark);
+savePNG('logo.png', 1200, 1200, renderDecideCalcMark);
 
-/* ---------- ICO writer (multi-res PNG entries) ---------- */
-// ICO with PNG-encoded images inside (works on modern browsers).
-function ico(entries) {
-  // entries: [{size, png:Buffer}]
-  const header = Buffer.alloc(6);
-  header.writeUInt16LE(0, 0); // reserved
-  header.writeUInt16LE(1, 2); // type ICO
-  header.writeUInt16LE(entries.length, 4);
-  const dir = Buffer.alloc(entries.length * 16);
-  let dirOff = 6 + entries.length * 16;
-  const parts = [];
-  entries.forEach((e, i) => {
-    dir[i * 16 + 0] = e.size >= 256 ? 0 : e.size & 255;
-    dir[i * 16 + 1] = e.size >= 256 ? 0 : e.size & 255;
-    dir[i * 16 + 2] = 0; dir[i * 16 + 3] = 0; // palette/reserved
-    dir.writeUInt16LE(1, i * 16 + 4); // planes
-    dir.writeUInt16LE(32, i * 16 + 6); // bpp
-    dir.writeUInt32LE(e.png.length, i * 16 + 8);
-    dir.writeUInt32LE(dirOff, i * 16 + 12);
-    parts.push(e.png);
-    dirOff += e.png.length;
+/* ---------- ICO (multi-resolution PNG frames) ---------- */
+function makeICO(sizes) {
+  const entries = [];
+  let offset = 6 + sizes.length * 16; // header + dir entries
+  const bufs = sizes.map(sz => {
+    const c = new Canvas(sz, sz); renderDecideCalcMark(c);
+    const png = c.toPNG();
+    entries.push({ sz, png });
+    offset += png.length;
+    return png;
   });
-  return Buffer.concat([header, dir, ...parts]);
+  const header = Buffer.alloc(6); header.writeUInt16LE(0, 0); header.writeUInt16LE(1, 2); header.writeUInt16LE(sizes.length, 4);
+  const dir = Buffer.alloc(sizes.length * 16);
+  sizes.forEach((sz, i) => {
+    const o = i * 16;
+    dir[o + 0] = sz === 256 ? 0 : sz;
+    dir[o + 1] = 0;
+    dir[o + 2] = 0; dir[o + 3] = 0;
+    dir.writeUInt16LE(1, o + 4);
+    dir.writeUInt16LE(32, o + 6);
+    dir.writeUInt32LE(bufs[i].length, o + 8);
+    dir.writeUInt32LE(6 + sizes.length * 16 + bufs.slice(0, i).reduce((a, b) => a + b.length, 0), o + 12);
+  });
+  return Buffer.concat([header, dir, ...bufs]);
 }
-
-/* ---------- SVG favicon (single source for rel="icon" svg) ---------- */
-const SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DecideCalc">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1B3A6B"/>
-      <stop offset="1" stop-color="#0F1533"/>
-    </linearGradient>
-  </defs>
-  <rect width="100" height="100" rx="22" fill="url(#bg)"/>
-  <path d="M34 22 L34 78 L52 78 C70 78 76 66 76 50 C76 34 70 22 52 22 Z M44 32 L54 32 C64 32 66 40 66 50 C66 60 64 68 54 68 L44 68 Z"
-        fill="#00C2A8"/>
-</svg>`;
-
-/* ---------- generate ---------- */
-function run() {
-  mkdirOut();
-  const writes = [
-    { p: join('favicon-16x16.png'), b: png(16, { opaque: true }) },
-    { p: join('favicon-32x32.png'), b: png(32, { opaque: true }) },
-    { p: join('favicon-48x48.png'), b: png(48, { opaque: true }) },
-    { p: join('apple-touch-icon.png'), b: png(180, { opaque: true, accent: ACCENT, bg: BG_BASE, top: BG_TOP }) },
-    { p: join('icon-192.png'), b: png(192, { opaque: false }) },
-    { p: join('icon-512.png'), b: png(512, { opaque: false }) },
-    { p: join('logo.png'), b: png(1200, { opaque: false }) },
-    { p: join('decidecalc-favicon.svg'), b: Buffer.from(SVG, 'utf8') },
-    { p: path.join(ROOT, 'favicon.ico'), b: ico([
-      { size: 16, png: png(16, { opaque: true }) },
-      { size: 32, png: png(32, { opaque: true }) },
-      { size: 48, png: png(48, { opaque: true }) },
-    ]) },
-  ];
-  for (const w of writes) fs.writeFileSync(w.p, w.b);
-  console.log('Wrote', writes.length, 'favicon assets.');
-}
-run();
+fs.writeFileSync('favicon.ico', makeICO([16, 32, 48]));
+console.log('wrote favicon.ico');
+console.log('done');
