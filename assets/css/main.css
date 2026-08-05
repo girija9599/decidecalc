@@ -141,9 +141,11 @@ ul { list-style: none; }
   .cat-card p { font-size: .85rem; }
   .cat-card .cat-meta { margin-top: 12px; }
   /* Scale tool cards proportionally */
-  .tool-card { padding: 18px 16px; }
-  .tool-card .tool-ic { width: 40px; height: 40px; flex-shrink: 0; }
-  .tool-card .tool-ic svg { width: 20px; height: 20px; }
+  .tool-card { padding: 18px 14px; border-radius: 14px; }
+  .tool-card .tool-ic { width: 38px; height: 38px; flex-shrink: 0; margin-right: 12px; }
+  .tool-card .tool-ic svg { width: 18px; height: 18px; }
+  .tool-card h3 { font-size: .98rem; margin-bottom: 4px; }
+  .tool-card p { font-size: .82rem; }
   /* Footer compact stacking on mobile */
   .site-footer { padding-top: 48px; padding-bottom: 36px; }
   .footer-grid { gap: 26px; }
