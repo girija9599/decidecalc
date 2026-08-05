@@ -85,7 +85,7 @@
       '<header class="site-header">' +
         '<div class="container nav">' +
           '<a class="brand" href="' + (DC.base || '/') + '" aria-label="DecideCalc home">' +
-            '<span class="brand-mark"><img src="' + DC.base + 'assets/img/favicon-48x48.png" width="36" height="36" alt="" aria-hidden="true"></span>' +
+            '<span class="brand-mark"><img src="' + DC.base + 'assets/img/decidecalc-mark.svg" width="36" height="36" alt="" aria-hidden="true"></span>' +
             '<span class="brand-copy"><span class="brand-name">Decide<span>Calc</span></span><small>Calculate Before You Decide</small></span>' +
           '</a>' +
           '<nav class="nav-links">' + navHTML + '</nav>' +
@@ -118,7 +118,7 @@
           '<div class="footer-grid">' +
             '<div class="footer-brand">' +
               '<a class="brand footer-logo" href="' + (DC.base || '/') + '" aria-label="DecideCalc home">' +
-                '<span class="brand-mark"><img src="' + DC.base + 'assets/img/favicon-48x48.png" width="40" height="40" alt="" aria-hidden="true"></span>' +
+                '<span class="brand-mark"><img src="' + DC.base + 'assets/img/decidecalc-mark.svg" width="40" height="40" alt="" aria-hidden="true"></span>' +
                 '<span class="brand-copy"><span class="brand-name">Decide<span>Calc</span></span><small>Calculate Before You Decide</small></span>' +
               '</a>' +
               '<p style="color:rgba(255,255,255,.72);max-width:300px">DecideCalc is a free, no-login, India-first platform of practical life-decision calculators. Every listed tool works — instant results, real recommendations.</p>' +

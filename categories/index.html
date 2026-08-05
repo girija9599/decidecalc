@@ -34,7 +34,7 @@
       var grid = document.getElementById('catGrid');
       grid.innerHTML = DC.categoriesSorted().map(function (c, i) {
         var live = DC.catCount(c.id);
-        return '<a class="cat-card reveal d' + (i % 3) + '" href="' + c.id + '" style="--cat-color:' + c.color + '">' +
+        return '<a class="cat-card reveal d' + (i % 3) + '" href="/categories/' + c.id + '" style="--cat-color:' + c.color + '">' +
           '<div class="cat-icon">' + DC.icon(c.icon) + '</div>' +
           '<h3>' + c.name + '</h3>' +
           '<p>' + c.desc + '</p>' +
