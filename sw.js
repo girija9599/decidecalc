@@ -1,5 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
-const CACHE = 'decidecalc-v38';
+// v39: navigation/HTML requests are network-first so freshly deployed content
+// always reaches users and search crawlers. Static assets stay cache-first.
+const CACHE = 'decidecalc-v39';
 const ASSETS = [
   '/',
   '/index.html',
@@ -161,8 +163,7 @@ const ASSETS = [
   '/assets/img/blog-bond-ytm.png',
   '/favicon.ico',
   '/site.webmanifest',
-  '/browserconfig.xml',
-  '/manifest.json'
+  '/browserconfig.xml'
 ];
 
 // Install — cache all static assets
@@ -175,9 +176,11 @@ self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))).then(() => self.clients.claim())));
 });
 
-// Fetch — cache-first for static, network-first for CDN
+// Fetch — static assets cache-first; HTML/navigations network-first (offline fallback)
+const PRECACHED = new Set(ASSETS);
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
+  if (e.request.method !== 'GET') return;
   if (url.hostname === 'cdn.jsdelivr.net') {
     e.respondWith(fetch(e.request).then(res => {
       const clone = res.clone();
@@ -186,10 +189,17 @@ self.addEventListener('fetch', e => {
     }).catch(() => caches.match(e.request)));
     return;
   }
+  const isHtml = e.request.mode === 'navigate' || (e.request.headers.get('accept') || '').includes('text/html');
+  if (isHtml) {
+    // Do not runtime-cache HTML. A navigation always uses the deployed
+    // response; only the installation-time offline copy is a fallback.
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request).then(c => c || caches.match('/index.html'))));
+    return;
+  }
   e.respondWith(caches.match(e.request).then(cached => {
     if (cached) return cached;
     return fetch(e.request).then(res => {
-      if (res.ok) {
+      if (res.ok && PRECACHED.has(url.pathname)) {
         const clone = res.clone();
         caches.open(CACHE).then(c => c.put(e.request, clone));
       }
