@@ -73,6 +73,34 @@
       }).join('');
     }
 
+    // 2b. Render related blog articles (curated in tools.js, not random)
+    let artWrap = document.getElementById('relatedArticles');
+    if (!artWrap) {
+      // Insert after the relatedTools section on pages that only have that block.
+      const relatedSection = document.getElementById('relatedTools');
+      if (relatedSection) {
+        const holder = relatedSection.closest('section');
+        if (holder && holder.parentElement) {
+          artWrap = document.createElement('section');
+          artWrap.id = 'relatedArticles';
+          artWrap.className = 'mt-4 reveal';
+          holder.parentElement.insertBefore(artWrap, holder.nextElementSibling);
+        }
+      }
+    }
+    const relatedArticles = (DC.relatedArticlesList ? DC.relatedArticlesList(tool.slug, 3) : []);
+    if (artWrap && relatedArticles.length) {
+      artWrap.innerHTML = '<h3 class="related-title" style="margin-bottom:14px">Keep reading</h3>' +
+        '<div class="related-mini">' + relatedArticles.map(function (slug) {
+          const meta = DC.blogMeta && DC.blogMeta[slug];
+          if (!meta) return '';
+          return '<a class="mini-card" href="/blog/' + slug + '" style="--cat-color:var(--accent)">' +
+            '<span class="mic">' + DC.icon(meta.icon || 'trending') + '</span>' +
+            '<span><h4>' + meta.title + '</h4><span>Blog guide</span></span>' +
+          '</a>';
+        }).join('') + '</div>';
+    }
+
     // 3. Render FAQ
     const faqWrap = document.getElementById('faqList');
     if (faqWrap && page.faqs) {

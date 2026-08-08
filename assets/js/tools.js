@@ -176,6 +176,67 @@
     const others = DC.tools.filter(function (x) { return x.cat !== t.cat && x.slug !== slug; });
     return sameCat.concat(others).slice(0, n);
   };
+
+  /* Map calculator slugs to relevant blog articles. Curated, not random —
+     keeps calculator pages pointed at genuinely useful reading. */
+  DC.relatedArticles = {
+    'compound-interest-calculator': ['how-to-calculate-compound-interest', 'simple-interest-vs-compound-interest', 'how-much-will-10000-grow-compound-interest', 'how-does-compound-interest-work'],
+    'simple-interest-calculator': ['simple-interest-vs-compound-interest', 'how-to-calculate-compound-interest'],
+    'mortgage-calculator': ['how-to-calculate-mortgage-payment', '30-year-vs-15-year-mortgage', 'how-much-house-can-i-afford', 'rent-or-buy-house-2026-india'],
+    'paycheck-calculator': ['how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay', 'how-to-calculate-salary-increase'],
+    'percentage-calculator': ['how-to-calculate-percentage-increase-and-decrease', 'how-to-calculate-a-discount', 'how-to-calculate-original-price-before-discount'],
+    'savings-goal-calculator': ['how-much-will-10000-grow-compound-interest'],
+    'budget-50-30-20-calculator': ['how-to-calculate-paycheck-from-salary'],
+    'investment-fee-calculator': ['mutual-fund-expense-ratio-impact-india', 'how-to-calculate-compound-interest'],
+    'credit-card-payoff-calculator': ['debt-snowball-vs-avalanche-india', 'credit-card-minimum-payment-payoff-india'],
+    'debt-payoff-planner': ['debt-snowball-vs-avalanche-india', 'credit-card-minimum-payment-payoff-india'],
+    'retirement-calculator': ['retirement-withdrawal-rate-india', 'how-much-will-10000-grow-compound-interest'],
+    'retirement-withdrawal-calculator': ['retirement-withdrawal-rate-india', 'emi-vs-sip-which-is-better-india'],
+    'home-loan-refinance-calculator': ['home-loan-balance-transfer-refinance-india'],
+    'rent-vs-buy': ['rent-or-buy-house-2026-india', 'how-to-calculate-mortgage-payment', '30-year-vs-15-year-mortgage'],
+    'loan-refinance-calculator': ['home-loan-balance-transfer-refinance-india', 'how-to-calculate-loan-interest'],
+    'emi-calculator': ['emi-vs-sip-which-is-better-india', 'how-to-calculate-loan-interest', 'how-to-calculate-mortgage-payment'],
+    'sip-calculator': ['emi-vs-sip-which-is-better-india', 'how-much-will-10000-grow-compound-interest', 'how-does-compound-interest-work'],
+    'income-tax-calculator': ['how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay'],
+    'bond-ytm-calculator': ['bond-yield-vs-ytm-india'],
+    'mutual-fund-expense-ratio-impact-india': [],
+    'health-insurance-need': ['how-much-health-insurance-need-india'],
+    'age-calculator': ['how-to-calculate-age-in-days', 'how-to-calculate-date-difference'],
+    'date-difference-calculator': ['how-to-calculate-date-difference', 'how-to-calculate-business-days-between-dates'],
+    'business-days-calculator': ['how-to-calculate-business-days-between-dates'],
+    'fuel-cost-calculator': ['how-to-calculate-fuel-cost-per-mile'],
+    'salary-hike-negotiator': ['how-to-calculate-salary-increase', 'how-to-calculate-annual-salary-from-hourly-pay'],
+    'cagr-calculator': ['how-much-will-10000-grow-compound-interest', 'how-to-calculate-investment-return'],
+    'rule-of-72': ['how-to-calculate-time-to-double-money', 'how-much-will-10000-grow-compound-interest'],
+    'percentage-calculator': ['how-to-calculate-percentage-increase-and-decrease', 'how-to-calculate-a-discount', 'how-to-calculate-original-price-before-discount']
+  };
+  DC.relatedArticlesList = function (slug, n) {
+    n = n || 3;
+    const list = DC.relatedArticles[slug] || [];
+    return list.slice(0, n);
+  };
+  DC.blogMeta = {
+    'how-to-calculate-compound-interest': { title: 'How to Calculate Compound Interest: Formula, Examples & Free Calculator', desc: 'Learn the compound interest formula step by step with a $10,000 example, see how monthly compounding changes the result, and use our free compound interest calculator to project your savings instantly.', icon: 'trending' },
+    'simple-interest-vs-compound-interest': { title: 'Simple Interest vs. Compound Interest: What\'s the Difference?', desc: 'Simple interest is a flat slice of the principal; compound interest is interest on interest. Compare both formulas side-by-side with $10,000 at 8% for 20 years.', icon: 'percent' },
+    'how-does-compound-interest-work': { title: 'How Does Compound Interest Work? A Simple Explanation', desc: 'See why compound interest is the engine behind savings, 401(k), and mortgage debt, why starting early beats a higher rate later, and how time does the heavy lifting.', icon: 'trending' },
+    'how-much-will-10000-grow-compound-interest': { title: 'How Much Will $10,000 Grow With Compound Interest?', desc: 'Run exact future values for $10,000 at 5%, 7%, and 10% over 10–30 years. See the difference between annual, monthly and daily compounding and the Rule of 72 shortcut.', icon: 'piggy' },
+    'how-to-calculate-compound-interest-formula': { title: 'Compound Interest Formula Explained: A = P(1 + r/n)^nt', desc: 'Break down every variable in A = P(1 + r/n)^nt, solve for rate and time, and avoid the three most common formula mistakes that lead to wrong answers.', icon: 'percent' },
+    'how-to-calculate-mortgage-payment': { title: 'How to Calculate Your Monthly Mortgage Payment (PITI Formula)', desc: 'Step-by-step mortgage payment formula — P, r, n, taxes, insurance and PMI — with a $320,000 example and a side-by-side 15 vs 30 year cost comparison.', icon: 'home' },
+    '30-year-vs-15-year-mortgage': { title: '30-Year vs. 15-Year Mortgage: Which Costs Less Overall?', desc: 'The 30-year gives you a lower payment; the 15-year cuts total interest nearly in half. See the exact monthly cost, total interest, and personal-finance trade-offs.', icon: 'home' },
+    'how-much-house-can-i-afford': { title: 'How Much House Can I Afford on My Income? (The 28/36 Rule)', desc: 'Calculate your maximum mortgage payment from income, debts and down payment using the 28/36 rule, and see exactly what your home budget is at $70K, $90K and $110K.', icon: 'home' },
+    'how-to-calculate-mortgage-interest': { title: 'How to Calculate Mortgage Interest Over the Life of the Loan', desc: 'Amortization explained: why early payments go mostly to interest, what 5% extra principal saves, and how to read the full amortization schedule.', icon: 'percent' },
+    'how-to-calculate-paycheck-from-salary': { title: 'How to Calculate Take-Home Pay From Your Annual Salary', desc: 'Convert salary to hourly, bi-weekly or monthly pay, then subtract federal tax, FICA, state income tax and benefits to find your real paycheck in the USA.', icon: 'money' },
+    'how-to-calculate-salary-increase': { title: 'How to Calculate a Salary Increase Percentage (with Formula)', desc: 'Compute a pay-raise percentage or the new salary after a raise, compare flat dollar raises vs percent raises, and see what 5% on $60,000 actually adds per paycheck.', icon: 'money' },
+    'how-to-calculate-annual-salary-from-hourly-pay': { title: 'How to Convert Hourly Pay to Annual Salary', desc: 'The quick formula: hourly × 2,080 hours. Compare $20, $25 and $30/hour to their gross yearly, monthly and per-paycheck equivalents, including overtime.', icon: 'money' },
+    'gross-pay-vs-net-pay': { title: 'Gross Pay vs. Net Pay: What\'s the Difference?', desc: 'Gross is before deductions; net is what actually hits your bank. See a full stub breakdown of federal withholding, FICA (7.65%), state tax and pre-tax 401(k).', icon: 'money' },
+    'how-to-calculate-percentage-increase-and-decrease': { title: 'How to Calculate Percentage Increase and Percentage Decrease', desc: 'The percentage-change formula (+ and −), salary-raise example, stock-price example, and the simple rule that avoids the most common mistake.', icon: 'percent' },
+    'how-to-calculate-a-discount': { title: 'How to Calculate a Discount: Sale Price, Savings & Original Price', desc: 'Three quick formulas: find the sale price, find what you saved, or reverse it to recover the original price before a 20% or 30% off tag.', icon: 'percent' },
+    'how-to-calculate-loan-interest': { title: 'How to Calculate How Much Interest You\'ll Pay on a Loan', desc: 'Amortization vs simple interest, the PMT formula, and the exact total interest on a $35,000 car loan at 10% — plus how one extra payment cuts it.', icon: 'bank' },
+    'how-to-calculate-investment-return': { title: 'How to Calculate Investment Return (CAGR vs. Simple Growth)', desc: 'Total return vs annualized return, the XIRR effect of monthly contributions, and why 10 years of 7% beats 20 years of 5%.', icon: 'trending' },
+    'how-to-calculate-time-to-double-money': { title: 'How Long Does It Take to Double Your Money? (Rule of 72)', desc: 'Rule of 72 tells you how many years at 6%, 8% or 10%. Exact formula, worked examples, and when the shortcut is off by more than a year.', icon: 'percent' },
+    'rent-or-buy-house-2026-india': { title: 'Rent or Buy a House in 2026? A Complete Framework', desc: 'Compare down payment, closing costs, mortgage, rent, property taxes, maintenance and opportunity cost to see whether renting or buying builds more wealth in 2026.', icon: 'home' }
+  };
+
   DC.toolMatches = function (t, q) {
     if (!q) return true;
     const hay = (t.name + ' ' + t.blurb + ' ' + (t.aliases || '')).toLowerCase();
