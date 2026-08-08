@@ -265,7 +265,7 @@ function makeICO(sizes) {
   sizes.forEach((sz, i) => {
     const o = i * 16;
     dir[o + 0] = sz === 256 ? 0 : sz;
-    dir[o + 1] = 0;
+    dir[o + 1] = sz === 256 ? 0 : sz;
     dir[o + 2] = 0; dir[o + 3] = 0;
     dir.writeUInt16LE(1, o + 4);
     dir.writeUInt16LE(32, o + 6);
