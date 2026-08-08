@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v39';
+const CACHE = 'decidecalc-v40';
 const ASSETS = [
   '/',
   '/index.html',
@@ -20,6 +20,12 @@ const ASSETS = [
   '/blog/mutual-fund-expense-ratio-impact-india.html',
   '/blog/retirement-withdrawal-rate-india.html',
   '/blog/bond-yield-vs-ytm-india.html',
+  '/blog/how-to-calculate-loan-interest.html',
+  '/blog/gross-pay-vs-net-pay.html',
+  '/blog/how-much-house-can-i-afford.html',
+  '/blog/how-to-calculate-investment-return.html',
+  '/blog/how-to-calculate-percentage-increase-and-decrease.html',
+  '/blog/how-to-calculate-a-discount.html',
   '/calculators/emi-calculator.html',
   '/calculators/sip-calculator.html',
   '/calculators/income-tax-calculator.html',
@@ -116,6 +122,7 @@ const ASSETS = [
   '/calculators/loan-refinance-calculator.html',
   '/calculators/retirement-withdrawal-calculator.html',
   '/calculators/bond-ytm-calculator.html',
+  '/calculators/car-loan-calculator.html',
   '/tools/index.html',
   '/categories/index.html',
   '/how-it-works/index.html',
@@ -161,6 +168,12 @@ const ASSETS = [
   '/assets/img/blog-expense-ratio-impact.png',
   '/assets/img/blog-retirement-withdrawal.png',
   '/assets/img/blog-bond-ytm.png',
+  '/assets/img/blog-loan-interest.png',
+  '/assets/img/blog-gross-vs-net-pay.png',
+  '/assets/img/blog-how-much-house.png',
+  '/assets/img/blog-investment-return.png',
+  '/assets/img/blog-percentage-change.png',
+  '/assets/img/blog-discount-calculator.png',
   '/favicon.ico',
   '/site.webmanifest',
   '/browserconfig.xml'

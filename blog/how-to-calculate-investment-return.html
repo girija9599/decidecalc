@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-adsense-account" content="ca-pub-3027138458482943">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Calculate Investment Return: CAGR vs Simple Growth | DecideCalc</title>
+  <meta name="description" content="Total return vs annualized return (CAGR), the XIRR effect of monthly contributions, and why 10 years of 7% beats 20 years of 5%. Worked examples with real numbers.">
+  <link rel="canonical" href="https://www.decidecalc.com/blog/how-to-calculate-investment-return">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+  <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Calculate Investment Return: CAGR vs Simple Growth">
+  <meta property="og:description" content="Total return vs annualized return (CAGR), XIRR for contributions, and why 10 years of 7% beats 20 years of 5%.">
+  <meta property="og:url" content="https://www.decidecalc.com/blog/how-to-calculate-investment-return">
+  <meta property="og:image" content="https://www.decidecalc.com/assets/img/blog-investment-return.png">
+  <meta property="og:site_name" content="DecideCalc">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Calculate Investment Return: CAGR vs Simple Growth">
+  <meta name="twitter:description" content="Total return vs CAGR, XIRR for contributions, and why 7% for 10 years beats 5% for 20 years.">
+  <meta name="twitter:image" content="https://www.decidecalc.com/assets/img/blog-investment-return.png">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Calculate Investment Return (CAGR vs. Simple Growth)",
+    "description": "Total return vs annualized return (CAGR), the XIRR effect of monthly contributions, and why 10 years of 7% beats 20 years of 5%.",
+    "image": "https://www.decidecalc.com/assets/img/blog-investment-return.png",
+    "datePublished": "2026-08-08",
+    "dateModified": "2026-08-08",
+    "author": { "@type": "Organization", "name": "DecideCalc" },
+    "publisher": { "@type": "Organization", "name": "DecideCalc", "logo": { "@type": "ImageObject", "url": "https://www.decidecalc.com/assets/img/apple-touch-icon.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.decidecalc.com/blog/how-to-calculate-investment-return" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.decidecalc.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.decidecalc.com/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Investment Return" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is the formula for calculating investment return?", "acceptedAnswer": { "@type": "Answer", "text": "Simple total return = (Ending Value − Beginning Value) / Beginning Value × 100. For annualized return (CAGR): CAGR = (Ending Value / Beginning Value)^(1/years) − 1. CAGR is the correct way to compare returns across different time periods." } },
+      { "@type": "Question", "name": "What is CAGR and why does it matter?", "acceptedAnswer": { "@type": "Answer", "text": "CAGR (Compound Annual Growth Rate) is the steady annual rate at which an investment would have grown from start to finish, assuming compounding. It smooths out year-to-year volatility and allows apples-to-apples comparison of investments held for different lengths of time." } },
+      { "@type": "Question", "name": "Does 10 years at 7% really beat 20 years at 5%?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — on a $10,000 lump sum. 10 years at 7% CAGR grows to $19,672. 20 years at 5% CAGR grows to $26,533, so in that case the longer investment wins. But if you start the 7% investment 10 years earlier (equal 20-year comparison), $10,000 at 7% for 20 years = $38,697 vs $26,533 at 5%." } },
+      { "@type": "Question", "name": "How do I calculate return if I made contributions over time?", "acceptedAnswer": { "@type": "Answer", "text": "Use IRR (Internal Rate of Return) or XIRR if the contribution dates are irregular. A simple shortcut: divide total gain by average invested capital (beginning balance plus half of total contributions). For a precise annualized return on a portfolio with regular contributions, a financial calculator or spreadsheet XIRR function is needed." } }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <main class="container blog-post" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span>How to Calculate Investment Return</span></nav>
+
+    <article>
+      <header class="article-header">
+        <div class="article-meta-top"><span class="article-cat">Finance</span><span class="article-date">August 8, 2026</span></div>
+        <h1>How to Calculate Investment Return (CAGR vs. Simple Growth)</h1>
+        <p class="article-subtitle">Total return vs annualized CAGR, the impact of contributions, and why rate × time beats rate alone.</p>
+      </header>
+
+      <div class="article-hero-img"><img src="/assets/img/blog-investment-return.png" alt="Investment return calculation comparing CAGR and simple total return with growth chart" width="1200" height="630" loading="eager"></div>
+
+      <div class="article-body">
+
+        <div class="cta-banner">
+          <p>Use our free <a href="/calculators/cagr-calculator">CAGR Calculator</a> — find your exact annualized return from any start and end value.</p>
+        </div>
+
+        <p>You invested $10,000 five years ago and it's now worth $16,105. What was your return? The simple answer is "61%," but that doesn't tell the full story. A more useful number is the <strong>7% per year (CAGR)</strong> — the annualized rate that lets you compare this investment against any other, regardless of how long it was held.</p>
+
+        <h2>Two ways to measure return</h2>
+
+        <h3>1. Simple total return</h3>
+        <div class="formula-box"><strong>Total Return = (Ending Value − Beginning Value) / Beginning Value × 100</strong></div>
+        <p>Example: ($16,105 − $10,000) / $10,000 = 61.05%</p>
+        <p>Simple total return is useful for a single comparison, but it ignores time. A 61% return over 5 years is very different from a 61% return over 25 years.</p>
+
+        <h3>2. CAGR (Compound Annual Growth Rate)</h3>
+        <div class="formula-box"><strong>CAGR = (Ending Value / Beginning Value)^(1/years) − 1</strong></div>
+        <p>Example: (16,105 / 10,000)^(1/5) − 1 = 1.6105^0.2 − 1 = <strong>10.0% per year</strong></p>
+        <p>Wait — 10%, not 7%? Yes. The example above was designed for 10% CAGR. CAGR is always higher than the simple average of annual returns if returns varied. It's the geometrically correct average.</p>
+
+        <h2>Worked example: $10,000 at different rates</h2>
+        <table class="data-table">
+          <thead><tr><th>Rate</th><th>5 years</th><th>10 years</th><th>20 years</th><th>30 years</th></tr></thead>
+          <tbody>
+            <tr><td>5% CAGR</td><td>$12,763</td><td>$16,289</td><td>$26,533</td><td>$43,219</td></tr>
+            <tr><td>7% CAGR</td><td>$14,026</td><td>$19,672</td><td>$38,697</td><td>$76,123</td></tr>
+            <tr><td>10% CAGR</td><td>$16,105</td><td>$25,937</td><td>$67,275</td><td>$174,494</td></tr>
+            <tr><td>12% CAGR</td><td>$17,623</td><td>$31,058</td><td>$96,463</td><td>$299,599</td></tr>
+          </tbody>
+        </table>
+        <p>At 7% CAGR for 20 years, $10,000 grows to $38,697. At 5% for 20 years it reaches $26,533 — a $12,164 difference purely from 2 extra percentage points of annual return.</p>
+
+        <h2>Does 10 years at 7% beat 20 years at 5%?</h2>
+        <p>For a lump sum, no — 20 years at 5% produces $26,533 vs $19,672 for 10 years at 7%. But if you compare <em>both investments over 20 years</em>, the 7% investment grows to $38,697, far outpacing the 5% result of $26,533. Higher rate wins if the time period is equal. Time wins if the rate is equal.</p>
+
+        <h2>How fees affect your actual return</h2>
+        <table class="data-table">
+          <thead><tr><th>Gross return</th><th>Annual fee</th><th>Net CAGR</th><th>$10K after 20 years</th><th>Lost to fees</th></tr></thead>
+          <tbody>
+            <tr><td>7%</td><td>0.04% (index fund)</td><td>6.96%</td><td>$38,467</td><td>$230</td></tr>
+            <tr><td>7%</td><td>0.75% (active fund)</td><td>6.25%</td><td>$33,863</td><td>$4,834</td></tr>
+            <tr><td>7%</td><td>1.50% (high-cost fund)</td><td>5.50%</td><td>$29,178</td><td>$9,519</td></tr>
+          </tbody>
+        </table>
+        <p>A seemingly small 1.5% annual fee costs you nearly $9,500 on a $10,000 investment over 20 years — almost equal to the original principal. This is why expense ratios matter enormously in long-term investing.</p>
+
+        <h2>Calculating return when you made contributions</h2>
+        <p>If you invested $10,000 upfront and added $200/month for 10 years, your total invested capital is $10,000 + ($200 × 120) = $34,000. If the portfolio is worth $53,000, is that a good return?</p>
+        <p>Simple total return: ($53,000 − $34,000) / $34,000 = 56%. But this ignores that the last month's $200 had only 1 month to grow while the first $10,000 had 10 years. The correct tool here is <strong>XIRR</strong> (in Excel or Google Sheets), which calculates an internal rate of return accounting for the timing of each cash flow. For regular monthly contributions at market returns of ~7%, a $53,000 balance on $34,000 invested over 10 years implies roughly a <strong>6.5–7% annualized return</strong>.</p>
+
+        <h2>Quick reference: CAGR vs simple return</h2>
+        <table class="data-table">
+          <thead><tr><th>What you want to know</th><th>Use this</th></tr></thead>
+          <tbody>
+            <tr><td>Total profit or loss on one investment</td><td>Simple total return</td></tr>
+            <tr><td>Annualized return to compare investments</td><td>CAGR</td></tr>
+            <tr><td>Return on a portfolio with contributions</td><td>IRR / XIRR</td></tr>
+            <tr><td>Year-by-year performance (volatile returns)</td><td>Time-weighted return (TWR)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="cta-banner">
+          <p><strong>Use the Calculator:</strong> Our <a href="/calculators/cagr-calculator">CAGR Calculator</a> computes the annualized return from any start and end values over any time period — instantly.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details open><summary>What is the formula for calculating investment return?</summary><p>Simple total return = (Ending Value − Beginning Value) / Beginning Value × 100. For annualized return (CAGR): CAGR = (Ending Value / Beginning Value)^(1/years) − 1.</p></details>
+          <details><summary>What is CAGR and why does it matter?</summary><p>CAGR is the steady annual rate at which an investment grew from start to finish, assuming compounding. It smooths out year-to-year volatility and allows apples-to-apples comparison of investments held for different lengths of time.</p></details>
+          <details><summary>Does 10 years at 7% beat 20 years at 5%?</summary><p>For a lump sum held for the same 20 years: $10,000 at 7% CAGR grows to $38,697; at 5% it reaches $26,533. The 7% investment wins if held for equal time. For only 10 years at 7%, the result is $19,672 — less than the 20-year 5% result of $26,533.</p></details>
+          <details><summary>How do I calculate return if I made contributions over time?</summary><p>Use IRR or XIRR in a spreadsheet. Each contribution has a different holding period, so simple total return understates or overstates performance. XIRR accounts for the timing of every cash flow to produce an accurate annualized return.</p></details>
+        </div>
+
+        <div class="article-related-articles" id="relatedArticlesSection"></div>
+        <div class="article-related-calcs">
+          <h3>Related calculators</h3>
+          <div class="related-mini-grid">
+            <a class="related-mini-card" href="/calculators/cagr-calculator"><span class="rmc-icon">📈</span><span class="rmc-name">CAGR Calculator</span></a>
+            <a class="related-mini-card" href="/calculators/compound-interest-calculator"><span class="rmc-icon">💹</span><span class="rmc-name">Compound Interest Calculator</span></a>
+            <a class="related-mini-card" href="/calculators/investment-fee-calculator"><span class="rmc-icon">💸</span><span class="rmc-name">Investment Fee Calculator</span></a>
+          </div>
+        </div>
+
+        <div class="article-disclaimer"><p><strong>Disclaimer:</strong> This article is for educational purposes only and does not constitute investment advice. Past performance is not indicative of future results. Consult a registered financial advisor before making investment decisions.</p></div>
+      </div>
+    </article>
+  </main>
+
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
+  <script src="/assets/js/tools.js"></script>
+  <script>
+    (function () {
+      const peers = ['how-much-will-10000-grow-compound-interest','how-to-calculate-compound-interest','how-to-calculate-time-to-double-money'];
+      const sec = document.getElementById('relatedArticlesSection');
+      if (!sec || !window.DC) return;
+      const show = peers.filter(function(s){ return DC.blogMeta && DC.blogMeta[s]; }).slice(0,3);
+      if (!show.length) return;
+      let h = '<h3>Related articles</h3><div class="related-mini-grid">';
+      show.forEach(function (s) {
+        const m = DC.blogMeta[s];
+        h += '<a class="related-mini-card" href="/blog/' + s + '"><span class="rmc-icon">📖</span><span class="rmc-name">' + m.title.split(':')[0] + '</span></a>';
+      });
+      sec.innerHTML = h + '</div>';
+    })();
+  </script>
+</body>
+</html>

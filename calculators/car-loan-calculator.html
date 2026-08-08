@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-adsense-account" content="ca-pub-3027138458482943">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Loan Calculator — Monthly Payment, Total Interest & Amortization | DecideCalc</title>
+  <meta name="description" content="Free car loan calculator: enter loan amount, interest rate and term to get your exact monthly payment, total interest paid and full amortization. Works for auto loans, used-car loans and truck financing.">
+  <link rel="canonical" href="https://www.decidecalc.com/calculators/car-loan-calculator">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+  <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/categories/finance">Finance &amp; Tax</a><span class="sep">/</span><span>Car Loan Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Car Loan Calculator</h1><div class="sub">Monthly payment · total interest · amortization</div></div></div>
+        <div class="calc-body">
+          <div class="field"><label>Vehicle price</label><div class="range-out"><span class="range-val" id="out-price">$35,000</span></div><input type="range" id="price" min="1000" max="200000" step="500" value="35000" data-prefix="$" data-dec="0"></div>
+          <div class="field-row">
+            <div class="field"><label>Down payment ($)</label><div class="range-out"><span class="range-val" id="out-down">$5,000</span></div><input type="range" id="down" min="0" max="50000" step="500" value="5000" data-prefix="$" data-dec="0"></div>
+            <div class="field"><label>Down payment %</label><div class="range-out"><span class="range-val" id="out-downpct">14.3%</span></div></div>
+          </div>
+          <div class="field"><label>Annual interest rate (%)</label><div class="range-out"><span class="range-val" id="out-rate">7.0%</span></div><input type="range" id="rate" min="0" max="30" step="0.05" value="7" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term">60 months (5 yr)</span></div><input type="range" id="term" min="12" max="96" step="12" value="60" data-dec="0"></div>
+          <div class="field-row">
+            <div class="field"><label>Trade-in value ($)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="tradein" type="number" min="0" step="500" value="0"></div></div>
+            <div class="field"><label>Sales tax rate (%)</label><input class="input" id="salestax" type="number" min="0" max="15" step="0.1" value="0"></div>
+          </div>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate car payment</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Monthly payment</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rLoan">—</div><div class="k">Loan amount</div></div>
+          <div class="result-stat"><div class="v" id="rInterest">—</div><div class="k">Total interest</div></div>
+          <div class="result-stat"><div class="v" id="rTotal">—</div><div class="k">Total cost</div></div>
+          <div class="result-stat"><div class="v" id="rRate">—</div><div class="k">APR entered</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="carChart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Car loan snapshot</h4><p id="recoText">Enter the vehicle price, your down payment and the dealer's APR to see the exact monthly payment and total cost.</p></div></div>
+      </div>
+    </div>
+
+    <!-- Amortization table -->
+    <section class="mt-4 card reveal" style="max-width:none" id="amortiSection" style="display:none">
+      <h2>Amortization schedule (first 12 months + last month)</h2>
+      <div style="overflow-x:auto">
+        <table id="amortiTable" style="width:100%;border-collapse:collapse;font-size:0.88rem;color:var(--text-soft)">
+          <thead><tr style="color:var(--text);border-bottom:1px solid var(--border)"><th style="padding:6px 10px;text-align:left">#</th><th style="padding:6px 10px;text-align:right">Payment</th><th style="padding:6px 10px;text-align:right">Principal</th><th style="padding:6px 10px;text-align:right">Interest</th><th style="padding:6px 10px;text-align:right">Balance</th></tr></thead>
+          <tbody id="amortiBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>How auto loan payments are calculated</h2>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Monthly payment formula:</b> M = P × [r(1+r)^n] ÷ [(1+r)^n − 1], where P = loan amount, r = monthly rate (APR ÷ 12), n = number of months.</li>
+        <li><b>Loan amount:</b> vehicle price + sales tax − down payment − trade-in value.</li>
+        <li><b>APR vs interest rate:</b> APR (Annual Percentage Rate) includes fees; the interest rate does not. Always compare APRs across lenders, not just the stated rate.</li>
+        <li><b>Loan term trade-off:</b> A longer term lowers monthly payments but significantly increases total interest paid. A 72-month loan on a $30,000 vehicle at 7% costs roughly $3,000 more in interest than a 48-month loan.</li>
+        <li><b>Good APR benchmark (2026):</b> New-car buyers with excellent credit (720+) typically see 5–7% APR. Used-car rates run 1–3% higher. Rates above 10% add up quickly — consider a bigger down payment or a shorter term.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> Getting pre-approved by your bank or credit union before visiting the dealership gives you a rate benchmark and negotiating power. Dealers often mark up the rate they offer even if you qualify for a lower one.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
+  <script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'car-loan-calculator', faqs: [
+      { q: 'What is a good interest rate for a car loan?', a: 'In 2026, buyers with excellent credit (720+ FICO) typically qualify for 5–7% APR on new cars and 7–9% on used vehicles. Credit scores below 660 often push rates above 12%. Always get pre-approved at your bank or credit union to have a baseline before the dealer presents financing.' },
+      { q: 'Is a 72-month car loan a bad idea?', a: 'A 72-month loan lowers your monthly payment but significantly increases total interest. On a $30,000 loan at 7%, a 72-month term costs about $6,600 in interest; a 48-month term costs about $4,400. You also risk being "underwater" — owing more than the car is worth — for the first 3–4 years.' },
+      { q: 'How does a trade-in reduce my loan?', a: 'The trade-in value is subtracted from the vehicle price before the loan is calculated. A $5,000 trade-in on a $35,000 car reduces your loan to $30,000 (minus any down payment), saving you both principal and the interest that would have accrued on that $5,000.' },
+      { q: 'Should I put more money down?', a: 'A larger down payment reduces the loan principal, which lowers both the monthly payment and total interest. It also reduces the risk of negative equity. Generally, 10–20% down on a new car and 10–15% on a used car is a healthy starting point.' },
+      { q: 'Does the calculator include sales tax?', a: 'Yes — enter your state\'s sales tax rate and the calculator adds it to the vehicle price before computing the loan. Most states charge 4–10% on vehicle purchases; a few states have no sales tax at all.' }
+    ]};
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('zap');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+    function compact(n) { return '$' + DC.compact(n).replace(/^[₹$£€]/,''); }
+
+    let carChart = null;
+
+    function termLabel(months) {
+      if (months % 12 === 0) return months + ' months (' + (months / 12) + ' yr)';
+      return months + ' months';
+    }
+
+    function buildAmortization(loan, monthlyRate, n) {
+      const rows = [];
+      let balance = loan;
+      const pmt = monthlyRate > 0
+        ? loan * monthlyRate * Math.pow(1 + monthlyRate, n) / (Math.pow(1 + monthlyRate, n) - 1)
+        : loan / n;
+      for (let i = 1; i <= n; i++) {
+        const interest = balance * monthlyRate;
+        const principal = pmt - interest;
+        balance = Math.max(0, balance - principal);
+        rows.push({ i, pmt, principal, interest, balance });
+      }
+      return rows;
+    }
+
+    function renderAmortization(rows) {
+      const tbody = document.getElementById('amortiBody');
+      tbody.innerHTML = '';
+      const show = rows.length <= 13 ? rows : [...rows.slice(0, 12), { ellipsis: true }, rows[rows.length - 1]];
+      show.forEach(function (row) {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border)';
+        if (row.ellipsis) {
+          tr.innerHTML = '<td colspan="5" style="padding:4px 10px;text-align:center;color:var(--text-soft);font-style:italic">… months 13–' + (rows.length - 1) + ' …</td>';
+        } else {
+          tr.innerHTML = '<td style="padding:5px 10px">' + row.i + '</td>'
+            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.pmt) + '</td>'
+            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.principal) + '</td>'
+            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.interest) + '</td>'
+            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.balance) + '</td>';
+        }
+        tbody.appendChild(tr);
+      });
+      document.getElementById('amortiSection').style.display = '';
+    }
+
+    function compute() {
+      const price = DC.fnum(document.getElementById('price').value);
+      const down = Math.min(price, DC.fnum(document.getElementById('down').value));
+      const annualRate = DC.fnum(document.getElementById('rate').value);
+      const months = DC.fnum(document.getElementById('term').value);
+      const tradein = DC.fnum(document.getElementById('tradein').value) || 0;
+      const taxPct = DC.fnum(document.getElementById('salestax').value) / 100;
+
+      document.getElementById('out-price').textContent = compact(price);
+      document.getElementById('out-down').textContent = compact(down);
+      const downPct = price > 0 ? (down / price * 100) : 0;
+      document.getElementById('out-downpct').textContent = downPct.toFixed(1) + '%';
+      document.getElementById('out-rate').textContent = annualRate.toFixed(2) + '%';
+      document.getElementById('out-term').textContent = termLabel(months);
+
+      const taxAmount = price * taxPct;
+      const loan = Math.max(0, price + taxAmount - down - tradein);
+      const r = annualRate / 100 / 12;
+      const n = Math.max(1, Math.round(months));
+      const pmt = loan > 0 ? (r > 0 ? loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : loan / n) : 0;
+      const totalPaid = pmt * n;
+      const totalInterest = Math.max(0, totalPaid - loan);
+      const totalCost = price + taxAmount - tradein;
+
+      document.getElementById('rMain').textContent = fmt(pmt);
+      document.getElementById('rLoan').textContent = compact(loan);
+      document.getElementById('rInterest').textContent = compact(totalInterest);
+      document.getElementById('rTotal').textContent = compact(totalCost);
+      document.getElementById('rRate').textContent = annualRate.toFixed(2) + '% APR';
+
+      const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
+      const interestRatio = loan > 0 ? totalInterest / loan : 0;
+      if (annualRate > 10) {
+        title.textContent = 'High interest rate — shop around';
+        txt.textContent = 'At ' + annualRate.toFixed(2) + '% APR you pay ' + fmt(totalInterest) + ' in interest on this loan. Getting pre-approved by a bank or credit union before visiting the dealer can often cut 2–4% off the rate.';
+      } else if (months > 60) {
+        title.textContent = 'Long term increases your interest cost';
+        txt.textContent = 'A ' + months + '-month loan keeps the payment low but adds up to ' + fmt(totalInterest) + ' in interest. Shortening to 48–60 months would save significantly — use extra-payment options if you can afford it.';
+      } else {
+        title.textContent = 'Monthly payment breakdown';
+        txt.textContent = 'You pay ' + fmt(pmt) + '/month. Over ' + months + ' months, ' + fmt(loan) + ' is principal and ' + fmt(totalInterest) + ' is interest — ' + (interestRatio * 100).toFixed(0) + '% of the loan amount in interest cost.';
+      }
+
+      // Chart
+      if (carChart) { carChart.destroy(); }
+      const ctx = document.getElementById('carChart').getContext('2d');
+      carChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Loan principal', 'Total interest'],
+          datasets: [{ data: [Math.round(loan), Math.round(totalInterest)], backgroundColor: ['#1B3A6B', '#F59E0B'], borderWidth: 0 }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-soft)', font: { size: 13 } } } } }
+      });
+
+      // Amortization table
+      if (loan > 0 && pmt > 0) {
+        const rows = buildAmortization(loan, r, n);
+        renderAmortization(rows);
+      }
+    }
+
+    ['price','down','rate','term'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', compute);
+    });
+    ['tradein','salestax'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', compute);
+    });
+    document.getElementById('calcBtn').addEventListener('click', compute);
+
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const price = DC.fnum(document.getElementById('price').value);
+      const pmt = document.getElementById('rMain').textContent;
+      const interest = document.getElementById('rInterest').textContent;
+      const total = document.getElementById('rTotal').textContent;
+      navigator.clipboard && navigator.clipboard.writeText('Car Loan Calculator (DecideCalc)\nVehicle price: ' + compact(price) + '\nMonthly payment: ' + pmt + '\nTotal interest: ' + interest + '\nTotal cost: ' + total + '\nhttps://www.decidecalc.com/calculators/car-loan-calculator').catch(function(){});
+      document.getElementById('copyBtn').textContent = 'Copied!';
+      setTimeout(function(){ document.getElementById('copyBtn').textContent = 'Copy result'; }, 2000);
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      if (navigator.share) {
+        navigator.share({ title: 'Car Loan Calculator', url: 'https://www.decidecalc.com/calculators/car-loan-calculator' }).catch(function(){});
+      } else {
+        navigator.clipboard && navigator.clipboard.writeText('https://www.decidecalc.com/calculators/car-loan-calculator').catch(function(){});
+        document.getElementById('shareBtn').textContent = 'Link copied!';
+        setTimeout(function(){ document.getElementById('shareBtn').textContent = 'Share'; }, 2000);
+      }
+    });
+
+    compute();
+  </script>
+</body>
+</html>

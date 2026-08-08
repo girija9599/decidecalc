@@ -79,6 +79,7 @@
     { slug: 'loan-refinance-calculator',       name: 'Loan Refinance Calculator',          cat: 'finance', icon: 'scale',    aliases: 'refinance balance transfer loan switch break even fees', blurb: 'Compare keeping your loan with refinancing or a balance transfer.' },
     { slug: 'retirement-withdrawal-calculator',name: 'Retirement Withdrawal Calculator',    cat: 'finance', icon: 'piggy',    aliases: 'retirement withdrawal drawdown safe withdrawal corpus lasts', blurb: 'Estimate how long your retirement savings can support withdrawals.' },
     { slug: 'bond-ytm-calculator',             name: 'Bond Yield to Maturity Calculator',  cat: 'finance', icon: 'trending', aliases: 'bond ytm yield coupon price maturity current yield', blurb: 'Calculate current yield and yield to maturity from a bond price and coupon.' },
+    { slug: 'car-loan-calculator',             name: 'Car Loan Calculator',                cat: 'finance', icon: 'zap',      aliases: 'auto loan car payment vehicle financing monthly installment amortization', blurb: 'Monthly car payment, total interest and full amortization for any auto loan.', popular: true, popularOrder: 7 },
 
     /* ===== Career & Salary (3) ===== */
     { slug: 'job-switch-decision',          name: 'Job Switch Decision',             cat: 'career',  icon: 'briefcase', aliases: 'quit resign change job',                        blurb: 'Score-based guidance for a potential job switch.' },
@@ -182,7 +183,7 @@
   DC.relatedArticles = {
     'compound-interest-calculator': ['how-to-calculate-compound-interest', 'simple-interest-vs-compound-interest', 'how-much-will-10000-grow-compound-interest', 'how-does-compound-interest-work'],
     'simple-interest-calculator': ['simple-interest-vs-compound-interest', 'how-to-calculate-compound-interest'],
-    'mortgage-calculator': ['how-to-calculate-mortgage-payment', '30-year-vs-15-year-mortgage', 'how-much-house-can-i-afford', 'rent-or-buy-house-2026-india'],
+    'mortgage-calculator': ['how-to-calculate-mortgage-payment', '30-year-vs-15-year-mortgage', 'how-much-house-can-i-afford'],
     'paycheck-calculator': ['how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay', 'how-to-calculate-salary-increase'],
     'percentage-calculator': ['how-to-calculate-percentage-increase-and-decrease', 'how-to-calculate-a-discount', 'how-to-calculate-original-price-before-discount'],
     'savings-goal-calculator': ['how-much-will-10000-grow-compound-interest'],
@@ -199,6 +200,7 @@
     'sip-calculator': ['emi-vs-sip-which-is-better-india', 'how-much-will-10000-grow-compound-interest', 'how-does-compound-interest-work'],
     'income-tax-calculator': ['how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay'],
     'bond-ytm-calculator': ['bond-yield-vs-ytm-india'],
+    'car-loan-calculator': ['how-to-calculate-loan-interest', '30-year-vs-15-year-mortgage', 'how-to-calculate-mortgage-payment'],
     'mutual-fund-expense-ratio-impact-india': [],
     'health-insurance-need': ['how-much-health-insurance-need-india'],
     'age-calculator': ['how-to-calculate-age-in-days', 'how-to-calculate-date-difference'],
