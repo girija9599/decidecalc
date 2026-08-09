@@ -40,7 +40,13 @@ const guides=[
 	 ['blog-how-much-house.png','HOW MUCH HOUSE','CAN I AFFORD?',[20,47,73],[47,93,126],[124,211,255]],
 	 ['blog-investment-return.png','INVESTMENT','RETURN GUIDE',[18,55,48],[30,111,89],[0,194,168]],
 	 ['blog-percentage-change.png','PERCENTAGE','CHANGE GUIDE',[52,31,73],[93,55,128],[251,191,36]],
-	 ['blog-discount-calculator.png','HOW TO CALCULATE','A DISCOUNT',[49,35,44],[119,59,77],[255,194,82]]
+	 ['blog-discount-calculator.png','HOW TO CALCULATE','A DISCOUNT',[49,35,44],[119,59,77],[255,194,82]],
+	 /* USA cluster #3 */
+	 ['blog-inflation-rate.png','INFLATION','RATE GUIDE',[30,50,75],[52,112,152],[0,194,168]],
+	 ['blog-savings-rate.png','SAVINGS','RATE & FIRE',[14,55,44],[24,120,88],[0,194,168]],
+	 ['blog-apr-vs-apy.png','APR VS APY','WHICH RATE?',[55,28,48],[100,48,92],[251,191,36]],
+	 ['blog-401k-vs-roth-ira.png','401K VS','ROTH IRA',[14,42,80],[28,96,144],[124,211,255]],
+	 ['blog-student-loan-interest.png','STUDENT LOAN','INTEREST COST',[26,36,72],[52,84,128],[0,194,168]]
 ];
 fs.mkdirSync(out,{recursive:true});
 for(const [file,top,bottom,a,b,accent,opts] of guides){const p=canvas([a,b]);if(!opts||!opts.clean){circle(p,1010,150,320,accent,60);circle(p,1000,480,230,[255,255,255],24);for(let i=0;i<5;i++){const x=760+i*78, h=90+i*45;rect(p,x,430-h,48,h,accent,150);}}rect(p,72,68,150,7,accent,255);text(p,'DECIDECAL',72,96,6,[240,248,255]);text(p,'FREE FINANCE GUIDE',72,150,3,accent);let y=240;for(const line of lineWrap(top,15)){text(p,line,72,y,11,[255,255,255]);y+=90;}for(const line of lineWrap(bottom,17)){text(p,line,72,y,9,accent);y+=72;}text(p,'CALCULATE BEFORE YOU DECIDE',72,560,3,[230,240,255]);fs.writeFileSync(path.join(out,file),png(p));console.log('Wrote '+file);}

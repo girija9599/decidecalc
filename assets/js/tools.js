@@ -186,7 +186,7 @@
     'mortgage-calculator': ['how-to-calculate-mortgage-payment', '30-year-vs-15-year-mortgage', 'how-much-house-can-i-afford'],
     'paycheck-calculator': ['how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay', 'how-to-calculate-salary-increase'],
     'percentage-calculator': ['how-to-calculate-percentage-increase-and-decrease', 'how-to-calculate-a-discount', 'how-to-calculate-original-price-before-discount'],
-    'savings-goal-calculator': ['how-much-will-10000-grow-compound-interest'],
+    'savings-goal-calculator': ['how-much-will-10000-grow-compound-interest', 'how-to-calculate-savings-rate'],
     'budget-50-30-20-calculator': ['how-to-calculate-paycheck-from-salary'],
     'investment-fee-calculator': ['mutual-fund-expense-ratio-impact-india', 'how-to-calculate-compound-interest'],
     'credit-card-payoff-calculator': ['debt-snowball-vs-avalanche-india', 'credit-card-minimum-payment-payoff-india'],
@@ -210,7 +210,11 @@
     'salary-hike-negotiator': ['how-to-calculate-salary-increase', 'how-to-calculate-annual-salary-from-hourly-pay'],
     'cagr-calculator': ['how-much-will-10000-grow-compound-interest', 'how-to-calculate-investment-return'],
     'rule-of-72': ['how-to-calculate-time-to-double-money', 'how-much-will-10000-grow-compound-interest'],
-    'percentage-calculator': ['how-to-calculate-percentage-increase-and-decrease', 'how-to-calculate-a-discount', 'how-to-calculate-original-price-before-discount']
+    'percentage-calculator': ['how-to-calculate-percentage-increase-and-decrease', 'how-to-calculate-a-discount', 'how-to-calculate-original-price-before-discount'],
+    'inflation-calculator': ['how-to-calculate-inflation-rate', 'how-to-calculate-investment-return'],
+    '401k-calculator': ['401k-vs-roth-ira', 'how-to-calculate-savings-rate'],
+    'ira-calculator': ['401k-vs-roth-ira', 'how-to-calculate-savings-rate'],
+    'student-loan-calculator': ['how-to-calculate-student-loan-interest', 'how-to-calculate-loan-interest']
   };
   DC.relatedArticlesList = function (slug, n) {
     n = n || 3;
@@ -236,7 +240,12 @@
     'how-to-calculate-loan-interest': { title: 'How to Calculate How Much Interest You\'ll Pay on a Loan', desc: 'Amortization vs simple interest, the PMT formula, and the exact total interest on a $35,000 car loan at 10% — plus how one extra payment cuts it.', icon: 'bank' },
     'how-to-calculate-investment-return': { title: 'How to Calculate Investment Return (CAGR vs. Simple Growth)', desc: 'Total return vs annualized return, the XIRR effect of monthly contributions, and why 10 years of 7% beats 20 years of 5%.', icon: 'trending' },
     'how-to-calculate-time-to-double-money': { title: 'How Long Does It Take to Double Your Money? (Rule of 72)', desc: 'Rule of 72 tells you how many years at 6%, 8% or 10%. Exact formula, worked examples, and when the shortcut is off by more than a year.', icon: 'percent' },
-    'rent-or-buy-house-2026-india': { title: 'Rent or Buy a House in 2026? A Complete Framework', desc: 'Compare down payment, closing costs, mortgage, rent, property taxes, maintenance and opportunity cost to see whether renting or buying builds more wealth in 2026.', icon: 'home' }
+    'rent-or-buy-house-2026-india': { title: 'Rent or Buy a House in 2026? A Complete Framework', desc: 'Compare down payment, closing costs, mortgage, rent, property taxes, maintenance and opportunity cost to see whether renting or buying builds more wealth in 2026.', icon: 'home' },
+    'how-to-calculate-inflation-rate': { title: 'How to Calculate the Inflation Rate (CPI Formula)', desc: 'The inflation rate formula, CPI explained, real vs nominal return, and how $50,000 in cash loses purchasing power at 3% annual inflation.', icon: 'percent' },
+    'how-to-calculate-savings-rate': { title: 'How to Calculate Your Savings Rate (Formula + FIRE Targets)', desc: 'The savings rate formula, gross vs net income basis, employer 401(k) match treatment, and the FIRE savings-rate benchmarks that determine your retirement date.', icon: 'piggy' },
+    'apr-vs-apy': { title: 'APR vs APY: What\'s the Difference? (With Formula)', desc: 'APR vs APY explained: the conversion formula, which rate applies to credit cards vs savings accounts, and how daily compounding changes the true cost.', icon: 'percent' },
+    '401k-vs-roth-ira': { title: '401(k) vs Roth IRA: Which Should You Fund First?', desc: 'The tax difference, 2026 contribution limits, employer match rules, and the expert-recommended order of operations for US retirement savers.', icon: 'bank' },
+    'how-to-calculate-student-loan-interest': { title: 'How to Calculate Student Loan Interest (Daily Accrual Formula)', desc: 'Daily interest accrual on federal student loans, subsidized vs unsubsidized, IDR plans, and the true 10-year cost of a $30,000 loan at 5.5%.', icon: 'money' }
   };
 
   DC.toolMatches = function (t, q) {

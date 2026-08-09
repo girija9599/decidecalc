@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v40';
+const CACHE = 'decidecalc-v41';
 const ASSETS = [
   '/',
   '/index.html',
@@ -26,6 +26,11 @@ const ASSETS = [
   '/blog/how-to-calculate-investment-return.html',
   '/blog/how-to-calculate-percentage-increase-and-decrease.html',
   '/blog/how-to-calculate-a-discount.html',
+  '/blog/how-to-calculate-inflation-rate.html',
+  '/blog/how-to-calculate-savings-rate.html',
+  '/blog/apr-vs-apy.html',
+  '/blog/401k-vs-roth-ira.html',
+  '/blog/how-to-calculate-student-loan-interest.html',
   '/calculators/emi-calculator.html',
   '/calculators/sip-calculator.html',
   '/calculators/income-tax-calculator.html',
@@ -174,6 +179,11 @@ const ASSETS = [
   '/assets/img/blog-investment-return.png',
   '/assets/img/blog-percentage-change.png',
   '/assets/img/blog-discount-calculator.png',
+  '/assets/img/blog-inflation-rate.png',
+  '/assets/img/blog-savings-rate.png',
+  '/assets/img/blog-apr-vs-apy.png',
+  '/assets/img/blog-401k-vs-roth-ira.png',
+  '/assets/img/blog-student-loan-interest.png',
   '/favicon.ico',
   '/site.webmanifest',
   '/browserconfig.xml'
