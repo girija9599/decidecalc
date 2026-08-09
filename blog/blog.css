@@ -53,6 +53,56 @@
 .article-cta p { margin:0; color:rgba(255,255,255,.78); font-size:.9rem; }
 .article-cta .btn { flex:0 0 auto; }
 .article-faq { margin-top:42px; }
+
+/* ============================================================
+   Gen-3 clean article template (scoped to .blog-post articles)
+   ============================================================ */
+.blog-post .breadcrumb { display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:.82rem; color:var(--muted); margin-bottom:8px; }
+.blog-post .breadcrumb a { color:var(--primary); font-weight:700; text-decoration:none; }
+.blog-post .breadcrumb a:hover { color:var(--accent-600); }
+.blog-post .article-header { padding:14px 0 6px; }
+.blog-post .article-meta-top { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; }
+.blog-post .article-cat { font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--primary); background:color-mix(in srgb, var(--primary) 10%, transparent); padding:5px 12px; border-radius:999px; }
+.blog-post .article-date { font-size:.78rem; color:var(--muted); }
+.blog-post .article-header h1 { font-size:clamp(1.9rem,5vw,3rem); line-height:1.1; letter-spacing:-.04em; color:var(--text); margin:0; }
+.blog-post .article-subtitle { max-width:720px; margin-top:14px; font-size:1.06rem; color:var(--text-soft); line-height:1.6; }
+.blog-post .article-hero-img { margin:26px 0 32px; border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 18px 40px rgba(6,15,38,.12); }
+.blog-post .article-hero-img img { width:100%; height:auto; aspect-ratio:1200/630; object-fit:cover; display:block; }
+.blog-post .article-body { font-size:1.05rem; line-height:1.8; color:var(--text-soft); max-width:760px; }
+.blog-post .article-body h2 { color:var(--text); font-size:clamp(1.45rem,3vw,2.02rem); margin:44px 0 12px; line-height:1.25; letter-spacing:-.02em; }
+.blog-post .article-body h3 { color:var(--text); font-size:1.24rem; margin:26px 0 8px; }
+.blog-post .article-body p { margin:0 0 16px; }
+.blog-post .article-body ul, .blog-post .article-body ol { margin:0 0 20px; padding-left:24px; }
+.blog-post .article-body li { margin:8px 0; }
+.blog-post .article-body strong { color:var(--text); }
+.blog-post .article-body a { color:var(--primary); font-weight:600; }
+.blog-post .article-body a:hover { color:var(--accent-600); }
+.formula-box { margin:22px 0; padding:20px 22px; background:color-mix(in srgb, var(--primary) 6%, var(--card)); border:1px solid color-mix(in srgb, var(--primary) 20%, var(--border)); border-radius:var(--radius); font-size:1.06rem; color:var(--text); overflow-x:auto; }
+.data-table { width:100%; border-collapse:collapse; margin:20px 0 26px; font-size:.95rem; min-width:0; }
+.data-table thead th { text-align:left; padding:12px 14px; background:color-mix(in srgb, var(--primary) 8%, var(--card)); color:var(--text); font-weight:800; border-bottom:2px solid var(--border-strong); white-space:nowrap; }
+.data-table tbody td { padding:11px 14px; border-bottom:1px solid var(--border); color:var(--text-soft); }
+.data-table tbody tr:hover { background:color-mix(in srgb, var(--primary) 4%, transparent); }
+.cta-banner { margin:30px 0; padding:24px 26px; background:var(--gradient-hero); border-radius:var(--radius-lg); color:#fff; }
+.cta-banner p { margin:0; color:rgba(255,255,255,.92); font-size:1rem; line-height:1.65; }
+.cta-banner a { color:#ffe08a; font-weight:800; text-decoration:underline; }
+.cta-banner a:hover { color:#fff; }
+.faq-list details { border:1px solid var(--border); border-radius:var(--radius); margin:0 0 12px; background:var(--card); overflow:hidden; }
+.faq-list summary { cursor:pointer; list-style:none; padding:16px 20px; font-weight:700; color:var(--text); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.faq-list summary::-webkit-details-marker { display:none; }
+.faq-list summary::after { content:"+"; flex:0 0 auto; font-size:1.3rem; color:var(--accent-600); font-weight:900; }
+.faq-list details[open] summary::after { content:"–"; }
+.faq-list details p { padding:0 20px 16px; margin:0; color:var(--text-soft); font-size:.97rem; line-height:1.7; }
+.article-related-articles { margin-top:40px; }
+.article-related-articles h3, .article-related-calcs h3 { color:var(--text); font-size:1.2rem; margin:0 0 14px; }
+.article-related-calcs { margin-top:32px; }
+.related-mini-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.related-mini-card { display:flex; align-items:center; gap:12px; padding:16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--card); text-decoration:none; transition:transform .15s ease, border-color .15s ease; }
+.related-mini-card:hover { transform:translateY(-2px); border-color:var(--accent); }
+.related-mini-card .rmc-icon { font-size:1.3rem; flex:0 0 auto; }
+.related-mini-card .rmc-name { color:var(--text); font-size:.9rem; font-weight:700; line-height:1.35; }
+.article-disclaimer { margin-top:40px; padding:18px 20px; border:1px dashed var(--border-strong); border-radius:var(--radius); background:color-mix(in srgb, var(--accent) 5%, var(--card)); }
+.article-disclaimer p { margin:0; font-size:.85rem; color:var(--muted); line-height:1.6; }
+
 @media (max-width:900px) { .blog-grid { grid-template-columns:repeat(2,1fr); } }
 @media (max-width:640px) {
   .blog-grid { grid-template-columns:1fr; }
@@ -78,4 +128,13 @@
   .article-content h2 { font-size: 1.3rem; margin: 30px 0 10px; }
   .article-note { padding: 14px 16px; margin: 20px 0; }
   .article-cta { align-items:flex-start; flex-direction:column; padding: 18px; gap: 14px; margin: 24px 0; }
+  /* Gen-3 mobile tuning */
+  .blog-post .article-header h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .blog-post .article-hero-img { margin: 20px 0 24px; }
+  .blog-post .article-body { font-size: 1rem; }
+  .blog-post .article-body h2 { font-size: 1.35rem; margin: 30px 0 10px; }
+  .related-mini-grid { grid-template-columns:1fr; }
+  .cta-banner { padding: 18px; }
+  .data-table { font-size: .86rem; }
+  .data-table thead th, .data-table tbody td { padding: 9px 10px; }
 }
