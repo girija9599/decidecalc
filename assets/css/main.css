@@ -790,3 +790,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Hero text highlight needs its own stacking context, not z-index:-1 which hides under body */
 .hero h1 .hl { position: relative; display: inline-block; z-index: 0; }
 .hero h1 .hl::after { z-index: -1; }
+
+/* Cookie consent banner */
+.cookie-banner{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--card-bg,#111a33);border-top:1px solid var(--border,rgba(255,255,255,.12));box-shadow:0 -8px 30px rgba(0,0,0,.35)}
+.cookie-banner-inner{max-width:960px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cookie-text{margin:0;flex:1 1 260px;font-size:.92rem;color:var(--text-soft,rgba(255,255,255,.78))}
+.cookie-text a{color:var(--accent,#5ea1ff);font-weight:600}
+.cookie-ok{padding:8px 22px;font-size:.92rem;flex:0 0 auto}
+@media (max-width:640px){.cookie-banner-inner{padding:12px 14px}.cookie-text{font-size:.85rem}}

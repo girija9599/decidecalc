@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v42';
+const CACHE = 'decidecalc-v43';
 const ASSETS = [
   '/',
   '/index.html',
@@ -9,6 +9,8 @@ const ASSETS = [
   '/privacy.html',
   '/terms.html',
   '/contact.html',
+  '/cookie-policy.html',
+  '/404.html',
   '/blog/index.html',
   '/blog/blog.css',
   '/blog/emi-vs-sip-which-is-better-india.html',
@@ -152,6 +154,7 @@ const ASSETS = [
   '/assets/js/engagement.js',
   '/assets/js/toolkit.js',
   '/assets/js/ads.js',
+  '/assets/js/consent.js',
   '/assets/img/decidecalc-mark.svg',
   '/assets/img/decidecalc-favicon.svg',
   '/assets/img/favicon-16x16.png',

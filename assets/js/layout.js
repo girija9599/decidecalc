@@ -150,6 +150,7 @@
               '<a href="' + DC.base + 'about">About Us</a>' +
               '<a href="' + DC.base + 'privacy">Privacy Policy</a>' +
               '<a href="' + DC.base + 'terms">Terms of Use</a>' +
+              '<a href="' + DC.base + 'cookie-policy">Cookie Policy</a>' +
               '<a href="' + DC.base + 'contact">Contact</a>' +
             '</div>' +
           '</div>' +
@@ -162,6 +163,14 @@
     // Inject header at top of body
     document.body.insertAdjacentHTML('afterbegin', header);
     document.body.insertAdjacentHTML('beforeend', footer);
+    // Load the cookie-notice once per page (self-guarded by dc_consent flag)
+    if (!document.querySelector('script[data-dc-consent]')) {
+      const cs = document.createElement('script');
+      cs.src = DC.base + 'assets/js/consent.js';
+      cs.defer = true;
+      cs.setAttribute('data-dc-consent', '1');
+      document.body.appendChild(cs);
+    }
     // Keep year current even if user keeps a tab open over new year
     setInterval(function () {
       const el = document.getElementById('dcYear');
