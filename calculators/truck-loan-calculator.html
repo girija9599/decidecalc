@@ -23,6 +23,14 @@
   <meta name="twitter:title" content="Truck Loan Calculator | DecideCalc">
   <meta name="twitter:description" content="Free truck loan calculator: monthly payment and total interest for a pickup or commercial truck, including down payment, sales tax and longer loan terms.">
   <link rel="stylesheet" href="/assets/css/main.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7X2R2ZXN4Z');
+  </script>
 </head>
 <body>
   <main class="container" style="padding-top:30px;padding-bottom:60px">
@@ -34,7 +42,7 @@
         <div class="calc-body" id="calcBody">
           <div class="field"><label>Truck price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="5000" max="400000" step="1000" value="60000" data-dec="0"></div>
           <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="200000" step="1000" value="10000" data-dec="0"></div>
-          <div class="field"><label>undefined</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="7.5" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="7.5" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="96" step="6" value="72" data-dec="0"></div>
           <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
             <div class="field-row" style="margin-top:12px">
@@ -109,7 +117,7 @@
       document.getElementById('out-price').textContent = C.fmt(price);
       if (document.getElementById('out-down')) document.getElementById('out-down').textContent = C.fmt(down);
       document.getElementById('out-rate').textContent = rate.toFixed(2) + '%';
-      document.getElementById('out-term').textContent = termLabel(months);
+      if (document.getElementById('out-term')) document.getElementById('out-term').textContent = termLabel(months);
 
       const taxAmt = price * taxP;
       const loan = Math.max(0, price + taxAmt + fees - down);

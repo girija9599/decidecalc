@@ -22,6 +22,14 @@
   <meta name="twitter:title" content="Debt Payoff Calculator | DecideCalc">
   <meta name="twitter:description" content="Free debt payoff calculator: how long to pay off any loan or credit card, and how much interest you save by paying a little extra each month.">
   <link rel="stylesheet" href="/assets/css/main.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7X2R2ZXN4Z');
+  </script>
 </head>
 <body>
   <main class="container" style="padding-top:30px;padding-bottom:60px">
@@ -31,7 +39,7 @@
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Debt Payoff Calculator</h1><div class="sub">payoff date · interest saved</div></div></div>
         <div class="calc-body" id="calcBody">
           <div class="field"><label>Current balance</label><div class="input-wrap"><span class="prefix cur"></span><input class="input with-prefix" id="price" type="number" min="100" step="any" value="8000"></div></div>
-          <div class="field"><label>APR on the debt (%)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="40" step="0.1" value="undefined" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>APR on the debt (%)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="40" step="0.1" value="22" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Months to pay off</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="1" max="120" step="1" value="48" data-dec="0"></div>
           
           <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate payoff</button>
@@ -75,7 +83,7 @@
       const price = fnum(document.getElementById('price'));
       const rate  = fnum(document.getElementById('rate'));
       document.getElementById('out-rate').textContent = rate.toFixed(2) + '%';
-      if (document.getElementById('term')) document.getElementById('out-term').textContent = fnum(document.getElementById('term')) + ' months';
+      if (document.getElementById('term')) { const ot = document.getElementById('out-term'); if (ot) ot.textContent = fnum(document.getElementById('term')) + ' months'; }
 
       let main = 0, a = 0, b = 0, cc = 0;
       if (false) {
