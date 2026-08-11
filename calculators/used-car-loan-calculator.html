@@ -23,14 +23,6 @@
   <meta name="twitter:title" content="Used Car Loan Calculator | DecideCalc">
   <meta name="twitter:description" content="Free used car loan calculator: monthly payment, total interest and amortization for a pre-owned vehicle — accounting for the higher APR used cars usually carry.">
   <link rel="stylesheet" href="/assets/css/main.css">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-7X2R2ZXN4Z');
-  </script>
 </head>
 <body>
   <main class="container" style="padding-top:30px;padding-bottom:60px">
@@ -165,14 +157,10 @@
     document.getElementById('calcBtn').addEventListener('click', compute);
 
     document.getElementById('copyBtn').addEventListener('click', function () {
-      const txt = 'Used Car Loan Calculator (DecideCalc)
-Monthly payment: ' + document.getElementById('rMain').textContent +
-        '
-Total interest: ' + document.getElementById('rInterest').textContent +
-        '
-Total payable: ' + document.getElementById('rTotal').textContent +
-        '
-https://www.decidecalc.com/calculators/used-car-loan-calculator';
+      const txt = 'Used Car Loan Calculator (DecideCalc)\nMonthly payment: ' + document.getElementById('rMain').textContent +
+        '\nTotal interest: ' + document.getElementById('rInterest').textContent +
+        '\nTotal payable: ' + document.getElementById('rTotal').textContent +
+        '\nhttps://www.decidecalc.com/calculators/used-car-loan-calculator';
       if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(function(){});
       this.textContent = 'Copied!'; const b = this;
       setTimeout(function(){ b.textContent = 'Copy result'; }, 2000);

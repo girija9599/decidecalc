@@ -23,14 +23,6 @@
   <meta name="twitter:title" content="Phone EMI Calculator | DecideCalc">
   <meta name="twitter:description" content="Free phone EMI calculator: monthly installment and total interest for any smartphone bought on financing, a retail plan or a credit card.">
   <link rel="stylesheet" href="/assets/css/main.css">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-7X2R2ZXN4Z');
-  </script>
 </head>
 <body>
   <main class="container" style="padding-top:30px;padding-bottom:60px">
@@ -160,14 +152,10 @@
     document.getElementById('calcBtn').addEventListener('click', compute);
 
     document.getElementById('copyBtn').addEventListener('click', function () {
-      const txt = 'Phone EMI Calculator (DecideCalc)
-Monthly payment: ' + document.getElementById('rMain').textContent +
-        '
-Total interest: ' + document.getElementById('rInterest').textContent +
-        '
-Total payable: ' + document.getElementById('rTotal').textContent +
-        '
-https://www.decidecalc.com/calculators/phone-emi-calculator';
+      const txt = 'Phone EMI Calculator (DecideCalc)\nMonthly payment: ' + document.getElementById('rMain').textContent +
+        '\nTotal interest: ' + document.getElementById('rInterest').textContent +
+        '\nTotal payable: ' + document.getElementById('rTotal').textContent +
+        '\nhttps://www.decidecalc.com/calculators/phone-emi-calculator';
       if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(function(){});
       this.textContent = 'Copied!'; const b = this;
       setTimeout(function(){ b.textContent = 'Copy result'; }, 2000);
