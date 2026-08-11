@@ -186,7 +186,6 @@ const ASSETS = [
   '/assets/img/blog-savings-rate.png',
   '/assets/img/blog-apr-vs-apy.png',
   '/assets/img/blog-401k-vs-roth-ira.png',
-  '/assets/img/blog-student-loan-interest.png',
   '/assets/img/blog/how-to-calculate-car-payment.webp',
   '/assets/img/blog/how-much-motorcycle-can-i-afford.webp',
   '/assets/img/blog/should-you-finance-a-phone.webp',
