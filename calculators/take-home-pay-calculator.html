@@ -105,6 +105,7 @@
         const simple = price * r * years;
         const comp = price * Math.pow(1 + r / 12, months) - price;
         main = comp; a = price + comp; b = simple; cc = price + comp;
+        document.getElementById('rB').textContent = rate.toFixed(2) + '%';
         document.getElementById('recoText').textContent = 'Compound interest (' + C.fmt(comp) + ') beats simple interest (' + C.fmt(simple) + ') by ' + C.fmt(Math.max(0, comp - simple)) + ' over ' + months + ' months at ' + rate.toFixed(2) + '%.';
       } else if (false) {
         const months = fnum(document.getElementById('term'));
@@ -117,6 +118,7 @@
         main = price;
       }
       document.getElementById('rMain').textContent = C.fmt(main);
+      
       if (!false && !true && !false && !false && !false && !false) {
         document.getElementById('rA').textContent = C.fmt(a);
         document.getElementById('rB').textContent = rate.toFixed(2) + '%';
