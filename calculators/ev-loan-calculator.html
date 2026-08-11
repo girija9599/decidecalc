@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-adsense-account" content="ca-pub-3027138458482943">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electric Vehicle Loan Calculator | DecideCalc</title>
+  <meta name="description" content="Free EV loan calculator: monthly payment, total interest and amortization for an electric car, with any green-loan discount and longer terms accounted for.">
+  <link rel="canonical" href="https://www.decidecalc.com/calculators/ev-loan-calculator">
+  <meta name="theme-color" content="#0F1533">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DecideCalc">
+  <meta property="og:url" content="https://www.decidecalc.com/calculators/ev-loan-calculator">
+  <meta property="og:title" content="Electric Vehicle Loan Calculator | DecideCalc">
+  <meta property="og:description" content="Free EV loan calculator: monthly payment, total interest and amortization for an electric car, with any green-loan discount and longer terms accounted for.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Electric Vehicle Loan Calculator | DecideCalc">
+  <meta name="twitter:description" content="Free EV loan calculator: monthly payment, total interest and amortization for an electric car, with any green-loan discount and longer terms accounted for.">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <main class="container" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/categories/finance">Finance & Tax</a><span class="sep">/</span><span>Electric Vehicle (EV) Loan Calculator</span></nav>
+
+    <div class="calc-layout">
+      <div class="calc-shell reveal">
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Electric Vehicle (EV) Loan Calculator</h1><div class="sub">EV loans & green financing</div></div></div>
+        <div class="calc-body" id="calcBody">
+          <div class="field"><label>EV price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="10000" max="300000" step="1000" value="48000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="150000" step="1000" value="6000" data-dec="0"></div>
+          <div class="field"><label>undefined</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="6.5" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="96" step="6" value="60" data-dec="0"></div>
+          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
+            <div class="field-row" style="margin-top:12px">
+              <div class="field"><label>Tax rate (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
+              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="50" value="0"></div>
+            </div>
+          </details>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate EV payment</button>
+        </div>
+      </div>
+
+      <div class="result-panel reveal d2">
+        <div class="result-hero"><div class="big" id="rMain">—</div><div class="lbl">Monthly EV payment</div></div>
+        <div class="result-grid">
+          <div class="result-stat"><div class="v" id="rLoan">—</div><div class="k">Amount financed</div></div>
+          <div class="result-stat"><div class="v" id="rInterest">—</div><div class="k">Total interest</div></div>
+          <div class="result-stat"><div class="v" id="rTotal">—</div><div class="k">Total payable</div></div>
+          <div class="result-stat"><div class="v" id="rRate">—</div><div class="k">Rate entered</div></div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+        <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">EV loan snapshot</h4><p id="recoText">Some lenders offer a 0.25–0.5% APR discount on EVs. Factor that plus any federal/state tax credit into your net cost before comparing loans.</p></div></div>
+      </div>
+    </div>
+
+    <section class="mt-4 card reveal" style="max-width:none;display:none" id="amortiSection">
+      <h2>Amortization schedule</h2>
+      <div style="overflow-x:auto">
+        <table id="amortiTable" style="width:100%;border-collapse:collapse;font-size:.88rem;color:var(--text-soft)">
+          <thead><tr style="color:var(--text);border-bottom:1px solid var(--border)"><th style="padding:6px 10px;text-align:left">#</th><th style="padding:6px 10px;text-align:right">Payment</th><th style="padding:6px 10px;text-align:right">Principal</th><th style="padding:6px 10px;text-align:right">Interest</th><th style="padding:6px 10px;text-align:right">Balance</th></tr></thead>
+          <tbody id="amortiBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
+
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>EV financing considerations</h2>
+      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Green discounts:</b> many banks offer slightly lower APRs for EVs — ask before you accept the standard rate.</li><li><b>Tax credits:</b> a federal tax credit can effectively reduce the cost; because the credit arrives after purchase, it does not lower the loan but reduces net spend.</li><li><b>Higher price:</b> EVs still cost more upfront; a large down payment keeps the financed amount reasonable.</li><li><b>Home charger:</b> remember to budget for installation separately from the loan.</li></ul></div>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only — credit and incentive rules change; confirm details with your lender.</div></div>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/dc-currency.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
+  <script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/calc-page.js"></script>
+  <script>
+    DC.page = { slug: 'ev-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — USD, INR, EUR, GBP, CAD, AUD, AED, JPY or SGD. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('zap');
+    document.getElementById('recoIc').innerHTML = DC.icon('check');
+    document.getElementById('fIcon').innerHTML = DC.icon('shield');
+
+    const C = DC.emiCore;
+    function fnum(el){ return DC.fnum ? DC.fnum(el.value) : parseFloat(el.value) || 0; }
+    let chart = null;
+    function termLabel(m){ return m % 12 === 0 ? m + ' months (' + (m/12) + ' yr)' : m + ' months'; }
+
+    function compute() {
+      const price = fnum(document.getElementById('price'));
+      const down  = Math.min(price, document.getElementById('down') ? fnum(document.getElementById('down')) : 0);
+      const rate  = fnum(document.getElementById('rate'));
+      const months= fnum(document.getElementById('term'));
+      const taxP  = document.getElementById('tax') ? fnum(document.getElementById('tax')) / 100 : 0;
+      const fees  = document.getElementById('fees') ? fnum(document.getElementById('fees')) : 0;
+
+      document.getElementById('out-price').textContent = C.fmt(price);
+      if (document.getElementById('out-down')) document.getElementById('out-down').textContent = C.fmt(down);
+      document.getElementById('out-rate').textContent = rate.toFixed(2) + '%';
+      document.getElementById('out-term').textContent = termLabel(months);
+
+      const taxAmt = price * taxP;
+      const loan = Math.max(0, price + taxAmt + fees - down);
+      const { pmt, n, r } = C.emi(loan, rate, months);
+      const totalPaid = pmt * n;
+      const interest = Math.max(0, totalPaid - loan);
+      const totalCost = price + taxAmt + fees;
+
+      document.getElementById('rMain').textContent = C.fmt(pmt);
+      document.getElementById('rLoan').textContent = C.fmt(loan);
+      document.getElementById('rInterest').textContent = C.fmt(interest);
+      document.getElementById('rTotal').textContent = C.fmt(totalCost);
+      document.getElementById('rRate').textContent = rate.toFixed(2) + '% APR';
+
+      const t = document.getElementById('recoTitle'), x = document.getElementById('recoText');
+      const share = loan > 0 ? (interest / loan) * 100 : 0;
+      if (rate > 15) {
+        t.textContent = 'High rate — compare offers';
+        x.textContent = 'At ' + rate.toFixed(2) + '% APR you pay ' + C.fmt(interest) + ' in interest on this loan. Even a 2–3% lower rate can save ' + C.fmt(Math.max(interest*0.2, 100)) + ' — check a second lender before you sign.';
+      } else if (months > 60) {
+        t.textContent = 'Longer term = more interest';
+        x.textContent = 'Keeping payments low over ' + n + ' months adds ' + C.fmt(interest) + ' of interest. A shorter term raises the payment but cuts the total cost.';
+      } else {
+        t.textContent = 'Your payment breakdown';
+        x.textContent = 'You pay ' + C.fmt(pmt) + '/month for ' + n + ' months. ' + C.fmt(loan) + ' is principal and ' + C.fmt(interest) + ' is interest (' + share.toFixed(0) + '% of the amount financed).';
+      }
+
+      if (chart) chart.destroy();
+      chart = new Chart(document.getElementById('chart').getContext('2d'), {
+        type: 'doughnut',
+        data: { labels: ['Principal financed', 'Total interest'], datasets: [{ data: [Math.round(loan), Math.round(interest)], backgroundColor: ['#1B3A6B', '#F59E0B'], borderWidth: 0 }] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-soft)', font: { size: 13 } } } } }
+      });
+
+      if (loan > 0 && pmt > 0) {
+        C.renderTable(document.getElementById('amortiBody'), C.amortize(loan, rate, months), C.fmt);
+        document.getElementById('amortiSection').style.display = '';
+      }
+    }
+
+    // currency selector inserted at top of the body; recompute on change
+    C.mount(document.getElementById('calcBody'), compute);
+
+    ['price','down','rate','term','tax','fees'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', compute); });
+    document.getElementById('calcBtn').addEventListener('click', compute);
+
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const txt = 'Electric Vehicle Loan Calculator (DecideCalc)
+Monthly payment: ' + document.getElementById('rMain').textContent +
+        '
+Total interest: ' + document.getElementById('rInterest').textContent +
+        '
+Total payable: ' + document.getElementById('rTotal').textContent +
+        '
+https://www.decidecalc.com/calculators/ev-loan-calculator';
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(function(){});
+      this.textContent = 'Copied!'; const b = this;
+      setTimeout(function(){ b.textContent = 'Copy result'; }, 2000);
+    });
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      const url = 'https://www.decidecalc.com/calculators/ev-loan-calculator';
+      if (navigator.share) { navigator.share({ title: 'Electric Vehicle Loan Calculator', url }).catch(function(){}); }
+      else if (navigator.clipboard) { navigator.clipboard.writeText(url).catch(function(){}); this.textContent = 'Link copied!'; const b = this; setTimeout(function(){ b.textContent = 'Share'; }, 2000); }
+    });
+
+    compute();
+  </script>
+</body>
+</html>

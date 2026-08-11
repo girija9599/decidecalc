@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v43';
+const CACHE = 'decidecalc-v44';
 const ASSETS = [
   '/',
   '/index.html',
@@ -189,7 +189,36 @@ const ASSETS = [
   '/assets/img/blog-student-loan-interest.png',
   '/favicon.ico',
   '/site.webmanifest',
-  '/browserconfig.xml'
+  '/browserconfig.xml',
+  '/assets/js/dc-currency.js',
+  '/calculators/auto-loan-calculator.html',
+  '/calculators/used-car-loan-calculator.html',
+  '/calculators/truck-loan-calculator.html',
+  '/calculators/motorcycle-loan-calculator.html',
+  '/calculators/scooter-loan-calculator.html',
+  '/calculators/bike-loan-calculator.html',
+  '/calculators/ev-loan-calculator.html',
+  '/calculators/personal-loan-calculator.html',
+  '/calculators/iphone-emi-calculator.html',
+  '/calculators/phone-emi-calculator.html',
+  '/calculators/laptop-emi-calculator.html',
+  '/calculators/ipad-emi-calculator.html',
+  '/calculators/tv-emi-calculator.html',
+  '/calculators/appliance-emi-calculator.html',
+  '/calculators/loan-payment-calculator.html',
+  '/calculators/interest-calculator.html',
+  '/calculators/debt-payoff-calculator.html',
+  '/calculators/discount-calculator.html',
+  '/calculators/tip-calculator.html',
+  '/calculators/sales-tax-calculator.html',
+  '/calculators/take-home-pay-calculator.html',
+  '/blog/how-to-calculate-car-payment.html',
+  '/blog/how-much-motorcycle-can-i-afford.html',
+  '/blog/should-you-finance-a-phone.html',
+  '/blog/how-to-calculate-tip.html',
+  '/blog/what-is-sales-tax-how-to-calculate.html',
+  '/blog/how-to-calculate-take-home-pay.html',
+  '/blog/how-to-pay-off-debt-fast.html',
 ];
 
 // Install — cache all static assets
