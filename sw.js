@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v45';
+const CACHE = 'decidecalc-v46';
 const ASSETS = [
   '/',
   '/index.html',
@@ -187,6 +187,14 @@ const ASSETS = [
   '/assets/img/blog-apr-vs-apy.png',
   '/assets/img/blog-401k-vs-roth-ira.png',
   '/assets/img/blog-student-loan-interest.png',
+  '/assets/img/blog/how-to-calculate-car-payment.webp',
+  '/assets/img/blog/how-much-motorcycle-can-i-afford.webp',
+  '/assets/img/blog/should-you-finance-a-phone.webp',
+  '/assets/img/blog/how-to-calculate-tip.webp',
+  '/assets/img/blog/what-is-sales-tax-how-to-calculate.webp',
+  '/assets/img/blog/how-to-calculate-take-home-pay.webp',
+  '/assets/img/blog/how-to-pay-off-debt-fast.webp',
+  '/assets/img/blog/how-to-calculate-student-loan-interest.webp',
   '/favicon.ico',
   '/site.webmanifest',
   '/browserconfig.xml',
