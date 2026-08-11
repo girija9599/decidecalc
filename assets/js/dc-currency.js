@@ -55,21 +55,51 @@
   }
   function renderTable(tbody, rows, f) {
     tbody.innerHTML = '';
-    const show = rows.length <= 13 ? rows : [...rows.slice(0, 12), { ellipsis: true, n: rows.length - 1 }, rows[rows.length - 1]];
-    show.forEach(row => {
+    // Remove any leftover toggle button from a previous computation
+    const oldToggle = document.getElementById('amortiToggle');
+    if (oldToggle && oldToggle.parentNode) oldToggle.parentNode.removeChild(oldToggle);
+
+    const CELL = 'padding:8px 12px;';
+    const rowHtml = (row) =>
+      '<td style="' + CELL + 'text-align:left;color:var(--text-mute);font-weight:500">' + row.i + '</td>' +
+      '<td style="' + CELL + 'text-align:right;font-weight:600;color:var(--text)">' + f(row.pmt) + '</td>' +
+      '<td style="' + CELL + 'text-align:right">' + f(row.principal) + '</td>' +
+      '<td style="' + CELL + 'text-align:right">' + f(row.interest) + '</td>' +
+      '<td style="' + CELL + 'text-align:right;font-variant-numeric:tabular-nums">' + f(row.balance) + '</td>';
+
+    rows.forEach((row, idx) => {
       const tr = document.createElement('tr');
       tr.style.borderBottom = '1px solid var(--border)';
-      if (row.ellipsis) {
-        tr.innerHTML = '<td colspan="5" style="padding:4px 10px;text-align:center;color:var(--text-soft);font-style:italic">… months 13–' + row.n + ' …</td>';
-      } else {
-        tr.innerHTML = '<td style="padding:5px 10px">' + row.i + '</td>' +
-          '<td style="padding:5px 10px;text-align:right">' + f(row.pmt) + '</td>' +
-          '<td style="padding:5px 10px;text-align:right">' + f(row.principal) + '</td>' +
-          '<td style="padding:5px 10px;text-align:right">' + f(row.interest) + '</td>' +
-          '<td style="padding:5px 10px;text-align:right">' + f(row.balance) + '</td>';
-      }
+      tr.dataset.amortiRow = '1';
+      // Alternate row striping for readability
+      if (idx % 2 === 1) tr.style.background = 'color-mix(in srgb, var(--text) 3%, transparent)';
+      // Only first 12 months visible initially; rest hidden until the toggle
+      if (idx >= 12) tr.style.display = 'none';
+      tr.innerHTML = rowHtml(row);
       tbody.appendChild(tr);
     });
+
+    // Expand / collapse toggle (only when the loan runs longer than 12 months)
+    if (rows.length > 12) {
+      const table = tbody.closest('table');
+      const wrap = table && table.parentNode ? table.parentNode : null;
+      if (wrap && wrap.parentNode) {
+        const btn = document.createElement('button');
+        btn.id = 'amortiToggle';
+        btn.type = 'button';
+        btn.style.cssText = 'margin-top:14px;display:inline-block;padding:8px 18px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.88rem;font-weight:600;cursor:pointer';
+        btn.textContent = 'Show all ' + rows.length + ' months ▾';
+        btn.addEventListener('click', function () {
+          const hidden = tbody.querySelectorAll('tr[data-amorti-row]');
+          const isCollapsed = btn.dataset.expanded !== '1';
+          hidden.forEach((tr, idx) => { if (idx >= 12) tr.style.display = isCollapsed ? '' : 'none'; });
+          btn.dataset.expanded = isCollapsed ? '1' : '0';
+          btn.textContent = isCollapsed ? 'Show less ▴' : 'Show all ' + rows.length + ' months ▾';
+        });
+        wrap.parentNode.insertBefore(btn, wrap.nextSibling);
+        btn.dataset.expanded = '0';
+      }
+    }
   }
   /* Insert a styled currency <select> before the first .field inside `host`.
      Calls onChange() whenever the user switches currency. */
