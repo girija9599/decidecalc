@@ -21,24 +21,17 @@ const guides=[
  ['blog-debt-snowball-avalanche.png','DEBT SNOWBALL','VS AVALANCHE',[15,21,51],[25,88,132],[0,194,168]],
  ['blog-credit-card-payoff.png','CREDIT CARD','PAYOFF PLAN',[49,20,48],[116,34,77],[251,191,36]],
  ['blog-home-loan-refinance.png','REFINANCE OR','BALANCE TRANSFER',[15,48,79],[29,100,135],[124,211,255]],
- ['blog-expense-ratio-impact.png','EXPENSE RATIO','COMPOUNDING IMPACT',[21,55,46],[19,108,89],[0,194,168]],
- ['blog-retirement-withdrawal.png','RETIREMENT','WITHDRAWAL PLAN',[49,36,77],[82,58,130],[251,191,36]],
+['blog-retirement-withdrawal.png','RETIREMENT','WITHDRAWAL PLAN',[49,36,77],[82,58,130],[251,191,36]],
  ['blog-bond-ytm.png','BOND YIELD','VS YTM',[25,42,85],[38,86,136],[124,211,255]],
  /* USA cluster #1 */
  ['blog-compound-interest.png','COMPOUND','INTEREST GUIDE',[13,32,60],[25,83,132],[0,194,168]],
- ['blog-simple-vs-compound.png','SIMPLE VS','COMPOUND INTEREST',[12,42,72],[24,100,136],[0,194,168]],
- /* Clean legacy feature images */
- /* USA cluster #2 */
-	 ['blog-loan-interest.png','HOW TO CALCULATE','LOAN INTEREST',[18,35,68],[36,92,132],[0,194,168]],
+/* Clean legacy feature images */
+	/* USA cluster #2 */
 	 ['blog-gross-vs-net-pay.png','GROSS PAY VS','NET PAY',[20,47,73],[42,102,139],[251,191,36]],
 	 ['blog-how-much-house.png','HOW MUCH HOUSE','CAN I AFFORD?',[20,47,73],[47,93,126],[124,211,255]],
-	 ['blog-investment-return.png','INVESTMENT','RETURN GUIDE',[18,55,48],[30,111,89],[0,194,168]],
-	 ['blog-percentage-change.png','PERCENTAGE','CHANGE GUIDE',[52,31,73],[93,55,128],[251,191,36]],
-	 ['blog-discount-calculator.png','HOW TO CALCULATE','A DISCOUNT',[49,35,44],[119,59,77],[255,194,82]],
+	 	 ['blog-discount-calculator.png','HOW TO CALCULATE','A DISCOUNT',[49,35,44],[119,59,77],[255,194,82]],
 	 /* USA cluster #3 */
-	 ['blog-inflation-rate.png','INFLATION','RATE GUIDE',[30,50,75],[52,112,152],[0,194,168]],
-	 ['blog-savings-rate.png','SAVINGS','RATE & FIRE',[14,55,44],[24,120,88],[0,194,168]],
-	 ['blog-apr-vs-apy.png','APR VS APY','WHICH RATE?',[55,28,48],[100,48,92],[251,191,36]],
+	 	 ['blog-apr-vs-apy.png','APR VS APY','WHICH RATE?',[55,28,48],[100,48,92],[251,191,36]],
 	 ['blog-401k-vs-roth-ira.png','401K VS','ROTH IRA',[14,42,80],[28,96,144],[124,211,255]]
 ];
 fs.mkdirSync(out,{recursive:true});

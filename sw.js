@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v47';
+const CACHE = 'decidecalc-v48';
 const ASSETS = [
   '/',
   '/index.html',
@@ -170,17 +170,18 @@ const ASSETS = [
   '/assets/img/blog-debt-snowball-avalanche.png',
   '/assets/img/blog-credit-card-payoff.png',
   '/assets/img/blog-home-loan-refinance.png',
-  '/assets/img/blog-expense-ratio-impact.png',
+  '/assets/img/blog/mutual-fund-expense-ratio-impact-india.webp',
+  '/assets/img/blog/simple-interest-vs-compound-interest.webp',
+  '/assets/img/blog/how-to-calculate-savings-rate.webp',
+  '/assets/img/blog/how-to-calculate-inflation-rate.webp',
+  '/assets/img/blog/how-to-calculate-percentage-increase-and-decrease.webp',
+  '/assets/img/blog/how-to-calculate-investment-return.webp',
+  '/assets/img/blog/how-to-calculate-loan-interest.webp',
   '/assets/img/blog-retirement-withdrawal.png',
   '/assets/img/blog-bond-ytm.png',
-  '/assets/img/blog-loan-interest.png',
   '/assets/img/blog-gross-vs-net-pay.png',
-  '/assets/img/blog-how-much-house.png',
-  '/assets/img/blog-investment-return.png',
-  '/assets/img/blog-percentage-change.png',
+      '/assets/img/blog-how-much-house.png',
   '/assets/img/blog-discount-calculator.png',
-  '/assets/img/blog-inflation-rate.png',
-  '/assets/img/blog-savings-rate.png',
   '/assets/img/blog-apr-vs-apy.png',
   '/assets/img/blog-401k-vs-roth-ira.png',
   '/assets/img/blog/rent-or-buy-house-2026-india.webp',
