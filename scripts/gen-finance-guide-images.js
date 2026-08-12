@@ -26,15 +26,9 @@ const guides=[
  ['blog-bond-ytm.png','BOND YIELD','VS YTM',[25,42,85],[38,86,136],[124,211,255]],
  /* USA cluster #1 */
  ['blog-compound-interest.png','COMPOUND','INTEREST GUIDE',[13,32,60],[25,83,132],[0,194,168]],
- ['blog-mortgage-payment.png','MORTGAGE','PAYMENT GUIDE',[15,48,79],[24,82,120],[251,191,36]],
- ['blog-paycheck-salary.png','SALARY TO','PAYCHECK GUIDE',[20,44,80],[35,90,140],[0,194,168]],
- ['blog-15-vs-30-mortgage.png','15-YEAR OR','30-YEAR MORTGAGE',[33,28,48],[80,42,104],[251,191,36]],
  ['blog-simple-vs-compound.png','SIMPLE VS','COMPOUND INTEREST',[12,42,72],[24,100,136],[0,194,168]],
- ['blog-ten-thousand-grow.png','HOW MUCH WILL','$10,000 GROW?',[24,42,86],[40,96,140],[251,191,36]],
-	 /* Clean legacy feature images */
-	 ['blog-health-insurance-cover.png','HEALTH INSURANCE','COVER GUIDE',[8,117,109],[19,181,157],[218,255,247],{clean:true}],
-	 ['blog-rent-vs-buy-2026.png','RENT OR BUY','A HOUSE IN 2026',[116,80,23],[220,150,33],[255,239,190],{clean:true}],
-	 /* USA cluster #2 */
+ /* Clean legacy feature images */
+ /* USA cluster #2 */
 	 ['blog-loan-interest.png','HOW TO CALCULATE','LOAN INTEREST',[18,35,68],[36,92,132],[0,194,168]],
 	 ['blog-gross-vs-net-pay.png','GROSS PAY VS','NET PAY',[20,47,73],[42,102,139],[251,191,36]],
 	 ['blog-how-much-house.png','HOW MUCH HOUSE','CAN I AFFORD?',[20,47,73],[47,93,126],[124,211,255]],

@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v46';
+const CACHE = 'decidecalc-v47';
 const ASSETS = [
   '/',
   '/index.html',
@@ -167,9 +167,6 @@ const ASSETS = [
   '/assets/img/icon-192.svg',
   '/assets/img/icon-512.svg',
   '/assets/img/og.png',
-  '/assets/img/blog-emi-vs-sip.png',
-  '/assets/img/blog-health-insurance-cover.png',
-  '/assets/img/blog-rent-vs-buy-2026.png',
   '/assets/img/blog-debt-snowball-avalanche.png',
   '/assets/img/blog-credit-card-payoff.png',
   '/assets/img/blog-home-loan-refinance.png',
@@ -186,6 +183,13 @@ const ASSETS = [
   '/assets/img/blog-savings-rate.png',
   '/assets/img/blog-apr-vs-apy.png',
   '/assets/img/blog-401k-vs-roth-ira.png',
+  '/assets/img/blog/rent-or-buy-house-2026-india.webp',
+  '/assets/img/blog/how-to-calculate-paycheck-from-salary.webp',
+  '/assets/img/blog/how-to-calculate-mortgage-payment.webp',
+  '/assets/img/blog/how-much-will-10000-grow-compound-interest.webp',
+  '/assets/img/blog/how-much-health-insurance-need-india.webp',
+  '/assets/img/blog/emi-vs-sip-which-is-better-india.webp',
+  '/assets/img/blog/30-year-vs-15-year-mortgage.webp',
   '/assets/img/blog/how-to-calculate-car-payment.webp',
   '/assets/img/blog/how-much-motorcycle-can-i-afford.webp',
   '/assets/img/blog/should-you-finance-a-phone.webp',
