@@ -166,6 +166,14 @@
   };
 
   /* ---------- Number / currency formatting ---------- */
+  // Smart round: max 2 decimals, strip trailing zeros and decimal point
+  DC.round2 = function (n) {
+    n = Number(n);
+    if (!isFinite(n)) return '0';
+    var r = n.toFixed(2);
+    if (r.indexOf('.') !== -1) { r = r.replace(/0+$/, '').replace(/\.$/, ''); }
+    return r;
+  };
   DC.inr = function (n, dec) {
     if (!isFinite(n)) n = 0;
     return '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: dec == null ? 0 : dec, minimumFractionDigits: dec == null ? 0 : dec });
@@ -181,6 +189,16 @@
     if (Math.abs(n) >= 100000) return '₹' + (n / 100000).toFixed(2) + ' L';
     if (Math.abs(n) >= 1000) return '₹' + (n / 1000).toFixed(1) + 'K';
     return '₹' + Math.round(n);
+  };
+  // Compact with configurable currency symbol (for USD, EUR, etc.)
+  DC.compactCcy = function (n, ccy) {
+    ccy = ccy || '$';
+    if (!isFinite(n)) n = 0;
+    n = Number(n);
+    if (Math.abs(n) >= 1000000000) return ccy + (n / 1000000000).toFixed(2) + 'B';
+    if (Math.abs(n) >= 1000000) return ccy + (n / 1000000).toFixed(2) + 'M';
+    if (Math.abs(n) >= 1000) return ccy + (n / 1000).toFixed(1) + 'K';
+    return ccy + Math.round(n);
   };
   DC.pct = function (n, dec) { return (dec == null ? n.toFixed(1) : n.toFixed(dec)) + '%'; };
   DC.fnum = function (v) { v = parseFloat(v); return isNaN(v) ? 0 : v; };
@@ -345,12 +363,14 @@
         ctx.font = '600 11px Inter, system-ui, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
+        // Default formatter: smart round to 2 decimals, strip trailing zeros
+        const defaultFmt = function (raw) { return DC.round2(raw); };
         if (chart.config.type === 'bar') {
           chart.data.datasets.forEach(function (set, si) {
             chart.getDatasetMeta(si).data.forEach(function (el, di) {
               const raw = set.data[di];
               if (!isFinite(raw)) return;
-              const text = typeof settings.formatter === 'function' ? settings.formatter(raw, di, si) : String(raw);
+              const text = typeof settings.formatter === 'function' ? settings.formatter(raw, di, si) : defaultFmt(raw);
               ctx.fillStyle = c.textStrong;
               ctx.fillText(text, el.x, el.y - 4);
             });
@@ -362,7 +382,7 @@
               const raw = set.data[di];
               if (!isFinite(raw)) continue;
               const point = meta.data[di];
-              const text = typeof settings.formatter === 'function' ? settings.formatter(raw, di, si) : String(raw);
+              const text = typeof settings.formatter === 'function' ? settings.formatter(raw, di, si) : defaultFmt(raw);
               ctx.fillStyle = c.textStrong;
               ctx.textAlign = di === 0 ? 'left' : 'right';
               ctx.fillText(text, point.x, point.y - 6);
@@ -373,7 +393,7 @@
           chart.getDatasetMeta(0).data.forEach(function (el, di) {
             const raw = (chart.data.datasets[0].data || [])[di];
             if (!isFinite(raw)) return;
-            const value = typeof settings.formatter === 'function' ? settings.formatter(raw, di, 0) : String(raw);
+            const value = typeof settings.formatter === 'function' ? settings.formatter(raw, di, 0) : defaultFmt(raw);
             const pos = el.tooltipPosition();
             const metrics = ctx.measureText(value);
             const width = metrics.width + 10;
@@ -417,16 +437,18 @@
     const labels = config.data.labels || [];
     let head = '';
     let body = '';
+    // Default table formatter: smart round to avoid 116.66666666666667
+    const defaultTableFmt = function (v) { return DC.round2(v); };
     if (config.type === 'doughnut' || config.type === 'pie' || config.type === 'radar') {
       head = '<tr><th>Label</th><th>Value</th></tr>';
       body = rows.map(function (row) {
-        return '<tr><td>' + DC.escape(row[0]) + '</td><td>' + DC.escape(typeof meta.tableFormatter === 'function' ? meta.tableFormatter(row[1], row[0]) : row[1]) + '</td></tr>';
+        return '<tr><td>' + DC.escape(row[0]) + '</td><td>' + DC.escape(typeof meta.tableFormatter === 'function' ? meta.tableFormatter(row[1], row[0]) : defaultTableFmt(row[1])) + '</td></tr>';
       }).join('');
     } else {
       head = '<tr><th>Period</th>' + ((config.data.datasets || []).map(function (set) { return '<th>' + DC.escape(set.label || 'Value') + '</th>'; }).join('')) + '</tr>';
       body = rows.map(function (row) {
         return '<tr><td>' + DC.escape(row[0]) + '</td>' + row.slice(1).map(function (value) {
-          return '<td>' + DC.escape(typeof meta.tableFormatter === 'function' ? meta.tableFormatter(value, row[0]) : value) + '</td>';
+          return '<td>' + DC.escape(typeof meta.tableFormatter === 'function' ? meta.tableFormatter(value, row[0]) : defaultTableFmt(value)) + '</td>';
         }).join('') + '</tr>';
       }).join('');
     }

@@ -187,6 +187,10 @@
   <script src="/assets/js/layout.js?v=20260804-2"></script>
   <script src="/assets/js/tools.js"></script>
   <script>
+    DC.renderLayout();
+    setTimeout(function () { DC.initReveal(); }, 0);
+  </script>
+  <script>
     (function () {
       const peers = ['how-to-calculate-mortgage-payment','30-year-vs-15-year-mortgage','rent-or-buy-house-2026-india'];
       const sec = document.getElementById('relatedArticlesSection');

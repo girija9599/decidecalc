@@ -183,6 +183,10 @@
   <script src="/assets/js/layout.js?v=20260804-2"></script>
   <script src="/assets/js/tools.js"></script>
   <script>
+    DC.renderLayout();
+    setTimeout(function () { DC.initReveal(); }, 0);
+  </script>
+  <script>
     (function () {
       const peers = ['how-to-calculate-savings-rate','how-to-calculate-investment-return','how-to-calculate-compound-interest'];
       const sec = document.getElementById('relatedArticlesSection');

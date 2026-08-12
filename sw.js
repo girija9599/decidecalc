@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v49';
+const CACHE = 'decidecalc-v50';
 const ASSETS = [
   '/',
   '/index.html',
@@ -167,9 +167,7 @@ const ASSETS = [
   '/assets/img/icon-192.svg',
   '/assets/img/icon-512.svg',
   '/assets/img/og.png',
-  ,
-  '/assets/img/blog-credit-card-payoff.png',
-  ,
+  '/assets/img/blog/credit-card-minimum-payment-payoff-india.webp',
   '/assets/img/blog/mutual-fund-expense-ratio-impact-india.webp',
   '/assets/img/blog/simple-interest-vs-compound-interest.webp',
   '/assets/img/blog/how-to-calculate-savings-rate.webp',
@@ -187,13 +185,6 @@ const ASSETS = [
   '/assets/img/blog/how-to-calculate-a-discount.webp',
   '/assets/img/blog/apr-vs-apy.webp',
   '/assets/img/blog/401k-vs-roth-ira.webp',
-  ,
-  ,
-  ,
-      ,
-  ,
-  ,
-  ,
   '/assets/img/blog/rent-or-buy-house-2026-india.webp',
   '/assets/img/blog/how-to-calculate-paycheck-from-salary.webp',
   '/assets/img/blog/how-to-calculate-mortgage-payment.webp',

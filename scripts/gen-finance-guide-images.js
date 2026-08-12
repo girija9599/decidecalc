@@ -18,7 +18,7 @@ function rect(p,x,y,w,h,col,a){for(let yy=Math.max(0,y);yy<Math.min(H,y+h);yy++)
 function text(p,str,x,y,scale,col){let xx=x;for(const char of str.toUpperCase()){const glyph=FONT[char]||FONT[' '];for(let gy=0;gy<7;gy++)for(let gx=0;gx<5;gx++)if(glyph[gy][gx]==='1')rect(p,xx+gx*scale,y+gy*scale,scale,scale,col,255);xx+=6*scale;}return xx;}
 function lineWrap(str,max){const words=str.split(' '), lines=[];let line='';for(const word of words){const trial=line?line+' '+word:word;if(trial.length>max){if(line)lines.push(line);line=word;}else line=trial;}if(line)lines.push(line);return lines;}
 const guides=[
- ['blog-credit-card-payoff.png','CREDIT CARD','PAYOFF PLAN',[49,20,48],[116,34,77],[251,191,36]]
+  // All finance guide PNGs migrated to WebP in assets/img/blog/ — no generators needed
 ];
 fs.mkdirSync(out,{recursive:true});
 for(const [file,top,bottom,a,b,accent,opts] of guides){const p=canvas([a,b]);if(!opts||!opts.clean){circle(p,1010,150,320,accent,60);circle(p,1000,480,230,[255,255,255],24);for(let i=0;i<5;i++){const x=760+i*78, h=90+i*45;rect(p,x,430-h,48,h,accent,150);}}rect(p,72,68,150,7,accent,255);text(p,'DECIDECAL',72,96,6,[240,248,255]);text(p,'FREE FINANCE GUIDE',72,150,3,accent);let y=240;for(const line of lineWrap(top,15)){text(p,line,72,y,11,[255,255,255]);y+=90;}for(const line of lineWrap(bottom,17)){text(p,line,72,y,9,accent);y+=72;}text(p,'CALCULATE BEFORE YOU DECIDE',72,560,3,[230,240,255]);fs.writeFileSync(path.join(out,file),png(p));console.log('Wrote '+file);}
