@@ -137,21 +137,33 @@
               '<a href="' + DC.base + 'categories/education">Education Tools</a>' +
               '<a href="' + DC.base + 'categories/unique">Decision Tools</a>' +
             '</div>' +
-            '<div><h4>Popular Tools</h4>' +
+            '<div><h4>Popular Calculators</h4>' +
               '<a href="' + DC.base + 'calculators/emi-calculator">EMI Calculator</a>' +
-              '<a href="' + DC.base + 'calculators/sip-calculator">SIP Returns</a>' +
-              '<a href="' + DC.base + 'calculators/income-tax-calculator">Income Tax</a>' +
-              '<a href="' + DC.base + 'calculators/retirement-calculator">Retirement</a>' +
-              '<a href="' + DC.base + 'calculators/life-decision-scorer">Life Decision Scorer</a>' +
+              '<a href="' + DC.base + 'calculators/sip-calculator">SIP Returns Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/income-tax-calculator">Income Tax Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/retirement-calculator">Retirement Calculator</a>' +
               '<a href="' + DC.base + 'calculators/gst-calculator">GST Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/bmi-calculator">BMI Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/age-calculator">Age Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/percentage-calculator">Percentage Calculator</a>' +
             '</div>' +
-            '<div><h4>Company</h4>' +
+            '<div><h4>More Tools</h4>' +
+              '<a href="' + DC.base + 'calculators/life-decision-scorer">Life Decision Scorer</a>' +
+              '<a href="' + DC.base + 'calculators/compound-interest-calculator">Compound Interest</a>' +
+              '<a href="' + DC.base + 'calculators/home-loan-eligibility">Home Loan Eligibility</a>' +
+              '<a href="' + DC.base + 'calculators/ppf-calculator">PPF Calculator</a>' +
+              '<a href="' + DC.base + 'calculators/currency-converter">Currency Converter</a>' +
+              '<a href="' + DC.base + 'calculators/password-generator">Password Generator</a>' +
+              '<a href="' + DC.base + 'tools">View All 121+ Tools →</a>' +
+            '</div>' +
+            '<div><h4>Resources &amp; Company</h4>' +
               '<a href="' + DC.base + 'blog/">Blog</a>' +
               '<a href="' + DC.base + 'about">About Us</a>' +
+              '<a href="' + DC.base + 'contact">Contact</a>' +
               '<a href="' + DC.base + 'privacy">Privacy Policy</a>' +
               '<a href="' + DC.base + 'terms">Terms of Use</a>' +
               '<a href="' + DC.base + 'cookie-policy">Cookie Policy</a>' +
-              '<a href="' + DC.base + 'contact">Contact</a>' +
+              '<a href="' + DC.base + 'sitemap.xml">Sitemap</a>' +
             '</div>' +
           '</div>' +
           '<div class="footer-bottom">' +

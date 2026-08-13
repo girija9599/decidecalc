@@ -28,14 +28,24 @@
     document.documentElement.style.setProperty('--cat-color', cat.color);
 
     // 1. Inject schema (JSON-LD) in head
+    var catMap = {
+      finance: 'FinanceApplication', career: 'CareerApplication', health: 'HealthApplication',
+      life: 'LifestyleApplication', business: 'BusinessApplication', unique: 'UtilityApplication',
+      datetime: 'UtilityApplication', converter: 'UtilityApplication', text: 'UtilityApplication',
+      dev: 'DeveloperApplication', utility: 'UtilityApplication', education: 'EducationalApplication'
+    };
     const schema = {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
+      "@type": "WebApplication",
       "name": tool.name,
-      "applicationCategory": "FinanceApplication",
+      "url": "https://www.decidecalc.com/calculators/" + tool.slug,
+      "applicationCategory": catMap[tool.cat] || 'UtilityApplication',
       "operatingSystem": "Web",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-      "description": tool.blurb
+      "description": tool.blurb,
+      "browserRequirements": "Requires JavaScript",
+      "inLanguage": "en-IN",
+      "applicationSuite": "DecideCalc"
     };
     const faqSchema = {
       "@context": "https://schema.org",
@@ -53,7 +63,38 @@
         { "@type": "ListItem", "position": 3, "name": tool.name }
       ]
     };
-    [schema, faqSchema, breadcrumbSchema].forEach(function (s) {
+    // HowTo schema: extract steps from the guide section if it exists
+    var howToSteps = [];
+    var howToEl = document.querySelector('.mt-4.card h2');
+    if (howToEl) {
+      var guideSection = howToEl.closest('section');
+      if (guideSection) {
+        var lis = guideSection.querySelectorAll('li');
+        lis.forEach(function (li) {
+          howToSteps.push(li.textContent.trim());
+        });
+      }
+    }
+    var howToSchema = null;
+    if (howToSteps.length > 0) {
+      howToSchema = {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to use the " + tool.name,
+        "description": "Step-by-step guide to using " + tool.name + " on DecideCalc.",
+        "step": howToSteps.map(function (text, i) {
+          return {
+            "@type": "HowToStep",
+            "position": i + 1,
+            "name": "Step " + (i + 1),
+            "text": text
+          };
+        })
+      };
+    }
+    var schemasToInject = [schema, faqSchema, breadcrumbSchema];
+    if (howToSchema) schemasToInject.push(howToSchema);
+    schemasToInject.forEach(function (s) {
       const sc = document.createElement('script');
       sc.type = 'application/ld+json';
       sc.textContent = JSON.stringify(s);
@@ -66,7 +107,7 @@
       const rel = DC.related(tool.slug, 3);
       relWrap.innerHTML = rel.map(function (r) {
         const rc = DC.catName(r.cat);
-        return '<a class="mini-card" href="' + r.slug + '" style="--cat-color:' + rc.color + '">' +
+        return '<a class="mini-card" href="/calculators/' + r.slug + '" style="--cat-color:' + rc.color + '">' +
           '<span class="mic">' + DC.icon(r.icon) + '</span>' +
           '<span><h4>' + r.name + '</h4><span>' + rc.name + '</span></span>' +
         '</a>';
