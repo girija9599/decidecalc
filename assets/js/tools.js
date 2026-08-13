@@ -80,6 +80,7 @@
     { slug: 'retirement-withdrawal-calculator',name: 'Retirement Withdrawal Calculator',    cat: 'finance', icon: 'piggy',    aliases: 'retirement withdrawal drawdown safe withdrawal corpus lasts', blurb: 'Estimate how long your retirement savings can support withdrawals.' },
     { slug: 'bond-ytm-calculator',             name: 'Bond Yield to Maturity Calculator',  cat: 'finance', icon: 'trending', aliases: 'bond ytm yield coupon price maturity current yield', blurb: 'Calculate current yield and yield to maturity from a bond price and coupon.' },
     { slug: 'car-loan-calculator',             name: 'Car Loan Calculator',                cat: 'finance', icon: 'zap',      aliases: 'auto loan car payment vehicle financing monthly installment amortization', blurb: 'Monthly car payment, total interest and full amortization for any auto loan.', popular: true, popularOrder: 7 },
+    { slug: '8th-pay-commission-calculator',   name: '8th Pay Commission Calculator',      cat: 'finance', icon: 'briefcase', aliases: '8th cpc pay commission fitment factor central government salary india arrears', blurb: 'Estimate your 8th CPC salary with fitment factor scenarios, HRA, TA, deductions, and arrears calculator.' },
 
     /* ===== Career & Salary (3) ===== */
     { slug: 'job-switch-decision',          name: 'Job Switch Decision',             cat: 'career',  icon: 'briefcase', aliases: 'quit resign change job',                        blurb: 'Score-based guidance for a potential job switch.' },
@@ -250,7 +251,9 @@
     'tip-calculator': ['how-to-calculate-tip', 'how-to-calculate-percentage-increase-and-decrease'],
     'sales-tax-calculator': ['what-is-sales-tax-how-to-calculate', 'how-to-calculate-a-discount'],
     'take-home-pay-calculator': ['how-to-calculate-take-home-pay', 'how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay'],
-    'student-loan-calculator': ['how-to-calculate-student-loan-interest', 'how-to-calculate-loan-interest']
+    'student-loan-calculator': ['how-to-calculate-student-loan-interest', 'how-to-calculate-loan-interest'],
+    '8th-pay-commission-calculator': ['8th-pay-commission-calculator-2026'],
+    '8th-pay-commission-calculator-2026': ['8th-pay-commission-calculator']
   };
   DC.relatedArticlesList = function (slug, n) {
     n = n || 3;
@@ -290,7 +293,8 @@
     'what-is-sales-tax-how-to-calculate': { title: 'What Is Sales Tax? How to Calculate It (Formulas + Examples)', desc: 'Sales tax explained: add it to a price, reverse it out of a total, combined state and local rates, tax on discounted items, and US vs GST vs VAT differences.', icon: 'percent' },
     'how-to-calculate-take-home-pay': { title: 'How to Calculate Take-Home Pay From Salary (Step by Step)', desc: 'From gross salary to the number that lands in your bank: federal brackets, FICA at 7.65%, state tax, 401(k) and insurance deductions with a $75,000 example.', icon: 'money' },
     'how-to-pay-off-debt-fast': { title: 'How to Pay Off Debt Fast: Avalanche vs Snowball + Payoff Math', desc: 'The fastest way to become debt-free: avalanche vs snowball compared on $23,900 of real debt, the minimum-payment trap, and extra-payment strategies that cut years.', icon: 'trending' },
-    'retirement-withdrawal-rate-india': { title: 'Retirement Withdrawal Rates in India: A Practical Guide', desc: 'Inflation, sequence-of-returns risk and flexibility — how long a retirement corpus could last at different withdrawal rates in India.', icon: 'piggy' }
+    'retirement-withdrawal-rate-india': { title: 'Retirement Withdrawal Rates in India: A Practical Guide', desc: 'Inflation, sequence-of-returns risk and flexibility — how long a retirement corpus could last at different withdrawal rates in India.', icon: 'piggy' },
+    '8th-pay-commission-calculator-2026': { title: '8th Pay Commission Calculator 2026: Estimated Salary, Fitment Factor & Arrears Guide', desc: 'Complete guide to the 8th CPC with fitment factor scenarios, salary estimation formula, HRA changes, arrears calculation, and a free calculator for Indian government employees.', icon: 'briefcase' }
   };
 
   DC.toolMatches = function (t, q) {
