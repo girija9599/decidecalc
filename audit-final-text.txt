@@ -1,0 +1,841 @@
+DecideCalc.com — Complete SEO Audit & Fix
+Report (Final)
+Audit date: August 2025 URL audited: https://www.decidecalc.com Scope: Homepage
+messaging, metadata, headings, comparison-page opportunity, internal links, schema markup,
+content gaps, non-branded search opportunities Goal: Actionable fixes to push DecideCalc
+toward #1 Google rankings Current score: 78/100 (up from 64 after Round 1 fixes)
+
+-- 1 of 24 --
+
+1. Fix Status Dashboard — Round 1 vs Round 2
+# Issue Round
+1
+Round
+2 Status
+1 /tools JS-only — invisible to
+crawlers ❌ 	✅ 	FIXED
+2 /categories JS-only — zero
+links ❌ 	✅ 	FIXED
+3 Homepage H1 has zero keyword
+value ❌ 	✅ 	FIXED
+4 Homepage H2s are marketing
+copy ❌ 	✅ 	FIXED
+5 No schema on calculator pages 	❌ 	❌ 	NOT FIXED
+6 Calculator pages are SEO islands 	❌ 	❌ 	NOT FIXED
+7 ~70% of blog is USA-centric 	❌ 	❌ 	NOT FIXED
+8 No dedicated comparison landing
+pages ❌ 	❌ 	NOT FIXED
+9 No HowTo schema on calculator
+pages ❌ 	❌ 	NOT FIXED
+10 Missing sameAs social profiles 	❌ 	❌ 	NOT FIXED
+11 Blog posts lack datePublished /
+dateModified ❌ 	✅ 	FIXED
+12 No footer navigation 	❌ 	✅ 	FIXED
+13 No hreflang tags 	❌ 	✅ FIXED (homepage, /tools, /
+categories only)
+14 Missing new blog posts (GST, PPF,
+Tax) ❌ 	❌ 	NOT FIXED
+15 No pillar/hub pages 	❌ 	❌ 	NOT FIXED
+16 No calculator → blog cross-links 	❌ 	❌ 	NOT FIXED
+Round 1 fixes implemented: 7/10 ✅Round 2 fixes implemented: 0/7 ❌
+
+-- 2 of 24 --
+
+2. Overall Score: 78 / 100
+Category 	Previous 	Current 	Change
+Technical SEO (crawlability, sitemap, robots) 	82/100 	92/100 	+10 ✅On-Page Metadata & Headings 	60/100 	88/100 	+28 ✅Schema / Structured Data 	45/100 	50/100 	+5 ⚠️Content Depth & Gaps 	55/100 	60/100 	+5 ⚠️Internal Linking 	50/100 	65/100 	+15 ⚠️Non-Branded Search Opportunity 	70/100 	75/100 	+5 ⚠️Projected score after ALL fixes: 92–96/100
+3. Technical SEO — 92/100 ✅What's Working
+robots.txt — clean, no accidental blocks ✅sitemap.xml — 175 URLs with proper <lastmod> , <changefreq> , <priority> ✅Canonical tags — present on all pages ✅robots meta — index,follow,max-snippet:-1,max-image-preview:large,max-video-
+preview:-1 ✅Open Graph + Twitter Cards — complete with og:image (1200×630), og:locale = en_IN
+✅Favicons + web manifest — fully configured (multiple sizes, apple-touch, mask-icon, PWA)
+✅/tools page — fully server-rendered with 121 calculator links in semantic HTML ✅/categories page — fully server-rendered with all 12 category cards ✅hreflang tags — en-IN + x-default on homepage, /tools , /categories ✅Google AdSense + Yandex verification — added ✅Theme-color + color-scheme meta — added ✅
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+-- 3 of 24 --
+
+Still Broken
+# Issue 	Severity
+T1 hreflang missing on calculator and blog pages — only homepage, /
+tools , /categories have it
+🟡Medium
+T2 No Core Web Vitals data in schema — homepage claims <2s load time
+but no CWV structured 🟢Low
+4. On-Page Metadata & Headings — 88/100 ✅Homepage
+Element 	Current 	Assessment
+Title tag Free Online Calculators — EMI, SIP, GST, Tax &
+More \| DecideCalc
+Good keyword
+inclusion ✅Meta
+description
+"Use 100+ free online calculators for EMI, SIP, GST, Tax,
+Salary, Retirement, BMI, Pregnancy, Finance, Loans and
+daily life decisions. Fast, accurate and mobile-friendly."
+Keyword-rich,
+updated ✅
+Meta
+keywords
+EMI Calculator,SIP Calculator,GST
+Calculator,Salary Calculator,Income Tax
+Calculator,BMI Calculator,Retirement
+Calculator,Loan Calculator,Age
+Calculator,Pregnancy Calculator,Finance
+Calculator,Rent vs Buy,Compound Interest,FD
+Calculator
+Added ✅
+H1 	Free Online Calculators for India
+Fixed —
+primary
+keyword
+included ✅
+H2s
+"Popular Free Online Calculators", "Calculator Categories
+— 12 Topics, 121+ Tools", "Browse All Free Online
+Calculators", "How to Use Our Free Calculators Online",
+"Free Decision Calculator"
+Fixed — all
+keyword-
+optimized ✅
+
+-- 4 of 24 --
+
+Calculator Pages
+Element 	Assessment
+Title tags 	Strong — e.g. "Retirement Calculator — Corpus, Pension & FIRE Number" ✅H1 	Calculator name only — could include benefit/keyword modifier ⚠️Body copy 	Thin — 150–200 words. Competitors have 800–2000+ words ❌FAQ sections Present — good for featured snippets ✅
+5. Schema / Structured Data — 50/100 ❌What's Implemented
+Page Type 	Schema Types Found
+Homepage Organization (with email , areaServed , contactPoint ✅), WebSite
+(with SearchAction ), BreadcrumbList
+Blog posts Article (with datePublished , dateModified ✅), FAQPage ,
+BreadcrumbList
+Calculator
+pages
+NONE — zero JSON-LD on EMI, SIP, Retirement, Job Switch, Life Decision
+Scorer ❌
+
+-- 5 of 24 --
+
+Critical Gaps
+# Gap 	Impact
+S1 No WebApplication schema on ANY calculator page — Google doesn't
+know these are interactive tools
+🔴Critical
+S2 No HowTo schema — calculator pages walk users through steps but lack
+structured markup
+🔴Critical
+S3 No FAQPage schema on calculator pages — FAQ sections exist but have
+no schema
+🟡Medium
+S4 No BreadcrumbList schema on calculator pages — breadcrumbs exist in
+HTML but not JSON-LD
+🟡Medium
+S5 sameAs still only lists site URL — no LinkedIn, Twitter, YouTube,
+Instagram, Facebook 🟢Low
+6. Internal Linking — 65/100 ⚠️What's Working
+Footer navigation — 5 columns with 38+ links (Categories, Popular Calculators, More Tools,
+Resources & Company) ✅Breadcrumbs — present on calculator and blog pages ✅Blog → Calculator links — 3 related calculators per blog post ✅
+•
+•
+•
+
+-- 6 of 24 --
+
+Still Broken
+Link Type 	Status
+Homepage → Tools, Life Decision
+Scorer ✅Blog → Related calculators 	✅Blog → Blog index 	✅Calculator → Home, Category 	✅Calculator → Calculator ❌JS-only — <div id="relatedTools"> is empty in
+server HTML
+Calculator → Blog ❌Missing — no links from calculator pages to blog
+guides
+Category pages → Calculators 	✅Fixed (server-rendered)
+/tools → Individual
+calculators ✅Fixed (server-rendered)
+Footer navigation 	✅Fixed
+Breadcrumbs 	✅Key finding: Calculator pages still have only 2 internal links (Home + Category). The "Related
+calculators" section is JS-rendered, so Google sees an empty <div> . No links to related
+calculators or blog posts.
+7. Content Gaps — 60/100 ⚠️Blog Content Audit (34 posts identified)
+Segment 	Count Notes
+India-
+specific
+posts
+~11
+EMI vs SIP, Rent vs Buy, Health Insurance, Debt Snowball, Credit
+Card, Home Loan Balance Transfer, MF Expense Ratio, Retirement
+Withdrawal, Bond YTM, 8th Pay Commission
+USA-
+generic
+posts
+~23
+Compound interest, mortgage payment, 30yr vs 15yr mortgage,
+paycheck calculation, car payment, motorcycle affordability, phone
+financing, tips, sales tax, 401k vs Roth IRA, student loans
+
+-- 7 of 24 --
+
+Critical Issues
+# Issue 	Severity
+C1 Brand positioning conflict. Homepage says "India-First" but 68% of blog
+content is USA-centric. This dilutes topical authority.
+🔴Critical
+C2 No comparison/versus pages. /calculators/emi-vs-sip-comparison
+returns 404.
+🔴Critical
+C3
+No new blog posts. /blog/gst-calculator-guide-india-2025 , /blog/
+ppf-calculator-guide-india-2025 , /blog/income-tax-calculator-
+india-2025-26 — all 404.
+🟡Medium
+C4 No pillar/hub pages. /hub/personal-finance-calculators and all other
+hub URLs return 404.
+🟡Medium
+C5 Calculator pages lack comparison tables. No amortization tables, year-
+by-year breakdowns, or side-by-side comparisons.
+🟡Medium
+
+-- 8 of 24 --
+
+8. Non-Branded Search Opportunities — 75/100
+High-Value Keyword Gaps
+Query Cluster Est. Monthly
+Volume (India)
+DecideCalc
+Coverage Opportunity
+"EMI calculator" 	90,000+ 	✅Page exists Thin content, no schema,
+no comparison table
+"SIP calculator" 	60,000+ 	✅Page exists 	Same issues as EMI
+"income tax
+calculator India
+2025"
+100,000+ 	✅Page exists 	No supporting blog post
+"home loan EMI
+calculator" 50,000+ ❌No dedicated
+page
+Only generic "EMI
+Calculator"
+"GST calculator" 	40,000+ 	✅Page exists No supporting blog
+content
+"PPF calculator" 	22,000+ 	✅Page exists 	Thin page, no blog support
+"rent vs buy
+calculator India" 18,000+ ✅Calculator +
+blog
+Good coverage, could rank
+higher
+"wedding budget
+calculator India" 14,000+ 	✅Page exists 	No blog post, thin page
+"FD vs mutual fund" 12,000+ ✅Comparison
+calculator No supporting blog post
+"should I switch jobs
+calculator" 5,000+ ✅Job Switch
+Decision Good unique angle
+"salary hike
+negotiator" 4,000+ 	✅Page exists 	Unique, no blog support
+"career switch ROI
+calculator" 3,000+ 	✅Page exists Unique angle, no blog
+support
+"real age calculator" 2,000+ 	✅Page exists 	Niche, viral potential
+"life decision scorer" <1,000 	✅Unique tool Zero competition —
+brandable
+
+-- 9 of 24 --
+
+Comparison-Page Opportunity (Highest ROI)
+The site has comparison calculators ( /loan-vs-investment , /fd-vs-mutual-fund , /rent-vs-
+buy ) but they are not promoted as comparison landing pages. Create dedicated "vs" pages
+combining calculator + guide + FAQ + schema.
+Unique Differentiator: Life Decision Scorer
+Exists nowhere else on the internet
+Currently buried as a secondary CTA on the homepage
+Opportunity: Standalone landing page for "decision maker tool", "life decision calculator",
+"should I calculator", "decision matrix online"
+•
+•
+•
+
+-- 10 of 24 --
+
+9. Remaining Top 10 Issues (Ranked)
+Rank Issue 	Category 	Effort 	Impact
+1
+No schema on ANY calculator page — zero
+WebApplication, HowTo, FAQPage, or
+BreadcrumbList JSON-LD
+Schema 	Low 🔴Critical
+2
+Calculator pages are SEO islands — related
+calculators section is JS-only, no cross-links to
+blog
+Internal
+Links Low 🔴Critical
+3 No comparison landing pages — /emi-vs-
+sip-comparison is 404 Content 	Medium 🔴Critical
+4 68% of blog is USA-centric on an "India-First"
+site — topical authority conflict Content 	Medium 🔴High
+5 New blog posts not created — GST, PPF,
+Income Tax guides are 404 Content 	Medium 🟡Medium
+6 No pillar/hub pages — all 4 hub URLs return
+404 Content 	Medium 🟡Medium
+7 sameAs social profiles incomplete — only site
+URL listed Schema 	Low 	🟢Low
+8
+Calculator H1s still generic — "EMI Calculator"
+not "EMI Calculator — Calculate Loan EMI
+Online"
+On-Page 	Low 	🟢Low
+9 No hreflang on calculator/blog pages — only
+on homepage, /tools, /categories Technical 	Low 	🟢Low
+10 No Speakable schema — missed voice search
+opportunity Schema 	Low 	🟢Low
+10. 7-Day Quick Wins (Remaining Fixes)
+Day 1–2: Schema Markup (Highest ROI, Lowest Effort)
+[ ] Add WebApplication schema to ALL calculator pages (name, category, offers, description,
+screenshot)
+[ ] Add HowTo schema to calculator pages with step-by-step instructions
+[ ] Add FAQPage schema to calculator pages with FAQ sections
+•
+•
+•
+
+-- 11 of 24 --
+
+[ ] Add BreadcrumbList schema to calculator pages
+[ ] Expand sameAs in Organization schema to include LinkedIn, Twitter/X, YouTube,
+Instagram, Facebook
+Day 3: Server-Render Related Calculators
+[ ] Replace JS-only <div id="relatedTools"> with server-rendered HTML for related
+calculator links
+[ ] Add "Read the Guide" links from calculator pages to relevant blog posts
+[ ] Ensure all related links are in the initial server response (not JS-dependent)
+Day 4: Create Comparison Landing Pages
+[ ] Create /calculators/emi-vs-sip-comparison with comparison table, 1000+ word guide,
+FAQ, and schema
+[ ] Create /calculators/fd-vs-mutual-fund-comparison
+[ ] Create /calculators/rent-vs-buy-comparison
+[ ] Add FAQPage + WebApplication schema to each
+Day 5: Create Missing Blog Posts
+[ ] Write "GST Calculator Guide: How to Calculate GST in India (2025)" — 1500+ words
+[ ] Write "PPF Calculator: Maximize Your Tax-Free Returns" — 1500+ words
+[ ] Write "Income Tax Calculator India 2025–26: New vs Old Regime" — 1500+ words
+[ ] Add Article + FAQPage schema to each
+Day 6: Create Pillar/Hub Pages
+[ ] Create /hub/personal-finance-calculators with grid of all finance calculators + blog
+links
+[ ] Create /hub/career-decision-calculators
+[ ] Create /hub/health-calculators
+[ ] Create /hub/life-decision-tools
+[ ] Add BreadcrumbList + CollectionPage schema to each
+Day 7: Final Cleanup
+[ ] Add hreflang tags to ALL calculator and blog pages
+[ ] Audit USA-centric blog posts — add geo-disclaimers or create India-specific equivalents
+[ ] Submit updated sitemap to Google Search Console
+[ ] Request indexing of all new pages via Google Search Console
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+-- 12 of 24 --
+
+11. AI Agent Fix Prompts — Remaining Issues
+FIX #1 — Add WebApplication Schema to ALL Calculator Pages
+You are an SEO developer. Add JSON-LD structured data to every calculator page
+on decidecalc.com.
+Currently, ZERO calculator pages have any schema markup — this is the highest-
+priority fix.
+For each calculator page, inject THREE <script type="application/ld+json">
+blocks in the <head>:
+BLOCK 1 — WebApplication schema:
+{
+"@context": "https://schema.org",
+"@type": "WebApplication",
+"name": "[Calculator Name]",
+"applicationCategory": "[FinanceApplication | HealthApplication |
+UtilityApplication]",
+"operatingSystem": "Web",
+"url": "https://www.decidecalc.com/calculators/[slug]",
+"description": "[1–2 sentence description optimized for primary keyword]",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "INR",
+"availability": "https://schema.org/InStock"
+},
+"browserRequirements": "Requires JavaScript",
+"inLanguage": "en-IN",
+"creator": {
+"@type": "Organization",
+"name": "DecideCalc",
+"url": "https://www.decidecalc.com"
+}
+}
+BLOCK 2 — HowTo schema (3–4 steps for using the calculator):
+{
+"@context": "https://schema.org",
+"@type": "HowTo",
+
+-- 13 of 24 --
+
+"name": "How to [Calculator Action] with [Calculator Name]",
+"step": [
+{ "@type": "HowToStep", "position": 1, "name": "[Step 1]", "text":
+"[Description]" },
+{ "@type": "HowToStep", "position": 2, "name": "[Step 2]", "text":
+"[Description]" },
+{ "@type": "HowToStep", "position": 3, "name": "[Step 3]", "text":
+"[Description]" }
+]
+}
+BLOCK 3 — BreadcrumbList schema:
+{
+"@context": "https://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://
+www.decidecalc.com/" },
+{ "@type": "ListItem", "position": 2, "name": "[Category]", "item":
+"https://www.decidecalc.com/categories/[cat-slug]" },
+{ "@type": "ListItem", "position": 3, "name": "[Calculator Name]" }
+]
+}
+Generate complete JSON-LD for these 15 high-priority calculators:
+1. EMI Calculator — FinanceApplication — Steps: Enter loan amount, Set interest
+rate, Choose tenure, View EMI
+2. SIP Returns Calculator — FinanceApplication — Steps: Enter monthly SIP
+amount, Set expected return, Choose period, View future value
+3. Income Tax Calculator — FinanceApplication — Steps: Enter annual income,
+Select tax regime, Enter deductions, View tax liability
+4. Retirement Calculator — FinanceApplication — Steps: Enter current age, Set
+retirement age, Enter expenses and savings, View corpus needed
+5. PPF Calculator — FinanceApplication — Steps: Enter annual contribution, Set
+tenure, View maturity value
+6. GST Calculator — FinanceApplication — Steps: Enter amount, Select GST rate,
+Choose inclusive/exclusive, View GST breakdown
+7. Rent vs Buy — FinanceApplication — Steps: Enter property price, Set rent
+amount, Choose tenure, Compare costs
+8. BMI Calculator — HealthApplication — Steps: Enter height, Enter weight, View
+BMI and category
+9. Age Calculator — UtilityApplication — Steps: Enter date of birth, View exact
+
+-- 14 of 24 --
+
+age
+10. Job Switch Decision — UtilityApplication — Steps: Describe current job,
+Enter new offer details, Answer comparison questions, View score
+11. Life Decision Scorer — UtilityApplication — Steps: Describe decision,
+Answer 8 weighted questions, View score and verdict
+12. Wedding Budget Planner — UtilityApplication — Steps: Enter guest count,
+Select events, Set per-guest budget, View total
+13. Baby Cost Calculator — UtilityApplication — Steps: Select city, Choose
+healthcare type, Enter duration, View total cost
+14. Compound Interest Calculator — FinanceApplication — Steps: Enter principal,
+Set rate, Choose compounding frequency, View growth
+15. Home Loan Eligibility — FinanceApplication — Steps: Enter monthly income,
+Set existing EMIs, View eligibility amount
+Output all 45 JSON-LD blocks (3 per calculator × 15 calculators), ready to
+paste into each page's <head>.
+FIX #2 — Server-Render Related Calculators on Every Calculator Page
+You are a web developer. The "Related calculators" section on every
+decidecalc.com calculator page is currently JS-rendered (<div
+id="relatedTools">), so Google sees an empty div.
+Fix: Add server-rendered HTML for related calculator links directly in the page
+template, BEFORE the JS-enhanced version.
+For each calculator page, add a section like this:
+<section class="mt-4 reveal">
+<h3 style="margin-bottom:16px">Related calculators</h3>
+<div class="related-mini-grid">
+<a class="related-mini-card" href="/calculators/[related-slug-1]">
+<span class="rmc-icon">[emoji]</span>
+<span class="rmc-name">[Related Calculator Name]</span>
+</a>
+<a class="related-mini-card" href="/calculators/[related-slug-2]">
+<span class="rmc-icon">[emoji]</span>
+<span class="rmc-name">[Related Calculator Name]</span>
+</a>
+<a class="related-mini-card" href="/calculators/[related-slug-3]">
+
+-- 15 of 24 --
+
+<span class="rmc-icon">[emoji]</span>
+<span class="rmc-name">[Related Calculator Name]</span>
+</a>
+<a class="related-mini-card" href="/calculators/[related-slug-4]">
+<span class="rmc-icon">[emoji]</span>
+<span class="rmc-name">[Related Calculator Name]</span>
+</a>
+</div>
+</section>
+Also add a "Read the Guide" banner linking to the relevant blog post:
+<section class="mt-4 reveal">
+<div class="cta-banner">
+<p><strong>Want to learn more?</strong> Read our guide: <a href="/blog/
+[blog-slug]">[Blog Post Title]</a></p>
+</div>
+</section>
+Generate the server-rendered HTML for these 10 high-priority calculator pages:
+1. EMI Calculator — Related: SIP, Loan vs Investment, Rent vs Buy, Home Loan
+Eligibility — Blog: "EMI vs SIP: Which Is Better in India?"
+2. SIP Calculator — Related: EMI, Compound Interest, Loan vs Investment, FD vs
+Mutual Fund — Blog: "EMI vs SIP: Which Is Better in India?"
+3. Income Tax Calculator — Related: GST, Gratuity, HRA Exemption, Salary Hike —
+Blog: (none yet)
+4. Retirement Calculator — Related: PPF, SIP, FD vs Mutual Fund, NPS — Blog: "A
+sustainable retirement withdrawal rate"
+5. PPF Calculator — Related: Retirement, FD vs Mutual Fund, NPS, Sukanya
+Samriddhi — Blog: (none yet)
+6. GST Calculator — Related: Income Tax, Stamp Duty, Brokerage — Blog: (none
+yet)
+7. Rent vs Buy — Related: EMI, Home Loan Eligibility, Rent Affordability, Home
+Loan Comparison — Blog: "Rent or buy a house in India?"
+8. Job Switch Decision — Related: Salary Hike, Career Switch ROI, Life Decision
+Scorer — Blog: (none yet)
+9. Life Decision Scorer — Related: Job Switch, Wedding Budget, Baby Cost —
+Blog: (none yet)
+10. Compound Interest Calculator — Related: SIP, Retirement, FD, Rule of 72 —
+Blog: "How to calculate compound interest"
+
+-- 16 of 24 --
+
+Output the complete HTML sections for all 10 pages.
+FIX #3 — Create Comparison Landing Pages
+You are an SEO content writer and developer. Create a comparison landing page
+for "EMI vs SIP" on decidecalc.com.
+URL: /calculators/emi-vs-sip-comparison
+This page must be a full landing page (not a blog post) combining:
+1. A comparison calculator with side-by-side results
+2. A detailed comparison table
+3. 1200+ words of guide content
+4. FAQ section with FAQPage schema
+5. WebApplication schema
+Structure:
+- H1: "EMI vs SIP: Which Should You Choose? — Free Comparison Calculator"
+- Hero section with two-column calculator
+- Comparison table (EMI vs SIP across: Purpose, Risk, Return, Tax, Lock-in,
+Best For, Liquidity, Minimum Amount)
+- Detailed guide sections (What is EMI, What is SIP, When to choose each, The
+middle path, Real example)
+- 6–8 FAQ questions with answers
+- Links to EMI Calculator, SIP Calculator, and Loan vs Investment Calculator
+Output the complete HTML page with all content, table, FAQs, and JSON-LD schema
+blocks.
+FIX #4 — Create Missing Blog Posts
+You are an SEO content writer. Write three India-specific blog posts for
+decidecalc.com.
+Each post must be 1500–2000 words and include:
+- Keyword-optimized H1 title
+- Meta description (max 155 chars)
+- 4–6 H2 sections with detailed explanations
+
+-- 17 of 24 --
+
+- Comparison table where relevant
+- "Related Calculator" CTA linking to the DecideCalc calculator
+- 4-question FAQ section
+- Article schema + FAQPage schema in JSON-LD
+POST 1: /blog/gst-calculator-guide-india-2025
+Target keyword: "GST Calculator India"
+Topics: GST rates (5/12/18/28%), inclusive vs exclusive, how to calculate
+manually, GST on common purchases, input tax credit basics
+POST 2: /blog/ppf-calculator-guide-india-2025
+Target keyword: "PPF Calculator India"
+Topics: PPF interest rate, EEE tax status, contribution limits, PPF vs FD
+comparison, lock-in period, withdrawal rules
+POST 3: /blog/income-tax-calculator-india-2025-26
+Target keyword: "Income Tax Calculator India 2025"
+Topics: New vs Old regime, latest tax slabs, standard deduction, Section 80C,
+surcharge and cess, which regime to choose
+Output all three complete blog posts with full content, tables, FAQs, and JSON-
+LD schema.
+FIX #5 — Create Pillar/Hub Pages
+You are an SEO developer and content writer. Create 4 pillar (hub) pages for
+decidecalc.com.
+1. /hub/personal-finance-calculators
+H1: "Personal Finance Calculators — Plan Your Money Smarter"
+Grid: EMI, SIP, Income Tax, PPF, GST, Compound Interest, FD vs Mutual Fund,
+Loan vs Investment, Gratuity, Home Loan Eligibility, NPS, EPF, HRA, Stamp Duty,
+Brokerage
+Blog links: EMI vs SIP, Debt Snowball, Credit Card, Home Loan Balance
+Transfer, MF Expense Ratio, Retirement Withdrawal, Bond YTM
+2. /hub/career-decision-calculators
+H1: "Career Decision Calculators — Make Smarter Career Moves"
+Grid: Job Switch Decision, Salary Hike Negotiator, Career Switch ROI
+
+-- 18 of 24 --
+
+3. /hub/health-calculators
+H1: "Health Calculators — Track Your Wellness Numbers"
+Grid: BMI, Real Age, Health Insurance Need, Pregnancy Due Date
+4. /hub/life-decision-tools
+H1: "Life Decision Tools — Score Your Biggest Life Choices"
+Grid: Life Decision Scorer, Wedding Budget Planner, Baby Cost Calculator,
+Rent vs Buy
+Each page needs:
+- 200–300 word intro
+- Grid of calculator cards with links
+- Grid of blog post links
+- BreadcrumbList schema
+- CollectionPage schema
+- All links server-rendered
+Output the complete HTML for all 4 pages.
+FIX #6 — Add hreflang to ALL Pages
+You are an SEO developer. Add hreflang tags to ALL pages on decidecalc.com.
+Currently only the homepage, /tools, and /categories have hreflang tags.
+Every page needs these two <link> tags in the <head>:
+<link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/
+[current-page-url]" />
+<link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/" /
+>
+For USA-centric blog posts, also add:
+<link rel="alternate" hreflang="en-US" href="https://www.decidecalc.com/blog/
+[us-post-slug]" />
+Generate the exact <link> tags for:
+- All calculator pages (/calculators/*)
+- All blog pages (/blog/*)
+- All category pages (/categories/*)
+- All static pages (/about, /contact, /privacy, /terms, /how-it-works)
+
+-- 19 of 24 --
+
+Output the complete set of hreflang tags organized by page type.
+FIX #7 — Expand sameAs Social Profiles
+You are an SEO developer. Update the Organization JSON-LD schema on
+decidecalc.com's homepage.
+Current sameAs: ["https://www.decidecalc.com"]
+Update to include ALL social media profiles:
+"sameAs": [
+"https://www.decidecalc.com",
+"https://twitter.com/decidecalc",
+"https://www.linkedin.com/company/decidecalc",
+"https://www.youtube.com/@decidecalc",
+"https://www.instagram.com/decidecalc",
+"https://www.facebook.com/decidecalc"
+]
+Also add "knowsAbout":
+"knowsAbout": ["Personal Finance", "Tax Planning", "Investment", "EMI
+Calculator", "SIP Calculator", "Retirement Planning", "Career Decisions",
+"Health Calculators", "GST", "Income Tax India"]
+Output the complete updated Organization JSON-LD block.
+
+-- 20 of 24 --
+
+12. Source Notes & Evidence
+
+-- 21 of 24 --
+
+Finding 	Source 	Evidence
+H1 fixed to
+"Free Online
+Calculators
+for India"
+curl
+homepage
+<h1>Free Online <span class="hl">Calculators</span> for
+India</h1>
+H2s
+keyword-
+optimized
+curl
+homepage
+"Popular Free Online Calculators", "Calculator Categories — 12
+Topics, 121+ Tools"
+Meta
+keywords
+added
+curl
+homepage
+<meta name="keywords" content="EMI Calculator,SIP
+Calculator,...">
+hreflang on
+homepage
+curl
+homepage <link rel="alternate" hreflang="en-IN"> + x-default
+hreflang on /
+tools curl /tools <link rel="alternate" hreflang="en-IN"> + x-default
+hreflang on /
+categories
+curl /
+categories <link rel="alternate" hreflang="en-IN"> + x-default
+hreflang on
+calculator
+pages
+curl /
+calculators/
+emi-
+calculator
+NONE found
+Organization
+schema
+expanded
+curl
+homepage Now has email , areaServed , contactPoint
+sameAs still
+incomplete
+curl
+homepage "sameAs": ["https://www.decidecalc.com"]
+/tools
+server-
+rendered
+curl /tools 75+ calculator cards in Finance & Tax section alone
+/categories
+server-
+rendered
+curl /
+categories All 12 category cards as <a> tags
+curl /
+calculators/ Zero JSON-LD blocks
+
+-- 22 of 24 --
+
+Finding 	Source 	Evidence
+No schema
+on EMI
+calculator
+emi-
+calculator
+No schema
+on SIP
+calculator
+curl /
+calculators/
+sip-
+calculator
+Zero JSON-LD blocks
+No schema
+on
+Retirement
+calculator
+curl /
+calculators/
+retirement-
+calculator
+Zero JSON-LD blocks
+No schema
+on Job
+Switch
+curl /
+calculators/
+job-switch-
+decision
+Zero JSON-LD blocks
+No schema
+on Life
+Decision
+Scorer
+curl /
+calculators/
+life-
+decision-
+scorer
+Zero JSON-LD blocks
+EMI
+calculator
+has only 2
+links
+curl /
+calculators/
+emi-
+calculator
+href="/" and href="/categories/finance" only
+Related
+section is JS-
+only
+curl /
+calculators/
+emi-
+calculator
+<div class="related-mini" id="relatedTools"></div>
+Blog dates
+fixed
+curl /
+blog/emi-
+vs-sip
+"datePublished":"2026-07-29","dateModified":"2026-08-12"
+Blog still has
+23 USA posts
+curl /
+blog/ 401k, mortgage, FICA, tips, car payment, student loans still listed
+Footer
+implemented
+curl
+layout.js 5-column footer with 38+ links
+
+-- 23 of 24 --
+
+Finding 	Source 	Evidence
+Comparison
+page is 404
+curl /
+calculators/
+emi-vs-sip-
+comparison
+Returns 404 page
+New blog
+posts are 404
+curl /
+blog/gst-
+calculator-
+guide-
+india-2025
+Returns 404 page
+Hub pages
+are 404
+curl /hub/
+personal-
+finance-
+calculators
+Returns 404 page
+Sitemap now
+175 URLs
+curl /
+sitemap.xml grep '<loc>' \| wc -l = 175
+New blog
+post added
+curl /
+blog/ "8th Pay Commission Calculator 2026"
+Calculator
+count: 121
+curl
+homepage "121+ practical calculators"
+Web app
+manifest +
+PWA
+curl
+homepage <link rel="manifest" href="/site.webmanifest">
+Blog Article
+schema with
+dates
+curl /
+blog/emi-
+vs-sip
+"datePublished":"2026-07-29","dateModified":"2026-08-12"
+Final re-audit conducted by fresh crawl of all pages. Previous score: 64/100 → Round 1: 78/100 →
+Current: 78/100 (no Round 2 fixes implemented). Projected score after ALL fixes: 92–96/100.
+
+-- 24 of 24 --
+
