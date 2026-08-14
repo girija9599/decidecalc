@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="google-adsense-account" content="ca-pub-3027138458482943">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FD vs Mutual Fund: Which Investments Are Better? — Free Comparison Calculator | DecideCal</title>
+  <title>FD vs Mutual Fund: Which Investments Are Better? — Free Comparison Calculator | DecideCalc</title>
   <meta name="description" content="Compare Fixed Deposit returns vs Mutual Fund SIP with our India-first FD vs MF calculator. Understand risk, returns and tax implications to choose wisely.">
   <link rel="canonical" href="https://www.decidecalc.com/calculators/fd-vs-mutual-fund-comparison">
   <meta name="theme-color" content="#1B3A6B">
@@ -21,7 +21,7 @@
   <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FD vs Mutual Fund Comparison Calculator — DecideCalc","applicationCategory":"FinanceApplication","operatingSystem":"Web","url":"https://www.decidecalc.com/calculators/fd-vs-mutual-fund-comparison","description":"Compare Fixed Deposit returns against Mutual Fund SIP with detailed analysis. India-first calculator for FD vs MF investment decision.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"browserRequirements":"Requires JavaScript","inLanguage":"en-IN","creator":{"@type":"Organization","name":"DecideCalc","url":"https://www.decidecalc.com"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to Compare FD vs Mutual Fund with DecideCalc","step":[{"@type":"HowToStep","position":1,"name":"Enter investment amount","text":"Input the monthly amount you want to invest in both FD and mutual fund options."},{"@type":"HowToStep","position":2,"name":"Set FD interest rate","text":"Enter expected fixed deposit annual interest rate (current FD rates 6-8%)."},{"@type":"HowToStep","position":3,"name":"Set expected MF return","text":"Enter expected mutual fund annual return (historical 10-12% for equity funds)."},{"@type":"HowToStep","position":4,"name":"Analyze and decide","text":"Compare projected corpus after your chosen investment tenure to determine which option suits your goals."}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which is better: FD or mutual funds?","acceptedAnswer":{"@type":"Answer","text":"FD is better for short-term goals and capital preservation. Mutual funds excel for long-term wealth creation (10+ years) when you can tolerate market volatility."}},{"@type":"Question","name":"What FD rate is available now?","acceptedAnswer":{"@type":"Answer","text":"FD rates range from 6.5% to 8% for regular banks, up to 8.5% for tax-secure fixed deposits. Senior citizens get 0.5-0.75% additional interest."}},{"@type":"Question","name":"Can I break FD anytime?","acceptedAnswer":{"@type":"Answer","text":"Yes, most banks allow premature withdrawal with penalty (loss of interest or 0.5-1% exit load). Fixed deposits are best held for full tenure."}},{"@type":"Question","name":"Which is safer between FD and MF?","acceptedAnswer":{"@type":"Answer","text":"Fixed Deposit is completely safe with zero risk. Mutual Funds operate on market risk - your principal is not guaranteed but historical returns have been positive over long periods."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which is better: FD or mutual funds?","acceptedAnswer":{"@type":"Answer","text":"FD is better for short-term goals and capital preservation. Mutual funds excel for long-term wealth creation (10+ years) when you can tolerate market volatility."}},{"@type":"Question","name":"What FD rate is available now?","acceptedAnswer":{"@type":"Answer","text":"FD rates range from 6.5% to 8% for regular banks, up to 8.5% for tax-secure fixed deposits. Senior citizens get 0.5-0.75% additional interest."}},{"@type":"Question","name":"Can I break FD anytime?","acceptedAnswer":{"@type":"Answer","text":"Yes, most banks allow premature withdrawal with penalty (loss of interest or 0.5-1% exit load). Fixed deposits are best held for full tenure."}},{"@type":"Question","name":"Which is safer between FD and MF?","acceptedAnswer":{"@type":"Answer","text":"Fixed Deposit is completely safe with zero risk. Mutual Funds operate on market risk — your principal is not guaranteed but historical returns have been positive over long periods."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.decidecalc.com/"},{"@type":"ListItem","position":2,"name":"Finance","item":"https://www.decidecalc.com/categories/finance"},{"@type":"ListItem","position":3,"name":"FD vs Mutual Fund Comparison"}]}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
@@ -36,259 +36,233 @@
   <main class="container" style="padding-top:30px;padding-bottom:60px">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a><span class="sep">/</span>
-      <a href="/categories/finance">Finance</a><span class="sep">/</span>
+      <a href="/categories/finance">Finance & Tax</a><span class="sep">/</span>
       <span>FD vs Mutual Fund Comparison</span>
     </nav>
 
-    <div class="calc-layout">
-      <!-- CALCULATOR -->
-      <div class="calc-shell reveal">
-        <div class="calc-header">
-          <span class="ic" id="ic"></span>
-          <div>
-            <h1>FD vs Mutual Fund: Which Investments Are Better?</h1>
-            <div class="sub">Free India-First Comparison Calculator · Compare Risk, Returns & Tax</div>
-          </div>
-        </div>
-        <div class="calc-body">
-          <div class="calc-comparison">
-            <div class="calc-column">
-              <h3>Fixed Deposit</h3>
-              <div class="field"><label>Investment Amount (₹/month)</label>
-                <div class="range-out"><span class="range-val" id="out-fd">₹10,000</span></div>
-                <input type="range" id="fd-amt" min="1000" max="100000" step="1000" value="10000" data-prefix="₹" data-dec="0">
-              </div>
-              <div class="field"><label>FD Rate (% p.a.)</label>
-                <div class="range-out"><span class="range-val" id="out-fd-rate">7.0%</span></div>
-                <input type="range" id="fd-rate" min="5" max="9" step="0.25" value="7" data-suffix="%" data-dec="2">
-              </div>
-              <div class="result-stat"><div class="v" id="fd-corpus">₹19.3 lakhs</div><div class="k">Projected Corpus (15yr)</div></div>
-            </div>
-            <div class="calc-column">
-              <h3>Mutual Fund SIP</h3>
-              <div class="field"><label>SIP Amount (₹/month)</label>
-                <div class="range-out"><span class="range-val" id="out-mf">₹10,000</span></div>
-                <input type="range" id="mf-amt" min="1000" max="100000" step="1000" value="10000" data-prefix="₹" data-dec="0">
-              </div>
-              <div class="field"><label>Expected Return (%)</label>
-                <div class="range-out"><span class="range-val" id="out-mf-rate">11%</span></div>
-                <input type="range" id="mf-rate" min="6" max="15" step="0.5" value="11" data-suffix="%" data-dec="1">
-              </div>
-              <div class="result-stat"><div class="v" id="mf-corpus">₹43.2 lakhs</div><div class="k">Projected Corpus (15yr)</div></div>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Comparison</button>
+    <div class="calc-shell reveal" style="--cat-color:var(--cat-finance)">
+      <div class="calc-header">
+        <span class="ic" id="ic"></span>
+        <div>
+          <h1>FD vs Mutual Fund: Which Investments Are Better?</h1>
+          <div class="sub">Compare FD vs MF SIP · India-first risk, returns & tax analysis</div>
         </div>
       </div>
-
-      <!-- COMPARISON TABLE -->
-      <section class="card reveal" style="max-width:none">
-        <h2>FD vs Mutual Fund: Detailed Comparison</h2>
-        <p class="mt-2">Understanding the key differences helps you choose the right investment based on your risk profile, timeline and financial goals.</p>
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Parameter</th>
-              <th>Fixed Deposit</th>
-              <th>Mutual Fund SIP</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Typical Returns</strong></td>
-              <td>6.5-8.5% p.a. (taxable)</td>
-              <td>10-12% p.a. (equity) <br>6-9% (debt)</td>
-            </tr>
-            <tr>
-              <td><strong>Risk Profile</strong></td>
-              <td>Zero risk - principal guaranteed</td>
-              <td>Market risk - returns market-dependent<br>Longer horizon reduces volatility</td>
-            </tr>
-            <tr>
-              <td><strong>Lock-in Period</strong></td>
-              <td>None (premature withdrawal with penalty)</td>
-              <td>Equity: 3 years exit load<br>Debt: 3-5 years</td>
-            </tr>
-            <tr>
-              <td><strong>Tax Treatment</strong></td>
-              <td>Interest taxable as income<br>TDS @ 10% if > ₹10,000/year</td>
-              <td>STCG < ₹1 lakh: 10%<br>STCG > ₹1 lakh: 15%<br>Long-term gains: Taxed at 10% after indexation</td>
-            </tr>
-            <tr>
-              <td><strong>Liquidity</strong></td>
-              <td>Penalty for early withdrawal</td>
-              <td>Can exit anytime after 7 days<br>Partial withdrawal from week 9</td>
-            </tr>
-            <tr>
-              <td><strong>Inflation Impact</strong>**</td>
-              <td>Real returns often negative after inflation**</td>
-              <td>Long-term returns typically beat inflation</td>
-            </tr>
-            <tr>
-              <td><strong>Minimum Amount</strong></td>
-              <td>₹100-₹1,000 (varies by bank)</td>
-              <td>₹100-₹500 per SIP</td>
-            </tr>
-            <tr>
-              <td><strong>Best For**:</strong></td>
-              <td>Safety, short-term goals, knowledge of exact outcome</td>
-              <td>Wealth creation, long-term goals (10+ years), growth mindset</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- FD VS MF ANALYSIS -->
-      <section class="card reveal" style="max-width:none">
-        <h2>FD vs Mutual Fund: When to Choose Each</h2>
-        
-        <h3>Choose Fixed Deposit When:</h3>
-        <ul>
-          <li><strong>Short-term goals:</strong> You need money within 3-5 years (down payment, vacation, emergency fund).</li>
-          <li><strong>Capital preservation:</strong> You cannot afford any loss of principal - FD guarantees 100% of your money back.</li>
-          <li><strong>Predictable outcomes:</strong> FD gives you exactly what is promised - no surprises in returns.</li>
-          <li><strong>Age and risk profile:</strong> If you're above 50 or risk-averse, FD provides safety.</li>
-          <li><strong>Tax planning:</strong> FD interest qualifies for Section 80C deduction if you invest in 5-year Tax-Saving FDs.</li>
-        </ul>
-        
-        <h3>Choose Mutual Fund SIP When:</h3>
-        <ul>
-          <li><strong>Long-term wealth creation:</strong> Goals 10+ years away benefit from compounding and market returns.</li>
-          <li><strong>High inflation concerns:</strong> Equity markets historically outpace inflation over long periods.</li>
-          <li><strong>Diversification:</strong> Mutual funds spread risk across 50-500+ companies.</li>
-          <li><strong>You have emergency corpus:</strong> Maintain 6-month expenses in FDs or savings for emergencies.</li>
-          <li><strong>You're young (25-45):</strong> Longer time horizon allows riding through market cycles.</li>
-        </ul>
-        
-        <h3>Hybrid Approach (Recommended)</h3>
-        <p>Most financial planners suggest a balanced mix:
-        <ol>
-          <li><strong>60-70% in SIP:</strong> For long-term wealth creation and inflation beating returns.</li>
-          <li><strong>30-40% in FD:</strong> For safe emergency corpus and short-term goals.</li>
-          <li><strong>Rebalance annually:</strong> Shift towards FD as you near major goals like children's education.</li>
-        </ol>
-        This combines the safety of FD with the growth potential of mutual funds.</p>
-        
-        <h3>Real Example</h3>
-        <p>Rahul, 30, wants to invest ₹10,000/month for 15 years.
-        <br><strong>FD at 7.5%:</strong> Corpus = ₹33.3 lakhs (₹18 lakhs invested)
-        <br><strong>MF SIP at 11%:</strong> Corpus = ₹61.3 lakhs (₹18 lakhs invested)
-        <br><strong>Mixed (60% MF, 40% FD):</strong> Corpus ≈ ₹50 lakhs
-        <br><strong>Verdict:</strong> The ₹28 lakh difference reflects market premium for equity risk, which historically has been worth taking over 15+ year horizons.</p>
-      </section>
-
-      <!-- TAX COMPARISON -->
-      <section class="card reveal" style="max-width:none">
-        <h2>Tax Comparison: FD vs Mutual Fund</h2>
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Tax Aspect</th>
-              <th>Fixed Deposit</th>
-              <th>Mutual Fund</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>TDS</td>
-              <td>10% if interest > ₹10,000/year</td>
-              <td>None on investments<br>TDS applicable only on dividend payouts</td>
-            </tr>
-            <tr>
-              <td>Income Tax</td>
-              <td>Interest fully taxable in hands of investor</td>
-              <td>Long-term: 10% on gains above ₹1 lakh<br>Short-term: Added to income, taxed at applicable slab</td>
-            </tr>
-            <tr>
-              <td>Indexation Benefit</td>
-              <td>Not applicable</td>
-              <td>Available for debt funds held > 1 year</td>
-            </tr>
-            <tr>
-              <td>Section 80C</td>
-              <td>Tax-Saving FD qualifies for 80C deduction</td>
-              <td>ELSS mutual funds qualify for 80C deduction (max ₹1.5 lakh/year)</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- FAQ SECTION -->
-      <section class="card reveal" style="max-width:none">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-list">
-          <details>
-            <summary>Can I break a Fixed Deposit anytime?</summary>
-            <p>Yes, most banks allow premature withdrawal with penalty. You may lose 1-3% of interest or face a flat exit load. For flexible access, consider Recurring Deposits or SIP instead.</p>
-          </details>
-          <details>
-            <summary>Is SIP better than lump sum investment?</summary>
-            <p>SIP provides rupee cost averaging and discipline. Lump sum can be better if markets are trending downward. Consider 60% lump sum + 40% SIP for balance.</p>
-          </details>
-          <details>
-            <summary>What is the ideal FD rate in India 2025?</summary>
-            <p>Top banks offer 6.5-7.5% for regular FDs, up to 7.75% for senior citizens. Compare rates across banks before investing, especially for large amounts.</p>
-          </details>
-          <details>
-            <summary>Should I invest in debt mutual funds instead of FD?</summary>
-            <p>Debt mutual funds offer better after-tax returns than FDs for non-senior citizens. They also provide liquidity and professional management. However, FD remains safer for capital preservation.</p>
-          </details>
+      <div class="calc-body">
+        <div class="calc-comparison">
+          <div class="calc-column">
+            <h3>Fixed Deposit</h3>
+            <div class="field"><label>Investment Amount (₹/month)</label>
+              <div class="range-out"><span class="range-val" id="out-fd">₹10,000</span></div>
+              <input type="range" id="fd-amt" min="1000" max="100000" step="1000" value="10000" data-prefix="₹" data-dec="0">
+            </div>
+            <div class="field"><label>FD Rate (% p.a.)</label>
+              <div class="range-out"><span class="range-val" id="out-fd-rate">7.0%</span></div>
+              <input type="range" id="fd-rate" min="5" max="9" step="0.25" value="7" data-suffix="%" data-dec="2">
+            </div>
+            <div class="result-stat"><div class="v" id="fd-corpus">₹19.3 lakhs</div><div class="k">Projected Corpus (15yr)</div></div>
+          </div>
+          <div class="calc-column">
+            <h3>Mutual Fund SIP</h3>
+            <div class="field"><label>SIP Amount (₹/month)</label>
+              <div class="range-out"><span class="range-val" id="out-mf">₹10,000</span></div>
+              <input type="range" id="mf-amt" min="1000" max="100000" step="1000" value="10000" data-prefix="₹" data-dec="0">
+            </div>
+            <div class="field"><label>Expected Return (%)</label>
+              <div class="range-out"><span class="range-val" id="out-mf-rate">11%</span></div>
+              <input type="range" id="mf-rate" min="6" max="15" step="0.5" value="11" data-suffix="%" data-dec="1">
+            </div>
+            <div class="result-stat"><div class="v" id="mf-corpus">₹43.2 lakhs</div><div class="k">Projected Corpus (15yr)</div></div>
+          </div>
         </div>
-      </section>
-    </main>
+        <button class="btn btn-primary btn-block" id="calcBtn">Calculate Comparison</button>
+      </div>
+    </div>
 
+    <!-- RELATED -->
     <section class="mt-4 reveal">
-      <div class="article-related-calcs">
-        <h3>Related Calculators</h3>
-        <div class="related-mini-grid">
-          <a class="related-mini-card" href="/calculators/sip-calculator"><span class="rmc-icon">📈</span><span class="rmc-name">SIP Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/fd-calculator"><span class="rmc-icon">🏦</span><span class="rmc-name">FD Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/emi-calculator"><span class="rmc-icon">📊</span><span class="rmc-name">EMI Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/compound-interest-calculator"><span class="rmc-icon">📈</span><span class="rmc-name">Compound Interest</span></a>
-        </div>
-      </div>
+      <h3 style="margin-bottom:16px">Related calculators</h3>
+      <div class="related-mini" id="relatedTools"></div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="/assets/js/core.js"></script>
-    <script src="/assets/js/layout.js?v=20260814-1"></script>
-    <script src="/assets/js/tools.js"></script>
-    <script src="/assets/js/ads.js"></script>
-    <script>
-      DC.page = {
-        slug: 'fd-vs-mutual-fund-comparison',
-        faqs: [
-          { q: 'Which is better: FD or mutual funds?', a: 'FD is better for short-term goals. Mutual funds excel for long-term wealth creation with higher returns potential.' },
-          { q: 'What FD rate is available now?', a: 'FD rates range from 6.5% to 8.5% depending on bank and tenure. Senior citizens get additional interest.' }
-        ]
-      };
-      
-      function compute() {
-        const fdAmt = DC.fnum(document.getElementById('fd-amt').value) || 10000;
-        const fdRate = DC.fnum(document.getElementById('fd-rate').value) || 7;
-        const mfAmt = DC.fnum(document.getElementById('mf-amt').value) || 10000;
-        const mfRate = DC.fnum(document.getElementById('mf-rate').value) || 11;
-        
-        const fdMonthlyRt = (fdRate / 100) / 12;
-        const fdPeriods = 15 * 12;
-        const fdCorpus = fdAmt * ((Math.pow(1 + fdMonthlyRt, fdPeriods) - 1) / fdMonthlyRt);
-        
-        const mfMonthlyRt = Math.pow(1 + mfRate / 100, 1/12) - 1;
-        const mfCorpus = mfAmt * ((Math.pow(1 + mfMonthlyRt, fdPeriods) - 1) / mfMonthlyRt);
-        
-        document.getElementById('fd-corpus').textContent = '₹' + (fdCorpus > 1000000 ? (fdCorpus/1000000).toFixed(1) + ' lakhs' : '₹' + DC.compact(fdCorpus));
-        document.getElementById('mf-corpus').textContent = '₹' + (mfCorpus > 1000000 ? (mfCorpus/1000000).toFixed(1) + ' lakhs' : '₹' + DC.compact(mfCorpus));
-      }
-      
-      document.getElementById('calcBtn').addEventListener('click', compute);
-      ['fd-amt', 'fd-rate', 'mf-amt', 'mf-rate'].forEach(id => {
-        document.getElementById(id).addEventListener('input', compute);
-      });
-      compute();
-      
-      DC.renderLayout();
-      document.getElementById('ic').innerHTML = DC.icon('chart');
-      DC.initReveal();
-    </script>
-  </body>
+    <!-- COMPARISON TABLE -->
+    <section class="card reveal mt-4" style="max-width:none">
+      <h2>FD vs Mutual Fund: Detailed Comparison</h2>
+      <p class="mt-2">Understanding the key differences helps you choose the right investment based on your risk profile, timeline and financial goals.</p>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Fixed Deposit</th>
+            <th>Mutual Fund SIP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Typical Returns</strong></td>
+            <td>6.5–8.5% p.a. (taxable)</td>
+            <td>10–12% p.a. (equity)<br>6–9% (debt)</td>
+          </tr>
+          <tr>
+            <td><strong>Risk Profile</strong></td>
+            <td>Zero risk — principal guaranteed</td>
+            <td>Market risk — returns market-dependent<br>Longer horizon reduces volatility</td>
+          </tr>
+          <tr>
+            <td><strong>Lock-in Period</strong></td>
+            <td>None (premature withdrawal with penalty)</td>
+            <td>Equity: 3-year exit load<br>Debt: 3–5 years</td>
+          </tr>
+          <tr>
+            <td><strong>Tax Treatment</strong></td>
+            <td>Interest taxable as income<br>TDS @ 10% if interest > ₹10,000/year</td>
+            <td>STCG < ₹1L: 10%<br>STCG > ₹1L: 15%<br>LTCG: 10% after indexation</td>
+          </tr>
+          <tr>
+            <td><strong>Liquidity</strong></td>
+            <td>Penalty for early withdrawal</td>
+            <td>Can exit anytime after 7 days<br>Partial withdrawal from week 9</td>
+          </tr>
+          <tr>
+            <td><strong>Inflation Impact</strong></td>
+            <td>Real returns often negative after inflation</td>
+            <td>Long-term returns typically beat inflation</td>
+          </tr>
+          <tr>
+            <td><strong>Minimum Amount</strong></td>
+            <td>₹100–₹1,000 (varies by bank)</td>
+            <td>₹100–₹500 per SIP</td>
+          </tr>
+          <tr>
+            <td><strong>Best For</strong></td>
+            <td>Safety, short-term goals, predictable outcome</td>
+            <td>Wealth creation, long-term goals (10+ years), growth mindset</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FD VS MF ANALYSIS -->
+    <section class="card reveal mt-4" style="max-width:none">
+      <h2>FD vs Mutual Fund: When to Choose Each</h2>
+
+      <h3>Choose Fixed Deposit When:</h3>
+      <ul>
+        <li><strong>Short-term goals:</strong> you need money within 3–5 years (down payment, vacation, emergency fund).</li>
+        <li><strong>Capital preservation:</strong> you cannot afford any loss of principal — FD guarantees 100% of your money back.</li>
+        <li><strong>Predictable outcomes:</strong> FD gives you exactly what is promised — no surprises in returns.</li>
+        <li><strong>Age and risk profile:</strong> if you're above 50 or risk-averse, FD provides safety.</li>
+        <li><strong>Tax planning:</strong> FD interest qualifies for Section 80C deduction if you invest in 5-year Tax-Saving FDs.</li>
+      </ul>
+
+      <h3>Choose Mutual Fund SIP When:</h3>
+      <ul>
+        <li><strong>Long-term wealth creation:</strong> goals 10+ years away benefit from compounding and market returns.</li>
+        <li><strong>High inflation concerns:</strong> equity markets historically outpace inflation over long periods.</li>
+        <li><strong>Diversification:</strong> mutual funds spread risk across 50–500+ companies.</li>
+        <li><strong>You have emergency corpus:</strong> maintain 6 months' expenses in FDs or savings for emergencies.</li>
+        <li><strong>You're young (25–45):</strong> longer time horizon allows riding through market cycles.</li>
+      </ul>
+
+      <h3>Hybrid Approach (Recommended)</h3>
+      <p>Most financial planners suggest a balanced mix:</p>
+      <ol>
+        <li><strong>60–70% in SIP:</strong> for long-term wealth creation and inflation-beating returns.</li>
+        <li><strong>30–40% in FD:</strong> for safe emergency corpus and short-term goals.</li>
+        <li><strong>Rebalance annually:</strong> shift towards FD as you near major goals like children's education.</li>
+      </ol>
+      <p>This combines the safety of FD with the growth potential of mutual funds.</p>
+
+      <h3>Real Example</h3>
+      <p>Rahul, 30, wants to invest ₹10,000/month for 15 years.</p>
+      <ul>
+        <li><strong>FD at 7.5%:</strong> corpus ≈ ₹33.3 lakhs (₹18 lakhs invested)</li>
+        <li><strong>MF SIP at 11%:</strong> corpus ≈ ₹61.3 lakhs (₹18 lakhs invested)</li>
+        <li><strong>Mixed (60% MF, 40% FD):</strong> corpus ≈ ₹50 lakhs</li>
+        <li><strong>Verdict:</strong> the ₹28 lakh difference reflects market premium for equity risk, which historically has been worth taking over 15+ year horizons.</li>
+      </ul>
+    </section>
+
+    <!-- TAX COMPARISON -->
+    <section class="card reveal mt-4" style="max-width:none">
+      <h2>Tax Comparison: FD vs Mutual Fund</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Tax Aspect</th>
+            <th>Fixed Deposit</th>
+            <th>Mutual Fund</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TDS</td>
+            <td>10% if interest > ₹10,000/year</td>
+            <td>None on investments<br>TDS applicable only on dividend payouts</td>
+          </tr>
+          <tr>
+            <td>Income Tax</td>
+            <td>Interest fully taxable in hands of investor</td>
+            <td>LTCG: 10% on gains above ₹1 lakh<br>STCG: added to income, taxed at slab rate</td>
+          </tr>
+          <tr>
+            <td>Indexation Benefit</td>
+            <td>Not applicable</td>
+            <td>Available for debt funds held > 1 year</td>
+          </tr>
+          <tr>
+            <td>Section 80C</td>
+            <td>Tax-Saving FD qualifies for 80C deduction</td>
+            <td>ELSS mutual funds qualify for 80C deduction (max ₹1.5 lakh/year)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-4 reveal">
+      <h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <div id="faqList" data-single="1"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
+  <script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/calc-page.js"></script>
+  <script src="/assets/js/ads.js"></script>
+  <script>
+    DC.page = {
+      slug: 'fd-vs-mutual-fund-comparison',
+      faqs: [
+        { q: 'Which is better: FD or mutual funds?', a: 'FD is better for short-term goals. Mutual funds excel for long-term wealth creation with higher returns potential.' },
+        { q: 'What FD rate is available now?', a: 'FD rates range from 6.5% to 8.5% depending on bank and tenure. Senior citizens get additional interest.' }
+      ]
+    };
+
+    function compute() {
+      const fdAmt = DC.fnum(document.getElementById('fd-amt').value) || 10000;
+      const fdRate = DC.fnum(document.getElementById('fd-rate').value) || 7;
+      const mfAmt = DC.fnum(document.getElementById('mf-amt').value) || 10000;
+      const mfRate = DC.fnum(document.getElementById('mf-rate').value) || 11;
+      const fdMonthlyRt = (fdRate / 100) / 12;
+      const periods = 15 * 12;
+      const fdCorpus = fdAmt * ((Math.pow(1 + fdMonthlyRt, periods) - 1) / fdMonthlyRt);
+      const mfMonthlyRt = Math.pow(1 + mfRate / 100, 1/12) - 1;
+      const mfCorpus = mfAmt * ((Math.pow(1 + mfMonthlyRt, periods) - 1) / mfMonthlyRt);
+      document.getElementById('fd-corpus').textContent = DC.inr(fdCorpus);
+      document.getElementById('mf-corpus').textContent = DC.inr(mfCorpus);
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['fd-amt', 'fd-rate', 'mf-amt', 'mf-rate'].forEach(function(id) {
+      document.getElementById(id).addEventListener('input', compute);
+    });
+    compute();
+
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('trending');
+  </script>
+</body>
 </html>

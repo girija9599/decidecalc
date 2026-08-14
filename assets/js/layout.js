@@ -90,6 +90,9 @@
           '</a>' +
           '<nav class="nav-links">' + navHTML + '</nav>' +
           '<div class="nav-actions">' +
+            '<button class="search-toggle" id="searchToggle" type="button" aria-label="Open search" aria-expanded="false" aria-controls="globalSearch">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>' +
+            '</button>' +
             '<a href="/tools" class="btn btn-primary btn-sm">Explore Tools <span aria-hidden="true">→</span></a>' +
             '<button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav">' +
               '<span></span><span></span><span></span>' +
@@ -109,7 +112,18 @@
           '<a href="' + DC.base + 'tools" class="btn btn-primary mobile-nav-cta">Explore all tools <span aria-hidden="true">→</span></a>' +
         '</div>' +
       '</div>' +
-      '<div class="nav-backdrop" aria-hidden="true"></div>';
+      '<div class="nav-backdrop" aria-hidden="true"></div>' +
+      // Global search panel (overlay, attached to body, not sticky header)
+      '<div class="global-search" id="globalSearch" aria-hidden="true">' +
+        '<div class="global-search-inner">' +
+          '<div class="global-search-box">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>' +
+            '<input type="search" id="globalSearchInput" placeholder="Search calculators, blogs, guides…" autocomplete="off" aria-label="Search DecideCalc" />' +
+            '<kbd>Esc</kbd>' +
+          '</div>' +
+          '<div class="global-search-results" id="globalSearchResults" aria-live="polite"></div>' +
+        '</div>' +
+      '</div>';
 
     const year = new Date().getFullYear();
     const footer =
@@ -188,9 +202,25 @@
       const el = document.getElementById('dcYear');
       if (el) el.textContent = new Date().getFullYear();
     }, 60 * 60 * 1000);
+    // Global search (stateless DOM scanner)
+    if (!document.querySelector('script[src*="search.js"]')) {
+      var ss = document.createElement('script');
+      ss.src = DC.base + 'assets/js/search.js';
+      ss.defer = true;
+      document.body.appendChild(ss);
+    }
     // Initialize ad slots once they are in the DOM
     setTimeout(function () { if (DC.initAds) DC.initAds(); }, 0);
   };
+
+  // Global search: load once at the base level so DOMContentLoaded inside
+  // search.js fires AFTER DC.renderLayout() has injected the overlay HTML.
+  if (!document.querySelector('script[src*="search.js"]')) {
+    var searchLoader = document.createElement('script');
+    searchLoader.src = DC.base + 'assets/js/search.js';
+    searchLoader.defer = true;
+    document.head.appendChild(searchLoader);
+  }
 
   // base path: always site root. Using an absolute '/' here prevents the
   // class of bugs caused by cleanUrls:true + trailingSlash:false where '/blog'

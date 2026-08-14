@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="google-adsense-account" content="ca-pub-3027138458482943">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rent vs Buy: Should You Buy a House? — Free Comparison Calculator | DecideCal</title>
+  <title>Rent vs Buy: Should You Buy a House? — Free Comparison Calculator | DecideCalc</title>
   <meta name="description" content="Compare rent vs buy a house in India with our ROI calculator. Analyze property price, rent, down payment and break-even timeline to make the right decision.">
   <link rel="canonical" href="https://www.decidecalc.com/calculators/rent-vs-buy-comparison">
   <meta name="theme-color" content="#1B3A6B">
@@ -21,7 +21,7 @@
   <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Rent vs Buy House Comparison Calculator — DecideCalc","applicationCategory":"FinanceApplication","operatingSystem":"Web","url":"https://www.decidecalc.com/calculators/rent-vs-buy-comparison","description":"Compare renting vs buying a house in India with detailed cost analysis, upfront costs and break-even timeline. Make informed housing decisions.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"browserRequirements":"Requires JavaScript","inLanguage":"en-IN","creator":{"@type":"Organization","name":"DecideCalc","url":"https://www.decidecalc.com"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to Compare Rent vs Buy with DecideCalc","step":[{"@type":"HowToStep","position":1,"name":"Enter property details","text":"Input property price, location and expected appreciation rate."},{"@type":"HowToStep","position":2,"name":"Set down payment","text":"Enter percentage of price you can pay as down payment and loan details."},{"@type":"HowToStep","position":3,"name":"Enter rent details","text":"Input monthly rent, rent escalation and duration of stay plan."},{"@type":"HowToStep","position":4,"name":"View comparison","text":"See 10-year cost comparison, net cost difference and break-even timeline."}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"When should I buy instead of rent?","acceptedAnswer":{"@type":"Answer","text":"Buy when you plan to stay 7+ years, have stable income, and property values in your city are rising or stable."}},{"@type":"Question","name":"What are upfront costs of buying a house?","acceptedAnswer":{"@type":"Answer","text":"Down payment (10-25%), stamp duty (3-5%), registration (1%), legal charges (₹10,000-50,000), and home loan processing fee (0.5-1%)."}}},{"@type":"Question","name":"Is rent tax-deductible?","acceptedAnswer":{"@type":"Answer","text":"Rent is not deductible under Section 80C. Only HRA (if applicable) and home loan interest are deductible."}},{"@type":"Question","name":"What about property appreciation?","acceptedAnswer":{"@type":"Answer","text":"Property value growth plus rental savings may exceed ownership costs. Research local market trends before deciding."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"When should I buy instead of rent?","acceptedAnswer":{"@type":"Answer","text":"Buy when you plan to stay 7+ years, have stable income, and property values in your city are rising or stable."}},{"@type":"Question","name":"What are upfront costs of buying a house?","acceptedAnswer":{"@type":"Answer","text":"Down payment (10-25%), stamp duty (3-5%), registration (1%), legal charges (₹10,000-50,000), and home loan processing fee (0.5-1%)."}},{"@type":"Question","name":"Is rent tax-deductible?","acceptedAnswer":{"@type":"Answer","text":"Rent is not deductible under Section 80C. Only HRA (if applicable) and home loan interest are deductible."}},{"@type":"Question","name":"What about property appreciation?","acceptedAnswer":{"@type":"Answer","text":"Property value growth plus rental savings may exceed ownership costs. Research local market trends before deciding."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.decidecalc.com/"},{"@type":"ListItem","position":2,"name":"Finance","item":"https://www.decidecalc.com/categories/finance"},{"@type":"ListItem","position":3,"name":"Rent vs Buy Comparison"}]}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
@@ -36,281 +36,245 @@
   <main class="container" style="padding-top:30px;padding-bottom:60px">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a><span class="sep">/</span>
-      <a href="/categories/finance">Finance</a><span class="sep">/</span>
+      <a href="/categories/finance">Finance & Tax</a><span class="sep">/</span>
       <span>Rent vs Buy Comparison</span>
     </nav>
 
-    <div class="calc-layout">
-      <!-- CALCULATOR -->
-      <div class="calc-shell reveal">
-        <div class="calc-header">
-          <span class="ic" id="ic"></span>
-          <div>
-            <h1>Rent vs Buy: Should You Buy a House?</h1>
-            <div class="sub">Free India-First House Decision Calculator · Compare Cost, Upfront & ROI</div>
-          </div>
-        </div>
-        <div class="calc-body">
-          <div class="calc-comparison">
-            <div class="calc-column">
-              <h3>Buying a House</h3>
-              <div class="field"><label>Property Price (₹) </label>
-                <div class="range-out"><span class="range-val" id="out-price">₹1.0 Cr</span></div>
-                <input type="range" id="price" min="5000000" max="100000000" step="5000000" value="10000000" data-prefix="₹" data-dec="0" style="width:100%">
-              </div>
-              <div class="field"><label>Down Payment (%)</label>
-                <div class="range-out"><span class="range-val" id="out-down">20%</span></div>
-                <input type="range" id="down" min="10" max="50" step="5" value="20" data-suffix="%">
-              </div>
-              <div class="field"><label>Loan Rate (%)</label>
-                <div class="range-out"><span class="range-val" id="out-loan-rate">8.5%</span></div>
-                <input type="range" id="loan-rate" min="6" max="12" step="0.25" value="8.5" data-suffix="%" data-dec="2">
-              </div>
-              <div class="field"><label>Loan Tenure (yrs)</label>
-                <div class="range-out"><span class="range-val" id="out-tenure">15 yrs</span></div>
-                <input type="range" id="tenure" min="5" max="30" step="1" value="15">
-              </div>
-              <div class="result-stat"><div class="v" id="buy-monthly">₹8.5 lt</div><div class="k">Monthly Cost(EMI)</div></div>
-              <div class="result-stat"><div class="v" id="buy-break-even">5.2 yrs</div><div class="k">Break-even Time</div></div>
-            </div>
-            <div class="calc-column">
-              <h3>Rent Option</h3>
-              <div class="field"><label>Monthly Rent (₹)</label>
-                <div class="range-out"><span class="range-val" id="out-rent">₹80,000</span></div>
-                <input type="range" id="rent" min="20000" max="500000" step="10000" value="80000" data-prefix="₹">
-              </div>
-              <div class="field"><label>Rent Escalation (%)</label>
-                <div class="range-out"><span class="range-val" id="out-escalation">3%</span></div>
-                <input type="range" id="escalation" min="0" max="10" step="0.5" value="3" data-suffix="%">
-              </div>
-              <div class="field"><label>Duration (yrs)</label>
-                <div class="range-out"><span class="range-val" id="out-duration">15 yrs</span></div>
-                <input type="range" id="duration" min="3" max="30" step="1" value="15">
-              </div>
-              <div class="result-stat"><div class="v" id="rent-total">₹1.88 Cr</div><div class="k">Total Rent Paid</div></div>
-              <div class="result-stat"><div class="v" id="own-equity">₹1.5 Cr</div><div class="k">Equity @ 15yr</div></div>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-block" id="calcBtn">Calculate Comparison</button>
+    <div class="calc-shell reveal" style="--cat-color:var(--cat-finance)">
+      <div class="calc-header">
+        <span class="ic" id="ic"></span>
+        <div>
+          <h1>Rent vs Buy: Should You Buy a House?</h1>
+          <div class="sub">Compare cost, upfront & ROI · India-first housing decision</div>
         </div>
       </div>
-
-      <!-- COMPARISON TABLE -->
-      <section class="card reveal" style="max-width:none">
-        <h2>Rent vs Buy: Housing Decision Matrix</h2>
-        <p class="mt-2">Making the right choice between renting and buying requires considering multiple factors beyond just monthly cost.</p>
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Factor</th>
-              <th>Rent</th>
-              <th>Buy (Own Home)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Upfront Cost</strong></td>
-              <td>0-2 months rent (security deposit)</td>
-              <td>Down payment (10-25%) + 3-5% stamp duty + registration fees</td>
-            </tr>
-            <tr>
-              <td><strong>Monthly Cost</strong></td>
-              <td>Fixed rent, negotiable</td>
-              <td>EMI (principal + interest), property tax, maintenance</td>
-            </tr>
-            <tr>
-              <td><strong>Appreciation</strong></td>
-              <td>None - you pay someone else's appreciation</td>
-              <td>You benefit from property value increase</td>
-            </tr>
-            <tr>
-              <td><strong>Tax Benefits</strong></td>
-              <td>No deductions (except HRA for renters)</td>
-              <td>Interest deduction up to ₹2 lakhs (Section 24)<br>Principal deduction up to ₹1.5 lakhs (Section 80C)</td>
-            </tr>
-            <tr>
-              <td><strong>Liquidity</strong></td>
-              <td>Fully liquid - can move anytime</td>
-              <td>Difficult - need to sell, takes months, may incur losses</td>
-            </tr>
-            <tr>
-              <td><strong>Mortgage Interest Rate</strong></td>
-              <td>N/A</td>
-              <td>~8-9% floating, 7.5-8.5% for senior citizens</td>
-            </tr>
-            <tr>
-              <td><strong>Maintenance</strong></td>
-              <td>Landlord responsible</td>
-              <td>Your responsibility, typically 1% of property value annually</td>
-            </tr>
-            <tr>
-              <td><strong>Stability</strong></td>
-              <td>Notice period required for moving</td>
-              <td>Stable, cannot be evicted by landlord</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- DETAILED GUIDE -->
-      <section class="card reveal" style="max-width:none">
-        <h2>Detailed Analysis: When to Buy vs Rent</h2>
-        
-        <h3>Buying Makes Sense When:</h3>
-        <ul>
-          <li><strong>You plan to stay 7+ years:</strong> Breaking even typically takes 4-7 years, longer tenure favors ownership.</li>
-          <li><strong>Property in good growth location:</strong> Metro cities with 5-10% annual appreciation have better ROI.</li>
-          <li><strong>You have stable income:</strong> EMIs must be 40-50% of take-home for comfortable repayment.</li>
-          <li><strong>You need tax benefits:</strong> Home loan interest and principal qualify for 80C and 24 deductions.</li>
-          <li><strong>You want stability:</strong> Fixed EMI offers predictable costs vs rising rents in some areas.</li>
-        </ul>
-        
-        <h3>Renting Makes Sense When:</h3>
-        <ul>
-          <li><strong>Temporary location:</strong> Job transfer, uncertain career path expected within few years.</li>
-          <li><strongHigh rent in your area:</strong> If monthly rent is 20%+ below EMI, renting may be financially better.</li>
-          <li><strongEmergency fund priorities:</strong> Keep liquidity for future opportunities instead of down payment.</li>
-          <li><strongMultiple property ownership:</strong> Avoid concentrating too much in illiquid real estate.</li>
-          <li><strongMarket uncertainty:</strong> If prices are expected to decline in your area.</li>
-        </ul>
-        
-        <h3>Break-even Analysis</h3>
-        <p>The key metric is <strong>time to break-even</strong> - when cumulative costs of renting equals buying. Formula:
-        <br>Break-even years = (Upfront costs + Total interest paid) / (Annual rent escalation savings)</p>
-        <p><strong>Rule of thumb:</strong> If you plan to stay <strong>less than 5 years</strong>, renting often wins. More than <strong>7-10 years</strong>, buying usually makes financial sense.</p>
-        
-        <h3>Tax Comparison (Rent vs Home Loan)</h3>
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Tax Benefit</th>
-              <th>Rent</th>
-              <th>Own Home</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>HRA Exemption</td>
-              <td>Available (if applicable)</td>
-              <td>Not available</td>
-            </tr>
-            <tr>
-              <td>80C Deduction</td>
-              <td>Limited (EPFO, PPF)</td>
-              <td>Up to ₹1.5 lakh (principal)</td>
-            </tr>
-            <tr>
-              <td>Section 24</td>
-              <td>Not available</td>
-              <td>Up to ₹2 lakh (interest)</td>
-            </tr>
-            <tr>
-              <td>Wealth Creation</td>
-              <td>No asset backing</td>
-              <td>Property appreciation + tax benefits</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- FAQ SECTION -->
-      <section class="card reveal" style="max-width:none">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-list">
-          <details>
-            <summary>Can I sell my house and rent instead later?</summary>
-            <p>Yes, but consider stamp duty on sale (2-5% of value), brokerage (1-2%), and the time it takes to sell. Weigh these costs against your new rental savings.</p>
-          </details>
-          <details>
-            <summary>Is home loan interest deductible under current tax laws?</summary>
-            <p>Yes, up to ₹2 lakhs deduction under Section 24 for self-occupied property. For let-out property, up to ₹2 lakhs interest deduction plus potential loss from property is deductible.</p>
-          </details>
-          <details>
-            <summary>What about property tax in rent vs buy?</summary>
-            <p>Rent includes maintenance. Property tax is paid by owner - it's an additional cost of ownership. Negotiate with landlord about who pays maintenance.</p>
-          </details>
-          <details>
-            <summary>Is there any limit to loan prepayment?</summary>
-            <p>No limit on prepayment. Prepayment can reduce EMI or tenure. Reducing tenure saves more interest. Ask bank to recalculate EMI after prepayment.</p>
-          </details>
+      <div class="calc-body">
+        <div class="calc-comparison">
+          <div class="calc-column">
+            <h3>Buying a House</h3>
+            <div class="field"><label>Property Price (₹)</label>
+              <div class="range-out"><span class="range-val" id="out-price">₹1.0 Cr</span></div>
+              <input type="range" id="price" min="5000000" max="100000000" step="5000000" value="10000000" data-prefix="₹" data-dec="0" style="width:100%">
+            </div>
+            <div class="field"><label>Down Payment (%)</label>
+              <div class="range-out"><span class="range-val" id="out-down">20%</span></div>
+              <input type="range" id="down" min="10" max="50" step="5" value="20" data-suffix="%">
+            </div>
+            <div class="field"><label>Loan Rate (%)</label>
+              <div class="range-out"><span class="range-val" id="out-loan-rate">8.5%</span></div>
+              <input type="range" id="loan-rate" min="6" max="12" step="0.25" value="8.5" data-suffix="%" data-dec="2">
+            </div>
+            <div class="field"><label>Loan Tenure (yrs)</label>
+              <div class="range-out"><span class="range-val" id="out-tenure">15 yrs</span></div>
+              <input type="range" id="tenure" min="5" max="30" step="1" value="15">
+            </div>
+            <div class="result-stat"><div class="v" id="buy-monthly">₹8.5 lt</div><div class="k">Monthly Cost (EMI)</div></div>
+            <div class="result-stat"><div class="v" id="buy-break-even">5.2 yrs</div><div class="k">Break-even Time</div></div>
+          </div>
+          <div class="calc-column">
+            <h3>Rent Option</h3>
+            <div class="field"><label>Monthly Rent (₹)</label>
+              <div class="range-out"><span class="range-val" id="out-rent">₹80,000</span></div>
+              <input type="range" id="rent" min="20000" max="500000" step="10000" value="80000" data-prefix="₹">
+            </div>
+            <div class="field"><label>Rent Escalation (%)</label>
+              <div class="range-out"><span class="range-val" id="out-escalation">3%</span></div>
+              <input type="range" id="escalation" min="0" max="10" step="0.5" value="3" data-suffix="%">
+            </div>
+            <div class="field"><label>Duration (yrs)</label>
+              <div class="range-out"><span class="range-val" id="out-duration">15 yrs</span></div>
+              <input type="range" id="duration" min="3" max="30" step="1" value="15">
+            </div>
+            <div class="result-stat"><div class="v" id="rent-total">₹1.88 Cr</div><div class="k">Total Rent Paid</div></div>
+            <div class="result-stat"><div class="v" id="own-equity">₹1.5 Cr</div><div class="k">Equity @ 15yr</div></div>
+          </div>
         </div>
-      </section>
-    </main>
+        <button class="btn btn-primary btn-block" id="calcBtn">Calculate Comparison</button>
+      </div>
+    </div>
 
+    <!-- RELATED -->
     <section class="mt-4 reveal">
-      <div class="article-related-calcs">
-        <h3>Related Calculators</h3>
-        <div class="related-mini-grid">
-          <a class="related-mini-card" href="/calculators/emi-calculator"><span class="rmc-icon">📊</span><span class="rmc-name">EMI Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/home-loan-eligibility"><span class="rmc-icon">🏠</span><span class="rmc-name">Home Loan Eligibility</span></a>
-          <a class="related-mini-card" href="/calculators/fd-calculator"><span class="rmc-icon">🏦</span><span class="rmc-name">FD Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/loan-vs-investment"><span class="rmc-icon">⚖️</span><span class="rmc-name">Loan vs Investment</span></a>
-        </div>
-      </div>
+      <h3 style="margin-bottom:16px">Related calculators</h3>
+      <div class="related-mini" id="relatedTools"></div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="/assets/js/core.js"></script>
-    <script src="/assets/js/layout.js?v=20260814-1"></script>
-    <script src="/assets/js/tools.js"></script>
-    <script src="/assets/js/ad.js"></script>
-    <script>
-      DC.page = {
-        slug: 'rent-vs-buy-comparison',
-        faqs: [
-          { q: 'When should I buy instead of rent?', a: 'Buy when you plan to stay 7+ years, have stable income, and property values are rising in your area.' },
-          { q: 'What are upfront costs of buying?', a: 'Down payment (10-25%), stamp duty (3-5%), registration, and home loan processing fees.' }
-        ]
-      };
-      
-      function compute() {
-        const price = DC.fnum(document.getElementById('price').value) || 10000000;
-        const downPct = DC.fnum(document.getElementById('down').value) || 20;
-        const loanRate = DC.fnum(document.getElementById('loan-rate').value) || 8.5;
-        const tenure = DC.fnum(document.getElementById('tenure').value) || 15;
-        
-        const downPmt = price * downPct / 100;
-        const loanAmt = price - downPmt;
-        const r = loanRate / 12 / 100;
-        const n = tenure * 12;
-        const emi = loanAmt * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
-        
-        const rent = DC.fnum(document.getElementById('rent').value) || 80000;
-        const rentEscal = DC.fnum(document.getElementById('escalation').value) || 3;
-        const years = DC.fnum(document.getElementById('duration').value) || 15;
-        
-        // Calculate total rent with escalation
-        let totalRent = 0;
-        for (let i = 0; i < years * 12; i++) {
-          totalRent += rent * Math.pow(1 + rentEscal/100, i/12);
-        }
-        
-        // Calculate equity after tenure (assuming 5% annual appreciation)
-        const appreciation = 0.05;
-        const finalValue = price * Math.pow(1 + appreciation, years);
-        const equity = finalValue - loanAmt;
-        
-        // Break-even (rough estimate)
-        const totalInterest = emi * tenure * 12 - loanAmt;
-        const upfrontCost = downPmt + price * 0.04; // approx stamp duty
-        const savingsPerYear = (rent * 12 * (1 + rentEscal/100) * tenure / years) - (emi * 12);
-        const breakEven = upfrontCost / (rent * 12 - emi * 12);
-        
-        document.getElementById('buy-monthly').textContent = '₹' + (emi > 1000000 ? (emi/1000000).toFixed(2) + ' lt' : DC.inr(emi));
-        document.getElementById('buy-break-even').textContent = Math.max(1, Math.round(breakEven)) + ' yrs';
-        document.getElementById('rent-total').textContent = '₹' + (totalRent > 1000000 ? (totalRent/1000000).toFixed(2) + ' Cr' : '₹' + DC.compact(totalRent));
-        document.getElementById('own-equity').textContent = '₹' + (equity > 1000000 ? (equity/1000000).toFixed(2) + ' Cr' : '₹' + DC.compact(equity));
+    <!-- COMPARISON TABLE -->
+    <section class="card reveal mt-4" style="max-width:none">
+      <h2>Rent vs Buy: Housing Decision Matrix</h2>
+      <p class="mt-2">Making the right choice between renting and buying requires considering multiple factors beyond just monthly cost.</p>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Rent</th>
+            <th>Buy (Own Home)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Upfront Cost</strong></td>
+            <td>0–2 months rent (security deposit)</td>
+            <td>Down payment (10–25%) + 3–5% stamp duty + registration fees</td>
+          </tr>
+          <tr>
+            <td><strong>Monthly Cost</strong></td>
+            <td>Fixed rent, negotiable</td>
+            <td>EMI (principal + interest), property tax, maintenance</td>
+          </tr>
+          <tr>
+            <td><strong>Appreciation</strong></td>
+            <td>None — you pay someone else's appreciation</td>
+            <td>You benefit from property value increase</td>
+          </tr>
+          <tr>
+            <td><strong>Tax Benefits</strong></td>
+            <td>No deductions (except HRA for renters)</td>
+            <td>Interest deduction up to ₹2 lakh (Section 24)<br>Principal deduction up to ₹1.5 lakh (Section 80C)</td>
+          </tr>
+          <tr>
+            <td><strong>Liquidity</strong></td>
+            <td>Fully liquid — can move anytime</td>
+            <td>Difficult — need to sell, takes months, may incur losses</td>
+          </tr>
+          <tr>
+            <td><strong>Mortgage Interest Rate</strong></td>
+            <td>N/A</td>
+            <td>~8–9% floating, 7.5–8.5% for senior citizens</td>
+          </tr>
+          <tr>
+            <td><strong>Maintenance</strong></td>
+            <td>Landlord responsible</td>
+            <td>Your responsibility, typically 1% of property value annually</td>
+          </tr>
+          <tr>
+            <td><strong>Stability</strong></td>
+            <td>Notice period required for moving</td>
+            <td>Stable, cannot be evicted by landlord</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- DETAILED GUIDE -->
+    <section class="card reveal mt-4" style="max-width:none">
+      <h2>Detailed Analysis: When to Buy vs Rent</h2>
+
+      <h3>Buying Makes Sense When:</h3>
+      <ul>
+        <li><strong>You plan to stay 7+ years:</strong> breaking even typically takes 4–7 years, longer tenure favours ownership.</li>
+        <li><strong>Property in a good growth location:</strong> metro cities with 5–10% annual appreciation have better ROI.</li>
+        <li><strong>You have stable income:</strong> EMIs must be 40–50% of take-home for comfortable repayment.</li>
+        <li><strong>You need tax benefits:</strong> home loan interest and principal qualify for 80C and 24 deductions.</li>
+        <li><strong>You want stability:</strong> fixed EMI offers predictable costs vs rising rents in some areas.</li>
+      </ul>
+
+      <h3>Renting Makes Sense When:</h3>
+      <ul>
+        <li><strong>Temporary location:</strong> job transfer, uncertain career path expected within a few years.</li>
+        <li><strong>High rent-to-EMI ratio:</strong> if monthly rent is 20%+ below EMI equivalent, renting may be financially better.</li>
+        <li><strong>Emergency fund priorities:</strong> keep liquidity for future opportunities instead of a down payment.</li>
+        <li><strong>Multiple property ownership:</strong> avoid concentrating too much in illiquid real estate.</li>
+        <li><strong>Market uncertainty:</strong> if prices are expected to decline in your area.</li>
+      </ul>
+
+      <h3>Break-even Analysis</h3>
+      <p>The key metric is <strong>time to break-even</strong> — when cumulative costs of renting equals buying. As a rough formula:</p>
+      <p><strong>Break-even years ≈ (Upfront costs + Total interest paid) ÷ (Annual rent escalation savings)</strong></p>
+      <p><strong>Rule of thumb:</strong> if you plan to stay <strong>less than 5 years</strong>, renting often wins. More than <strong>7–10 years</strong>, buying usually makes financial sense.</p>
+
+      <h3>Tax Comparison (Rent vs Home Loan)</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Tax Benefit</th>
+            <th>Rent</th>
+            <th>Own Home</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HRA Exemption</td>
+            <td>Available (if applicable)</td>
+            <td>Not available</td>
+          </tr>
+          <tr>
+            <td>80C Deduction</td>
+            <td>Limited (EPFO, PPF)</td>
+            <td>Up to ₹1.5 lakh (principal)</td>
+          </tr>
+          <tr>
+            <td>Section 24</td>
+            <td>Not available</td>
+            <td>Up to ₹2 lakh (interest)</td>
+          </tr>
+          <tr>
+            <td>Wealth Creation</td>
+            <td>No asset backing</td>
+            <td>Property appreciation + tax benefits</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-4 reveal">
+      <h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <div id="faqList" data-single="1"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/layout.js?v=20260804-2"></script>
+  <script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/calc-page.js"></script>
+  <script src="/assets/js/ads.js"></script>
+  <script>
+    DC.page = {
+      slug: 'rent-vs-buy-comparison',
+      faqs: [
+        { q: 'When should I buy instead of rent?', a: 'Buy when you plan to stay 7+ years, have stable income, and property values are rising in your area.' },
+        { q: 'What are upfront costs of buying?', a: 'Down payment (10–25%), stamp duty (3–5%), registration, and home loan processing fees.' }
+      ]
+    };
+
+    function compute() {
+      const price = DC.fnum(document.getElementById('price').value) || 10000000;
+      const downPct = DC.fnum(document.getElementById('down').value) || 20;
+      const loanRate = DC.fnum(document.getElementById('loan-rate').value) || 8.5;
+      const tenure = DC.fnum(document.getElementById('tenure').value) || 15;
+      const downPmt = price * downPct / 100;
+      const loanAmt = price - downPmt;
+      const r = loanRate / 12 / 100;
+      const n = tenure * 12;
+      const emi = loanAmt * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+      const rent = DC.fnum(document.getElementById('rent').value) || 80000;
+      const rentEscal = DC.fnum(document.getElementById('escalation').value) || 3;
+      const years = DC.fnum(document.getElementById('duration').value) || 15;
+      let totalRent = 0;
+      for (let i = 0; i < years * 12; i++) {
+        totalRent += rent * Math.pow(1 + rentEscal/100, i/12);
       }
-      
-      document.getElementById('calcBtn').addEventListener('click', compute);
-      ['price', 'down', 'loan-rate', 'tenure', 'rent', 'escalation', 'duration'].forEach(id => {
-        document.getElementById(id).addEventListener('input', compute);
-      });
-      compute();
-      
-      DC.renderLayout();
-      document.getElementById('ic').innerHTML = DC.icon('home');
-      DC.initReveal();
-    </script>
-  </body>
+      const appreciation = 0.05;
+      const finalValue = price * Math.pow(1 + appreciation, years);
+      const equity = finalValue - loanAmt;
+      const upfrontCost = downPmt + price * 0.04;
+      const breakEven = upfrontCost / (rent * 12 - emi * 12);
+      document.getElementById('buy-monthly').textContent = DC.inr(emi);
+      document.getElementById('buy-break-even').textContent = Math.max(1, Math.round(breakEven)) + ' yrs';
+      document.getElementById('rent-total').textContent = DC.inr(totalRent);
+      document.getElementById('own-equity').textContent = DC.inr(equity);
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', compute);
+    ['price', 'down', 'loan-rate', 'tenure', 'rent', 'escalation', 'duration'].forEach(function(id) {
+      document.getElementById(id).addEventListener('input', compute);
+    });
+    compute();
+
+    DC.initCalcPage();
+    document.getElementById('ic').innerHTML = DC.icon('home');
+  </script>
+</body>
 </html>
