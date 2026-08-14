@@ -81,6 +81,9 @@
     { slug: 'bond-ytm-calculator',             name: 'Bond Yield to Maturity Calculator',  cat: 'finance', icon: 'trending', aliases: 'bond ytm yield coupon price maturity current yield', blurb: 'Calculate current yield and yield to maturity from a bond price and coupon.' },
     { slug: 'car-loan-calculator',             name: 'Car Loan Calculator',                cat: 'finance', icon: 'zap',      aliases: 'auto loan car payment vehicle financing monthly installment amortization', blurb: 'Monthly car payment, total interest and full amortization for any auto loan.', popular: true, popularOrder: 7 },
     { slug: '8th-pay-commission-calculator',   name: '8th Pay Commission Calculator',      cat: 'finance', icon: 'briefcase', aliases: '8th cpc pay commission fitment factor central government salary india arrears', blurb: 'Estimate your 8th CPC salary with fitment factor scenarios, HRA, TA, deductions, and arrears calculator.' },
+    { slug: 'emi-vs-sip-comparison',           name: 'EMI vs SIP Comparison',              cat: 'finance', icon: 'scale',    aliases: 'emi vs sip which is better loan prepayment vs invest india', blurb: 'Compare loan prepayment vs SIP investing — see which gives better returns.' },
+    { slug: 'fd-vs-mutual-fund-comparison',    name: 'FD vs Mutual Fund Comparison',       cat: 'finance', icon: 'trending', aliases: 'fd vs mutual fund which is better fixed deposit vs mf india', blurb: 'Compare FD returns vs Mutual Fund SIP with risk, returns & tax analysis.' },
+    { slug: 'rent-vs-buy-comparison',          name: 'Rent vs Buy Comparison',             cat: 'finance', icon: 'home',     aliases: 'rent vs buy house property india roi calculator', blurb: 'Compare renting vs buying a house with ROI, break-even & cost analysis.' },
 
     /* ===== Career & Salary (3) ===== */
     { slug: 'job-switch-decision',          name: 'Job Switch Decision',             cat: 'career',  icon: 'briefcase', aliases: 'quit resign change job',                        blurb: 'Score-based guidance for a potential job switch.' },
@@ -253,7 +256,13 @@
     'take-home-pay-calculator': ['how-to-calculate-take-home-pay', 'how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay'],
     'student-loan-calculator': ['how-to-calculate-student-loan-interest', 'how-to-calculate-loan-interest'],
     '8th-pay-commission-calculator': ['8th-pay-commission-calculator-2026'],
-    '8th-pay-commission-calculator-2026': ['8th-pay-commission-calculator']
+    '8th-pay-commission-calculator-2026': ['8th-pay-commission-calculator'],
+    'emi-vs-sip-comparison': ['emi-vs-sip-which-is-better-india', 'how-to-calculate-loan-interest', 'how-much-will-10000-grow-compound-interest'],
+    'fd-vs-mutual-fund-comparison': ['mutual-fund-expense-ratio-impact-india', 'how-much-will-10000-grow-compound-interest'],
+    'rent-vs-buy-comparison': ['rent-or-buy-house-2026-india', 'how-to-calculate-mortgage-payment'],
+    'ppf-calculator': ['ppf-calculator-guide-india-2025'],
+    'gst-calculator': ['gst-calculator-guide-india-2025'],
+    'income-tax-calculator': ['income-tax-calculator-india-2025-26', 'how-to-calculate-paycheck-from-salary', 'gross-pay-vs-net-pay']
   };
   DC.relatedArticlesList = function (slug, n) {
     n = n || 3;
@@ -294,7 +303,10 @@
     'how-to-calculate-take-home-pay': { title: 'How to Calculate Take-Home Pay From Salary (Step by Step)', desc: 'From gross salary to the number that lands in your bank: federal brackets, FICA at 7.65%, state tax, 401(k) and insurance deductions with a $75,000 example.', icon: 'money' },
     'how-to-pay-off-debt-fast': { title: 'How to Pay Off Debt Fast: Avalanche vs Snowball + Payoff Math', desc: 'The fastest way to become debt-free: avalanche vs snowball compared on $23,900 of real debt, the minimum-payment trap, and extra-payment strategies that cut years.', icon: 'trending' },
     'retirement-withdrawal-rate-india': { title: 'Retirement Withdrawal Rates in India: A Practical Guide', desc: 'Inflation, sequence-of-returns risk and flexibility — how long a retirement corpus could last at different withdrawal rates in India.', icon: 'piggy' },
-    '8th-pay-commission-calculator-2026': { title: '8th Pay Commission Calculator 2026: Estimated Salary, Fitment Factor & Arrears Guide', desc: 'Complete guide to the 8th CPC with fitment factor scenarios, salary estimation formula, HRA changes, arrears calculation, and a free calculator for Indian government employees.', icon: 'briefcase' }
+    '8th-pay-commission-calculator-2026': { title: '8th Pay Commission Calculator 2026: Estimated Salary, Fitment Factor & Arrears Guide', desc: 'Complete guide to the 8th CPC with fitment factor scenarios, salary estimation formula, HRA changes, arrears calculation, and a free calculator for Indian government employees.', icon: 'briefcase' },
+    'ppf-calculator-guide-india-2025': { title: 'PPF Calculator Guide: Plan Your Tax-Free Corpus (India 2025)', desc: 'How PPF works, current interest rate, contribution limits, tax benefits under 80C, and how to estimate your maturity amount with our calculator.', icon: 'piggy' },
+    'gst-calculator-guide-india-2025': { title: 'GST Calculator Guide: How to Calculate GST in India (2025)', desc: 'Learn GST rates, inclusive vs exclusive pricing, CGST/SGST vs IGST, and how to calculate GST for any item or service in India.', icon: 'percent' },
+    'income-tax-calculator-india-2025-26': { title: 'Income Tax Calculator India 2025-26: New vs Old Regime Guide', desc: 'Compare new vs old tax regime, latest tax slabs, deductions, and learn which regime saves you more tax in FY 2025-26.', icon: 'money' }
   };
 
   DC.toolMatches = function (t, q) {
