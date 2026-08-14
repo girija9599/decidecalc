@@ -378,6 +378,60 @@ p  { color: var(--text-soft); }
 }
 .tool-card .tag.mvp { background: rgba(59,130,246,.14); color: var(--accent-600); }
 
+/* ---------- Tools directory: Cards ⇄ Table view toggle ---------- */
+.tools-view-bar { display:flex; align-items:center; justify-content:flex-end; gap:10px; margin:22px 0 6px; }
+.view-toggle { display:inline-flex; background: var(--bg-soft); border:1px solid var(--border); border-radius: var(--radius-pill); padding:4px; gap:4px; }
+.view-toggle button {
+  border:none; background:transparent; cursor:pointer; padding:8px 18px; border-radius: var(--radius-pill);
+  font-weight:700; color: var(--text-soft); transition:.2s; display:inline-flex; align-items:center; gap:7px; font-size:.88rem;
+}
+.view-toggle button svg { width:16px; height:16px; }
+.view-toggle button.active { background: var(--card); color: var(--accent-600); box-shadow: var(--shadow-sm); }
+
+/* Table view */
+.tools-table-wrap { display:none; margin-top:6px; border:1px solid var(--border); border-radius: var(--radius-lg); overflow:hidden; background: var(--card); box-shadow: var(--shadow-sm); }
+.tools-table { width:100%; border-collapse:collapse; font-size:.92rem; }
+.tools-table thead th {
+  text-align:left; padding:14px 16px; font-size:.74rem; text-transform:uppercase; letter-spacing:.07em;
+  color: var(--muted); font-weight:800; background: var(--card-2); border-bottom:2px solid var(--border-strong); white-space:nowrap;
+}
+.tools-table tbody td { padding:12px 16px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.tools-table tbody tr { transition: background .15s ease; }
+.tools-table tbody tr:hover { background: color-mix(in srgb, var(--primary) 4%, transparent); }
+.tools-table tbody tr:last-child td { border-bottom:none; }
+.tt-tool { display:flex; align-items:center; gap:12px; min-width:0; }
+.tt-ic {
+  width:38px; height:38px; border-radius:11px; flex:0 0 auto; display:grid; place-items:center;
+  background: color-mix(in srgb, var(--cat-color, var(--accent)) 13%, transparent);
+  color: var(--cat-color, var(--accent));
+}
+.tt-ic svg { width:19px; height:19px; }
+.tt-name { font-weight:800; color: var(--text); line-height:1.3; display:block; }
+.tt-blurb { display:block; font-size:.8rem; color: var(--muted); font-weight:400; margin-top:2px; line-height:1.4; }
+.tt-cat {
+  display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase;
+  padding:5px 11px; border-radius: var(--radius-pill); white-space:nowrap;
+  background: color-mix(in srgb, var(--cat-color, var(--accent)) 11%, transparent);
+  color: var(--cat-color, var(--accent));
+}
+.tt-live {
+  display:inline-flex; align-items:center; gap:5px; font-size:.7rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  padding:4px 10px; border-radius: var(--radius-pill); color: var(--success); white-space:nowrap;
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  border:1px solid color-mix(in srgb, var(--success) 32%, transparent);
+}
+.tt-live::before { content:""; width:6px; height:6px; border-radius:50%; background: var(--success); }
+.tt-go { display:inline-flex; align-items:center; gap:6px; font-weight:800; font-size:.82rem; color: var(--cat-color, var(--accent)); white-space:nowrap; }
+.tt-go svg { width:15px; height:15px; }
+@media (max-width:760px){
+  .tools-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .tools-table { min-width:640px; }
+}
+/* Body gets [data-tools-view="table"] to hide the card grid and show the table */
+body[data-tools-view="table"] #toolsGrid { display:none; }
+body[data-tools-view="table"] .tools-table-wrap { display:block; }
+body[data-tools-view="cards"] .tools-table-wrap { display:none; }
+
 /* ---------- Hero ---------- */
 .hero {
   position:relative; overflow:hidden;
@@ -477,6 +531,19 @@ p  { color: var(--text-soft); }
 .calc-header h1 { font-size:1.4rem; }
 .calc-header .sub { font-size:.85rem; color: var(--muted); }
 .calc-body { padding: 26px; }
+
+/* Comparison calculator (two input columns) */
+.calc-comparison { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.calc-column { display:flex; flex-direction:column; }
+.calc-column h3 { margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); font-size:1.05rem; }
+@media (max-width: 700px){ .calc-comparison{ grid-template-columns:1fr; } }
+
+/* Comparison table (used in guide sections) */
+.comparison-table { width:100%; border-collapse:collapse; margin:16px 0; font-size:.92rem; }
+.comparison-table th, .comparison-table td { padding:12px 14px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+.comparison-table thead th { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color: var(--muted); font-weight:700; background: var(--card-2); border-bottom:2px solid var(--border-strong); }
+.comparison-table tbody tr:hover { background:color-mix(in srgb, var(--primary) 4%, transparent); }
+@media (max-width: 640px){ .comparison-table{ display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; } }
 
 /* ---------- Form controls ---------- */
 .field { margin-bottom: 18px; }

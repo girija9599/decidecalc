@@ -44,6 +44,13 @@
       <input id="toolSearch" name="q" class="input" type="search" placeholder="Search: EMI, SIP, tax, BMI, age, password…" autocomplete="off" aria-label="Search all tools">
     </div>
     <div class="chip-group reveal" id="filterChips" style="margin-top:14px"></div>
+    <!-- Cards ⇄ Table view toggle -->
+    <div class="tools-view-bar reveal d4">
+      <div class="view-toggle" role="group" aria-label="Toggle tools view">
+        <button type="button" id="viewCardsBtn" class="active" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Cards</button>
+        <button type="button" id="viewTableBtn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M3 9h18M3 15h18"/></svg>Table</button>
+      </div>
+    </div>
 
     <!-- ====== SERVER-RENDERED TOOL DIRECTORY (crawlable by all search engines) ====== -->
     <div id="toolsGrid" style="margin-top:26px">
@@ -270,12 +277,118 @@
       activeQuery = activeQuery.trim().toLowerCase();
       document.getElementById('toolCount').textContent = DC.tools.length + ' live tools';
 
+      // Build slug lookup for enrichment
+      var bySlug = {};
+      DC.tools.forEach(function (t) { bySlug[t.slug] = t; });
+
+      /* ---------- 1. Enrich server-rendered cards (icons, live badge, category footer) ---------- */
+      var grid = document.getElementById('toolsGrid');
+      var cards = Array.prototype.slice.call(grid.querySelectorAll('.tool-card'));
+      cards.forEach(function (el) {
+        var href = el.getAttribute('href') || '';
+        var slug = href.replace('/calculators/', '').split('/')[0];
+        var t = bySlug[slug];
+        var cat = t ? DC.catName(t.cat) : null;
+        el.setAttribute('data-cat', t ? t.cat : '');
+        el.setAttribute('data-slug', slug);
+        el.style.setProperty('--cat-color', cat ? cat.color : 'var(--accent)');
+        if (!t) return;
+
+        // Head row: icon + Live badge (matches homepage tool-card style)
+        var head = document.createElement('div');
+        head.style.cssText = 'display:flex;justify-content:space-between;align-items:flex-start';
+        head.innerHTML =
+          '<span class="tool-ic">' + DC.icon(t.icon) + '</span>' +
+          '<span class="tag" style="color:var(--success);border-color:color-mix(in srgb,var(--success) 35%,var(--border));background:color-mix(in srgb,var(--success) 10%,transparent)">● Live</span>';
+        el.insertBefore(head, el.firstChild);
+
+        // Footer row: category name + Open →
+        var footer = document.createElement('div');
+        footer.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;font-size:.82rem;font-weight:700;color:' + cat.color;
+        footer.innerHTML = '<span>' + cat.name.split(' ')[0] + '</span><span>Open →</span>';
+        el.appendChild(footer);
+      });
+
+      /* ---------- 2. Build the table view from the DC.tools registry ---------- */
+      var tableWrap = document.createElement('div');
+      tableWrap.className = 'tools-table-wrap';
+      tableWrap.id = 'toolsTableView';
+      grid.parentNode.insertBefore(tableWrap, grid.nextSibling);
+      var tableBody = document.createElement('tbody');
+
+      function slugFromTool(t) { return t.slug; }
+      function renderTable() {
+        tableBody.innerHTML = DC.tools.map(function (t) {
+          var cat = DC.catName(t.cat);
+          return '<tr data-slug="' + t.slug + '" data-cat="' + t.cat + '" data-hay="' + (t.name + ' ' + t.blurb + ' ' + (t.aliases || '')).toLowerCase() + '">' +
+            '<td><a class="tt-tool" href="/calculators/' + t.slug + '" style="--cat-color:' + cat.color + '">' +
+              '<span class="tt-ic">' + DC.icon(t.icon) + '</span>' +
+              '<span><span class="tt-name">' + t.name + '</span><span class="tt-blurb">' + t.blurb + '</span></span>' +
+            '</a></td>' +
+            '<td><span class="tt-cat" style="--cat-color:' + cat.color + '">' + cat.name.split(' ')[0] + '</span></td>' +
+            '<td><span class="tt-live">Live</span></td>' +
+            '<td><a class="tt-go" href="/calculators/' + t.slug + '" style="--cat-color:' + cat.color + '">Open ' + DC.icon('arrow') + '</a></td>' +
+          '</tr>';
+        }).join('');
+      }
+      renderTable();
+      tableWrap.innerHTML = '<table class="tools-table"><thead><tr>' +
+        '<th>Tool</th><th>Category</th><th>Status</th><th></th>' +
+        '</tr></thead>' + tableBody.outerHTML + '</table>';
+
+      /* ---------- 3. Cards ⇄ Table view toggle ---------- */
+      var viewCarrier = document.body;
+      function setView(view) {
+        viewCarrier.setAttribute('data-tools-view', view);
+        document.getElementById('viewCardsBtn').classList.toggle('active', view === 'cards');
+        document.getElementById('viewTableBtn').classList.toggle('active', view === 'table');
+        document.getElementById('viewCardsBtn').setAttribute('aria-pressed', view === 'cards' ? 'true' : 'false');
+        document.getElementById('viewTableBtn').setAttribute('aria-pressed', view === 'table' ? 'true' : 'false');
+        try { localStorage.setItem('dc-tools-view', view); } catch (e) {}
+      }
+      document.getElementById('viewCardsBtn').addEventListener('click', function () { setView('cards'); });
+      document.getElementById('viewTableBtn').addEventListener('click', function () { setView('table'); });
+
+      /* ---------- 4. Unified filtering (cards + table) ---------- */
       // Build filter chips from DC.categories
       var wrap = document.getElementById('filterChips');
       var chips = [{ id: 'all', name: 'All' }].concat(DC.categoriesSorted());
       wrap.innerHTML = chips.map(function (c) {
         return '<button type="button" class="chip' + (c.id === 'all' ? ' active' : '') + '" data-cat="' + c.id + '"' + (c.color ? ' style="--cat-color:' + c.color + '"' : '') + '>' + c.name + '</button>';
       }).join('');
+
+      function toolHay(t) {
+        return (t.name + ' ' + t.blurb + ' ' + (t.aliases || '')).toLowerCase();
+      }
+      function matches(t) {
+        return (activeFilter === 'all' || t.cat === activeFilter) &&
+          (!activeQuery || toolHay(t).indexOf(activeQuery) !== -1);
+      }
+
+      function apply() {
+        var shown = 0;
+        // Cards
+        cards.forEach(function (el) {
+          var t = bySlug[el.getAttribute('data-slug')] || { cat: el.getAttribute('data-cat'), name: (el.querySelector('h3') || {}).textContent || '', blurb: (el.querySelector('p') || {}).textContent || '' };
+          var ok = matches(t);
+          el.style.display = ok ? '' : 'none';
+          if (ok) shown++;
+        });
+        // Sections (hide empty sections)
+        var sections = grid.querySelectorAll('.tool-section');
+        sections.forEach(function (sec) {
+          var anyVisible = false;
+          sec.querySelectorAll('.tool-card').forEach(function (c) { if (c.style.display !== 'none') anyVisible = true; });
+          sec.style.display = (activeFilter === 'all' || anyVisible) ? '' : 'none';
+        });
+        // Table rows
+        tableWrap.querySelectorAll('tr[data-slug]').forEach(function (tr) {
+          var t = bySlug[tr.getAttribute('data-slug')];
+          tr.style.display = matches(t) ? '' : 'none';
+        });
+        document.getElementById('noResults').hidden = shown !== 0;
+      }
+
       wrap.querySelectorAll('.chip').forEach(function (b) {
         b.addEventListener('click', function () {
           activeFilter = b.getAttribute('data-cat');
@@ -283,45 +396,6 @@
           apply();
         });
       });
-
-      // Collect ALL server-rendered tool cards from the DOM
-      var grid = document.getElementById('toolsGrid');
-      var cards = Array.prototype.slice.call(grid.querySelectorAll('.tool-card'));
-
-      // Build slug→cat map from DC.tools for data-cat annotation
-      var slugCat = {};
-      DC.tools.forEach(function (t) { slugCat[t.slug] = t.cat; });
-
-      // Annotate each card with its category for filtering
-      cards.forEach(function (el) {
-        var href = el.getAttribute('href') || '';
-        var slug = href.replace('/calculators/', '').split('/')[0];
-        el.setAttribute('data-cat', slugCat[slug] || '');
-      });
-
-      function apply() {
-        var shown = 0;
-        cards.forEach(function (el) {
-          var cat = el.getAttribute('data-cat');
-          var h3 = el.querySelector('h3');
-          var p = el.querySelector('p');
-          var name = (h3 ? h3.textContent : '') + ' ';
-          var desc = (p ? p.textContent : '');
-          var ok = (activeFilter === 'all' || cat === activeFilter) &&
-            (!activeQuery || (name + desc).toLowerCase().indexOf(activeQuery) !== -1);
-          el.style.display = ok ? '' : 'none';
-          if (ok) shown++;
-        });
-        // Also filter sections when a category is selected
-        var sections = grid.querySelectorAll('.tool-section');
-        sections.forEach(function (sec) {
-          var secCards = sec.querySelectorAll('.tool-card');
-          var anyVisible = false;
-          secCards.forEach(function (c) { if (c.style.display !== 'none') anyVisible = true; });
-          sec.style.display = (activeFilter === 'all' || anyVisible) ? '' : 'none';
-        });
-        document.getElementById('noResults').hidden = shown !== 0;
-      }
 
       searchInput.addEventListener('input', function (e) {
         activeQuery = e.target.value.trim().toLowerCase();
@@ -331,6 +405,12 @@
         history.replaceState(null, '', url.pathname + url.search);
         apply();
       });
+
+      // Restore preferred view: URL ?view=table wins, else localStorage, else cards
+      var savedView = new URLSearchParams(window.location.search).get('view') || 'cards';
+      if (savedView !== 'table' && savedView !== 'cards') savedView = 'cards';
+      try { if (!new URLSearchParams(window.location.search).has('view')) savedView = localStorage.getItem('dc-tools-view') || 'cards'; } catch (e) {}
+      setView(savedView);
 
       // Initial apply (in case URL has ?q= param)
       apply();
