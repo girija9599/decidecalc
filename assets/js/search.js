@@ -91,7 +91,8 @@
       if (text.indexOf(q) === -1) continue;
       var href  = el.getAttribute('href') || '';
       if (!href) continue;
-      var title = (el.querySelector('h2, h3, h4') || {}).textContent || el.textContent.trim().slice(0, 80);
+      var titleEl = el.querySelector('h2, h3, h4');
+      var title = titleEl ? titleEl.textContent.replace(/\s+/g,' ').trim() : el.textContent.trim().slice(0, 80).replace(/\s+/g,' ');
       var typeLabel = 'Page';
       var cat = '';
       var icon = '';
@@ -108,12 +109,15 @@
       var links = document.querySelectorAll('a[href]');
       for (var j = 0; j < links.length; j++) {
         var a = links[j];
-        var aText = (a.textContent || '').trim().toLowerCase();
+        // Prefer a heading inside the link over full textContent (avoids "titlecategory" concatenation)
+        var aTitleEl = a.querySelector('h2, h3, h4');
+        var aTitle = aTitleEl ? aTitleEl.textContent.replace(/\s+/g,' ').trim() : (a.textContent || '').replace(/\s+/g,' ').trim();
+        var aText = aTitle.toLowerCase();
         if (!aText || aText.length < 3) continue;
         if (aText.indexOf(q) === -1) continue;
         var h = a.getAttribute('href') || '';
         if (!h || h === '#' || h.indexOf('javascript:') === 0) continue;
-        add({ href: h, title: aText, typeLabel: 'Link', cat: '', icon: '', samePage: false });
+        add({ href: h, title: aTitle, typeLabel: 'Link', cat: '', icon: '', samePage: false });
       }
     }
 
