@@ -108,7 +108,6 @@
       relWrap.innerHTML = rel.map(function (r) {
         const rc = DC.catName(r.cat);
         return '<a class="mini-card" href="/calculators/' + r.slug + '" style="--cat-color:' + rc.color + '">' +
-          '<span class="mic">' + DC.icon(r.icon) + '</span>' +
           '<span><h4>' + r.name + '</h4><span>' + rc.name + '</span></span>' +
         '</a>';
       }).join('');
@@ -136,7 +135,6 @@
           const meta = DC.blogMeta && DC.blogMeta[slug];
           if (!meta) return '';
           return '<a class="mini-card" href="/blog/' + slug + '" style="--cat-color:var(--accent)">' +
-            '<span class="mic">' + DC.icon(meta.icon || 'trending') + '</span>' +
             '<span><h4>' + meta.title + '</h4><span>Blog guide</span></span>' +
           '</a>';
         }).join('') + '</div>';
