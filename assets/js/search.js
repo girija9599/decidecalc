@@ -95,7 +95,7 @@
       var typeLabel = 'Page';
       var cat = '';
       var icon = '';
-      if (el.classList.contains('blog-card'))  { typeLabel = 'Blog guide'; icon = DC.icon('book-open'); }
+      if (el.classList.contains('blog-card'))  { typeLabel = 'Blog guide'; icon = (typeof DC !== 'undefined' && DC.icon) ? DC.icon('trending') : ''; }
       else if (el.classList.contains('tool-card') || el.classList.contains('tool-ic')) { typeLabel = 'Calculator'; icon = (el.querySelector('.tool-ic') || {}).innerHTML || ''; }
       else if (el.classList.contains('cat-card'))  { typeLabel = 'Category'; icon = (el.querySelector('.cat-icon') || {}).innerHTML || ''; }
       else if (el.classList.contains('mini-card')) { typeLabel = 'Tool'; icon = (el.querySelector('.mic') || {}).innerHTML || ''; }
@@ -126,7 +126,7 @@
 
   function escHTML (s) {
     return String(s).replace(/[&<>"']/g, function (m) {
-      return ({ '&':'&', '<':'<', '>':'>', '"':'"', "'":''' })[m];
+      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[m];
     });
   }
 

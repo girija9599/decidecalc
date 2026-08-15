@@ -213,15 +213,6 @@
     setTimeout(function () { if (DC.initAds) DC.initAds(); }, 0);
   };
 
-  // Global search: load once at the base level so DOMContentLoaded inside
-  // search.js fires AFTER DC.renderLayout() has injected the overlay HTML.
-  if (!document.querySelector('script[src*="search.js"]')) {
-    var searchLoader = document.createElement('script');
-    searchLoader.src = DC.base + 'assets/js/search.js';
-    searchLoader.defer = true;
-    document.head.appendChild(searchLoader);
-  }
-
   // base path: always site root. Using an absolute '/' here prevents the
   // class of bugs caused by cleanUrls:true + trailingSlash:false where '/blog'
   // and '/blog/' resolve the same HTML but the browser's relative-path base
