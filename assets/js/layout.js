@@ -205,7 +205,7 @@
     // Global search (stateless DOM scanner)
     if (!document.querySelector('script[src*="search.js"]')) {
       var ss = document.createElement('script');
-      ss.src = DC.base + 'assets/js/search.js';
+      ss.src = DC.base + 'assets/js/search.js?v=20260815-3';
       ss.defer = true;
       document.body.appendChild(ss);
     }
