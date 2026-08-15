@@ -162,7 +162,7 @@ h1,h2,h3,h4 { line-height: 1.15; color: var(--text); letter-spacing: -0.02em; fo
 h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
 h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
 h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
-p  { color: var(--text-soft); }
+p  { color: var(--text); }
 .lead { font-size: clamp(1.05rem, 1.6vw, 1.2rem); color: var(--text-soft); }
 .result-hero .big, .result-stat .v, .hero-stat .num, .breakdown, .range-val, .range-manual { font-family: var(--font-nums); font-variant-numeric: tabular-nums lining-nums; }
 .eyebrow {
