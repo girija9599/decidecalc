@@ -588,7 +588,7 @@ body[data-tools-view="cards"] .tools-table-wrap { display:none; }
 
 /* Comparison table (used in guide sections) */
 .comparison-table { width:100%; border-collapse:collapse; margin:16px 0; font-size:.92rem; }
-.comparison-table th, .comparison-table td { padding:12px 14px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+.comparison-table th, .comparison-table td { padding:12px 14px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; color:var(--text); }
 .comparison-table thead th { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color: var(--muted); font-weight:700; background: var(--card-2); border-bottom:2px solid var(--border-strong); }
 .comparison-table tbody tr:hover { background:color-mix(in srgb, var(--primary) 4%, transparent); }
 @media (max-width: 640px){ .comparison-table{ display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; } }
@@ -722,9 +722,9 @@ input[type="radio"]:checked + .chip,
 
 /* Breakdown table */
 .breakdown { width:100%; border-collapse:collapse; margin-top: 8px; font-size:.92rem; }
-.breakdown th, .breakdown td { padding: 11px 12px; text-align:left; border-bottom:1px solid var(--border); }
-.breakdown th { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color: var(--muted); font-weight:700; }
-.breakdown td.num { text-align:right; font-weight:700; font-variant-numeric: tabular-nums; }
+.breakdown th, .breakdown td { padding: 11px 12px; text-align:left; border-bottom:1px solid var(--border); color:var(--text); }
+.breakdown th { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color: var(--text); font-weight:700; }
+.breakdown td.num { text-align:right; font-weight:700; font-variant-numeric: tabular-nums; color:var(--text); }
 .breakdown tr:last-child td { border-bottom:none; }
 .breakdown tfoot td { border-top:2px solid var(--border-strong); font-weight:800; }
 
@@ -744,10 +744,10 @@ input[type="radio"]:checked + .chip,
 .reco .ric { flex:0 0 auto; width:40px;height:40px;border-radius:12px;display:grid;place-items:center; background: var(--gradient-accent); color:#fff; }
 .reco .ric svg{width:20px;height:20px}
 .reco h4 { margin-bottom:4px; }
-.reco p { font-size:.9rem; }
+.reco p { font-size:.9rem; color:var(--text); }
 
 /* Tip / note */
-.note { display:flex; gap:12px; padding:14px 16px; border-radius: var(--radius-sm); font-size:.88rem; background: color-mix(in srgb, var(--accent) 8%, var(--card)); border:1px solid color-mix(in srgb, var(--accent) 26%, var(--border)); }
+.note { display:flex; gap:12px; padding:14px 16px; border-radius: var(--radius-sm); font-size:.88rem; color:var(--text); background: color-mix(in srgb, var(--accent) 8%, var(--card)); border:1px solid color-mix(in srgb, var(--accent) 26%, var(--border)); }
 .note svg { width:18px;height:18px; flex:0 0 auto; color: var(--accent-600); margin-top:2px; }
 
 /* ---------- Breadcrumb ---------- */

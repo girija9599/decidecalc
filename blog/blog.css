@@ -40,7 +40,7 @@
 .article-visual::after { width:280px; height:280px; bottom:-180px; left:-70px; }
 .article-visual.health { background:linear-gradient(135deg, #08756d, #13b59d); }
 .article-visual.home { background:linear-gradient(135deg, #745017, #dc9621); }
-.article-content { font-size:1.04rem; line-height:1.8; color:var(--text-soft); }
+.article-content { font-size:1.04rem; line-height:1.8; color:var(--text); }
 .article-content h2 { color:var(--text); font-size:clamp(1.42rem,3vw,2rem); margin:44px 0 12px; line-height:1.25; }
 .article-content h3 { color:var(--text); font-size:1.22rem; margin:28px 0 8px; }
 .article-content p { margin:0 0 16px; }
@@ -73,7 +73,7 @@
 .blog-post .article-subtitle { max-width:720px; margin-top:14px; font-size:1.06rem; color:var(--text-soft); line-height:1.6; }
 .blog-post .article-hero-img { margin:26px 0 32px; border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 18px 40px rgba(6,15,38,.12); }
 .blog-post .article-hero-img img { width:100%; height:auto; aspect-ratio:1200/630; object-fit:cover; display:block; }
-.blog-post .article-body { font-size:1.05rem; line-height:1.8; color:var(--text-soft); max-width:760px; }
+.blog-post .article-body { font-size:1.05rem; line-height:1.8; color:var(--text); max-width:760px; }
 .blog-post .article-body h2 { color:var(--text); font-size:clamp(1.45rem,3vw,2.02rem); margin:44px 0 12px; line-height:1.25; letter-spacing:-.02em; }
 .blog-post .article-body h3 { color:var(--text); font-size:1.24rem; margin:26px 0 8px; }
 .blog-post .article-body p { margin:0 0 16px; }
@@ -85,7 +85,7 @@
 .formula-box { margin:22px 0; padding:20px 22px; background:color-mix(in srgb, var(--primary) 6%, var(--card)); border:1px solid color-mix(in srgb, var(--primary) 20%, var(--border)); border-radius:var(--radius); font-size:1.06rem; color:var(--text); overflow-x:auto; }
 .data-table { width:100%; border-collapse:collapse; margin:20px 0 26px; font-size:.95rem; min-width:0; }
 .data-table thead th { text-align:left; padding:12px 14px; background:color-mix(in srgb, var(--primary) 8%, var(--card)); color:var(--text); font-weight:800; border-bottom:2px solid var(--border-strong); white-space:nowrap; }
-.data-table tbody td { padding:11px 14px; border-bottom:1px solid var(--border); color:var(--text-soft); }
+.data-table tbody td { padding:11px 14px; border-bottom:1px solid var(--border); color:var(--text); }
 .data-table tbody tr:hover { background:color-mix(in srgb, var(--primary) 4%, transparent); }
 .cta-banner { margin:30px 0; padding:24px 26px; background:var(--gradient-hero); border-radius:var(--radius-lg); color:#fff; }
 .cta-banner p { margin:0; color:rgba(255,255,255,.92); font-size:1rem; line-height:1.65; }
