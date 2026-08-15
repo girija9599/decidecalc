@@ -43,9 +43,9 @@
 .article-content { font-size:1.04rem; line-height:1.8; color:var(--text); }
 .article-content h2 { color:var(--text); font-size:clamp(1.42rem,3vw,2rem); margin:44px 0 12px; line-height:1.25; }
 .article-content h3 { color:var(--text); font-size:1.22rem; margin:28px 0 8px; }
-.article-content p { margin:0 0 16px; }
-.article-content ul, .article-content ol { margin:0 0 18px; padding-left:24px; }
-.article-content li { margin:7px 0; }
+.article-content p { margin:0 0 16px; color:var(--text); }
+.article-content ul, .article-content ol { margin:0 0 18px; padding-left:24px; color:var(--text); }
+.article-content li { margin:7px 0; color:var(--text); }
 .article-content strong { color:var(--text); }
 .article-content a { color:var(--accent-600); font-weight:600; text-decoration:underline; text-decoration-color:color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset:3px; transition:color .15s ease; }
 .article-content a:hover { color:var(--accent); text-decoration-color:var(--accent); }
@@ -76,9 +76,9 @@
 .blog-post .article-body { font-size:1.05rem; line-height:1.8; color:var(--text); max-width:760px; }
 .blog-post .article-body h2 { color:var(--text); font-size:clamp(1.45rem,3vw,2.02rem); margin:44px 0 12px; line-height:1.25; letter-spacing:-.02em; }
 .blog-post .article-body h3 { color:var(--text); font-size:1.24rem; margin:26px 0 8px; }
-.blog-post .article-body p { margin:0 0 16px; }
-.blog-post .article-body ul, .blog-post .article-body ol { margin:0 0 20px; padding-left:24px; }
-.blog-post .article-body li { margin:8px 0; }
+.blog-post .article-body p { margin:0 0 16px; color:var(--text); }
+.blog-post .article-body ul, .blog-post .article-body ol { margin:0 0 20px; padding-left:24px; color:var(--text); }
+.blog-post .article-body li { margin:8px 0; color:var(--text); }
 .blog-post .article-body strong { color:var(--text); }
 .blog-post .article-body a, .blog-post .article-content a { color:var(--accent-600); font-weight:600; text-decoration:underline; text-decoration-color:color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset:3px; transition:color .15s ease; }
 .blog-post .article-body a:hover, .blog-post .article-content a:hover { color:var(--accent); text-decoration-color:var(--accent); }
