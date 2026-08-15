@@ -92,7 +92,7 @@
       var href  = el.getAttribute('href') || '';
       if (!href) continue;
       var titleEl = el.querySelector('h2, h3, h4');
-      var title = titleEl ? titleEl.textContent.replace(/\s+/g,' ').trim() : el.textContent.trim().slice(0, 80).replace(/\s+/g,' ');
+      var title = titleEl ? cleanTitle(titleEl.textContent) : cleanTitle(el.textContent.trim().slice(0, 80));
       var typeLabel = 'Page';
       var cat = '';
       var icon = '';
@@ -101,7 +101,7 @@
       else if (el.classList.contains('cat-card'))  { typeLabel = 'Category'; icon = (el.querySelector('.cat-icon') || {}).innerHTML || ''; }
       else if (el.classList.contains('mini-card')) { typeLabel = 'Tool'; icon = (el.querySelector('.mic') || {}).innerHTML || ''; }
       if (el.style && el.style.getPropertyValue) cat = el.style.getPropertyValue('--cat-color').trim() || '';
-      add({ href: href, title: title || href, typeLabel: typeLabel, cat: cat, icon: icon, samePage: false });
+      add({ href: href, title: title || href.replace(/\.html$/, '').split('/').pop(), typeLabel: typeLabel, cat: cat, icon: icon, samePage: false });
     }
 
     // 2. Fallback: plain <a> elements with meaningful text (nav, footer, etc.)
@@ -111,9 +111,10 @@
         var a = links[j];
         // Prefer a heading inside the link over full textContent (avoids "titlecategory" concatenation)
         var aTitleEl = a.querySelector('h2, h3, h4');
-        var aTitle = aTitleEl ? aTitleEl.textContent.replace(/\s+/g,' ').trim() : (a.textContent || '').replace(/\s+/g,' ').trim();
+        var aTitle = aTitleEl ? cleanTitle(aTitleEl.textContent) : cleanTitle(a.textContent || '');
+        if (!aTitle) continue;
         var aText = aTitle.toLowerCase();
-        if (!aText || aText.length < 3) continue;
+        if (aText.length < 3) continue;
         if (aText.indexOf(q) === -1) continue;
         var h = a.getAttribute('href') || '';
         if (!h || h === '#' || h.indexOf('javascript:') === 0) continue;
@@ -132,6 +133,14 @@
     return String(s).replace(/[&<>"']/g, function (m) {
       return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[m];
     });
+  }
+
+  function cleanTitle (s) {
+    // Remove repeated adjacent words (e.g. "LinkLink" → "Link"), collapse whitespace
+    var t = String(s).replace(/([\w])\1{2,}/g, '$1').replace(/\s+/g, ' ').trim();
+    // If title is just noise words, return empty so caller can fall back
+    if (t.toLowerCase() === 'link' || t.toLowerCase() === 'link link') return '';
+    return t;
   }
 
   if (document.readyState === 'loading') {
