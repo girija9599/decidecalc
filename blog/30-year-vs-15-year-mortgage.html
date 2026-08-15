@@ -97,15 +97,15 @@
       <div class="article-related-calcs">
         <h3>Related calculators</h3>
         <div class="related-mini-grid">
-          <a class="related-mini-card" href="/calculators/mortgage-calculator"><span class="rmc-icon">🏠</span><span class="rmc-name">Mortgage Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/loan-refinance-calculator"><span class="rmc-icon">📊</span><span class="rmc-name">Loan Refinance Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/rent-vs-buy"><span class="rmc-icon">🏠</span><span class="rmc-name">Rent vs. Buy Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/mortgage-calculator"><span class="rmc-name">Mortgage Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/loan-refinance-calculator"><span class="rmc-name">Loan Refinance Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/rent-vs-buy"><span class="rmc-name">Rent vs. Buy Calculator</span></a>
         </div>
       </div>
     </section>
     <div class="article-disclaimer"><p><strong>Financial disclaimer:</strong> This guide is educational and does not constitute investment, tax, credit or legal advice. Mortgage rates, tax rates, and insurance premiums vary significantly by lender, location, and time. Consult a HUD-approved housing counselor or licensed mortgage professional for personalized guidance.</p></div>
   </main>
-  <script src="/assets/js/core.js"></script><script src="/assets/js/layout.js?v=20260804-2"></script><script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/core.js"></script><script src="/assets/js/layout.js?v=20260815-1"></script><script src="/assets/js/tools.js"></script>
   <script>
     DC.renderLayout();
     (function () {
@@ -117,7 +117,7 @@
       let h = '<h3>Related articles</h3><div class="related-mini-grid">';
       show.forEach(function (s) {
         const m = DC.blogMeta[s];
-        h += '<a class="related-mini-card" href="/blog/' + s + '"><span class="rmc-icon">📖</span><span class="rmc-name">' + m.title.split(':')[0] + '</span></a>';
+        h += '<a class="related-mini-card" href="/blog/' + s + '"><span class="rmc-name">' + m.title.split(':')[0] + '</span></a>';
       });
       sec.innerHTML = h + '</div>';
     })();

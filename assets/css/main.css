@@ -773,6 +773,17 @@ input[type="radio"]:checked + .chip,
 .mini-card h4{font-size:.95rem}
 .mini-card span{font-size:.78rem;color:var(--muted)}
 
+/* ---------- Blog related calculators & articles (same card style) ---------- */
+.related-mini-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+@media (max-width:680px){ .related-mini-grid{ grid-template-columns:1fr; } }
+.article-related-calcs { margin-top:32px; }
+.article-related-calcs h3 { font-size:1.1rem; margin-bottom:14px; }
+.article-related-articles { margin-top:32px; }
+.article-related-articles h3 { font-size:1.1rem; margin-bottom:14px; }
+.related-mini-card { display:flex; align-items:center; gap:12px; padding:14px; border-radius: var(--radius); border:1px solid var(--border); background:var(--card); transition:.25s; text-decoration:none; color:var(--text); }
+.related-mini-card:hover { transform:translateY(-3px); box-shadow: var(--shadow); border-color: var(--border-strong); }
+.rmc-name { font-size:.95rem; font-weight:600; color:var(--text); }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--primary-700); color: rgba(255,255,255,.78); padding: 60px 0 26px; margin-top: 40px; }
 [data-theme="dark"] .site-footer { background:#070C18; }

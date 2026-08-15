@@ -191,12 +191,12 @@
       <div class="article-related-calcs">
         <h3>Related calculators</h3>
         <div class="related-mini-grid" id="taxRelatedCalcs">
-          <a class="related-mini-card" href="/calculators/income-tax-calculator" data-icon="money"><span class="rmc-icon"></span><span class="rmc-name">Income Tax Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/take-home-pay-calculator" data-icon="money"><span class="rmc-icon"></span><span class="rmc-name">Take-Home Pay Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/salary-calculator" data-icon="money"><span class="rmc-icon"></span><span class="rmc-name">Salary Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/hra-calculator" data-icon="home"><span class="rmc-icon"></span><span class="rmc-name">HRA Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/gst-calculator" data-icon="percent"><span class="rmc-icon"></span><span class="rmc-name">GST Calculator</span></a>
-          <a class="related-mini-card" href="/calculators/ppf-calculator" data-icon="bank"><span class="rmc-icon"></span><span class="rmc-name">PPF Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/income-tax-calculator"><span class="rmc-name">Income Tax Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/take-home-pay-calculator"><span class="rmc-name">Take-Home Pay Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/salary-calculator"><span class="rmc-name">Salary Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/hra-calculator"><span class="rmc-name">HRA Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/gst-calculator"><span class="rmc-name">GST Calculator</span></a>
+          <a class="related-mini-card" href="/calculators/ppf-calculator"><span class="rmc-name">PPF Calculator</span></a>
         </div>
       </div>
       <div class="article-related-articles" data-peer-hrefs="how-to-calculate-paycheck-from-salary,gross-pay-vs-net-pay" id="taxRelatedArticles"></div>
@@ -205,8 +205,8 @@
     <div class="article-disclaimer"><p><strong>Financial disclaimer:</strong> Tax slabs, rebate limits and deduction rules are notified by the Central Government and may change with each Budget. The figures in this guide reflect the position for FY 2025-26 and do not constitute tax, legal or investment advice. Always verify the latest position on the Income Tax e-filing portal or with a qualified chartered accountant before filing.</p></div>
   </main>
   <script src="/assets/js/core.js"></script>
-  <script src="/assets/js/layout.js?v=20260804-2"></script>
+  <script src="/assets/js/layout.js?v=20260815-1"></script>
   <script src="/assets/js/tools.js"></script>
-  <script>DC.renderLayout();setTimeout(function(){DC.initReveal();DC.initFAQ();if(window.DC&&DC.icon){document.querySelectorAll('[data-icon]').forEach(function(el){el.innerHTML=DC.icon(el.getAttribute('data-icon'));});};var sec=document.getElementById('taxRelatedArticles');if(sec&&window.DC){var peers=(sec.getAttribute('data-peer-hrefs')||'').split(',').filter(Boolean);var show=peers.filter(function(x){return DC.blogMeta&&DC.blogMeta[x];}).slice(0,3);if(show.length){var h='<h3 style="margin-top:32px">Related articles</h3><div class="related-mini-grid">';show.forEach(function(x){var m=DC.blogMeta[x];h+='<a class="related-mini-card" href="/blog/'+x+'"><span class="rmc-icon">'+DC.icon('trending')+'</span><span class="rmc-name">'+m.title.split(':')[0]+'</span></a>';});sec.innerHTML=h+'</div>';}}},0);</script>
+  <script>DC.renderLayout();setTimeout(function(){DC.initReveal();DC.initFAQ();var sec=document.getElementById('taxRelatedArticles');if(sec&&window.DC){var peers=(sec.getAttribute('data-peer-hrefs')||'').split(',').filter(Boolean);var show=peers.filter(function(x){return DC.blogMeta&&DC.blogMeta[x];}).slice(0,3);if(show.length){var h='<h3 style="margin-top:32px">Related articles</h3><div class="related-mini-grid">';show.forEach(function(x){var m=DC.blogMeta[x];h+='<a class="related-mini-card" href="/blog/'+x+'"><span class="rmc-name">'+m.title.split(':')[0]+'</span></a>';});sec.innerHTML=h+'</div>';}}},0);</script>
 </body>
 </html>
