@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Discount Calculator | DecideCalc">
   <meta name="twitter:description" content="Free discount calculator: enter the list price and discount percentage to get the final price and how much you save, with support for stacked percent-offs.">
-  <link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+  <link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/calculators/discount-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/discount-calculator">
 </head>
@@ -56,13 +56,28 @@
       <h2>How discounts stack</h2><div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Single discount:</b> Final price = original × (1 − discount%). </li><li><b>Stacked discounts:</b> 20% then 10% = ×0.8 ×0.9 = 72% of original — a real 28% total, not 30%.</li></ul></div>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Sales tax, if applicable, is applied after the discount in most stores.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>Discount calculation, explained with examples</h2>
+      <p style="margin-top:8px"><strong>Sale price:</strong> Final = Original × (1 − d). A ₹2,499 shirt at 20% off: 2499 × 0.8 = <strong>₹1,999.20</strong>; you save ₹499.80.</p>
+      <p style="margin-top:8px"><strong>Discount percentage from two prices:</strong> d = (Original − Sale) ÷ Original. If something dropped ₹1,800 → ₹1,350, the discount is 450 ÷ 1800 = <strong>25%</strong>.</p>
+      <p style="margin-top:8px"><strong>Reverse — original price before discount:</strong> Original = Sale ÷ (1 − d). Paid ₹1,600 after a 20% discount? The pre-discount price was 1600 ÷ 0.8 = <strong>₹2,000</strong>.</p>
+      <p style="margin-top:8px"><strong>Stacked discounts multiply, they don't add:</strong> 20% off then an extra 10% off means ×0.8 ×0.9 = ×0.72 — a real 28% total, not 30%. This is the single most common checkout illusion; the calculator above handles the exact math. For the full method guide see <a href="/blog/how-to-calculate-a-discount">How to Calculate a Discount</a>.</p>
+      <p style="margin-top:8px;color:var(--text-soft)"><strong>How this calculator works:</strong> it applies simple and stacked percentage discounts, computes savings, and reverse-calculates the original price from a discounted one — instantly, in your browser, with nothing stored. Content reviewed and updated for 2026.</p>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How do I calculate a discount?</summary><div class="faq-a"><p>Multiply the original price by (1 − discount%). A ₹2,499 item at 20% off costs 2499 × 0.8 = ₹1,999.20, saving ₹499.80. The calculator above does this instantly.</p></div></details>
+      <details class="faq-static"><summary>What is the discount formula?</summary><div class="faq-a"><p>Discount amount = Original price × discount% ; Sale price = Original × (1 − discount%). To find the rate from two prices: (Original − Sale) ÷ Original × 100.</p></div></details>
+      <details class="faq-static"><summary>How do I find the original price before a discount?</summary><div class="faq-a"><p>Divide the sale price by (1 − discount%): paid ₹1,600 at 20% off → 1600 ÷ 0.8 = ₹2,000 original.</p></div></details>
+      <details class="faq-static"><summary>How do stacked discounts like 20% + extra 10% work?</summary><div class="faq-a"><p>They multiply: ×0.8 ×0.9 = ×0.72, a real 28% off — not 30%. Always multiply successive discounts rather than adding them.</p></div></details>
+      <details class="faq-static"><summary>Is my data saved or shared?</summary><div class="faq-a"><p>No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone.</p></div></details>
+    </section>
   </main>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/dc-currency.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'discount-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — USD, INR, EUR, GBP, CAD, AUD, AED, JPY or SGD. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
     DC.initCalcPage();

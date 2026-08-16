@@ -46,13 +46,16 @@
 
   DC.initAds = function () {
     document.querySelectorAll('.ad-slot').forEach(function (el) {
+      const shell = el.closest('.calc-ad-layout, .ad-module') || el;
       if (!isConfigured()) {
-        const shell = el.closest('.calc-ad-layout, .ad-module') || el;
-        shell.hidden = true;
+        // Hide only the ad slot itself. .calc-ad-layout wraps real page content
+        // (guide sections, related tools) on newer templates — never hide that shell.
+        el.hidden = true;
+        if (shell !== el && shell.classList.contains('ad-module')) shell.hidden = true;
         return;
       }
-      const shell = el.closest('.calc-ad-layout, .ad-module') || el;
-      shell.hidden = false;
+      el.hidden = false;
+      if (shell !== el && shell.classList.contains('ad-module')) shell.hidden = false;
       if (!el.dataset.rendered) {
         el.innerHTML = '';
         renderLive(el, el.getAttribute('data-slot') || 'content');

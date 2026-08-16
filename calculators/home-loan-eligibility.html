@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Home Loan Eligibility Calculator — How Much Loan Can You Get? | DecideCalc","url":"https://www.decidecalc.com/calculators/home-loan-eligibility","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Indian home loan eligibility calculator. Enter monthly income, EMIs & tenure to find your maximum eligible home loan amount (FOIR based).","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -82,21 +82,46 @@
             <li>Loan amount = EMI × [{(1+r)ⁿ − 1} / {r × (1+r)ⁿ}], reversed from the EMI formula.</li>
             <li>Banks also factor credit score (CIBIL > 750 preferred), age (≤ retirement at end of tenure) and property value (LTV 80-90%).</li>
           </ul>
+          <h3 class="mt-3" style="font-size:1.2rem">Home loan eligibility by salary (2026 indicative table)</h3>
+          <p style="margin-top:8px">Assuming 50% FOIR, no existing EMIs, age under 40, 8.5% interest and a 20-year tenure — the standard benchmark case banks quote:</p>
+          <div style="overflow-x:auto;margin-top:10px">
+          <table class="breakdown">
+            <thead><tr><th>Monthly net salary</th><th class="num">Max EMI (50%)</th><th class="num">Eligible loan</th></tr></thead>
+            <tbody>
+              <tr><td>₹30,000</td><td class="num">₹15,000</td><td class="num">≈ ₹17.3 lakh</td></tr>
+              <tr><td>₹50,000</td><td class="num">₹25,000</td><td class="num">≈ ₹28.8 lakh</td></tr>
+              <tr><td>₹75,000</td><td class="num">₹37,500</td><td class="num">≈ ₹43.2 lakh</td></tr>
+              <tr><td>₹1,00,000</td><td class="num">₹50,000</td><td class="num">≈ ₹57.6 lakh</td></tr>
+              <tr><td>₹1,50,000</td><td class="num">₹75,000</td><td class="num">≈ ₹86.4 lakh</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="margin-top:6px;font-size:.85rem;color:var(--muted)">So a common question — 'how much home loan can I get on a ₹50,000 salary?' — answers to roughly ₹28–29 lakh on a 20-year tenure, or about ₹25 lakh if you already carry a ₹5,000 EMI. A 30-year tenure stretches the same EMI to about ₹33 lakh. Run your exact income, obligations and tenure in the calculator above.</p>
+          <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+          <p style="margin-top:8px;color:var(--text-soft)">Eligible EMI = (FOIR% × net income) − existing EMIs; eligible loan reverses the standard EMI annuity formula at your rate and tenure, then applies LTV and age caps. Results are pre-qualification estimates — each bank applies its own FOIR (typically 45–55%) and policy overlays. All maths runs in your browser. Content reviewed and updated for 2026. Related: <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/blog/how-to-reduce-home-loan-emi">How to reduce your home loan EMI</a></p>
           <div class="note mt-2"><span id="fIcon"></span><div><b>LTV tip:</b> specified property value also caps the loan at 75-90% (LTV). If income supports more than the LTV amount, the bank funds the lower of the two.</div></div>
         </section>
       </div>
       <div class="ad-slot" data-slot="sidebar"></div>
     </div>
     <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much home loan can I get on a ₹50,000 salary?</summary><div class="faq-a"><p>With 50% FOIR, no existing EMIs, at 8.5% over 20 years: about ₹28–29 lakh. A ₹5,000 existing EMI reduces that to roughly ₹25 lakh, and a 30-year tenure stretches it to about ₹33 lakh. Use the calculator above with your exact figures.</p></div></details>
+      <details class="faq-static"><summary>What is FOIR and why does it matter?</summary><div class="faq-a"><p>Fixed Obligations to Income Ratio is the share of your monthly income that goes to fixed EMIs. Banks keep it under ~50% — any future EMI must fit inside the remaining headroom.</p></div></details>
+      <details class="faq-static"><summary>How do banks calculate home loan eligibility from salary?</summary><div class="faq-a"><p>Banks cap total EMIs at 45–55% of net monthly income (FOIR). Eligible EMI = (50% × income) − existing EMIs; the loan amount is then the present value of that EMI at your rate and tenure, subject to LTV (75–90% of property value) and age limits.</p></div></details>
+      <details class="faq-static"><summary>Can a co-applicant raise my loan amount?</summary><div class="faq-a"><p>Yes — spouse, parent or sibling earning income boosts the income pool and the allowed EMI, lifting the eligible loan amount by 50-100% depending on relative income.</p></div></details>
+      <details class="faq-static"><summary>Does my CIBIL score affect eligibility?</summary><div class="faq-a"><p>A score above 750 is normally required; below 700 may reduce eligible amount or raise the rate by 0.1-0.5%. Settle pending EMIs and keep credit utilization under 30% to improve eligibility before applying.</p></div></details>
+      <details class="faq-static"><summary>Why is my loan lesser than what this tool shows?</summary><div class="faq-a"><p>Banks apply LTV caps (75-90% of property value), age limits and their own FOIR thresholds (40-55%). This calculator is a pre-qualification estimate; final sanction can differ.</p></div></details>
+      <details class="faq-static"><summary>Does overtime, bonus or rental count as income?</summary><div class="faq-a"><p>Stable rental and bonus averaging are accepted by most banks. Pure overtime/commission income is often discounted by 20-30% as non-recurring. Disclose honest figures; banks verify via bank statements.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
-  <script src="/assets/js/ads.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
+  <script src="/assets/js/ads.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'home-loan-eligibility', faqs: [
       { q: 'What is FOIR and why does it matter?', a: 'Fixed Obligations to Income Ratio is the share of your monthly income that goes to fixed EMIs. Banks keep it under ~50% — any future EMI must fit inside the remaining headroom.' },

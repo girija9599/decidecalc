@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Take-Home Pay Calculator | DecideCalc">
   <meta name="twitter:description" content="Free take-home pay calculator: estimate your net paycheck after federal tax, state tax, Social Security and Medicare from any US salary or hourly wage.">
-  <link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+  <link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/calculators/take-home-pay-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/take-home-pay-calculator">
 </head>
@@ -56,13 +56,28 @@
       <h2>How net pay is estimated</h2><div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Gross vs net:</b> gross is your salary before taxes; net is what hits your bank account.</li><li><b>Effective tax:</b> most middle-income US workers see 17–30% deducted in total — use 25% as a reasonable default.</li><li><b>This tool is simplified:</b> real paychecks depend on filing status, state, pre-tax 401(k) contributions and more.</li></ul></div>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimate only — use your actual pay stub or IRS withholding calculator for exact numbers.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>From gross pay to net take-home pay</h2>
+      <p style="margin-top:8px"><strong>What is net take-home pay?</strong> It is your gross salary minus every mandatory deduction — income tax, social security contributions and any forced payroll deductions. What is left is the number that actually lands in your bank account, and the only number worth budgeting from.</p>
+      <p style="margin-top:8px"><strong>How to calculate net pay from gross pay (worked example):</strong> on a $75,000 US salary, subtract federal income tax (~$8,200), FICA at 7.65% (~$5,738) and state tax where applicable — netting roughly $58,000–60,000, or about $4,850/month. A quick planning shortcut: middle-income earners typically keep 72–80% of gross.</p>
+      <p style="margin-top:8px"><strong>Calculating in-hand salary in India (CTC → net):</strong> Indian CTC includes employer PF and gratuity that never reach your account. For an India-specific computation with old vs new tax regime, EPF, professional tax and standard deduction, use the <a href="/calculators/income-tax-calculator">Income Tax Calculator (India)</a> — it computes your in-hand salary side by side for both regimes. For US paychecks, read <a href="/blog/how-to-calculate-paycheck-from-salary">How to Calculate Your Paycheck From Salary</a>.</p>
+      <p style="margin-top:8px;color:var(--text-soft)"><strong>How this calculator works:</strong> enter gross pay and a deduction percentage (or use the presets); the tool computes net pay across pay frequencies instantly in your browser — nothing is stored. Content reviewed and updated for 2026.</p>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is net take-home pay?</summary><div class="faq-a"><p>Net take-home pay is your gross salary minus income tax, social-security contributions and mandatory payroll deductions — the amount that actually reaches your bank account each pay cycle.</p></div></details>
+      <details class="faq-static"><summary>How do I calculate my paycheck from my salary?</summary><div class="faq-a"><p>Start from gross pay, subtract income tax, FICA/social security (7.65% in the US) and state taxes plus any pre-tax deductions like 401(k) or health premiums. The result is your net paycheck — see the worked $75,000 example above.</p></div></details>
+      <details class="faq-static"><summary>How much of my gross salary will I take home?</summary><div class="faq-a"><p>Most middle-income US workers keep 72–80% of gross after all deductions. In India, in-hand salary from CTC is typically 70–75% after PF, gratuity provisioning, professional tax and TDS — model it exactly with the Income Tax Calculator linked above.</p></div></details>
+      <details class="faq-static"><summary>Is this calculator result exact?</summary><div class="faq-a"><p>It is a close planning estimate. Real paychecks depend on filing status, state, pre-tax elections and benefit choices. Confirm final figures with your payroll team.</p></div></details>
+      <details class="faq-static"><summary>Can I use this tool for any currency?</summary><div class="faq-a"><p>Yes. Use the currency selector — USD, INR, EUR, GBP, CAD, AUD, AED, JPY or SGD. The math is identical; only the symbol and formatting change. The tool does not convert between currencies.</p></div></details>
+      <details class="faq-static"><summary>Is my data saved or shared?</summary><div class="faq-a"><p>No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone.</p></div></details>
+    </section>
   </main>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/dc-currency.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'take-home-pay-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — USD, INR, EUR, GBP, CAD, AUD, AED, JPY or SGD. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
     DC.initCalcPage();

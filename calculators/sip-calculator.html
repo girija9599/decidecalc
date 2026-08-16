@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SIP Returns Calculator — Monthly SIP Maturity Corpus | DecideCalc","url":"https://www.decidecalc.com/calculators/sip-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free SIP calculator. See your monthly SIP corpus, total returns and projected value at maturity with a clear growth chart. India-first mutual fund planning.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -92,6 +92,12 @@
       <h2>How SIP returns are calculated</h2>
       <p class="mt-2">A Systematic Investment Plan (SIP) uses the future value of an annuity formula, compounding monthly:</p>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Formula (simple SIP):</b> FV = P × [((1+i)ⁿ − 1) ÷ i] × (1+i), where P = monthly investment, i = monthly rate, n = number of months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹5,000 per month for 10 years</h3>
+      <p style="margin-top:8px">At an assumed 12% annual return (i = 0.01 per month, n = 120), a ₹5,000 monthly SIP grows to about ₹11.6 lakh — you invest ₹6 lakh and compounding adds ₹5.6 lakh. Extend the same SIP to 20 years and the corpus jumps to roughly ₹50 lakh, of which you contributed only ₹12 lakh. That non-linear jump is why tenure is the most powerful variable in SIP planning.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How much SIP is needed for ₹1 crore?</h3>
+      <p style="margin-top:8px">Working backwards from the same formula at 12%: about ₹10,000/month for 20 years, ₹4,300/month for 25 years, or just ₹1,600/month if you start at age 25 and retire at 60. The earlier you start, the smaller the monthly cheque — time does most of the heavy lifting. Try these figures in the calculator above to see the exact numbers.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">SIP vs lumpsum — which is better?</h3>
+      <p style="margin-top:8px">A lumpsum investment can win in a steadily rising market because all your money compounds from day one, but a SIP averages your entry cost across market highs and lows (rupee-cost averaging), removes timing anxiety, and matches how salaried investors actually receive income. For most people investing from a monthly salary, SIP is the natural default. Compare both paths side by side with the <a href="/calculators/fd-vs-mutual-fund">FD vs Mutual Fund comparison</a> or read <a href="/blog/emi-vs-sip-which-is-better-india">EMI vs SIP: which should come first?</a></p>
       <h3 class="mt-3" style="font-size:1.2rem">SIP tips that actually move the needle</h3>
       <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
         <li><b>Start now, not later.</b> ₹10,000/month for 25 years beats ₹20,000/month for 12.</li>
@@ -99,16 +105,29 @@
         <li><b>12% is a reasonable long-term equity assumption</b> — don't plan on 20%+.</li>
         <li><b>Stay invested through dips.</b> That's literally when you buy more units cheaply.</li>
       </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard monthly-compounding annuity formula used across the Indian mutual-fund industry, with an optional annual step-up mode. Returns shown are illustrative projections, not guarantees; actual mutual-fund returns vary with market performance. All math runs instantly in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/ppf-calculator-guide-india-2025">PPF Calculator guide</a> · <a href="/blog/mutual-fund-expense-ratio-impact-india">How expense ratio eats your returns</a> · <a href="/calculators/compound-interest-calculator">Compound Interest Calculator</a> · <a href="/calculators/retirement-calculator">Retirement Calculator</a></p>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is a SIP?</summary><div class="faq-a"><p>A Systematic Investment Plan lets you invest a fixed amount in mutual funds every month, averaging your purchase cost and benefiting from compounding.</p></div></details>
+      <details class="faq-static"><summary>If I invest ₹5,000 per month in SIP for 10 years, how much will I get?</summary><div class="faq-a"><p>At an assumed 12% annual return, a ₹5,000 monthly SIP for 10 years grows to roughly ₹11.6 lakh, of which ₹6 lakh is your own investment. At a more conservative 10%, expect about ₹10.3 lakh. Run your exact scenario in the calculator above.</p></div></details>
+      <details class="faq-static"><summary>How much SIP do I need to build ₹1 crore?</summary><div class="faq-a"><p>At 12% assumed return: about ₹10,000/month over 20 years, or ₹4,300/month over 25 years. Starting early reduces the required monthly amount dramatically.</p></div></details>
+      <details class="faq-static"><summary>Is 12% return realistic?</summary><div class="faq-a"><p>12% is a commonly used long-term assumption for diversified equity mutual funds in India. Past performance doesn't guarantee future returns — use 10–12% for planning.</p></div></details>
+      <details class="faq-static"><summary>What is a step-up SIP?</summary><div class="faq-a"><p>Step-up SIP increases your monthly contribution every year (usually with your salary hike). It dramatically boosts your final corpus without straining you early on.</p></div></details>
+      <details class="faq-static"><summary>SIP vs lumpsum — which gives better returns?</summary><div class="faq-a"><p>Lumpsum can outperform in a consistently rising market, but SIP spreads your entry across market cycles (rupee-cost averaging), which suits salaried investors and reduces timing risk. Many investors combine both.</p></div></details>
+      <details class="faq-static"><summary>Are SIP returns taxable?</summary><div class="faq-a"><p>Equity mutual-fund gains are taxed as capital gains when you redeem (LTCG 12.5% on gains above ₹1.25 lakh per year for units held over 12 months, as per Finance Act 2024). SIP redemptions follow first-in-first-out, so your earliest instalments qualify for long-term treatment first.</p></div></details>
+      <details class="faq-static"><summary>Are SIP returns guaranteed?</summary><div class="faq-a"><p>No. SIP returns depend on market performance. Over 7–10+ years, equity SIPs have historically delivered healthy returns, but they are not guaranteed.</p></div></details>
+      <details class="faq-static"><summary>How much should I invest monthly?</summary><div class="faq-a"><p>A common rule: save at least 20% of your income. Use our <a href="/calculators/retirement-calculator">Retirement Calculator</a> to find the corpus you need, then work backwards.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'sip-calculator', faqs: [
       { q: 'What is a SIP?', a: 'A Systematic Investment Plan lets you invest a fixed amount in mutual funds every month, averaging your purchase cost and benefiting from compounding.' },

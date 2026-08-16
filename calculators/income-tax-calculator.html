@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Income Tax Calculator — Old vs New Regime FY 2025-26 | DecideCalc","url":"https://www.decidecalc.com/calculators/income-tax-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free India income tax calculator. Compare old vs new tax regime FY 2025-26, standard deduction, cess, surcharge — see which regime saves you more tax.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -75,24 +75,54 @@
       <div style="flex:1;min-width:0;">
         <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related calculators</h3><div class="related-mini" id="relatedTools"></div></section>
         <section class="mt-4 card reveal" style="max-width:none">
-          <h2>Old vs New regime — FY 2025-26</h2>
+          <h2>Old vs New regime — full comparison (FY 2025-26 / AY 2026-27)</h2>
           <p class="mt-2"><b>New regime (default):</b> ₹4 lakh nil, then 5/10/15/20/25/30% slabs plus standard deduction ₹75,000. No need to claim exemptions.</p>
           <p class="mt-2"><b>Old regime:</b> ₹3 lakh nil (60 yrs) then slabs, <i>plus</i> standard deduction ₹75,000 and all your 80C/80D/HRA/exemptions stacked on top.</p>
           <div class="note mt-2"><span id="fIcon"></span><div><b>Rule of thumb:</b> if total deductions exceed ~15% of income, old regime often wins. For most salaried folks with home loans + 80C → ₹2-3L deductions means old regime saves more. For those with no investments/HRA — new regime.</div></div>
+          <h3 class="mt-3" style="font-size:1.2rem">Tax slab comparison at a glance</h3>
+          <div style="overflow-x:auto;margin-top:10px">
+            <table class="breakdown">
+              <thead><tr><th>Income slab</th><th class="num">New regime</th><th class="num">Old regime (&lt;60 yrs)</th></tr></thead>
+              <tbody>
+                <tr><td>₹0 – ₹3,00,000</td><td class="num">Nil</td><td class="num">Nil</td></tr>
+                <tr><td>₹3,00,001 – ₹4,00,000</td><td class="num">Nil</td><td class="num">5%</td></tr>
+                <tr><td>₹4,00,001 – ₹8,00,000</td><td class="num">5%</td><td class="num">5% (up to ₹6L), then 20%</td></tr>
+                <tr><td>₹8,00,001 – ₹12,00,000</td><td class="num">10%</td><td class="num">20% (up to ₹9L), then 30%</td></tr>
+                <tr><td>₹12,00,001 – ₹16,00,000</td><td class="num">15%</td><td class="num">30%</td></tr>
+                <tr><td>₹16,00,001 – ₹20,00,000</td><td class="num">20%</td><td class="num">30%</td></tr>
+                <tr><td>₹20,00,001 – ₹24,00,000</td><td class="num">25%</td><td class="num">30%</td></tr>
+                <tr><td>Above ₹24,00,000</td><td class="num">30%</td><td class="num">30%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:6px;font-size:.85rem;color:var(--muted)">Both regimes add 4% health &amp; education cess; surcharge applies above ₹50 lakh. Standard deduction: ₹75,000 (salaried, both regimes). Section 87A rebate can make new-regime tax zero up to ₹12L income.</p>
+          <h3 class="mt-3" style="font-size:1.2rem">Worked example: which regime is better for a ₹10 lakh salary?</h3>
+          <p style="margin-top:8px">Take a ₹10,00,000 gross salary. Under the <strong>new regime</strong>, after the ₹75,000 standard deduction, tax is about ₹33,800 including cess. Under the <strong>old regime</strong> with typical deductions — ₹1.5L under Section 80C, ₹25,000 under 80D and about ₹2.4L of HRA exemption — taxable income falls to roughly ₹5.1L and tax drops to about ₹11,000. With those deductions, the old regime saves roughly ₹23,000. With <em>no</em> deductions beyond the standard one, the old regime tax balloons to about ₹86,000 and the new regime wins by over ₹50,000. For most salaried taxpayers the break-even sits around ₹3–3.5 lakh of total deductions — enter your own figures above to see your exact saving in both regimes.</p>
+          <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+          <p style="margin-top:8px;color:var(--text-soft)">Slabs, standard deduction, Section 87A rebate, cess and surcharge follow the Finance Act rules in force for FY 2025-26 (assessment year 2026-27) — the year you file in 2026. The tool computes both regimes side by side from your inputs and highlights the cheaper one. Nothing is uploaded; all maths runs in your browser. For a deeper walkthrough see <a href="/blog/income-tax-calculator-india-2025-26">Income Tax Calculator India: New vs Old Regime Guide</a>.</p>
         </section>
       </div>
       <div class="ad-slot" data-slot="sidebar"></div>
     </div>
     <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Which tax regime is the default for FY 2025-26?</summary><div class="faq-a"><p>The new regime is now the default. If you don't actively choose the old regime in your ITR, the new regime applies. Employees can switch back every year.</p></div></details>
+      <details class="faq-static"><summary>Which is better — old or new tax regime for a ₹10 lakh salary?</summary><div class="faq-a"><p>It depends on your deductions. With ₹3–3.5 lakh or more of total deductions (80C + 80D + HRA + others), the old regime usually saves more; below that, the new regime's lower slabs win. Enter both scenarios in the calculator above for your exact break-even.</p></div></details>
+      <details class="faq-static"><summary>How do I calculate income tax in the old regime?</summary><div class="faq-a"><p>Subtract the standard deduction and all eligible deductions/exemptions (80C, 80D, HRA, LTA) from your gross income, then apply the old-regime slabs (nil to ₹3L, 5% to ₹6L, 20% to ₹9L, 30% above) plus 4% cess. The calculator above does this automatically next to the new-regime figure.</p></div></details>
+      <details class="faq-static"><summary>Can I claim 80C, 80D and HRA in the new regime?</summary><div class="faq-a"><p>No. The new regime allows the standard deduction (₹75,000) as the only major deduction. Chapter VI-A deductions (80C, 80D), HRA, LTA and most exemptions are not available under it.</p></div></details>
+      <details class="faq-static"><summary>How much tax on a ₹12 lakh salary in the new regime?</summary><div class="faq-a"><p>Thanks to the Section 87A rebate, new-regime tax on ₹12 lakh income (after the ₹75,000 standard deduction) works out to zero — the rebate phases out between ₹12L and ₹12.75L. In the old regime the same income without deductions would pay substantially more.</p></div></details>
+      <details class="faq-static"><summary>How is 4% cess and surcharge applied?</summary><div class="faq-a"><p>Health &amp; Education Cess of 4% is added to your income tax in both regimes. Surcharge kicks in for high incomes (10% above ₹50L, 15% above ₹1Cr, etc.) and is capped at 25%/29% under new/old regimes respectively.</p></div></details>
+      <details class="faq-static"><summary>Is the ₹12,500 rebate under Sec 87A still available?</summary><div class="faq-a"><p>Yes — in the new regime FY25-26, income up to ₹12,00,000 (after standard deduction) attracts no tax due to the Sec 87A rebate. The rebate phases out between ₹12L and ₹12,75,000.</p></div></details>
+      <details class="faq-static"><summary>Does this calculator handle capital gains, crypto, business income?</summary><div class="faq-a"><p>No. This tool covers salaried/freelance income at a basic level. Capital gains (stocks, property, crypto @30%) and business income have their own rules — consult a CA for those.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
-  <script src="/assets/js/ads.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
+  <script src="/assets/js/ads.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'income-tax-calculator', faqs: [
       { q: 'Which tax regime is the default for FY 2025-26?', a: 'The new regime is now the default. If you don\'t actively choose the old regime in your ITR, the new regime applies. Employees can switch back every year.' },

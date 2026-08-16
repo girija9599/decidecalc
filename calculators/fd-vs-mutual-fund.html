@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FD vs Mutual Fund Calculator — Where to Invest? | DecideCalc","url":"https://www.decidecalc.com/calculators/fd-vs-mutual-fund","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Fixed Deposit vs Mutual Fund returns calculator for Indian investors. Compare post-tax growth, see which is better for your horizon & risk appetite.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -83,20 +83,36 @@
             <li>For horizons under 3 years, prefer FD/liquid funds — risk beats the extra return.</li>
           </ul>
           <div class="note mt-2"><span id="fIcon"></span><div><b>STCG vs LTCG:</b> equity MF held > 1 yr → LTCG tax 12.5% above ₹1.25 L (FY25-26). FD interest is fully taxable every year — both regimes apply.</div></div>
-        </section>
+        
+      <h3 class="mt-3" style="font-size:1.2rem">The three differences that decide it: risk, liquidity, tax</h3>
+      <p style="margin-top:8px"><strong>Risk:</strong> bank FDs up to ₹5 lakh per bank are DICGC-insured and their interest is contractual — the return is known on day one. Equity mutual funds carry market risk: a 12% long-run average can hide a −15% year, which is why equity needs a 5–7+ year horizon. Debt funds sit between, with credit and interest-rate risk.</p>
+      <p style="margin-top:8px"><strong>Liquidity:</strong> FDs can be broken early (usually with a 0.5–1% interest penalty); 5-year tax-saver FDs cannot. Open-ended mutual funds redeem in 1–3 working days at that day's NAV — no exit load after the load period (typically 1 year for equity funds). Neither should hold your emergency money unless it's a liquid fund.</p>
+      <p style="margin-top:8px"><strong>Tax:</strong> FD interest is added to income and taxed at slab every year — a 30% taxpayer earning 7% keeps under 5% post-tax. Equity MF gains are taxed only on redemption (12.5% LTCG beyond the ₹1.25L/year exemption for 12-month-plus holdings), so the deferral itself compounds. Post-April 2023, debt-fund gains are also taxed at slab, which narrowed their edge over FDs.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹10 lakh for 10 years</h3>
+      <p style="margin-top:8px">₹10 lakh in a 7% FD grows to about ₹19.67 lakh — but yearly slab tax on interest trims a 30% taxpayer to roughly ₹17.4 lakh. The same ₹10 lakh in an equity fund at an assumed 12% compounds to ₹31.06 lakh; LTCG of 12.5% on gains above the ₹1.25L exemption leaves about ₹28.8 lakh. That ₹11+ lakh gap is the price of volatility — which only makes sense if the money genuinely has 10 years. Try your own amounts and tenures above, and read <a href="/blog/simple-interest-vs-compound-interest">simple vs compound interest</a> for the underlying maths.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">The tool compounds both instruments at your chosen FD and MF rates side by side, applying the current tax treatment to each (FD interest at slab yearly; equity MF LTCG at redemption). All maths runs in your browser. Content reviewed and updated for 2026.</p>
+    </section>
       </div>
       <div class="ad-slot" data-slot="sidebar"></div>
     </div>
     <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>FD vs SIP vs mutual fund — which is better?</summary><div class="faq-a"><p>For goals under 3 years, FDs win (capital protection, known return). For 7+ year goals, equity mutual funds have historically out-returned FDs after tax — SIPs just automate monthly investing into them. The calculator above compares FD vs mutual fund growth with tax.</p></div></details>
+      <details class="faq-static"><summary>Is my FD money guaranteed?</summary><div class="faq-a"><p>Yes — bank deposits up to ₹5 lakh per depositor per bank are insured by DICGC. Cooperative banks and NBFC FDs carry higher default risk; check credit ratings before locking large sums.</p></div></details>
+      <details class="faq-static"><summary>Are mutual fund returns fixed?</summary><div class="faq-a"><p>No. Equity MF returns fluctuate yearly — a 12% long-run average can include -10% and +30% individual years. Debt MFs are lower-volatility but returns are not guaranteed either.</p></div></details>
+      <details class="faq-static"><summary>Which saves more tax — FD or mutual fund?</summary><div class="faq-a"><p>Tax-saver 5-year FDs and ELSS both get 80C deduction, but FD interest is then taxed yearly at slab while ELSS gains are taxed once at 12.5% LTCG on redemption. For a 30% slab investor, equity fund taxation is materially lighter.</p></div></details>
+      <details class="faq-static"><summary>What about debt mutual funds from April 2023?</summary><div class="faq-a"><p>Debt MF capital gains bought after 1-Apr-2023 are now taxed at your slab (no LTCG benefit). This makes equity MF + PPF relatively more attractive for the debt portion of your portfolio.</p></div></details>
+      <details class="faq-static"><summary>How much should I keep in each?</summary><div class="faq-a"><p>Rule of thumb: 3–6 months expenses in FD/liquid fund (emergency), rest split by horizon — money needed <3yr (FD/debt), 3-7yr (balanced), 7+yr (equity MF) for higher expected returns.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
-  <script src="/assets/js/ads.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
+  <script src="/assets/js/ads.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'fd-vs-mutual-fund', faqs: [
       { q: 'Is my FD money guaranteed?', a: 'Yes — bank deposits up to ₹5 lakh per depositor per bank are insured by DICGC. Cooperative banks and NBFC FDs carry higher default risk; check credit ratings before locking large sums.' },

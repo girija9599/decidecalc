@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"50/30/20 Budget Calculator — Needs, Wants &amp; Savings Split | DecideCalc","url":"https://www.decidecalc.com/calculators/budget-50-30-20-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Split your take-home pay with the 50/30/20 budget rule: 50% needs, 30% wants, 20% savings. Add what you actually spend to see where you run over — and by how much.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -109,14 +109,27 @@
       </ul>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    
+      <h3 class="mt-3" style="font-size:1.2rem">The 50/30/20 rule on an Indian salary (worked example)</h3>
+      <p style="margin-top:8px">On a ₹70,000 monthly take-home (roughly ₹10–12 lakh CTC): <strong>Needs ₹35,000</strong> (rent ₹18,000, groceries &amp; utilities ₹9,000, transport ₹5,000, insurance ₹3,000), <strong>Wants ₹21,000</strong> (eating out, OTT, travel, shopping) and <strong>Savings ₹14,000</strong> — about ₹1.68 lakh a year, which a step-up <a href="/calculators/sip-calculator">SIP</a> can compound to ₹1 crore+ over 20 years. In high-rent metros where needs cross 55–60%, use the custom mode for a realistic 60/25/15 split rather than abandoning the framework — the discipline matters more than the exact ratio.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">Enter your monthly take-home income and the tool splits it into needs/wants/savings at 50/30/20 or your custom ratios, flagging when a bucket is overspent. All maths runs in your browser; nothing is stored. Content reviewed and updated for 2026. Related: <a href="/calculators/sip-calculator">SIP Calculator</a> · <a href="/calculators/debt-payoff-planner">Debt Payoff Planner</a></p>
+    
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the 50/30/20 budget rule?</summary><div class="faq-a"><p>Split take-home income into 50% needs (rent, groceries, EMIs, insurance), 30% wants (dining, entertainment, travel) and 20% savings and investments. On ₹70,000/month that is ₹35,000 / ₹21,000 / ₹14,000.</p></div></details>
+      <details class="faq-static"><summary>Is the 50/30/20 rule based on gross or take-home salary?</summary><div class="faq-a"><p>Take-home. The rule applies to the money that reaches your account after tax and payroll deductions — the amount you can actually allocate. Pre-tax deductions like EPF or 401(k) contributions already count as saving happening before the paycheck lands.</p></div></details>
+      <details class="faq-static"><summary>What if my needs alone exceed 50% of my income?</summary><div class="faq-a"><p>That is common in high-rent metro cities or during heavy debt periods — it is a diagnosis, not a failure. Switch to a realistic split like 60/25/15 with the custom option, protect some savings rate no matter how small, and work the structural levers (rent, commute, loan rates) instead of starving groceries.</p></div></details>
+      <details class="faq-static"><summary>Do minimum loan EMIs count as needs or savings?</summary><div class="faq-a"><p>The compulsory minimum EMI is a need — missing it has consequences. Any extra prepayment above the required EMI goes in the savings bucket, because it actively builds net worth by destroying interest.</p></div></details>
+      <details class="faq-static"><summary>How is the 50/30/20 rule different from zero-based budgeting?</summary><div class="faq-a"><p>50/30/20 is a guardrail: three buckets, minimal tracking, decide once a month. Zero-based budgeting assigns every rupee a job before the month starts — more precise, but far more effort. Many people use 50/30/20 to set targets and a monthly review to stay honest.</p></div></details>
+      <details class="faq-static"><summary>Should the 20% savings go to investments or the emergency fund first?</summary><div class="faq-a"><p>Emergency fund first. Until you hold roughly 3–6 months of essentials in liquid savings, the savings bucket should largely refill the buffer. Once that is funded, redirect the same 20% toward long-term investing and high-interest debt payoff.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'budget-50-30-20-calculator', faqs: [
       { q: 'Is the 50/30/20 rule based on gross or take-home salary?', a: 'Take-home. The rule applies to the money that reaches your account after tax and payroll deductions — the amount you can actually allocate. Pre-tax deductions like EPF or 401(k) contributions already count as saving happening before the paycheck lands.' },

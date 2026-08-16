@@ -54,6 +54,20 @@
         return { "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } };
       })
     };
+    // Prefer statically-rendered FAQs (crawlable <details class="faq-static">) when present:
+    // schema then mirrors exactly what search engines see in the initial HTML.
+    const staticFaqs = document.querySelectorAll('details.faq-static');
+    if (staticFaqs.length) {
+      faqSchema.mainEntity = Array.prototype.map.call(staticFaqs, function (d) {
+        const q = d.querySelector('summary');
+        const a = d.querySelector('.faq-a');
+        return {
+          "@type": "Question",
+          "name": q ? q.textContent.trim() : '',
+          "acceptedAnswer": { "@type": "Answer", "text": a ? a.textContent.trim().replace(/\s+/g, ' ') : '' }
+        };
+      });
+    }
     const breadcrumbSchema = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",

@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GST Calculator — Add/Remove GST for All Slabs | DecideCalc","url":"https://www.decidecalc.com/calculators/gst-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free India GST calculator. Add or remove GST (5%, 12%, 18%, 28%) from any amount. See base price, GST amount, total & CGST+SGST split instantly.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -96,16 +96,29 @@
           <tr><td><b>28%</b></td><td>Luxury cars, bikes, tobacco, aerated drinks, 5-star hotels</td></tr>
         </tbody>
       </table>
+      <h3 class="mt-3" style="font-size:1.2rem">How to calculate GST on an invoice</h3>
+      <p style="margin-top:8px">For a GST-exclusive base of ₹10,000 at 18%: GST = 10,000 × 0.18 = ₹1,800, invoice total = ₹11,800. On an intra-State sale this prints as CGST ₹900 + SGST ₹900; on an inter-State sale as IGST ₹1,800. Small businesses on the composition scheme instead apply 1% (traders/manufacturers) or 5% (restaurants) on turnover — the calculator above covers both forward and reverse directions.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">GST-inclusive vs GST-exclusive price</h3>
+      <p style="margin-top:8px">A GST-<strong>exclusive</strong> price excludes tax (you add GST on top: base × 1.18). A GST-<strong>inclusive</strong> price already contains it (MRP tags on shop shelves are inclusive). To extract GST from an inclusive price — the <em>reverse GST calculation</em> — divide by (1 + rate): base = 11,800 ÷ 1.18 = ₹10,000, tax component ₹1,800. Flip the toggle above to 'Remove GST' to do this instantly for any MRP.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">The tool applies the standard GST arithmetic used on Indian invoices — forward (add GST) and reverse (extract GST) — and splits intra-State tax into CGST/SGST halves. Rates follow the GST Council slabs in force for 2026. All maths runs in your browser; nothing is stored. For a fuller walkthrough see <a href="/blog/gst-calculator-guide-india-2025">GST Calculator Guide: how to calculate GST in India</a>.</p>
       <div class="note mt-2"><span id="fIcon"></span><div><b>CGST vs SGST vs IGST:</b> intra-state sales split GST equally into CGST + SGST. Inter-state sales charge IGST (full amount) instead. The total is the same.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is GST?</summary><div class="faq-a"><p>Goods and Services Tax — India's unified indirect tax on the supply of goods and services, replacing VAT, service tax, excise and many others since 1 July 2017.</p></div></details>
+      <details class="faq-static"><summary>How do I calculate GST on an invoice?</summary><div class="faq-a"><p>Multiply the taxable value by the GST rate and add it to the base: for ₹10,000 at 18%, GST is ₹1,800 and the invoice total is ₹11,800. Intra-State, show it as CGST ₹900 + SGST ₹900; inter-State, as IGST ₹1,800.</p></div></details>
+      <details class="faq-static"><summary>How do I add GST to a price?</summary><div class="faq-a"><p>Total = Base × (1 + GST%/100). For ₹10,000 at 18%: Total = 10000 × 1.18 = ₹11,800. GST amount = ₹1,800.</p></div></details>
+      <details class="faq-static"><summary>What is the reverse GST calculation formula?</summary><div class="faq-a"><p>Base price = Inclusive total ÷ (1 + GST%/100). For ₹11,800 at 18%: base = 11,800 ÷ 1.18 = ₹10,000, so the tax inside the price is ₹1,800.</p></div></details>
+      <details class="faq-static"><summary>What is CGST and SGST?</summary><div class="faq-a"><p>For sales within a state, GST splits equally into Central GST (CGST) and State GST (SGST). Both 50% of the total. For inter-state sales, IGST (Integrated GST) applies instead.</p></div></details>
+      <details class="faq-static"><summary>Who needs to register for GST?</summary><div class="faq-a"><p>Businesses with annual turnover above ₹40 lakh (goods) or ₹20 lakh (services) must register. Special category states and some services have lower thresholds. Voluntary registration is also allowed.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'gst-calculator', faqs: [
       { q: 'What is GST?', a: 'Goods and Services Tax — India\'s unified indirect tax on the supply of goods and services, replacing VAT, service tax, excise and many others since 1 July 2017.' },

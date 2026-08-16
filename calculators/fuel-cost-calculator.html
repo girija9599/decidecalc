@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Fuel Cost Calculator — Trip Petrol/Diesel Cost India | DecideCalc","url":"https://www.decidecalc.com/calculators/fuel-cost-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"India fuel cost calculator. Estimate trip cost by distance, mileage & fuel type (petrol/diesel/CNG) with current city fuel prices. Compare daily/monthly fuel spend.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -88,21 +88,47 @@
               <tr><td>Hyderabad</td><td class="num">106.92</td><td class="num">94.42</td></tr>
             </tbody>
           </table>
+          <h3 class="mt-3" style="font-size:1.2rem">Worked example: Delhi to Jaipur road trip</h3>
+          <p style="margin-top:8px">Delhi to Jaipur is roughly 280 km one way. In a petrol car averaging 16 km/L at Delhi's ₹94.72/L: fuel needed = 280 ÷ 16 = 17.5 L, cost = 17.5 × 94.72 ≈ <strong>₹1,658 one way</strong> (₹3,316 return). A diesel SUV at 14 km/L and ₹87.62/L costs about ₹1,752 one way — but carries more people and luggage. For a 900 km diesel run (a common Delhi–Udaipur trip): 900 ÷ 14 = 64.3 L × ₹87.62 ≈ ₹5,633.</p>
+          <h3 class="mt-3" style="font-size:1.2rem">Typical mileage presets (real-world India)</h3>
+          <div style="overflow-x:auto;margin-top:10px">
+          <table class="breakdown">
+            <thead><tr><th>Vehicle type</th><th class="num">Real-world mileage</th><th class="num">Cost/km (petrol @₹95)</th></tr></thead>
+            <tbody>
+              <tr><td>Small hatchback (Alto, WagonR)</td><td class="num">18–20 km/L</td><td class="num">₹4.75–5.30</td></tr>
+              <tr><td>Compact sedan/hatch (Swift, i20)</td><td class="num">15–17 km/L</td><td class="num">₹5.60–6.30</td></tr>
+              <tr><td>Mid-size SUV (Creta, Brezza)</td><td class="num">12–14 km/L</td><td class="num">₹6.80–7.90</td></tr>
+              <tr><td>Diesel sedan/SUV</td><td class="num">16–20 km/L</td><td class="num">₹4.40–5.50 (diesel @₹88)</td></tr>
+              <tr><td>CNG car</td><td class="num">25–30 km/kg</td><td class="num">₹2.50–3.00 (CNG @₹76)</td></tr>
+              <tr><td>Bike/scooter</td><td class="num">40–50 km/L</td><td class="num">₹1.90–2.40</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="margin-top:6px;font-size:.85rem;color:var(--muted)">Use the cost-per-km column to sanity-check any trip: monthly 1,000 km on a compact hatch ≈ ₹5,600–6,300 in fuel alone. The calculator above turns your exact distance, mileage and today's pump price into precise numbers.</p>
+          <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+          <p style="margin-top:8px;color:var(--text-soft)">Fuel needed = distance ÷ mileage; cost = fuel × price per litre/kg. City prices in the table are indicative for 2026 — pump rates revise daily with crude and taxes, so verify on your fuel company's app before a long trip. All maths runs in your browser. Content reviewed and updated for 2026.</p>
           <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> prices change daily with global crude + central/state taxes. Verify on the IOCL/HPCL/BPCL app for the latest before a long trip.</div></div>
         </section>
       </div>
       <div class="ad-slot" data-slot="sidebar"></div>
     </div>
     <div class="ad-slot" data-slot="content" style="margin-top:26px"></div>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How do I calculate fuel cost for a trip?</summary><div class="faq-a"><p>Fuel needed = distance ÷ mileage, then multiply by pump price. Example: 350 km at 16 km/L and ₹105/L = 21.9 L × ₹105 = ₹2,296. Enter your distance, mileage and price above for an instant answer.</p></div></details>
+      <details class="faq-static"><summary>How much does fuel cost per km in India?</summary><div class="faq-a"><p>At ₹95/L petrol: a small hatchback at 18–20 km/L costs ₹4.75–5.30/km, a mid-size SUV at 12–14 km/L costs ₹6.80–7.90/km, and a bike at 40–50 km/L costs under ₹2.50/km. CNG works out to roughly ₹2.50–3.00/km.</p></div></details>
+      <details class="faq-static"><summary>How much petrol do I need for 700 km?</summary><div class="faq-a"><p>Divide distance by your car's mileage: at 16 km/L you need 43.75 L (≈ ₹4,140 at ₹94.72/L); at 20 km/L, 35 L (≈ ₹3,315). A 1400 km trip at 14 km/L needs 100 L — about ₹9,000 at typical petrol prices.</p></div></details>
+      <details class="faq-static"><summary>Why is my real-world mileage lower than ARAI?</summary><div class="faq-a"><p>ARAI figures are lab-tested under ideal conditions. City traffic, AC, under-inflated tyres, and roof carriers cut real mileage by 15-30%. Track tankful-to-tankful for an accurate running number.</p></div></details>
+      <details class="faq-static"><summary>Is CNG cheaper than petrol for my daily commute?</summary><div class="faq-a"><p>Usually yes — CNG costs ~₹76/kg vs petrol ₹102/L, and CNG cars deliver ~25 km/kg. Net cost/km is roughly half. But a CNG kit costs ₹30-50k upfront and may reduce boot space; recover in ~6-9 months for 50 km/day drivers.</p></div></details>
+      <details class="faq-static"><summary>How are fuel prices set in India?</summary><div class="faq-a"><p>Crude cost + refinery margin + central excise + state VAT + dealer commission, revised daily since 2017. City differences reflect state taxes and transport costs.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
-  <script src="/assets/js/ads.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
+  <script src="/assets/js/ads.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'fuel-cost-calculator', faqs: [
       { q: 'How is trip fuel cost calculated?', a: 'Fuel needed = distance ÷ mileage. Cost = fuel needed × per-unit price. For example, 350 km at 16 km/L and ₹105/L = 21.9 L × ₹105 = ₹2,296.' },

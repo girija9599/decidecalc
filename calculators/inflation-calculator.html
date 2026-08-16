@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Inflation Calculator — Future Value & Real Purchasing Power | DecideCalc","url":"https://www.decidecalc.com/calculators/inflation-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free inflation calculator for India. Find how much ₹X today will be worth in Y years, and what you need to save today to match future prices.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -87,14 +87,25 @@
         <li><b>Index funds (12% historical)</b> leave ~6% real growth after inflation</li>
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Inverse trick:</b> divide today's cost by the result above to see what it felt like years ago. ₹1L today ≈ ₹55,838 of 2016 purchasing power at 6%/yr.</div></div>
+    
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: the ₹50 lunch and the CPI formula</h3>
+      <p style="margin-top:8px">Inflation rate = (CPI₂ − CPI₁) ÷ CPI₁ × 100. If the consumer price index moves from 185 to 198, inflation = 13 ÷ 185 = <strong>7.0%</strong>. In money terms: a ₹50 thali that cost ₹50 when the index was 185 costs 50 × (198/185) = <strong>₹53.51</strong> a year later. Run it the other way to feel purchasing power: ₹1,00,000 parked in a 0%-interest account for 10 years at 6% inflation buys only what ₹55,840 buys today — the calculator above shows both directions.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">The tool future-values (or present-values) any amount at your chosen inflation rate, and optionally accepts two CPI index values directly for rate-from-index calculations. India's CPI is published monthly by MoSPI; the long-run average is around 5–6%. All maths runs in your browser. For formulas and method see <a href="/blog/how-to-calculate-inflation-rate">How to Calculate the Inflation Rate</a>. Content reviewed and updated for 2026.</p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How is the inflation rate calculated?</summary><div class="faq-a"><p>Inflation = (CPI₂ − CPI₁) ÷ CPI₁ × 100. If the index rises 185 → 198, inflation is 7.0%. You can enter two CPI values directly in the calculator above.</p></div></details>
+      <details class="faq-static"><summary>What is the formula for inflation using CPI?</summary><div class="faq-a"><p>Same thing: (CPI this period − CPI last period) ÷ CPI last period × 100. CPI tracks the price of a fixed basket of goods and services.</p></div></details>
+      <details class="faq-static"><summary>How much will ₹1 lakh be worth in 10 years at 6% inflation?</summary><div class="faq-a"><p>Its purchasing power falls to about ₹55,840 in today’s money — which is exactly why savings need to earn above-inflation returns. Try your own numbers above.</p></div></details>
+      <details class="faq-static"><summary>What was India's average inflation?</summary><div class="faq-a"><p>CPI inflation in India has averaged roughly 5–6% over the long run, with food and fuel driving most of the swings.</p></div></details>
+      <details class="faq-static"><summary>Does the calculator convert between future and present value?</summary><div class="faq-a"><p>Yes — it shows both what today's amount will cost in the future and what a future amount is worth in today's purchasing power.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'inflation-calculator', faqs: [
       { q: 'What is India\'s current inflation?', a: 'Headline CPI has ranged 4-7% in FY24-FY26 — well within RBI\'s 2-6% band. Your personal inflation depends on what you buy: education & healthcare run at 10-12% while electronics deflate.' },

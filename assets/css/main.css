@@ -762,6 +762,15 @@ input[type="radio"]:checked + .chip,
 .faq-item.open .faq-q .pm { background: var(--accent-600); color:#fff; border-color: var(--accent-600); transform: rotate(45deg); }
 .faq-a { max-height:0; overflow:hidden; transition: max-height .35s ease; color: var(--text-soft); }
 .faq-item.open .faq-a { max-height: 400px; padding-bottom: 18px; }
+/* Statically rendered FAQs (<details>) — crawlable in initial HTML, styled like the JS version */
+details.faq-static { border-bottom:1px solid var(--border); }
+details.faq-static > summary { list-style:none; cursor:pointer; padding:18px 0; font-weight:700; font-size:1rem; display:flex; justify-content:space-between; align-items:center; gap:14px; color:var(--text); }
+details.faq-static > summary::-webkit-details-marker { display:none; }
+details.faq-static > summary::after { content:"+"; flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:1.5px solid var(--border-strong); display:grid; place-items:center; transition:.3s; font-weight:400; }
+details.faq-static[open] > summary::after { content:"–"; background:var(--accent-600); color:#fff; border-color:var(--accent-600); }
+details.faq-static .faq-a { max-height:none; overflow:visible; color:var(--text-soft); padding-bottom:18px; line-height:1.7; }
+details.faq-static .faq-a p { margin:0 0 10px; }
+details.faq-static .faq-a p:last-child { margin-bottom:0; }
 
 /* ---------- Related tools ---------- */
 .related-mini { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }

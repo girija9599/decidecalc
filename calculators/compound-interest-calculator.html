@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Compound Interest Calculator — Grow Your Savings | DecideCalc","url":"https://www.decidecalc.com/calculators/compound-interest-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free compound interest calculator. See exactly how a one-time savings grows with monthly, quarterly or yearly compounding. India-first.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -101,16 +101,27 @@
         <li><b>Compounding frequency helps, but slightly.</b> Monthly vs yearly at 8% adds ~0.07% per year.</li>
         <li><b>Reinvest interest.</b> Withdrawing interest kills compounding.</li>
       </ul>
+    
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹5 lakh at 8%, compounded yearly vs monthly</h3>
+      <p style="margin-top:8px">₹5,00,000 invested for 10 years at 8% annual: yearly compounding gives 5,00,000 × (1.08)¹⁰ = ₹10,79,462. Monthly compounding (8%/12 per month) gives ₹11,09,570 — about ₹30,000 more from the same rate, purely because interest starts earning interest sooner. Double the horizon to 20 years and the yearly-compounded value reaches ₹23.3 lakh — 4.66× the original, while simple interest would have delivered only 2.6×. That widening gap is the whole point of compound interest.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">The tool applies A = P(1 + r/n)^(nt) with your chosen compounding frequency (yearly, half-yearly, quarterly, monthly or daily), plus optional recurring additions. All maths runs in your browser — no login, nothing stored. For the full formula walkthrough with more examples, see <a href="/blog/how-to-calculate-compound-interest">How to Calculate Compound Interest</a>; for monthly SIP-style investing use the <a href="/calculators/sip-calculator">SIP Calculator</a>.</p>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is compound interest?</summary><div class="faq-a"><p>Interest calculated on both the principal and the accumulated interest of prior periods. It makes savings grow faster than simple (flat) interest.</p></div></details>
+      <details class="faq-static"><summary>What is the compound interest formula?</summary><div class="faq-a"><p>A = P(1 + r/n)^(nt), where P is principal, r the annual rate, n compounding frequency per year and t years. Example: ₹5 lakh at 8% yearly for 10 years = 5,00,000 × 1.08¹⁰ = ₹10.79 lakh.</p></div></details>
+      <details class="faq-static"><summary>Does compounding frequency matter?</summary><div class="faq-a"><p>Yes — the more frequent the compounding, the slightly higher your final value. Monthly beats yearly for the same rate.</p></div></details>
+      <details class="faq-static"><summary>Is the return rate guaranteed?</summary><div class="faq-a"><p>No. Use 7–9% for FDs/bonds and 10–12% for equity over long periods. Higher rates over short horizons are unreliable.</p></div></details>
+      <details class="faq-static"><summary>How is this different from SIP?</summary><div class="faq-a"><p>This calculator is for one-time (lump sum) savings. For monthly contributions, use the SIP Returns Calculator.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'compound-interest-calculator', faqs: [
       { q: 'What is compound interest?', a: 'Interest calculated on both the principal and the accumulated interest of prior periods. It makes savings grow faster than simple (flat) interest.' },

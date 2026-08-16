@@ -19,3 +19,5 @@ desktop.ini
 .env
 .env.*
 !.env.example
+.seo-tools/
+.playwright-mcp/

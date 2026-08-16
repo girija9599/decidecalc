@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Retirement Calculator — Corpus, Pension & FIRE Number | DecideCalc","url":"https://www.decidecalc.com/calculators/retirement-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"India-first retirement calculator. Find your retirement corpus, monthly pension estimate and FIRE number based on age, savings, returns & inflation.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -86,15 +86,27 @@
         <li>We compare <b>what you'll have</b> (savings + monthly investments compounded) vs <b>what you'll need</b>.</li>
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Reality check:</b> most Indians underestimate retirement needs. ₹40,000/month today becomes ~₹2.3L/month in 30 years at 6% inflation. Plan for it.</div></div>
+    
+      <h3 class="mt-3" style="font-size:1.2rem">Your FIRE number: the 25× rule</h3>
+      <p style="margin-top:8px">FIRE (Financial Independence, Retire Early) planning uses one simple anchor: your target corpus is <strong>25× your annual expenses</strong> — the inverse of the 4% safe withdrawal rate. Spending ₹6 lakh a year (₹50,000/month)? Your FIRE number is ₹1.5 crore. Spending ₹10 lakh a year? ₹2.5 crore. Because the rule assumes a 30-year US-style retirement, many Indian planners prefer a more conservative 30–33× (3–3.3% withdrawal) for retirements that could stretch 35–40 years — a ₹6L lifestyle then needs about ₹1.8–2 crore. Health inflation in India runs well above CPI, so model your later-years medical spend separately (see the <a href="/calculators/health-insurance-need">Health Insurance Need Calculator</a>).</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">The tool projects your corpus from current savings, monthly contribution, pre-retirement return and inflation, then tests it against a post-retirement withdrawal rate (default 4%, adjustable). It applies standard annuity compounding — all maths runs in your browser, nothing is stored. Content reviewed and updated for 2026. Related: <a href="/calculators/sip-calculator">SIP Calculator</a> · <a href="/blog/retirement-withdrawal-rate-india">Retirement withdrawal rates in India</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is a FIRE number and how do I calculate mine?</summary><div class="faq-a"><p>FIRE = Financial Independence, Retire Early. Your FIRE number is 25× your annual expenses — spend ₹6 lakh a year and you need ₹1.5 crore. Conservative Indian planners often use 30–33× for longer retirements.</p></div></details>
+      <details class="faq-static"><summary>What is the 4% rule?</summary><div class="faq-a"><p>A guideline that says you can withdraw 4% of your retirement corpus in the first year (then inflation-adjust it yearly) with a high probability of never running out over 30 years.</p></div></details>
+      <details class="faq-static"><summary>What is a safe withdrawal rate for retirement in India?</summary><div class="faq-a"><p>Most Indian planners suggest 3–4% rather than the full US 4% rule, because Indian retirements are longer, equity markets are younger and health inflation is higher. A 3.5% rate on ₹2 crore gives about ₹70 lakh over a 30-year drawdown — plan with the calculator above.</p></div></details>
+      <details class="faq-static"><summary>Should I include my house in retirement corpus?</summary><div class="faq-a"><p>Generally no, unless you plan to downsize or rent it out. Your primary residence doesn't generate retirement income.</p></div></details>
+      <details class="faq-static"><summary>What return rate should I use?</summary><div class="faq-a"><p>Pre-retirement (accumulation): 10-12% with equity-heavy portfolio. Post-retirement (withdrawal): 6-8% with debt-heavy, lower-volatility portfolio.</p></div></details>
+      <details class="faq-static"><summary>How is monthly pension calculated?</summary><div class="faq-a"><p>We apply the 4% safe withdrawal rate to your projected corpus, then divide by 12. Actual annuity products may pay slightly differently.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'retirement-calculator', faqs: [
       { q: 'What is the 4% rule?', a: 'A guideline that says you can withdraw 4% of your retirement corpus in the first year (then inflation-adjust it yearly) with a high probability of never running out over 30 years.' },

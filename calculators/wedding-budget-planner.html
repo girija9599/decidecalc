@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Wedding Budget Planner — India Wedding Cost Calculator | DecideCalc","url":"https://www.decidecalc.com/calculators/wedding-budget-planner","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free India-first wedding budget planner. Get an itemized breakdown of venue, catering, decor, jewelry, photography & more based on guests, city tier & your budget.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -97,15 +97,40 @@
         </tbody>
       </table>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Realistic warning:</b> Indian weddings typically overshoot budget by 15-25%. Build a 20% contingency, and agree a hard cap with family before booking starts.</div></div>
+    
+      <h3 class="mt-3" style="font-size:1.2rem">Indian wedding budget benchmarks by city (2026)</h3>
+      <p style="margin-top:8px">For a standard 2-day, 250-guest wedding — indicative mid-market ranges:</p>
+      <div style="overflow-x:auto;margin-top:10px">
+      <table class="breakdown">
+        <thead><tr><th>City</th><th class="num">Typical budget</th><th class="num">Venue share</th></tr></thead>
+        <tbody>
+          <tr><td>Tier-3 town / hometown</td><td class="num">₹8–15 lakh</td><td class="num">30–35%</td></tr>
+          <tr><td>Tier-2 city (Indore, Jaipur, Kochi)</td><td class="num">₹15–30 lakh</td><td class="num">35–40%</td></tr>
+          <tr><td>Delhi NCR / Mumbai</td><td class="num">₹30–60 lakh</td><td class="num">40–45%</td></tr>
+          <tr><td>Bengaluru / Hyderabad / Chennai</td><td class="num">₹25–50 lakh</td><td class="num">35–40%</td></tr>
+          <tr><td>Destination (Udaipur, Goa)</td><td class="num">₹50 lakh–2 crore+</td><td class="num">45–50%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="margin-top:6px;font-size:.85rem;color:var(--muted)">Venue + catering together typically eat 50–60% of an Indian or South Asian wedding budget; decor 10–15%; photography 5–8%; jewellery and attire the remainder. Adjust the sliders above to your guest count and city to get a personalized split.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">Budgets are allocated across venue, catering, decor, photography, attire, jewellery and misc using typical Indian wedding cost shares, then scaled by your guest count and city tier. Ranges reflect 2026 market prices — get quotes early; venue rates move with wedding-season demand (Nov–Feb). All maths runs in your browser. Content reviewed and updated for 2026.</p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much does an Indian wedding cost in 2026?</summary><div class="faq-a"><p>A standard 250-guest wedding runs ₹8–15 lakh in tier-3 towns, ₹15–30 lakh in tier-2 cities, and ₹30–60 lakh in metros like Delhi NCR and Mumbai. Destination weddings start around ₹50 lakh. The city-wise table above has the full breakdown.</p></div></details>
+      <details class="faq-static"><summary>What is a realistic Indian wedding budget?</summary><div class="faq-a"><p>For a 300-guest wedding in a tier-2 city, plan ₹10–20 lakh. Metros easily run ₹25–50 lakh+. Luxury destination weddings start at ₹50 lakh and go into crores.</p></div></details>
+      <details class="faq-static"><summary>How do I make a wedding budget estimator split?</summary><div class="faq-a"><p>Start from the standard shares — venue + catering 50–60%, decor 10–15%, photography 5–8% — then scale by guest count and city. The calculator above produces this split automatically.</p></div></details>
+      <details class="faq-static"><summary>How can I cut wedding costs?</summary><div class="faq-a"><p>Trim the guest list (biggest lever), choose off-peak dates/seasons, book venues 6-12 months early, simplify decor, and consider pre-loved or lighter jewelry.</p></div></details>
+      <details class="faq-static"><summary>Should I take a wedding loan?</summary><div class="faq-a"><p>Avoid if possible — weddings are consumption, not investment. Better to save in advance or scale down the wedding. A loan funds one day but pays interest for years.</p></div></details>
+      <details class="faq-static"><summary>Is ₹15 lakh enough for a wedding?</summary><div class="faq-a"><p>Yes, for ~200-300 guests in a tier-2/3 city with standard arrangements. In metros it will be tight — prioritize guests you truly want present.</p></div></details>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = { slug: 'wedding-budget-planner', faqs: [
       { q: 'What is a realistic Indian wedding budget?', a: 'A standard 300-guest wedding in a tier-2 city costs ₹10-20 lakh. Metros easily run ₹25-50 lakh+. Luxury destination weddings start at ₹50 lakh and go into crores.' },

@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v52';
+const CACHE = 'decidecalc-v53';
 const ASSETS = [
   '/',
   '/index.html',
@@ -236,6 +236,7 @@ const ASSETS = [
   '/blog/what-is-sales-tax-how-to-calculate.html',
   '/blog/how-to-calculate-take-home-pay.html',
   '/blog/how-to-pay-off-debt-fast.html',
+  '/blog/how-to-reduce-home-loan-emi.html',
 ];
 
 // Install — cache all static assets

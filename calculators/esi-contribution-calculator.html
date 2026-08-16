@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ESI Contribution Calculator India — Employee & Employer | DecideCalc","url":"https://www.decidecalc.com/calculators/esi-contribution-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Calculate monthly ESI contributions in India: employee 0.75%, employer 3.25%, ₹21,000 wage ceiling and ₹25,000 ceiling for persons with disability. Includes contribution-period continuation guidance.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -105,13 +105,25 @@
       <p class="mt-2">Contribution periods are generally 1 April–30 September and 1 October–31 March. Whether a particular salary change, joining date, wage component, exemption, or establishment is covered should be verified with ESIC or the employer’s payroll team.</p>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 card reveal" style="max-width:none">
+      <h2>ESIC contribution, in plain terms</h2>
+      <h3 class="mt-2" style="font-size:1.2rem">Worked example: ESI on an ₹18,000 salary</h3>
+      <p style="margin-top:8px">For a gross wage of ₹18,000/month (below the ₹21,000 coverage threshold): <strong>employee share</strong> = 18,000 × 0.75% = ₹135, and <strong>employer share</strong> = 18,000 × 3.25% = ₹585 — total ₹720/month, or ₹4,320 across the six-month contribution period. The employee's net deduction shows on the payslip as "ESI ₹135". Wages above ₹21,000/month (₹25,000 for persons with disability) are outside mandatory coverage — see the eligibility section above.</p>
+      <p style="margin-top:8px;color:var(--text-soft)"><strong>How this calculator works:</strong> it applies the statutory 0.75% + 3.25% rates to your contributory wages with the wage-ceiling and mid-period continuation rules built in. All maths runs in your browser; confirm current rates with ESIC before payroll decisions. Content reviewed and updated for 2026. Related: <a href="/calculators/gratuity-calculator">Gratuity Calculator</a> · <a href="/calculators/professional-tax-calculator">Professional Tax Calculator</a></p>
+    </section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What are the current ESI contribution rates?</summary><div class="faq-a"><p>The employee contribution is 0.75% of contributory wages and the employer contribution is 3.25%, making 4.00% in total. Confirm current rates with ESIC or your payroll team before relying on an estimate, as statutory rules can change.</p></div></details>
+      <details class="faq-static"><summary>How do I calculate ESI deduction on salary?</summary><div class="faq-a"><p>Multiply gross contributory wages by 0.75% for the employee share and 3.25% for the employer share. On ₹18,000/month: ₹135 employee + ₹585 employer = ₹720 total. The calculator above handles ceilings and continuation rules.</p></div></details>
+      <details class="faq-static"><summary>Is the ₹21,000 ceiling a cap on contributions?</summary><div class="faq-a"><p>No. It is primarily a coverage threshold. When ESI coverage applies, the contribution is calculated on the actual contributory wages, not capped at ₹21,000. The higher ₹25,000 threshold is for the applicable person-with-disability provision.</p></div></details>
+      <details class="faq-static"><summary>What happens if salary crosses the wage ceiling mid-period?</summary><div class="faq-a"><p>If the person was already covered at the beginning of a contribution period and wages cross the ceiling during that period, contributions generally continue until its end. This calculator has a specific continuation control for that case; it is not an eligibility override for a newly joining or otherwise uncovered employee.</p></div></details>
+      <details class="faq-static"><summary>Which allowances should be entered as ESI wages?</summary><div class="faq-a"><p>That depends on the statutory definition of wages, the employment terms, and applicable ESIC guidance or decisions. Use your employer’s payroll classification or seek professional advice. This calculator lets you add an included component but cannot determine whether an allowance is legally includible.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script src="/assets/js/toolkit.js?v=20260815-7"></script>
   <script>
     (function () {

@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260815-8">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EMI Calculator — Calculate Loan EMI Online Free | DecideCalc","url":"https://www.decidecalc.com/calculators/emi-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free online EMI calculator. Enter loan amount, interest rate & tenure to get monthly EMI, total interest payable and a full amortization schedule. India-first.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -122,6 +122,14 @@
       <h2>How is EMI calculated?</h2>
       <p class="mt-2">Your Equated Monthly Instalment (EMI) is fixed using the standard reducing-balance formula:</p>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = principal, r = monthly interest rate (annual ÷ 12 ÷ 100), and n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹20 lakh home loan at 8.5% for 20 years</h3>
+      <p style="margin-top:8px">Using the formula with P = ₹20,00,000, r = 8.5 ÷ 12 ÷ 100 = 0.007083 and n = 240 months: EMI = ₹17,356. Over the full tenure you repay ₹41,65,480 — of which ₹21,65,480 is interest, more than the loan itself. That is why even small changes in rate or tenure matter so much. Enter your own numbers above (or <a href="/blog/how-to-reduce-home-loan-emi">read our 7 ways to reduce your EMI</a>) to see your exact split.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Factors that change your EMI</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><strong>Loan amount (P):</strong> EMI rises in direct proportion — borrow ₹10 lakh more and your EMI is exactly twice as high, all else equal.</li>
+        <li><strong>Interest rate (r):</strong> on a 20-year ₹50 lakh loan, the difference between 8.5% and 9.5% is about ₹3,500 every month and roughly ₹8.4 lakh in total interest.</li>
+        <li><strong>Tenure (n):</strong> a longer tenure lowers the EMI but raises total interest. 15 years instead of 20 on ₹20 lakh at 8.5% raises the EMI by ~₹3,300 yet saves ~₹5.3 lakh in interest.</li>
+      </ul>
       <h3 class="mt-3" style="font-size:1.2rem">Tips to reduce your EMI burden</h3>
       <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
         <li>Make a larger down payment to shrink the principal.</li>
@@ -129,12 +137,21 @@
         <li>Compare rates across 3–4 lenders; even 0.25% matters over 20 years.</li>
         <li>Keep EMI under 40% of net take-home pay to stay financially safe.</li>
       </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs (RBI's external benchmark framework applies to most floating-rate retail loans since October 2019). Everything is computed instantly in your browser — no login, no data stored. It doubles as a <strong>loan calculator with an amortization schedule</strong>: open "View amortization schedule" above to see the year-wise principal/interest split of every payment. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/how-to-reduce-home-loan-emi">How to reduce your home loan EMI</a> · <a href="/blog/emi-vs-sip-which-is-better-india">EMI vs SIP: which comes first?</a> · <a href="/calculators/home-loan-eligibility">Home Loan Eligibility Calculator</a> · <a href="/calculators/loan-refinance-calculator">Loan Refinance Calculator</a></p>
     </section>
 
     <!-- FAQ -->
     <section class="mt-4 reveal">
       <h2 style="margin-bottom:8px">Frequently asked questions</h2>
-      <div id="faqList" data-single="1"></div>
+      <details class="faq-static"><summary>What is an EMI?</summary><div class="faq-a"><p>EMI (Equated Monthly Instalment) is the fixed amount you pay every month to repay a loan. Each EMI splits into a principal part and an interest part.</p></div></details>
+      <details class="faq-static"><summary>How is EMI calculated with an example?</summary><div class="faq-a"><p>EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1). For a ₹20 lakh loan at 8.5% for 20 years: P = 20,00,000, r = 0.007083, n = 240, which gives an EMI of ₹17,356.</p></div></details>
+      <details class="faq-static"><summary>How much is the EMI for a 20 lakh home loan?</summary><div class="faq-a"><p>It depends on rate and tenure. At 8.5% for 20 years, a ₹20 lakh home loan has an EMI of about ₹17,356; at 9% it rises to about ₹17,992. Use the sliders above for your exact figure.</p></div></details>
+      <details class="faq-static"><summary>Does prepayment reduce my EMI?</summary><div class="faq-a"><p>Prepayment usually reduces either your EMI or your tenure. Reducing tenure saves far more total interest; ask your bank to keep EMI the same and shorten the term. See <a href="/blog/how-to-reduce-home-loan-emi">seven practical ways to reduce your EMI</a>.</p></div></details>
+      <details class="faq-static"><summary>What is a good EMI-to-income ratio in India?</summary><div class="faq-a"><p>Most lenders and financial planners suggest keeping total EMIs under 40% of your monthly take-home pay — and under 30% if you're a single-income household with dependants.</p></div></details>
+      <details class="faq-static"><summary>Why is my actual bank EMI slightly different?</summary><div class="faq-a"><p>Banks may add processing fees, GST on charges, or use a slightly different rate. The EMI shown is the pure principal+interest calculation.</p></div></details>
+      <details class="faq-static"><summary>Is this EMI calculator free?</summary><div class="faq-a"><p>Yes — 100% free, no login, no data stored. Everything is calculated in your browser.</p></div></details>
     </section>
   </main>
 
@@ -142,7 +159,7 @@
   <script src="/assets/js/core.js?v=20260815-7"></script>
   <script src="/assets/js/layout.js?v=20260815-7"></script>
   <script src="/assets/js/tools.js?v=20260815-7"></script>
-  <script src="/assets/js/calc-page.js?v=20260815-7"></script>
+  <script src="/assets/js/calc-page.js?v=20260815-8"></script>
   <script>
     DC.page = {
       slug: 'emi-calculator',
