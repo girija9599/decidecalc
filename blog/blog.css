@@ -92,6 +92,17 @@
 .cta-banner strong, .cta-banner b, .cta-banner em, .cta-banner code { color:#fff; background:transparent; }
 .cta-banner a { color:#ffe08a; font-weight:800; text-decoration:underline; }
 .cta-banner a:hover { color:#fff; }
+/* Specificity guards: banner internals sit inside .article-body/.article-content, whose scoped
+   p/strong/a rules (0,1,2) would otherwise beat .cta-banner p (0,1,1) and paint navy-on-navy in light mode. */
+.article-body .cta-banner p, .article-content .cta-banner p { color:rgba(255,255,255,.92); }
+.article-body .cta-banner strong, .article-body .cta-banner b, .article-body .cta-banner em, .article-body .cta-banner code,
+.article-content .cta-banner strong, .article-content .cta-banner b, .article-content .cta-banner em, .article-content .cta-banner code { color:#fff; background:transparent; }
+.article-body .cta-banner a, .article-content .cta-banner a { color:#ffe08a; }
+.article-body .cta-banner a:hover, .article-content .cta-banner a:hover { color:#fff; }
+.article-body .article-cta p, .article-content .article-cta p { color:rgba(255,255,255,.78); }
+.article-body .article-cta h3, .article-content .article-cta h3 { color:#fff; }
+.article-body .article-cta strong, .article-body .article-cta b, .article-body .article-cta em, .article-body .article-cta code,
+.article-content .article-cta strong, .article-content .article-cta b, .article-content .article-cta em, .article-content .article-cta code { color:#fff; background:transparent; }
 .faq-list details { border:1px solid var(--border); border-radius:var(--radius); margin:0 0 12px; background:var(--card); overflow:hidden; }
 .faq-list summary { cursor:pointer; list-style:none; padding:16px 20px; font-weight:700; color:var(--text); display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .faq-list summary::-webkit-details-marker { display:none; }
