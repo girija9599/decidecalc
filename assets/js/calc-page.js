@@ -195,7 +195,9 @@
 
   /* Load assets/js/ads.js exactly once if not already present on this page. */
   DC._ensureAdsLib = function () {
-    if (document.querySelector('script[src$="ads.js"]')) { if (DC.initAds) DC.initAds(); return; }
+    // Match versioned (ads.js?v=...) and plain loads — avoids double-loading a
+    // stale unversioned copy over a fresh versioned one.
+    if (document.querySelector('script[src*="ads.js"]')) { if (DC.initAds) DC.initAds(); return; }
     const s = document.createElement('script');
     s.src = DC.base + 'assets/js/ads.js';
     s.defer = true;
