@@ -21,3 +21,4 @@ desktop.ini
 !.env.example
 .seo-tools/
 .playwright-mcp/
+seo-gen/

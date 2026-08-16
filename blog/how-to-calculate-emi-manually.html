@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-adsense-account" content="ca-pub-3027138458482943"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How EMI Is Calculated Manually: Formula + Worked Example (No Calculator) | DecideCalc</title>
+  <meta name="description" content="How to calculate EMI manually without a calculator: the reducing-balance formula step by step, a ₹10 lakh worked example, plus mental-math shortcuts and common mistakes.">
+  <link rel="canonical" href="https://www.decidecalc.com/blog/how-to-calculate-emi-manually"><meta name="theme-color" content="#1B3A6B">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48x48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+    <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
+    <link rel="manifest" href="/site.webmanifest">
+  <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/blog/how-to-calculate-emi-manually">
+  <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/blog/how-to-calculate-emi-manually">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260815-9"><link rel="stylesheet" href="/blog/blog.css?v=20260815-9">
+  <meta property="og:title" content="How EMI Is Calculated Manually: Formula + Worked Example (No Calculator) | DecideCalc">
+  <meta property="og:description" content="How to calculate EMI manually without a calculator: the reducing-balance formula step by step, a ₹10 lakh worked example, plus mental-math shortcuts and common mistakes.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.decidecalc.com/blog/how-to-calculate-emi-manually">
+  <meta property="og:image" content="https://www.decidecalc.com/assets/img/blog/emi-vs-sip-which-is-better-india.webp">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How EMI Is Calculated Manually: Formula + Worked Example (No Calculator) | DecideCalc">
+  <meta name="twitter:description" content="How to calculate EMI manually without a calculator: the reducing-balance formula step by step, a ₹10 lakh worked example, plus mental-math shortcuts and common mistakes.">
+  <meta name="twitter:image" content="https://www.decidecalc.com/assets/img/blog/emi-vs-sip-which-is-better-india.webp">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How EMI Is Calculated: The Formula Explained With a Worked Example","description":"How to calculate EMI manually without a calculator: the reducing-balance formula step by step, a ₹10 lakh worked example, plus mental-math shortcuts and common mistakes.","author":{"@type":"Organization","name":"DecideCalc"},"publisher":{"@type":"Organization","name":"DecideCalc"},"mainEntityOfPage":"https://www.decidecalc.com/blog/how-to-calculate-emi-manually","image":{"@type":"ImageObject","url":"https://www.decidecalc.com/assets/img/blog/emi-vs-sip-which-is-better-india.webp","width":1536,"height":1024},"datePublished":"2026-08-16","dateModified":"2026-08-16"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the formula for EMI calculation?","acceptedAnswer":{"@type":"Answer","text":"EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), with P = principal, r = monthly rate (annual ÷ 12 ÷ 100) and n = tenure in months. It is the standard reducing-balance formula used by Indian banks."}},{"@type":"Question","name":"How do I calculate EMI manually without a calculator?","acceptedAnswer":{"@type":"Answer","text":"Convert the rate to monthly (r), tenure to months (n), evaluate (1+r)ⁿ using logarithms or repeated squaring, then apply the formula. The worked ₹10 lakh / 9% / 15-year example above lands within a rupee of the exact EMI."}},{"@type":"Question","name":"Why is my EMI mostly interest in the early years?","acceptedAnswer":{"@type":"Answer","text":"Interest each month = outstanding balance × monthly rate. Early on the balance is at its largest, so interest takes most of the EMI; as the balance falls, the principal share grows — the amortization schedule shows the shift year by year."}},{"@type":"Question","name":"What is the difference between flat and reducing rate?","acceptedAnswer":{"@type":"Answer","text":"A flat rate charges interest on the original principal for the full tenure; reducing-balance charges only on the outstanding balance. Flat 10% ≈ reducing 17–18% — always compare on a reducing basis."}},{"@type":"Question","name":"How much EMI per lakh for a home loan?","acceptedAnswer":{"@type":"Answer","text":"At ~8.5–9%: about ₹2,000/month at 20 years, ₹2,650 at 15 years and ₹3,750 at 10 years, per ₹1 lakh borrowed."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.decidecalc.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.decidecalc.com/blog/"},{"@type":"ListItem","position":3,"name":"How to Calculate EMI Manually"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7X2R2ZXN4Z');
+  </script>
+</head>
+<body>
+  <main class="container blog-post" style="padding-top:30px;padding-bottom:60px">
+    <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span>How EMI Is Calculated</span></nav>
+    <header class="article-header"><div class="article-meta-top"><span class="article-cat">Home loans</span><span class="article-date">August 16, 2026</span></div><h1>How EMI Is Calculated: The Formula Explained With a Worked Example</h1><p class="article-subtitle">The bank’s EMI is not a black box — it is one formula you can evaluate by hand in four steps. Here it is, worked through rupee by rupee, with the shortcuts lenders use.</p></header>
+    <div class="article-hero-img"><img src="https://www.decidecalc.com/assets/img/blog/emi-vs-sip-which-is-better-india.webp" alt="How to calculate EMI manually — reducing balance formula with a ten lakh rupee worked example" loading="eager" decoding="async" fetchpriority="high" style="width:100%;height:auto;aspect-ratio:1536/1024;object-fit:cover;display:block"></div>
+    <article class="article-content">
+      <p>Every loan advertisement hides the same single formula. Learn it once and you can sanity-check any banker, compare any two offers, and understand exactly why a 20-year loan collects more interest than principal. No app required — just the formula, a pencil, and four steps.</p>
+
+      <h2>The EMI formula</h2>
+      <div class="formula-box">EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1)</div>
+      <p>Where <strong>P</strong> = principal (loan amount), <strong>r</strong> = monthly interest rate (annual rate ÷ 12 ÷ 100), and <strong>n</strong> = tenure in <em>months</em>. The numerator charges one month’s interest on the full principal scaled by compounding; the denominator spreads it as equal payments so the loan exactly zeroes out at month n.</p>
+      <h2>Worked example: ₹10 lakh, 9%, 15 years — by hand</h2>
+      <p><strong>Step 1 — convert the rate:</strong> r = 9 ÷ 12 ÷ 100 = 0.0075 per month.</p>
+      <p><strong>Step 2 — months:</strong> n = 15 × 12 = 180.</p>
+      <p><strong>Step 3 — the power term:</strong> (1.0075)¹⁸⁰. Evaluate by logs: ln(1.0075) ≈ 0.007472; × 180 = 1.3450; e¹·³⁴⁵⁰ ≈ 3.838. So (1+r)ⁿ ≈ 3.838, and (1+r)ⁿ − 1 ≈ 2.838.</p>
+      <p><strong>Step 4 — assemble:</strong> EMI = 10,00,000 × 0.0075 × 3.838 ÷ 2.838. Piece by piece: 10,00,000 × 0.0075 = 7,500; 7,500 × 3.838 = 28,785; 28,785 ÷ 2.838 ≈ <strong>₹10,143</strong>. (A calculator gives ₹10,142.67 — the hand method was off by half a rupee.)</p>
+      <p>Over 180 months you pay ₹18.26 lakh on a ₹10 lakh loan — interest of ₹8.26 lakh. Now the punchline experiment: the same loan at 20 years (n = 240, (1.0075)²⁴⁰ ≈ 6.009) gives EMI ≈ ₹8,997 but total interest ≈ ₹11.59 lakh. <strong>₹1,150 less per month; ₹3.3 lakh more overall.</strong> That trade — in one line of arithmetic — is what every tenure decision actually hinges on.</p>
+      <h2>Mental-math shortcuts</h2>
+      <ul>
+        <li><strong>The 4-slabs rule:</strong> per ₹1 lakh borrowed: ≈₹2,000/month at 20 years, ₹2,650 at 15, ₹3,750 at 10, ₹7,750 at 5 (8.5–9% band). ₹40 lakh over 20 years ≈ 40 × 2,000 = ₹80,000/month, instantly.</li>
+        <li><strong>Rate sensitivity:</strong> each 0.5% on a 20-year loan moves the EMI ~₹33 per lakh. A 25-basis-point concession on ₹50 lakh saves roughly ₹800/month.</li>
+        <li><strong>Interest ≈ principal check:</strong> at 8–9% over 20 years, total interest roughly equals the principal (100:95–115 ratio). If a quote shows far more, re-read the tenure.</li>
+      </ul>
+      <h2>Common mistakes in manual EMI maths</h2>
+      <ol>
+        <li><strong>Using the annual rate as r</strong> — always divide by 12 (and by 100). 9% ≠ 0.09 per month; it is 0.0075.</li>
+        <li><strong>Years instead of months</strong> — n must be instalments: 15 years = 180.</li>
+        <li><strong>Flat-rate confusion</strong> — some dealer finance quotes flat rates (interest on original principal throughout). Flat 10% ≈ reducing 17–18%. Convert before comparing.</li>
+        <li><strong>Forgetting the first-month timing</strong> — EMIs are typically advance/arrears; a day’s difference shifts the first instalment’s interest split, though not the EMI itself.</li>
+      </ol>
+      <h2>From formula to decision</h2>
+      <p>The formula also explains <em>why prepayment works</em>: interest each month = balance × r, and early EMIs are mostly interest because the balance is large. Any prepayment attacks that balance directly — one extra EMI a year on a 20-year loan removes roughly 3–4 years. Verify all of this with your own numbers in the <a href="/calculators/emi-calculator">EMI Calculator</a> (it also produces the full year-wise amortization schedule), and see <a href="/blog/how-to-reduce-home-loan-emi">7 practical ways to reduce your EMI</a> for the decision framework around the arithmetic.</p>
+
+      <div class="cta-banner"><p><strong>Check your hand-work:</strong> enter any P, rate and tenure in the free <a href="/calculators/emi-calculator">EMI Calculator</a> — instant EMI, total interest and the full amortization schedule to compare against your manual maths.</p></div>
+
+    </article>
+    <section style="margin-top:38px">
+      <div class="article-related-articles" id="relatedArticlesSection"></div>
+      <div class="article-related-calcs"><h3>Related calculators</h3><div class="related-mini-grid"><a class="related-mini-card" href="/calculators/emi-calculator"><span class="rmc-name">EMI Calculator</span></a><a class="related-mini-card" href="/calculators/loan-payment-calculator"><span class="rmc-name">Loan Payment Calculator</span></a><a class="related-mini-card" href="/calculators/home-loan-eligibility"><span class="rmc-name">Home Loan Eligibility</span></a></div></div>
+    </section>
+    <section class="article-faq"><h2>Frequently asked questions</h2><div class="faq-list"><div id="faqList">
+      <details class="faq-item"><summary>What is the formula for EMI calculation?</summary><p>EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), with P = principal, r = monthly rate (annual ÷ 12 ÷ 100) and n = tenure in months. It is the standard reducing-balance formula used by Indian banks.</p></details>
+      <details class="faq-item"><summary>How do I calculate EMI manually without a calculator?</summary><p>Convert the rate to monthly (r), tenure to months (n), evaluate (1+r)ⁿ using logarithms or repeated squaring, then apply the formula. The worked ₹10 lakh / 9% / 15-year example above lands within a rupee of the exact EMI.</p></details>
+      <details class="faq-item"><summary>Why is my EMI mostly interest in the early years?</summary><p>Interest each month = outstanding balance × monthly rate. Early on the balance is at its largest, so interest takes most of the EMI; as the balance falls, the principal share grows — the amortization schedule shows the shift year by year.</p></details>
+      <details class="faq-item"><summary>What is the difference between flat and reducing rate?</summary><p>A flat rate charges interest on the original principal for the full tenure; reducing-balance charges only on the outstanding balance. Flat 10% ≈ reducing 17–18% — always compare on a reducing basis.</p></details>
+      <details class="faq-item"><summary>How much EMI per lakh for a home loan?</summary><p>At ~8.5–9%: about ₹2,000/month at 20 years, ₹2,650 at 15 years and ₹3,750 at 10 years, per ₹1 lakh borrowed.</p></details>
+    </div></div></section>
+  </main>
+  <script src="/assets/js/core.js?v=20260815-7"></script><script src="/assets/js/layout.js?v=20260815-7"></script><script src="/assets/js/ads.js?v=20260815-8"></script><script src="/assets/js/tools.js?v=20260815-8"></script>
+  <script>DC.renderLayout();(function(){const peers=["how-to-reduce-home-loan-emi","how-to-calculate-loan-interest","emi-vs-sip-which-is-better-india"];const sec=document.getElementById('relatedArticlesSection');if(!sec||!window.DC)return;const show=peers.filter(s=>DC.blogMeta&&DC.blogMeta[s]).slice(0,3);if(!show.length)return;let h='<h3>Related articles</h3><div class="related-mini-grid">';show.forEach(function(sl){const m=DC.blogMeta[sl];h+='<a class="related-mini-card" href="/blog/'+sl+'"><span class="rmc-name">'+m.title.split(':')[0]+'</span></a>';});sec.innerHTML=h+'</div>';})();setTimeout(function(){DC.initReveal();},0);</script>
+</body></html>

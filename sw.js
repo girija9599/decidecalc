@@ -1,7 +1,7 @@
 // DecideCalc Service Worker — PWA offline support
 // v39: navigation/HTML requests are network-first so freshly deployed content
 // always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v54';
+const CACHE = 'decidecalc-v55';
 const ASSETS = [
   '/',
   '/index.html',
@@ -237,6 +237,26 @@ const ASSETS = [
   '/blog/how-to-calculate-take-home-pay.html',
   '/blog/how-to-pay-off-debt-fast.html',
   '/blog/how-to-reduce-home-loan-emi.html',
+  '/blog/how-much-home-loan-on-my-salary.html',
+  '/blog/how-much-sip-for-1-crore.html',
+  '/blog/how-to-calculate-in-hand-salary-from-ctc.html',
+  '/blog/nps-vs-ppf-vs-epf.html',
+  '/blog/bmi-calculator-for-indian-adults.html',
+  '/blog/personal-loan-vs-car-loan.html',
+  '/blog/hra-exemption-calculation-example.html',
+  '/blog/credit-card-emi-vs-personal-loan.html',
+  '/blog/how-to-calculate-emi-manually.html',
+  '/blog/gratuity-calculation-formula-india.html',
+  '/blog/stamp-duty-and-registration-charges-india.html',
+  '/blog/50-30-20-budget-rule-indian-salary.html',
+  '/blog/should-i-switch-jobs-for-20-percent-hike.html',
+  '/blog/first-year-baby-cost-india.html',
+  '/blog/cagr-vs-absolute-returns.html',
+  '/blog/esic-vs-esi-explained.html',
+  '/blog/zerodha-vs-upstox-vs-angel-one-brokerage-comparison.html',
+  '/blog/ppf-calculator-15-years.html',
+  '/blog/indian-wedding-cost-city-wise.html',
+  '/blog/atal-pension-yojana-explained.html',
 ];
 
 // Install — cache all static assets
