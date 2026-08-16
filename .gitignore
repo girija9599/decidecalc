@@ -22,3 +22,6 @@ desktop.ini
 .seo-tools/
 .playwright-mcp/
 seo-gen/
+package.json
+package-lock.json
+node_modules/
