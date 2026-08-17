@@ -168,7 +168,7 @@
               '<a href="' + DC.base + 'calculators/ppf-calculator">PPF Calculator</a>' +
               '<a href="' + DC.base + 'calculators/currency-converter">Currency Converter</a>' +
               '<a href="' + DC.base + 'calculators/password-generator">Password Generator</a>' +
-              '<a href="' + DC.base + 'tools">View All 121+ Tools →</a>' +
+              '<a href="' + DC.base + 'tools">View All 122+ Tools →</a>' +
             '</div>' +
             '<div><h4>Resources &amp; Company</h4>' +
               '<a href="' + DC.base + 'blog/">Blog</a>' +
