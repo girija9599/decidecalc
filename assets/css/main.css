@@ -718,7 +718,7 @@ input[type="radio"]:checked + .chip,
 
 .result-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
 .chart-wrap { margin-top: 20px; background: var(--card-2); border:1px solid var(--border); border-radius: var(--radius); padding:18px; }
-.chart-wrap canvas { max-height: 280px; }
+.chart-wrap canvas { display:block; width:100% !important; height:280px; max-height: 280px; }
 
 /* Breakdown table */
 .breakdown { width:100%; border-collapse:collapse; margin-top: 8px; font-size:.92rem; }
@@ -879,7 +879,7 @@ html:not(.js) .reveal { opacity:1; transform:none; transition:none; }
 
 /* ---------- Chart data labels & accessible summaries ---------- */
 .chart-wrap { position:relative; }
-.chart-wrap canvas { max-height:280px; }
+.chart-wrap canvas { display:block; width:100% !important; height:280px; max-height:280px; }
 .chart-alt { margin-top:12px; font-size:.82rem; color:var(--text-soft); }
 .chart-desc { line-height:1.5; }
 .chart-data-toggle { margin-top:8px; border:1px solid var(--border-strong); background:var(--card); color:var(--text); border-radius:999px; padding:7px 12px; font-weight:800; font-size:.74rem; cursor:pointer; }

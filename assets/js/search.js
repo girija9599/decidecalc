@@ -104,7 +104,45 @@
       add({ href: href, title: title || href.replace(/\.html$/, '').split('/').pop(), typeLabel: typeLabel, cat: cat, icon: icon, samePage: false });
     }
 
-    // 2. Fallback: plain <a> elements with meaningful text (nav, footer, etc.)
+    // 2. Registry pass — always consult DC.tools + DC.blogMeta regardless of
+    //    visible DOM markup. On calculator pages there is no tool-card markup,
+    //    so without this pass searches like "sip calculator" silently return
+    //    nothing even though the calculator clearly exists in the registry.
+    if (typeof DC !== 'undefined' && DC.tools && DC.toolMatches) {
+      for (var ti = 0; ti < DC.tools.length && out.length < 30; ti++) {
+        var t = DC.tools[ti];
+        if (!DC.toolMatches(t, q)) continue;
+        var catObj = DC.catName ? DC.catName(t.cat) : null;
+        add({
+          href: '/calculators/' + t.slug,
+          title: t.name,
+          typeLabel: 'Calculator',
+          cat: catObj ? catObj.name : '',
+          icon: DC.icon ? DC.icon(t.icon || 'sparkle') : '',
+          samePage: false
+        });
+      }
+    }
+    if (typeof DC !== 'undefined' && DC.blogMeta) {
+      var meta = DC.blogMeta;
+      for (var slug in meta) {
+        if (out.length >= 30) break;
+        if (!meta.hasOwnProperty(slug)) continue;
+        var m = meta[slug];
+        var hay = (m.title + ' ' + (m.desc || '')).toLowerCase();
+        if (hay.indexOf(q) === -1) continue;
+        add({
+          href: '/blog/' + slug,
+          title: m.title,
+          typeLabel: 'Blog guide',
+          cat: '',
+          icon: DC.icon ? DC.icon(m.icon || 'trending') : '',
+          samePage: false
+        });
+      }
+    }
+
+    // 3. Fallback: plain <a> elements with meaningful text (nav, footer, etc.)
     if (out.length < 3) {
       var links = document.querySelectorAll('a[href]');
       for (var j = 0; j < links.length; j++) {

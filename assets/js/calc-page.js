@@ -77,37 +77,11 @@
         { "@type": "ListItem", "position": 3, "name": tool.name }
       ]
     };
-    // HowTo schema: extract steps from the guide section if it exists
-    var howToSteps = [];
-    var howToEl = document.querySelector('.mt-4.card h2');
-    if (howToEl) {
-      var guideSection = howToEl.closest('section');
-      if (guideSection) {
-        var lis = guideSection.querySelectorAll('li');
-        lis.forEach(function (li) {
-          howToSteps.push(li.textContent.trim());
-        });
-      }
-    }
-    var howToSchema = null;
-    if (howToSteps.length > 0) {
-      howToSchema = {
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        "name": "How to use the " + tool.name,
-        "description": "Step-by-step guide to using " + tool.name + " on DecideCalc.",
-        "step": howToSteps.map(function (text, i) {
-          return {
-            "@type": "HowToStep",
-            "position": i + 1,
-            "name": "Step " + (i + 1),
-            "text": text
-          };
-        })
-      };
-    }
+    // HowTo structured data was deprecated by Google in September 2023 for
+    // financial calculators (only a few verticals keep eligibility) —
+    // removed to avoid Search Console schema-misuse flags. The step list
+    // stays visible to users via the .mt-4.card guide section in the HTML.
     var schemasToInject = [schema, faqSchema, breadcrumbSchema];
-    if (howToSchema) schemasToInject.push(howToSchema);
     schemasToInject.forEach(function (s) {
       const sc = document.createElement('script');
       sc.type = 'application/ld+json';

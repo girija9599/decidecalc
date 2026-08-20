@@ -1,8 +1,12 @@
 // DecideCalc Service Worker — PWA offline support
-// v39: navigation/HTML requests are network-first so freshly deployed content
-// always reaches users and search crawlers. Static assets stay cache-first.
-const CACHE = 'decidecalc-v56';
+// v57: app-shell precache stays lean (~30 core files). Calculator HTML and
+// blog .webp images now cache at runtime on first visit instead of being
+// force-downloaded at install — keeps first-visit mobile data burn low.
+// Navigations stay network-first so freshly deployed HTML reaches users
+// and crawlers immediately; offline falls back to the precached shell.
+const CACHE = 'decidecalc-v57';
 const ASSETS = [
+  // App-shell pages (homepage + always-on navigation/legal)
   '/',
   '/index.html',
   '/about.html',
@@ -11,127 +15,6 @@ const ASSETS = [
   '/contact.html',
   '/cookie-policy.html',
   '/404.html',
-  '/blog/index.html',
-  '/blog/blog.css',
-  '/blog/emi-vs-sip-which-is-better-india.html',
-  '/blog/how-much-health-insurance-need-india.html',
-  '/blog/rent-or-buy-house-2026-india.html',
-  '/blog/debt-snowball-vs-avalanche-india.html',
-  '/blog/home-loan-balance-transfer-refinance-india.html',
-  '/blog/credit-card-minimum-payment-payoff-india.html',
-  '/blog/mutual-fund-expense-ratio-impact-india.html',
-  '/blog/retirement-withdrawal-rate-india.html',
-  '/blog/bond-yield-vs-ytm-india.html',
-  '/blog/how-to-calculate-loan-interest.html',
-  '/blog/gross-pay-vs-net-pay.html',
-  '/blog/how-much-house-can-i-afford.html',
-  '/blog/how-to-calculate-investment-return.html',
-  '/blog/how-to-calculate-percentage-increase-and-decrease.html',
-  '/blog/how-to-calculate-a-discount.html',
-  '/blog/how-to-calculate-inflation-rate.html',
-  '/blog/how-to-calculate-savings-rate.html',
-  '/blog/apr-vs-apy.html',
-  '/blog/401k-vs-roth-ira.html',
-  '/blog/how-to-calculate-student-loan-interest.html',
-  '/calculators/emi-calculator.html',
-  '/calculators/sip-calculator.html',
-  '/calculators/income-tax-calculator.html',
-  '/calculators/rent-vs-buy.html',
-  '/calculators/loan-vs-investment.html',
-  '/calculators/retirement-calculator.html',
-  '/calculators/fd-vs-mutual-fund.html',
-  '/calculators/home-loan-eligibility.html',
-  '/calculators/ppf-calculator.html',
-  '/calculators/gratuity-calculator.html',
-  '/calculators/compound-interest-calculator.html',
-  '/calculators/job-switch-decision.html',
-  '/calculators/salary-hike-negotiator.html',
-  '/calculators/career-switch-roi.html',
-  '/calculators/bmi-calculator.html',
-  '/calculators/real-age-calculator.html',
-  '/calculators/health-insurance-need.html',
-  '/calculators/pregnancy-due-date.html',
-  '/calculators/wedding-budget-planner.html',
-  '/calculators/baby-cost-calculator.html',
-  '/calculators/gst-calculator.html',
-  '/calculators/fuel-cost-calculator.html',
-  '/calculators/life-decision-scorer.html',
-  '/calculators/age-calculator.html',
-  '/calculators/date-difference-calculator.html',
-  '/calculators/business-days-calculator.html',
-  '/calculators/leap-year-checker.html',
-  '/calculators/unit-converter.html',
-  '/calculators/currency-converter.html',
-  '/calculators/word-counter.html',
-  '/calculators/case-converter.html',
-  '/calculators/json-formatter.html',
-  '/calculators/password-generator.html',
-  '/calculators/percentage-calculator.html',
-  '/calculators/cgpa-calculator.html',
-  '/calculators/base64-tool.html',
-  '/calculators/slug-generator.html',
-  '/calculators/time-duration-calculator.html',
-  '/calculators/fd-calculator.html',
-  '/calculators/simple-interest-calculator.html',
-  '/calculators/inflation-calculator.html',
-  '/calculators/cagr-calculator.html',
-  '/calculators/calorie-calculator.html',
-  '/calculators/water-intake-calculator.html',
-  '/calculators/ideal-weight-calculator.html',
-  '/calculators/marks-percentage-calculator.html',
-  '/calculators/lorem-ipsum-generator.html',
-  '/calculators/number-to-words.html',
-  '/calculators/markdown-to-html.html',
-  '/calculators/rd-calculator.html',
-  '/calculators/rule-of-72.html',
-  '/calculators/random-number-generator.html',
-  '/calculators/rent-affordability-calculator.html',
-  '/calculators/nps-calculator.html',
-  '/calculators/epf-calculator.html',
-  '/calculators/ssy-calculator.html',
-  '/calculators/hra-calculator.html',
-  '/calculators/home-loan-comparison.html',
-  '/calculators/brokerage-calculator.html',
-  '/calculators/countdown-timer.html',
-  '/calculators/financial-year-calculator.html',
-  '/calculators/week-number-calculator.html',
-  '/calculators/stamp-duty-calculator.html',
-  '/calculators/professional-tax-calculator.html',
-  '/calculators/sleep-calculator.html',
-  '/calculators/body-fat-calculator.html',
-  '/calculators/pace-calculator.html',
-  '/calculators/password-strength-meter.html',
-  '/calculators/jwt-decoder.html',
-  '/calculators/uuid-generator.html',
-  '/calculators/hash-generator.html',
-  '/calculators/pregnancy-week-tracker.html',
-  '/calculators/apy-calculator.html',
-  '/calculators/scss-calculator.html',
-  '/calculators/mortgage-calculator.html',
-  '/calculators/debt-to-income-calculator.html',
-  '/calculators/net-worth-calculator.html',
-  '/calculators/esi-contribution-calculator.html',
-  '/calculators/credit-utilization-calculator.html',
-  '/calculators/emergency-fund-calculator.html',
-  '/calculators/kvp-calculator.html',
-  '/calculators/nsc-calculator.html',
-  '/calculators/savings-goal-calculator.html',
-  '/calculators/budget-50-30-20-calculator.html',
-  '/calculators/student-loan-calculator.html',
-  '/calculators/401k-calculator.html',
-  '/calculators/ira-calculator.html',
-  '/calculators/paycheck-calculator.html',
-  '/calculators/mssc-calculator.html',
-  '/calculators/pmay-clss-subsidy-calculator.html',
-  '/calculators/debt-payoff-planner.html',
-  '/calculators/credit-card-payoff-calculator.html',
-  '/calculators/investment-fee-calculator.html',
-  '/calculators/loan-refinance-calculator.html',
-  '/calculators/retirement-withdrawal-calculator.html',
-  '/calculators/bond-ytm-calculator.html',
-  '/calculators/car-loan-calculator.html',
-  '/calculators/8th-pay-commission-calculator.html',
-  '/blog/8th-pay-commission-calculator-2026.html',
   '/tools/index.html',
   '/categories/index.html',
   '/how-it-works/index.html',
@@ -147,6 +30,9 @@ const ASSETS = [
   '/categories/utility/index.html',
   '/categories/education/index.html',
   '/categories/unique/index.html',
+  '/blog/index.html',
+  '/blog/blog.css',
+  // Core runtime JS/CSS — needed on every page
   '/assets/css/main.css',
   '/assets/js/core.js',
   '/assets/js/layout.js',
@@ -157,6 +43,8 @@ const ASSETS = [
   '/assets/js/toolkit.js',
   '/assets/js/ads.js',
   '/assets/js/consent.js',
+  '/assets/js/dc-currency.js',
+  // Brand icons + OG image
   '/assets/img/decidecalc-mark.svg',
   '/assets/img/decidecalc-favicon.svg',
   '/assets/img/favicon-16x16.png',
@@ -169,94 +57,9 @@ const ASSETS = [
   '/assets/img/icon-192.svg',
   '/assets/img/icon-512.svg',
   '/assets/img/og.png',
-  '/assets/img/blog/credit-card-minimum-payment-payoff-india.webp',
-  '/assets/img/blog/mutual-fund-expense-ratio-impact-india.webp',
-  '/assets/img/blog/simple-interest-vs-compound-interest.webp',
-  '/assets/img/blog/how-to-calculate-savings-rate.webp',
-  '/assets/img/blog/how-to-calculate-inflation-rate.webp',
-  '/assets/img/blog/how-to-calculate-percentage-increase-and-decrease.webp',
-  '/assets/img/blog/how-to-calculate-investment-return.webp',
-  '/assets/img/blog/how-to-calculate-loan-interest.webp',
-  '/assets/img/blog/debt-snowball-vs-avalanche-india.webp',
-  '/assets/img/blog/home-loan-balance-transfer-refinance-india.webp',
-  '/assets/img/blog/retirement-withdrawal-rate-india.webp',
-  '/assets/img/blog/bond-yield-vs-ytm-india.webp',
-  '/assets/img/blog/gross-pay-vs-net-pay.webp',
-  '/assets/img/blog/how-much-house-can-i-afford.webp',
-  '/assets/img/blog/how-to-calculate-compound-interest.webp',
-  '/assets/img/blog/how-to-calculate-a-discount.webp',
-  '/assets/img/blog/apr-vs-apy.webp',
-  '/assets/img/blog/401k-vs-roth-ira.webp',
-  '/assets/img/blog/rent-or-buy-house-2026-india.webp',
-  '/assets/img/blog/how-to-calculate-paycheck-from-salary.webp',
-  '/assets/img/blog/how-to-calculate-mortgage-payment.webp',
-  '/assets/img/blog/how-much-will-10000-grow-compound-interest.webp',
-  '/assets/img/blog/how-much-health-insurance-need-india.webp',
-  '/assets/img/blog/emi-vs-sip-which-is-better-india.webp',
-  '/assets/img/blog/8th-pay-commission-calculator.webp',
-  '/assets/img/blog/8th-pay-commission-calculator-2026.webp',
-  '/assets/img/blog/30-year-vs-15-year-mortgage.webp',
-  '/assets/img/blog/how-to-calculate-car-payment.webp',
-  '/assets/img/blog/how-much-motorcycle-can-i-afford.webp',
-  '/assets/img/blog/should-you-finance-a-phone.webp',
-  '/assets/img/blog/how-to-calculate-tip.webp',
-  '/assets/img/blog/what-is-sales-tax-how-to-calculate.webp',
-  '/assets/img/blog/how-to-calculate-take-home-pay.webp',
-  '/assets/img/blog/how-to-pay-off-debt-fast.webp',
-  '/assets/img/blog/how-to-calculate-student-loan-interest.webp',
   '/favicon.ico',
   '/site.webmanifest',
   '/browserconfig.xml',
-  '/assets/js/dc-currency.js',
-  '/calculators/auto-loan-calculator.html',
-  '/calculators/used-car-loan-calculator.html',
-  '/calculators/truck-loan-calculator.html',
-  '/calculators/motorcycle-loan-calculator.html',
-  '/calculators/scooter-loan-calculator.html',
-  '/calculators/bike-loan-calculator.html',
-  '/calculators/ev-loan-calculator.html',
-  '/calculators/personal-loan-calculator.html',
-  '/calculators/iphone-emi-calculator.html',
-  '/calculators/phone-emi-calculator.html',
-  '/calculators/laptop-emi-calculator.html',
-  '/calculators/ipad-emi-calculator.html',
-  '/calculators/tv-emi-calculator.html',
-  '/calculators/appliance-emi-calculator.html',
-  '/calculators/loan-payment-calculator.html',
-  '/calculators/interest-calculator.html',
-  '/calculators/debt-payoff-calculator.html',
-  '/calculators/discount-calculator.html',
-  '/calculators/tip-calculator.html',
-  '/calculators/sales-tax-calculator.html',
-  '/calculators/take-home-pay-calculator.html',
-  '/blog/how-to-calculate-car-payment.html',
-  '/blog/how-much-motorcycle-can-i-afford.html',
-  '/blog/should-you-finance-a-phone.html',
-  '/blog/how-to-calculate-tip.html',
-  '/blog/what-is-sales-tax-how-to-calculate.html',
-  '/blog/how-to-calculate-take-home-pay.html',
-  '/blog/how-to-pay-off-debt-fast.html',
-  '/blog/how-to-reduce-home-loan-emi.html',
-  '/blog/how-much-home-loan-on-my-salary.html',
-  '/blog/how-much-sip-for-1-crore.html',
-  '/blog/how-to-calculate-in-hand-salary-from-ctc.html',
-  '/blog/nps-vs-ppf-vs-epf.html',
-  '/blog/bmi-calculator-for-indian-adults.html',
-  '/blog/personal-loan-vs-car-loan.html',
-  '/blog/hra-exemption-calculation-example.html',
-  '/blog/credit-card-emi-vs-personal-loan.html',
-  '/blog/how-to-calculate-emi-manually.html',
-  '/blog/gratuity-calculation-formula-india.html',
-  '/blog/stamp-duty-and-registration-charges-india.html',
-  '/blog/50-30-20-budget-rule-indian-salary.html',
-  '/blog/should-i-switch-jobs-for-20-percent-hike.html',
-  '/blog/first-year-baby-cost-india.html',
-  '/blog/cagr-vs-absolute-returns.html',
-  '/blog/esic-vs-esi-explained.html',
-  '/blog/zerodha-vs-upstox-vs-angel-one-brokerage-comparison.html',
-  '/blog/ppf-calculator-15-years.html',
-  '/blog/indian-wedding-cost-city-wise.html',
-  '/blog/atal-pension-yojana-explained.html',
 ];
 
 // Install — cache all static assets
@@ -270,7 +73,6 @@ self.addEventListener('activate', e => {
 });
 
 // Fetch — static assets cache-first; HTML/navigations network-first (offline fallback)
-const PRECACHED = new Set(ASSETS);
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET') return;
@@ -284,15 +86,25 @@ self.addEventListener('fetch', e => {
   }
   const isHtml = e.request.mode === 'navigate' || (e.request.headers.get('accept') || '').includes('text/html');
   if (isHtml) {
-    // Do not runtime-cache HTML. A navigation always uses the deployed
-    // response; only the installation-time offline copy is a fallback.
-    e.respondWith(fetch(e.request).catch(() => caches.match(e.request).then(c => c || caches.match('/index.html'))));
+    // Network-first so freshly deployed HTML always reaches users and crawlers.
+    // On success we keep a runtime copy in CACHE so revisited pages still work
+    // offline (the slim install precache only carries the app shell).
+    e.respondWith(fetch(e.request).then(res => {
+      if (res && res.ok && res.type === 'basic') {
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+      }
+      return res;
+    }).catch(() => caches.match(e.request).then(c => c || caches.match('/index.html'))));
     return;
   }
   e.respondWith(caches.match(e.request).then(cached => {
     if (cached) return cached;
     return fetch(e.request).then(res => {
-      if (res.ok && PRECACHED.has(url.pathname)) {
+      // Runtime-cache any successful same-origin GET so revisited pages
+      // (and their blog .webp banners, calculator assets) stay offline-capable
+      // without bloating the install-time precache.
+      if (res && res.ok && res.type === 'basic') {
         const clone = res.clone();
         caches.open(CACHE).then(c => c.put(e.request, clone));
       }
