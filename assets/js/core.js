@@ -204,16 +204,40 @@
   DC.fnum = function (v) { v = parseFloat(v); return isNaN(v) ? 0 : v; };
 
   /* ---------- Range sliders: fill, formatted value + manual entry ---------- */
+  // Snap a raw number to the slider's step grid. min/max are NOT enforced here —
+  // the slider bounds expand to fit whatever the user types (see growRange).
   DC.rangeValue = function (range, value) {
     const min = Number(range.min || 0);
-    const max = Number(range.max || 100);
     const step = Number(range.step || 1);
     let next = Number(value);
     if (!isFinite(next)) next = min;
-    next = Math.min(max, Math.max(min, next));
     if (step > 0) next = min + Math.round((next - min) / step) * step;
     const precision = String(step).indexOf('.') === -1 ? 0 : String(step).split('.')[1].length;
     return Number(next.toFixed(precision));
+  };
+
+  // Expand a slider's min/max so the user's typed value is always preserved
+  // exactly. The slider becomes a viewport over the last-used range, not a cap.
+  DC.growRange = function (range, value) {
+    const v = Number(value);
+    if (!isFinite(v)) return;
+    const min = Number(range.min || 0);
+    const max = Number(range.max || 100);
+    if (v > max) { range.max = String(v); if (v < min) range.min = String(v); }
+    else if (v < min) { range.min = String(v); if (v > max) range.max = String(v); }
+  };
+
+  // Keep the user's typed value EXACT. A native range input snaps assigned
+  // values to its step grid (anchored at min), so 850000 can silently become
+  // 850008. While a typed value is active we disable step snapping; the
+  // original step is restored as soon as the user actually drags the slider.
+  DC.applyTypedValue = function (range, value) {
+    const v = Number(value);
+    if (!isFinite(v)) return;
+    if (!range.dataset.origStep) range.dataset.origStep = range.step || '1';
+    range.step = 'any';
+    DC.growRange(range, v);
+    range.value = String(v);
   };
 
   DC.rangeLabel = function (range) {
@@ -237,16 +261,25 @@
 
     const manual = document.querySelector('[data-range-manual="' + range.id + '"]');
     if (manual) {
-      manual.min = range.min;
-      manual.max = range.max;
-      manual.step = range.step || '1';
+      // No min/max on the manual editor: the user decides the amount, the
+      // slider bounds just follow whatever they type.
+      manual.removeAttribute('min');
+      manual.removeAttribute('max');
+      manual.step = 'any';
       if (document.activeElement !== manual) manual.value = range.value;
     }
   };
 
   DC.setRangeValue = function (range, value, emit) {
     if (!range) return;
-    range.value = DC.rangeValue(range, value);
+    // Preserve exactly what the user typed: expand bounds and disable step
+    // snapping instead of clamping the value into the old slider range.
+    const v = Number(value);
+    if (isFinite(v) && v >= 0) {
+      DC.applyTypedValue(range, v);
+    } else {
+      range.value = DC.rangeValue(range, range.value);
+    }
     DC.syncRange(range);
     if (emit) range.dispatchEvent(new Event('input', { bubbles: true }));
   };
@@ -270,24 +303,34 @@
 
       if (!range.dataset.rangeBound) {
         range.dataset.rangeBound = 'true';
-        range.addEventListener('input', function () { DC.syncRange(range); });
+        range.addEventListener('input', function (e) {
+          // A real slider drag (trusted event) restores the original step grid.
+          if (e.isTrusted && range.dataset.origStep) {
+            range.step = range.dataset.origStep;
+            delete range.dataset.origStep;
+          }
+          DC.syncRange(range);
+        });
 
         if (manual) {
           manual.addEventListener('focus', function () { manual.select(); });
           manual.addEventListener('input', function () {
             if (manual.value === '' || !isFinite(Number(manual.value))) return;
             const typed = Number(manual.value);
-            const min = Number(range.min), max = Number(range.max);
-            // Keep an in-progress out-of-range value editable; normalize it on blur/change.
-            if (typed >= min && typed <= max) {
-              range.value = DC.rangeValue(range, typed);
-              DC.syncRange(range);
-              range.dispatchEvent(new Event('input', { bubbles: true }));
-            }
+            // Negative amounts make no sense for money sliders; reject silently.
+            if (typed < 0) return;
+            // Accept any typed value immediately — grow the slider bounds and
+            // keep the exact number (no clamping, no step snapping) so nothing
+            // is frozen or silently replaced while typing.
+            DC.applyTypedValue(range, typed);
+            DC.syncRange(range);
+            range.dispatchEvent(new Event('input', { bubbles: true }));
           });
           manual.addEventListener('change', function () {
             if (manual.value === '') { DC.syncRange(range); return; }
-            DC.setRangeValue(range, manual.value, true);
+            if (!isFinite(Number(manual.value))) { DC.syncRange(range); return; }
+            const typed = Number(manual.value);
+            if (typed >= 0) { DC.applyTypedValue(range, typed); DC.syncRange(range); range.dispatchEvent(new Event('input', { bubbles: true })); }
           });
           manual.addEventListener('blur', function () {
             if (manual.value === '') DC.syncRange(range);

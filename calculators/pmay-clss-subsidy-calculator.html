@@ -29,7 +29,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260819-1">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260911-1">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PMAY CLSS Subsidy Calculator — Credit Linked Subsidy Scheme | DecideCalc","url":"https://www.decidecalc.com/calculators/pmay-clss-subsidy-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free PMAY-Urban CLSS subsidy calculator: EWS/LIG 6.5% on ₹6L, MIG-I 4% on ₹9L, MIG-II 3% on ₹12L. Compute your upfront NPV subsidy, reduced loan principal, new EMI and monthly savings.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -52,10 +52,10 @@
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>PMAY CLSS Subsidy Calculator</h1><div class="sub">Credit Linked Subsidy Scheme — Pradhan Mantri Awas Yojana (Urban)</div></div></div>
         <div class="calc-body">
           <div class="field"><label>Annual household income (₹)</label>
-            <input class="input" id="income" type="number" min="0" max="5000000" step="10000" value="800000" inputmode="numeric">
+            <input class="input" id="income" type="number" min="0" step="10000" value="800000" inputmode="numeric">
           </div>
           <div class="field"><label>Home loan amount (₹)</label>
-            <input class="input" id="loan" type="number" min="50000" max="10000000" step="10000" value="900000" inputmode="numeric">
+            <input class="input" id="loan" type="number" min="0" step="10000" value="900000" inputmode="numeric">
           </div>
           <div class="field"><label>Loan tenure (years)</label>
             <input class="input" id="years" type="number" min="1" max="30" step="1" value="20" inputmode="numeric">
@@ -125,10 +125,10 @@
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="/assets/js/core.js?v=20260819-1"></script>
-  <script src="/assets/js/layout.js?v=20260819-1"></script>
-  <script src="/assets/js/tools.js?v=20260819-1"></script>
-  <script src="/assets/js/calc-page.js?v=20260819-1"></script>
+  <script src="/assets/js/core.js?v=20260911-1"></script>
+  <script src="/assets/js/layout.js?v=20260911-1"></script>
+  <script src="/assets/js/tools.js?v=20260911-1"></script>
+  <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
     DC.page = {
       slug: 'pmay-clss-subsidy-calculator',
@@ -197,8 +197,11 @@
       var rate = parseFloat(rawR);
       var disc = parseFloat(rawD);
 
-      var bad = rawInc === '' || !isFinite(income) || income < 0 || income > 5000000 ||
-                rawLoan === '' || !isFinite(loan) || loan < 50000 || loan > 10000000 ||
+      // Only basic sanity checks — the user decides income/loan amounts.
+      // Values outside CLSS bands simply report "not eligible" with context
+      // instead of being rejected.
+      var bad = rawInc === '' || !isFinite(income) || income < 0 ||
+                rawLoan === '' || !isFinite(loan) || loan < 0 ||
                 rawY === '' || !isFinite(years) || years < 1 || years > 30 ||
                 rawR === '' || !isFinite(rate) || rate <= 0 || rate > 20 ||
                 (rawD !== '' && (!isFinite(disc) || disc <= 0 || disc > 20));

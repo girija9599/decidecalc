@@ -29,7 +29,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260819-1">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260911-1">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NSC Calculator — National Savings Certificate Maturity & 80C | DecideCalc","url":"https://www.decidecalc.com/calculators/nsc-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free NSC calculator: National Savings Certificate maturity value at 7.7% p.a. compounded annually over 5 years. Year-wise growth table, 80C deduction limits and tax treatment explained.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -52,7 +52,7 @@
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>NSC Calculator</h1><div class="sub">National Savings Certificate — 5-year, 7.7% p.a.</div></div></div>
         <div class="calc-body">
           <div class="field"><label>Investment amount (₹) — min ₹1,000, multiples of 100</label>
-            <input class="input" id="amt" type="number" min="1000" max="10000000" step="100" value="100000" inputmode="numeric">
+            <input class="input" id="amt" type="number" min="0" step="any" value="100000" inputmode="numeric">
           </div>
           <div class="field"><label>Interest rate (% per year, compounded annually)</label>
             <input class="input" id="rate" type="number" min="0.1" max="20" step="0.1" value="7.7" inputmode="decimal">
@@ -105,10 +105,10 @@
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="/assets/js/core.js?v=20260819-1"></script>
-  <script src="/assets/js/layout.js?v=20260819-1"></script>
-  <script src="/assets/js/tools.js?v=20260819-1"></script>
-  <script src="/assets/js/calc-page.js?v=20260819-1"></script>
+  <script src="/assets/js/core.js?v=20260911-1"></script>
+  <script src="/assets/js/layout.js?v=20260911-1"></script>
+  <script src="/assets/js/tools.js?v=20260911-1"></script>
+  <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
     DC.page = {
       slug: 'nsc-calculator',
@@ -131,7 +131,7 @@
 
     function showPlaceholder() {
       ['rMain','rInt','rDep','rEff','rRatio'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
-      document.getElementById('growthBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter a valid amount (min ₹1,000, in multiples of 100) and rate to see the 5-year schedule.</td></tr>';
+      document.getElementById('growthBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter an amount and rate to see the 5-year schedule.</td></tr>';
       document.getElementById('growthFoot').style.display = 'none';
       if (DC.charts.nscChart) { DC.charts.nscChart.destroy(); delete DC.charts.nscChart; }
     }
@@ -142,8 +142,9 @@
       var P = parseFloat(rawAmt);
       var rate = parseFloat(rawRate);
 
-      // Strict validation: blank, non-numeric, zero, below minimum, or not a multiple of 100 → placeholder, not fake numbers.
-      var amtBad = rawAmt === '' || !isFinite(P) || P < 1000 || P > 10000000 || Math.round(P) % 100 !== 0;
+      // Basic validation only: blank, non-numeric, or negative → placeholder.
+      // The user decides the amount; multiples of ₹100 are not forced.
+      var amtBad = rawAmt === '' || !isFinite(P) || P < 0;
       var rateBad = rawRate === '' || !isFinite(rate) || rate <= 0 || rate > 20;
       if (amtBad || rateBad) { showPlaceholder(); return; }
       P = Math.round(P);
