@@ -29,7 +29,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="mask-icon" href="/assets/img/decidecalc-favicon.svg" color="#0F1533">
     <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/css/main.css?v=20260819-1">
+<link rel="stylesheet" href="/assets/css/main.css?v=20260911-1">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MSSC Calculator — Mahila Samman Savings Certificate Maturity | DecideCalc","url":"https://www.decidecalc.com/calculators/mssc-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free MSSC calculator: Mahila Samman Savings Certificate maturity at 7.5% p.a. compounded quarterly over 2 years. Max ₹2 lakh deposit, 40% partial withdrawal after 1 year, premature closure rules — all computed.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
@@ -51,8 +51,8 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>MSSC Calculator</h1><div class="sub">Mahila Samman Savings Certificate — 2-year, 7.5% p.a. quarterly</div></div></div>
         <div class="calc-body">
-          <div class="field"><label>Deposit amount (₹) — min ₹1,000, max ₹2,00,000 per account</label>
-            <input class="input" id="amt" type="number" min="1000" max="200000" step="1" value="200000" inputmode="numeric">
+          <div class="field"><label>Deposit amount (₹) — scheme allows ₹1,000 to ₹2,00,000 per account, but enter any amount to test</label>
+            <input class="input" id="amt" type="number" min="0" step="1" value="200000" inputmode="numeric">
           </div>
           <div class="field"><label>Interest rate (% per year, compounded quarterly)</label>
             <input class="input" id="rate" type="number" min="0.1" max="15" step="0.05" value="7.5" inputmode="decimal">
@@ -107,10 +107,10 @@
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="/assets/js/core.js?v=20260819-1"></script>
-  <script src="/assets/js/layout.js?v=20260819-1"></script>
-  <script src="/assets/js/tools.js?v=20260819-1"></script>
-  <script src="/assets/js/calc-page.js?v=20260819-1"></script>
+  <script src="/assets/js/core.js?v=20260911-1"></script>
+  <script src="/assets/js/layout.js?v=20260911-1"></script>
+  <script src="/assets/js/tools.js?v=20260911-1"></script>
+  <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
     DC.page = {
       slug: 'mssc-calculator',
@@ -136,7 +136,7 @@
 
     function showPlaceholder() {
       ['rMain','rInt','rDep','rEff','rWd'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
-      document.getElementById('growthBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter a valid deposit (₹1,000 – ₹2,00,000) and rate to see the 8-quarter schedule.</td></tr>';
+      document.getElementById('growthBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Enter a deposit amount and rate to see the 8-quarter schedule.</td></tr>';
       document.getElementById('growthFoot').style.display = 'none';
       document.getElementById('recoTitle').textContent = 'Scheme snapshot';
       document.getElementById('recoText').textContent = '—';
@@ -149,7 +149,11 @@
       var P = parseFloat(rawAmt);
       var rate = parseFloat(rawRate);
 
-      var amtBad = rawAmt === '' || !isFinite(P) || P < 1000 || P > CAP;
+      // Validate only that it's a real, non-negative number — the user decides
+      // the amount. Values outside the ₹1,000–₹2,00,000 scheme band still
+      // calculate; the recommendation notes the scheme limit instead of
+      // silently rejecting the input.
+      var amtBad = rawAmt === '' || !isFinite(P) || P < 0 || P < 1;
       var rateBad = rawRate === '' || !isFinite(rate) || rate <= 0 || rate > 15;
       if (amtBad || rateBad) { showPlaceholder(); return; }
       P = Math.round(P);
@@ -209,7 +213,13 @@
       // recommendation
       var rt = document.getElementById('recoTitle');
       var rx = document.getElementById('recoText');
-      if (P >= CAP) {
+      if (P > CAP) {
+        rt.textContent = 'Above the ₹2 lakh scheme cap';
+        rx.textContent = 'You entered ' + DC.inr(P) + ' — the MSSC scheme caps aggregate deposits at ' + DC.inr(CAP) + ' per depositor. The calculation above shows how ' + DC.inr(P) + ' would compound at ' + rate + '% quarterly; in practice, split surplus across MSSC + FD/PPF.';
+      } else if (P < 1000) {
+        rt.textContent = 'Below the ₹1,000 scheme minimum';
+        rx.textContent = 'You entered ' + DC.inr(P) + ' — MSSC requires a minimum deposit of ₹1,000. The math above still shows the growth of ' + DC.inr(P) + ' at ' + rate + '% quarterly.';
+      } else if (P >= CAP) {
         rt.textContent = 'You are at the ₹2 lakh scheme cap';
         rx.textContent = 'Depositing the full ' + DC.inr(CAP) + ' earns you ' + DC.inr(Math.round(totalInt)) + ' in 2 years at ' + rate + '% quarterly — an effective annual yield of ' + effYield.toFixed(2) + '%. Additional surplus can go into PPF (tax-free) or a bank FD beyond this cap.';
       } else {
