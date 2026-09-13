@@ -129,8 +129,16 @@ ul { list-style: none; }
 @media (max-width: 960px){ .grid-3,.grid-4{ grid-template-columns: repeat(2,1fr);} }
 @media (max-width: 620px){
   .grid-2,.grid-3,.grid-4{ grid-template-columns: 1fr; }
-  /* Wide tables scroll horizontally instead of overflowing the viewport */
-  .breakdown, .k401-table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  /* Data tables: scroll horizontally on mobile instead of wrapping headers
+     and splitting amounts mid-digit. Applies to every data-table class used
+     across the calculators (.breakdown is the shared schedule/growth table). */
+  .breakdown, .k401-table, .cpc-compare-table, .comparison-table {
+    display:block; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .breakdown th, .breakdown td,
+  .k401-table th, .k401-table td,
+  .cpc-compare-table th, .cpc-compare-table td,
+  .comparison-table th, .comparison-table td { white-space: nowrap; }
   .card { overflow-wrap:anywhere; }
   .breakdown th, .breakdown td { padding: 9px 10px; font-size:.88rem; }
   /* Compress category cards on mobile */
