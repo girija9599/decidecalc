@@ -108,6 +108,32 @@
 
   /* ---------- Shared loan context (consumed by exporters) ---------- */
   let context = null; // { name, summary, rows, currencyCode }
+
+  /* Download status per format — 'idle' | 'busy' | 'done'.
+     Reset to idle whenever the calculation re-runs (any input change or a
+     new calculation), so downloads are clearly available for fresh results. */
+  const _dl = { excel: 'idle', pdf: 'idle' };
+
+  function applyState(btn, kind) {
+    const st = _dl[kind];
+    btn.classList.toggle('dc-done', st === 'done');
+    if (st === 'busy') btn.textContent = kind === 'excel' ? 'Preparing Excel…' : 'Preparing PDF…';
+    else if (st === 'done') {
+      btn.textContent = 'Done ✓';
+      btn.style.color = '#15803D';
+      btn.style.borderColor = '#86EFAC';
+    } else {
+      btn.textContent = kind === 'excel' ? 'Download Excel' : 'Download PDF';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }
+  }
+  function setExportState(kind, state) {
+    _dl[kind] = state;
+    document.querySelectorAll('.amorti-actions button[data-dc-export="' + kind + '"]').forEach(function (b) {
+      applyState(b, kind);
+    });
+  }
   function summarizeFromRows(rows) {
     if (!rows || !rows.length) return null;
     let ti = 0, tp = 0, p = 0;
@@ -143,6 +169,11 @@
       || (document.title.split('|')[0] || 'Loan').trim();
     const summary = opts.summary || DC.loanSummary || summarizeFromRows(rows);
     context = { name: name, summary: summary, rows: rows, currencyCode: get().c };
+
+    /* The calculation just re-ran (any input change or a new calculation) —
+       previous download completions no longer describe this result. */
+    _dl.excel = 'idle';
+    _dl.pdf = 'idle';
 
     /* Placement: by default the schedule stays in its original full-width
        spot below the calculator layout. 'panel' mode relocates it into the
@@ -191,6 +222,7 @@
         const bar = document.createElement('div');
         bar.className = 'amorti-actions';
         bar.style.cssText = 'display:flex;gap:10px;flex-wrap:wrap;align-items:center';
+        bar.setAttribute('aria-live', 'polite');
         actions.forEach(function (b) { bar.appendChild(b); });
         section.insertBefore(bar, section.firstChild);
       }
@@ -245,24 +277,19 @@
     const xl = document.createElement('button');
     xl.type = 'button';
     xl.className = 'btn btn-accent btn-sm';
+    xl.setAttribute('data-dc-export', 'excel');
     xl.setAttribute('aria-label', 'Download ' + context.name + ' amortization schedule as Excel');
     xl.textContent = 'Download Excel';
     xl.addEventListener('click', function () { exportExcel(); });
     const pdf = document.createElement('button');
     pdf.type = 'button';
     pdf.className = 'btn btn-ghost btn-sm';
+    pdf.setAttribute('data-dc-export', 'pdf');
     pdf.setAttribute('aria-label', 'Download ' + context.name + ' amortization schedule as PDF');
     pdf.textContent = 'Download PDF';
     pdf.addEventListener('click', function () { exportPDF(); });
     out.push(xl, pdf);
     return out;
-  }
-
-  function setBusy(kind, busy) {
-    document.querySelectorAll('.amorti-actions button').forEach(function (b) {
-      if (kind === 'excel' && b.textContent.indexOf('Download Excel') === 0) b.textContent = busy ? 'Preparing Excel…' : 'Download Excel';
-      if (kind === 'pdf' && b.textContent.indexOf('Download PDF') === 0) b.textContent = busy ? 'Preparing PDF…' : 'Download PDF';
-    });
   }
 
   function dateStamp() {
@@ -560,18 +587,18 @@
       if (DC.toast) DC.toast('Please calculate your result first.', 'error');
       return Promise.resolve(null);
     }
-    setBusy('excel', true);
+    setExportState('excel', 'busy');
     return loadScript(EXCELJS, 'ExcelJS').then(function () {
       return buildWorkbook();
     }).then(function (wb) {
       return wb.xlsx.writeBuffer().then(function (buf) {
         const filename = 'DecideCalc-' + safeName(context.name) + '-Amortization-' + dateStamp() + '.xlsx';
         triggerDownload(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), filename);
-        setBusy('excel', false);
+        setExportState('excel', 'done');
         return { filename: filename, workbook: wb };
       });
     }).catch(function () {
-      setBusy('excel', false);
+      setExportState('excel', 'idle');
       if (DC.toast) DC.toast('Unable to generate Excel file. Please try again.', 'error');
       return null;
     });
@@ -591,7 +618,7 @@
       if (DC.toast) DC.toast('Please calculate your result first.', 'error');
       return Promise.resolve(null);
     }
-    setBusy('pdf', true);
+    setExportState('pdf', 'busy');
     return loadScript(JSPDF, 'jspdf').then(function () {
       return loadScript(AUTOTABLE);
     }).then(function () {
@@ -718,10 +745,10 @@
       doc.putTotalPages(TOTAL_PAGES_EXP);
       const filename = 'DecideCalc-' + safeName(context.name) + '-Amortization-' + dateStamp() + '.pdf';
       doc.save(filename);
-      setBusy('pdf', false);
+      setExportState('pdf', 'done');
       return { filename: filename, doc: doc };
     }).catch(function () {
-      setBusy('pdf', false);
+      setExportState('pdf', 'idle');
       if (DC.toast) DC.toast('Unable to generate PDF. Please try again.', 'error');
       return null;
     });
