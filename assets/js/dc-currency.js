@@ -467,7 +467,6 @@
       const sumRows = [];
       if (S.loanAmount != null) sumRows.push(['Loan Amount', S.loanAmount]);
       if (S.downPayment != null) sumRows.push(['Down Payment', S.downPayment]);
-      if (S.amountFinanced != null) sumRows.push(['Amount Financed', S.amountFinanced]);
       sumRows.push(['Interest Rate (% per year)', S.rate != null ? S.rate : null]);
       sumRows.push(['Loan Term (months)', S.months != null ? S.months : null]);
       sumRows.forEach(function (pair, idx) {
@@ -487,6 +486,7 @@
 
       const hlRows = [
         ['Monthly EMI', S.emi],
+        ['Amount Financed', S.amountFinanced],
         ['Total Interest', S.totalInterest],
         ['Total Payable', S.totalPayable]
       ];
@@ -510,8 +510,8 @@
         };
         ws.getRow(r).height = 20;
       });
-      ws.getCell('B23').value = 'Generated ' + dateDisplay() + ' · DecideCalc — www.decidecalc.com';
-      ws.getCell('B23').font = { size: 8.5, color: { argb: 'FF7884A0' } };
+      ws.getCell('B24').value = 'Generated ' + dateDisplay() + ' · DecideCalc — www.decidecalc.com';
+      ws.getCell('B24').font = { size: 8.5, color: { argb: 'FF7884A0' } };
 
       /* ---------- Sheet 2: Amortization Schedule (every month) ---------- */
       const ws2 = wb.addWorksheet('Amortization Schedule', {
@@ -688,7 +688,6 @@
       const sumBody = [['Calculation Date', dateDisplay()], ['Currency', cur.c + ' (' + cur.name + ')']];
       if (S.loanAmount != null) sumBody.push(['Loan Amount', money(S.loanAmount)]);
       if (S.downPayment != null) sumBody.push(['Down Payment', money(S.downPayment)]);
-      if (S.amountFinanced != null) sumBody.push(['Amount Financed', money(S.amountFinanced)]);
       if (S.rate != null) sumBody.push(['Interest Rate', S.rate.toFixed(2) + '% per year']);
       if (S.months != null) sumBody.push(['Loan Term', S.months + ' months']);
 
@@ -703,19 +702,21 @@
       });
       y = doc.lastAutoTable.finalY + 22;
 
-      // Monthly EMI highlight block
+      // Monthly EMI + Amount Financed + Total Interest + Total Payable highlight block
       doc.setFillColor(239, 243, 249);
       doc.roundedRect(24, y, W - 48, 52, 6, 6, 'F');
       doc.setFillColor(27, 58, 107);
       doc.rect(24, y, 4, 52, 'F');
       doc.setFont(FONT, 'normal'); doc.setFontSize(8.5); doc.setTextColor(120, 132, 160);
       doc.text('MONTHLY EMI', 40, y + 16);
-      doc.text('TOTAL INTEREST', 170, y + 16);
-      doc.text('TOTAL PAYABLE', 330, y + 16);
+      doc.text('AMOUNT FINANCED', 168, y + 16);
+      doc.text('TOTAL INTEREST', 296, y + 16);
+      doc.text('TOTAL PAYABLE', 424, y + 16);
       doc.setFont(FONT, 'bold'); doc.setFontSize(13); doc.setTextColor(15, 21, 51);
       doc.text(money(S.emi), 40, y + 34);
-      doc.text(money(S.totalInterest), 170, y + 34);
-      doc.text(money(S.totalPayable), 330, y + 34);
+      doc.text(money(S.amountFinanced), 168, y + 34);
+      doc.text(money(S.totalInterest), 296, y + 34);
+      doc.text(money(S.totalPayable), 424, y + 34);
       y += 70;
 
       doc.setFont(FONT, 'bold'); doc.setFontSize(12); doc.setTextColor(27, 58, 107);
