@@ -119,10 +119,11 @@
     };
   }
 
-  /* Where the schedule card lives. 'panel' = inside the results panel,
-     directly after the payment-breakdown stats and above the chart.
-     Change to 'below' to restore the old full-width-below-the-layout spot. */
-  const SCHEDULE_PLACEMENT = 'panel';
+  /* Where the schedule card lives.
+     'below' (default) = full-width card directly below the calculator
+     columns, exactly where it was originally — chart stays in the results
+     panel. Change to 'panel' to park it inside the results panel instead. */
+  const SCHEDULE_PLACEMENT = 'below';
 
   /* ---------- Amortization table with 12-month preview + expand/collapse ----------
      Lazy row rendering: only the first 12 rows exist in the DOM initially.
@@ -143,17 +144,21 @@
     const summary = opts.summary || DC.loanSummary || summarizeFromRows(rows);
     context = { name: name, summary: summary, rows: rows, currencyCode: get().c };
 
-    /* Placement: park the schedule card inside the results panel, right
-       before the chart, so the reading order is breakdown → schedule → chart. */
+    /* Placement: by default the schedule stays in its original full-width
+       spot below the calculator layout. 'panel' mode relocates it into the
+       results panel before the chart (defensive: insert relative to the
+       chart's actual parent, since .chart-wrap is not always a direct child
+       of .result-panel). */
     if (section && SCHEDULE_PLACEMENT === 'panel') {
       const panel = document.querySelector('.result-panel');
       const chartWrap = panel ? panel.querySelector('.chart-wrap') : null;
-      if (panel && chartWrap && section.parentNode !== panel) {
-        section.classList.remove('mt-4');
-        section.style.marginTop = '14px';
-        panel.insertBefore(section, chartWrap);
-      } else if (panel && chartWrap && chartWrap.previousElementSibling !== section) {
-        panel.insertBefore(section, chartWrap);
+      if (panel && chartWrap) {
+        const anchorParent = chartWrap.parentNode;
+        if (section.parentNode !== anchorParent || section.nextElementSibling !== chartWrap) {
+          section.classList.remove('mt-4');
+          section.style.marginTop = '14px';
+          anchorParent.insertBefore(section, chartWrap);
+        }
       }
     }
 
