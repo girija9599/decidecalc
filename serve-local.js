@@ -12,6 +12,7 @@ const types = {
 };
 http.createServer((req, res) => {
   let urlPath = decodeURIComponent(req.url.split('?')[0]);
+  if (urlPath === '/hang.js') return; // test-only
   if (urlPath.endsWith('/')) urlPath += 'index.html';
   let filePath = path.join(root, urlPath);
   if (!filePath.startsWith(root)) { res.writeHead(403); return res.end('Forbidden'); }
