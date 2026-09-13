@@ -51,7 +51,7 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Mortgage Calculator</h1><div class="sub">PITI · PMI · total cost · US / global</div></div></div>
         <div class="calc-body">
-          <div class="field"><label>Currency</label><select class="select" id="ccy"><option value="$">USD ($)</option><option value="£">GBP (£)</option><option value="€">EUR (€)</option><option value="₹">INR (₹)</option><option value="A$">AUD (A$)</option><option value="C$">CAD (C$)</option></select></div>
+    <!-- Currency selector is mounted by dc-currency.js (shared 14-currency config) -->
           <div class="field"><label>Home price</label><div class="range-out"><span class="range-val" id="out-price">$400,000</span></div><input type="range" id="price" min="50000" max="5000000" step="5000" value="400000" data-prefix="$" data-dec="0"></div>
           <div class="field-row">
             <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down">$80,000</span></div><input type="range" id="down" min="0" max="1000000" step="1000" value="80000" data-prefix="$" data-dec="0"></div>
@@ -107,6 +107,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260911-1"></script>
+  <script src="/assets/js/dc-currency.js?v=20260913-1"></script>
   <script src="/assets/js/layout.js?v=20260911-1"></script>
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
@@ -123,10 +124,9 @@
     document.getElementById('recoIc').innerHTML = DC.icon('check');
     document.getElementById('fIcon').innerHTML = DC.icon('shield');
 
-    let ccy = '$';
-    function sym() { return ccy; }
-    function fmt(n) { return ccy + Math.round(n).toLocaleString('en-IN'); }
-    function compact(n) { return ccy + DC.compact(n).replace(/^[₹$£€]/,''); }
+    const C = DC.emiCore;
+    function fmt(n) { return C.fmt(n); }
+    function compact(n) { return C.fmt(n); }
 
     function setPrefix(el, prefix) {
       const wrap = el.closest('.input-wrap');
@@ -134,13 +134,12 @@
     }
 
     function syncLabels() {
-      ccy = document.getElementById('ccy').value;
+      const ccy = C.get().s;
       ['out-price','out-down'].forEach(function (id) {
         const el = document.getElementById(id);
         const raw = el.textContent.replace(/^[^0-9]+/, '').replace(/,/g,'');
-        el.textContent = ccy + DC.compact(Number(raw) || 0).replace(/^[₹$£€]/,'');
+        el.textContent = C.fmt(Number(raw) || 0);
       });
-      ['out-downpct'].forEach(function(){});
       // update data-prefix on ranges
       document.getElementById('price').setAttribute('data-prefix', ccy);
       document.getElementById('down').setAttribute('data-prefix', ccy);
@@ -149,7 +148,6 @@
     }
 
     function compute() {
-      ccy = document.getElementById('ccy').value;
       const price = DC.fnum(document.getElementById('price').value);
       const down = Math.min(price, DC.fnum(document.getElementById('down').value));
       const rate = DC.fnum(document.getElementById('rate').value) / 100;
@@ -186,6 +184,17 @@
       const totalPaid = (pi + monthlyTax + monthlyIns + hoa) * n + totalPmi;
       const totalInterest = pi * n - loan;
 
+      DC.loanSummary = {
+        loanAmount: price,
+        downPayment: down,
+        amountFinanced: loan,
+        rate: rate * 100,
+        months: n,
+        emi: totalMonthly,
+        totalInterest: totalInterest,
+        totalPayable: totalPaid
+      };
+
       document.getElementById('rMain').textContent = fmt(totalMonthly);
       document.getElementById('rPI').textContent = fmt(pi);
       document.getElementById('rTax').textContent = fmt(monthlyTax);
@@ -215,7 +224,9 @@
       });
     }
 
-    ['ccy','price','down','rate','term','tax','ins','pmi','hoa'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', function(){ syncLabels(); compute(); }); el.addEventListener('change', function(){ syncLabels(); compute(); }); });
+    // shared currency selector (persisted, 14 currencies) — replaces the old 6-option select
+    C.mount(document.querySelector('.calc-body'), function () { syncLabels(); compute(); });
+    ['price','down','rate','term','tax','ins','pmi','hoa'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', function(){ syncLabels(); compute(); }); el.addEventListener('change', function(){ syncLabels(); compute(); }); });
     document.getElementById('calcBtn').addEventListener('click', compute);
     document.getElementById('copyBtn').addEventListener('click', function () { DC.copyResult('Mortgage\nMonthly payment: ' + document.getElementById('rMain').textContent + '\nP&I: ' + document.getElementById('rPI').textContent + '\nLoan: ' + document.getElementById('rLoan').textContent + '\nTotal interest: ' + document.getElementById('rInterest').textContent); });
     document.getElementById('shareBtn').addEventListener('click', function () { DC.shareWhatsApp('My mortgage is ' + document.getElementById('rMain').textContent + '/mo — total interest ' + document.getElementById('rInterest').textContent + '. Plan yours on DecideCalc.'); });

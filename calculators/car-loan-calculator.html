@@ -51,15 +51,15 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Car Loan Calculator</h1><div class="sub">Monthly payment · total interest · amortization</div></div></div>
         <div class="calc-body">
-          <div class="field"><label>Vehicle price</label><div class="range-out"><span class="range-val" id="out-price">$35,000</span></div><input type="range" id="price" min="1000" max="2000000" step="500" value="35000" data-prefix="$" data-dec="0"></div>
+          <div class="field"><label>Vehicle price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="1000" max="2000000" step="500" value="35000" data-dec="0"></div>
           <div class="field-row">
-            <div class="field"><label>Down payment ($)</label><div class="range-out"><span class="range-val" id="out-down">$5,000</span></div><input type="range" id="down" min="0" max="50000" step="500" value="5000" data-prefix="$" data-dec="0"></div>
+            <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="50000" step="500" value="5000" data-dec="0"></div>
             <div class="field"><label>Down payment %</label><div class="range-out"><span class="range-val" id="out-downpct">14.3%</span></div></div>
           </div>
           <div class="field"><label>Annual interest rate (%)</label><div class="range-out"><span class="range-val" id="out-rate">7.0%</span></div><input type="range" id="rate" min="0" max="30" step="0.05" value="7" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term">60 months (5 yr)</span></div><input type="range" id="term" min="12" max="96" step="12" value="60" data-dec="0"></div>
           <div class="field-row">
-            <div class="field"><label>Trade-in value ($)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="tradein" type="number" min="0" step="500" value="0"></div></div>
+            <div class="field"><label>Trade-in value</label><div class="input-wrap"><span class="prefix cur-prefix"></span><input class="input with-prefix" id="tradein" type="number" min="0" step="500" value="0"></div></div>
             <div class="field"><label>Sales tax rate (%)</label><input class="input" id="salestax" type="number" min="0" max="15" step="0.1" value="0"></div>
           </div>
           <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate car payment</button>
@@ -81,11 +81,12 @@
     </div>
 
     <!-- Amortization table -->
-    <section class="mt-4 card reveal" style="max-width:none" id="amortiSection" style="display:none">
-      <h2>Amortization schedule (first 12 months + last month)</h2>
+    <section class="mt-4 card reveal" id="amortiSection" style="max-width:none;display:none">
+      <h2>Amortization schedule</h2>
+      <p style="color:var(--text-soft);margin:6px 0 12px;font-size:.9rem">First 12 months shown — use the button below the table to see every month until payoff, or export the full schedule.</p>
       <div style="overflow-x:auto">
         <table id="amortiTable" style="width:100%;border-collapse:collapse;font-size:0.88rem;color:var(--text-soft)">
-          <thead><tr style="color:var(--text);border-bottom:1px solid var(--border)"><th style="padding:6px 10px;text-align:left">#</th><th style="padding:6px 10px;text-align:right">Payment</th><th style="padding:6px 10px;text-align:right">Principal</th><th style="padding:6px 10px;text-align:right">Interest</th><th style="padding:6px 10px;text-align:right">Balance</th></tr></thead>
+          <thead><tr style="color:var(--text);border-bottom:1px solid var(--border)"><th style="padding:6px 10px;text-align:left">Month</th><th style="padding:6px 10px;text-align:right">Payment</th><th style="padding:6px 10px;text-align:right">Principal</th><th style="padding:6px 10px;text-align:right">Interest</th><th style="padding:6px 10px;text-align:right">Balance</th></tr></thead>
           <tbody id="amortiBody"></tbody>
         </table>
       </div>
@@ -109,6 +110,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260911-1"></script>
+  <script src="/assets/js/dc-currency.js?v=20260913-1"></script>
   <script src="/assets/js/layout.js?v=20260911-1"></script>
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
@@ -125,9 +127,7 @@
     document.getElementById('recoIc').innerHTML = DC.icon('check');
     document.getElementById('fIcon').innerHTML = DC.icon('shield');
 
-    function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
-    function compact(n) { return '$' + DC.compact(n).replace(/^[₹$£€]/,''); }
-
+    const C = DC.emiCore;
     let carChart = null;
 
     function termLabel(months) {
@@ -135,40 +135,8 @@
       return months + ' months';
     }
 
-    function buildAmortization(loan, monthlyRate, n) {
-      const rows = [];
-      let balance = loan;
-      const pmt = monthlyRate > 0
-        ? loan * monthlyRate * Math.pow(1 + monthlyRate, n) / (Math.pow(1 + monthlyRate, n) - 1)
-        : loan / n;
-      for (let i = 1; i <= n; i++) {
-        const interest = balance * monthlyRate;
-        const principal = pmt - interest;
-        balance = Math.max(0, balance - principal);
-        rows.push({ i, pmt, principal, interest, balance });
-      }
-      return rows;
-    }
-
-    function renderAmortization(rows) {
-      const tbody = document.getElementById('amortiBody');
-      tbody.innerHTML = '';
-      const show = rows.length <= 13 ? rows : [...rows.slice(0, 12), { ellipsis: true }, rows[rows.length - 1]];
-      show.forEach(function (row) {
-        const tr = document.createElement('tr');
-        tr.style.borderBottom = '1px solid var(--border)';
-        if (row.ellipsis) {
-          tr.innerHTML = '<td colspan="5" style="padding:4px 10px;text-align:center;color:var(--text-soft);font-style:italic">… months 13–' + (rows.length - 1) + ' …</td>';
-        } else {
-          tr.innerHTML = '<td style="padding:5px 10px">' + row.i + '</td>'
-            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.pmt) + '</td>'
-            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.principal) + '</td>'
-            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.interest) + '</td>'
-            + '<td style="padding:5px 10px;text-align:right">' + fmt(row.balance) + '</td>';
-        }
-        tbody.appendChild(tr);
-      });
-      document.getElementById('amortiSection').style.display = '';
+    function syncCurrencyUi() {
+      document.querySelectorAll('.cur-prefix').forEach(function (el) { el.textContent = C.get().s; });
     }
 
     function compute() {
@@ -179,45 +147,56 @@
       const tradein = DC.fnum(document.getElementById('tradein').value) || 0;
       const taxPct = DC.fnum(document.getElementById('salestax').value) / 100;
 
-      document.getElementById('out-price').textContent = compact(price);
-      document.getElementById('out-down').textContent = compact(down);
+      document.getElementById('out-price').textContent = C.fmt(price);
+      document.getElementById('out-down').textContent = C.fmt(down);
       const downPct = price > 0 ? (down / price * 100) : 0;
       document.getElementById('out-downpct').textContent = downPct.toFixed(1) + '%';
       document.getElementById('out-rate').textContent = annualRate.toFixed(2) + '%';
       document.getElementById('out-term').textContent = termLabel(months);
+      syncCurrencyUi();
 
       const taxAmount = price * taxPct;
       const loan = Math.max(0, price + taxAmount - down - tradein);
-      const r = annualRate / 100 / 12;
-      const n = Math.max(1, Math.round(months));
-      const pmt = loan > 0 ? (r > 0 ? loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : loan / n) : 0;
+      const { pmt, n } = C.emi(loan, annualRate, months);
       const totalPaid = pmt * n;
       const totalInterest = Math.max(0, totalPaid - loan);
       const totalCost = price + taxAmount - tradein;
 
-      document.getElementById('rMain').textContent = fmt(pmt);
-      document.getElementById('rLoan').textContent = compact(loan);
-      document.getElementById('rInterest').textContent = compact(totalInterest);
-      document.getElementById('rTotal').textContent = compact(totalCost);
+      document.getElementById('rMain').textContent = C.fmt(pmt);
+      document.getElementById('rLoan').textContent = C.fmt(loan);
+      document.getElementById('rInterest').textContent = C.fmt(totalInterest);
+      document.getElementById('rTotal').textContent = C.fmt(loan + totalInterest);
       document.getElementById('rRate').textContent = annualRate.toFixed(2) + '% APR';
+
+      // shared loan summary — consumed by the Excel/PDF exporters
+      DC.loanSummary = {
+        loanAmount: price + taxAmount,
+        downPayment: down + tradein,
+        amountFinanced: loan,
+        rate: annualRate,
+        months: n,
+        emi: pmt,
+        totalInterest: totalInterest,
+        totalPayable: loan + totalInterest
+      };
 
       const title = document.getElementById('recoTitle'), txt = document.getElementById('recoText');
       const interestRatio = loan > 0 ? totalInterest / loan : 0;
       if (annualRate > 10) {
         title.textContent = 'High interest rate — shop around';
-        txt.textContent = 'At ' + annualRate.toFixed(2) + '% APR you pay ' + fmt(totalInterest) + ' in interest on this loan. Getting pre-approved by a bank or credit union before visiting the dealer can often cut 2–4% off the rate.';
+        txt.textContent = 'At ' + annualRate.toFixed(2) + '% APR you pay ' + C.fmt(totalInterest) + ' in interest on this loan. Getting pre-approved by a bank or credit union before visiting the dealer can often cut 2–4% off the rate.';
       } else if (months > 60) {
         title.textContent = 'Long term increases your interest cost';
-        txt.textContent = 'A ' + months + '-month loan keeps the payment low but adds up to ' + fmt(totalInterest) + ' in interest. Shortening to 48–60 months would save significantly — use extra-payment options if you can afford it.';
+        txt.textContent = 'A ' + months + '-month loan keeps the payment low but adds up to ' + C.fmt(totalInterest) + ' in interest. Shortening to 48–60 months would save significantly — use extra-payment options if you can afford it.';
       } else {
         title.textContent = 'Monthly payment breakdown';
-        txt.textContent = 'You pay ' + fmt(pmt) + '/month. Over ' + months + ' months, ' + fmt(loan) + ' is principal and ' + fmt(totalInterest) + ' is interest — ' + (interestRatio * 100).toFixed(0) + '% of the loan amount in interest cost.';
+        txt.textContent = 'You pay ' + C.fmt(pmt) + '/month. Over ' + months + ' months, ' + C.fmt(loan) + ' is principal and ' + C.fmt(totalInterest) + ' is interest — ' + (interestRatio * 100).toFixed(0) + '% of the loan amount in interest cost.';
       }
 
       // Chart
       if (carChart) { carChart.destroy(); }
       const ctx = document.getElementById('carChart').getContext('2d');
-      carChart = new Chart(ctx, {
+      carChart = window.Chart && new Chart(ctx, {
         type: 'doughnut',
         data: {
           labels: ['Loan principal', 'Total interest'],
@@ -226,12 +205,14 @@
         options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-soft)', font: { size: 13 } } } } }
       });
 
-      // Amortization table
+      // Amortization table (shared: 12-month preview + expand + exports)
       if (loan > 0 && pmt > 0) {
-        const rows = buildAmortization(loan, r, n);
-        renderAmortization(rows);
+        C.renderTable(document.getElementById('amortiBody'), C.amortize(loan, annualRate, months), C.fmt, { name: 'Car Loan Calculator' });
       }
     }
+
+    // currency selector inserted at top of the body; recompute on change
+    C.mount(document.querySelector('.calc-body'), compute);
 
     ['price','down','rate','term'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', compute);
@@ -242,11 +223,17 @@
     document.getElementById('calcBtn').addEventListener('click', compute);
 
     document.getElementById('copyBtn').addEventListener('click', function () {
-      const price = DC.fnum(document.getElementById('price').value);
+      const S = DC.loanSummary || {};
       const pmt = document.getElementById('rMain').textContent;
       const interest = document.getElementById('rInterest').textContent;
       const total = document.getElementById('rTotal').textContent;
-      navigator.clipboard && navigator.clipboard.writeText('Car Loan Calculator (DecideCalc)\nVehicle price: ' + compact(price) + '\nMonthly payment: ' + pmt + '\nTotal interest: ' + interest + '\nTotal cost: ' + total + '\nhttps://www.decidecalc.com/calculators/car-loan-calculator').catch(function(){});
+      navigator.clipboard && navigator.clipboard.writeText('Car Loan Calculator (DecideCalc)\nCurrency: ' + (DC.emiCore.get().c) +
+        (S.loanAmount != null ? '\nVehicle price (incl. tax): ' + DC.emiCore.fmt(S.loanAmount) : '') +
+        (S.amountFinanced != null ? '\nAmount financed: ' + DC.emiCore.fmt(S.amountFinanced) : '') +
+        (S.rate != null ? '\nAPR: ' + S.rate.toFixed(2) + '%' : '') +
+        (S.months != null ? '\nTerm: ' + S.months + ' months' : '') +
+        '\nMonthly payment: ' + pmt + '\nTotal interest: ' + interest + '\nTotal payable: ' + total +
+        '\nhttps://www.decidecalc.com/calculators/car-loan-calculator').catch(function(){});
       document.getElementById('copyBtn').textContent = 'Copied!';
       setTimeout(function(){ document.getElementById('copyBtn').textContent = 'Copy result'; }, 2000);
     });

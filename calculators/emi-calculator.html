@@ -64,8 +64,8 @@
         <div class="calc-body">
           <div class="field">
             <label>Loan Amount</label>
-            <div class="range-out"><span class="range-val" id="out-amount">₹10,00,000</span></div>
-            <input type="range" id="amount" min="50000" max="20000000" step="50000" value="1000000" data-prefix="₹" data-dec="0">
+            <div class="range-out"><span class="range-val" id="out-amount"></span></div>
+            <input type="range" id="amount" min="50000" max="20000000" step="50000" value="1000000" data-dec="0">
           </div>
           <div class="field">
             <label>Interest Rate (% per year)</label>
@@ -124,6 +124,18 @@
       </div>
     </div>
 
+    <!-- MONTHLY AMORTIZATION -->
+    <section class="mt-4 card reveal" id="amortiSection" style="max-width:none;display:none">
+      <h2>Amortization schedule</h2>
+      <p style="color:var(--text-soft);margin:6px 0 12px;font-size:.9rem">First 12 months shown — use the button below the table to see every month until payoff, or export the full schedule.</p>
+      <div style="overflow-x:auto">
+        <table id="amortiTable" style="width:100%;border-collapse:collapse;font-size:.88rem;color:var(--text-soft)">
+          <thead><tr style="color:var(--text);border-bottom:2px solid var(--border)"><th style="padding:8px 12px;text-align:left">Month</th><th style="padding:8px 12px;text-align:right">Payment</th><th style="padding:8px 12px;text-align:right">Principal</th><th style="padding:8px 12px;text-align:right">Interest</th><th style="padding:8px 12px;text-align:right">Balance</th></tr></thead>
+          <tbody id="amortiBody"></tbody>
+        </table>
+      </div>
+    </section>
+
     <!-- RELATED -->
     <section class="mt-4 reveal">
       <h3 style="margin-bottom:16px">Related calculators</h3>
@@ -170,6 +182,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260911-1"></script>
+  <script src="/assets/js/dc-currency.js?v=20260913-1"></script>
   <script src="/assets/js/layout.js?v=20260911-1"></script>
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
@@ -222,6 +235,7 @@
       const P = DC.fnum(document.getElementById('amount').value);
       const annualRate = DC.fnum(document.getElementById('rate').value);
       const n = tenureMonths();
+      const C = DC.emiCore;
       const r = annualRate / 12 / 100;
       let emi;
       if (r === 0) emi = P / n;
@@ -229,12 +243,24 @@
       const total = emi * n;
       const interest = total - P;
 
-      document.getElementById('rEmi').textContent = DC.inr(emi);
-      document.getElementById('rPrincipal').textContent = DC.compact(P);
-      document.getElementById('rInterest').textContent = DC.compact(interest);
-      document.getElementById('rTotal').textContent = DC.compact(total);
+      document.getElementById('out-amount').textContent = C.fmt(P);
+      document.getElementById('rEmi').textContent = C.fmt(emi);
+      document.getElementById('rPrincipal').textContent = C.fmt(P);
+      document.getElementById('rInterest').textContent = C.fmt(interest);
+      document.getElementById('rTotal').textContent = C.fmt(total);
       const pPct = Math.round(P / total * 100), iPct = 100 - pPct;
       document.getElementById('rRatio').textContent = pPct + ' : ' + iPct;
+
+      DC.loanSummary = {
+        loanAmount: P,
+        downPayment: 0,
+        amountFinanced: P,
+        rate: annualRate,
+        months: n,
+        emi: emi,
+        totalInterest: interest,
+        totalPayable: total
+      };
 
       // chart
       DC.makeChart('emiChart', {
@@ -247,8 +273,13 @@
             borderWidth: 0, hoverOffset: 8
           }]
         },
-        options: { cutout: '64%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + DC.compact(c.raw); } } } } }
+        options: { cutout: '64%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + C.fmt(c.raw); } } } } }
       });
+
+      // monthly amortization (shared: 12-month preview + expand + exports)
+      if (P > 0 && n > 0) {
+        C.renderTable(document.getElementById('amortiBody'), C.amortize(P, annualRate, n), C.fmt, { name: 'EMI Calculator' });
+      }
 
       // amortization
       const tbody = document.querySelector('#amortTable tbody');
@@ -291,6 +322,8 @@
 
     document.getElementById('calcBtn').addEventListener('click', compute);
     ['amount', 'rate', 'tenure'].forEach(function (id) { document.getElementById(id).addEventListener('input', compute); });
+    // currency selector inserted at top of the body; recompute on change
+    DC.emiCore.mount(document.querySelector('.calc-body'), compute);
     compute();
 
     document.getElementById('shareBtn').addEventListener('click', function () {
