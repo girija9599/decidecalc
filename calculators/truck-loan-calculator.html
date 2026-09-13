@@ -67,7 +67,7 @@
       <p style="color:var(--text-soft);margin:6px 0 12px;font-size:.9rem">First 12 months shown — tap the button below the table to see every month until payoff.</p>
       <div style="overflow-x:auto">
         <table id="amortiTable" style="width:100%;border-collapse:collapse;font-size:.88rem;color:var(--text-soft)">
-          <thead><tr style="color:var(--text);border-bottom:2px solid var(--border);letter-spacing:.04em;text-transform:uppercase;font-size:.72rem"><th style="padding:8px 12px;text-align:left">#</th><th style="padding:8px 12px;text-align:right">Payment</th><th style="padding:8px 12px;text-align:right">Principal</th><th style="padding:8px 12px;text-align:right">Interest</th><th style="padding:8px 12px;text-align:right">Balance</th></tr></thead>
+          <thead><tr style="color:var(--text);border-bottom:2px solid var(--border);letter-spacing:.04em;text-transform:uppercase;font-size:.72rem"><th style="padding:8px 12px;text-align:left">Month</th><th style="padding:8px 12px;text-align:right">Payment</th><th style="padding:8px 12px;text-align:right">Principal</th><th style="padding:8px 12px;text-align:right">Interest</th><th style="padding:8px 12px;text-align:right">Balance</th></tr></thead>
           <tbody id="amortiBody"></tbody>
         </table>
       </div>
@@ -85,12 +85,12 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/assets/js/core.js?v=20260911-1"></script>
-  <script src="/assets/js/dc-currency.js?v=20260911-1"></script>
+  <script src="/assets/js/dc-currency.js?v=20260913-1"></script>
   <script src="/assets/js/layout.js?v=20260911-1"></script>
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'truck-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — USD, INR, EUR, GBP, CAD, AUD, AED, JPY or SGD. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'truck-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');
@@ -120,11 +120,21 @@
       const totalPaid = pmt * n;
       const interest = Math.max(0, totalPaid - loan);
       const totalCost = price + taxAmt + fees;
+      DC.loanSummary = {
+        loanAmount: price + taxAmt + fees,
+        downPayment: down,
+        amountFinanced: loan,
+        rate: rate,
+        months: n,
+        emi: pmt,
+        totalInterest: interest,
+        totalPayable: loan + interest
+      };
 
       document.getElementById('rMain').textContent = C.fmt(pmt);
       document.getElementById('rLoan').textContent = C.fmt(loan);
       document.getElementById('rInterest').textContent = C.fmt(interest);
-      document.getElementById('rTotal').textContent = C.fmt(totalCost);
+      document.getElementById('rTotal').textContent = C.fmt(loan + interest);
       document.getElementById('rRate').textContent = rate.toFixed(2) + '% APR';
 
       const t = document.getElementById('recoTitle'), x = document.getElementById('recoText');
@@ -141,7 +151,7 @@
       }
 
       if (chart) chart.destroy();
-      chart = new Chart(document.getElementById('chart').getContext('2d'), {
+      chart = window.Chart && new Chart(document.getElementById('chart').getContext('2d'), {
         type: 'doughnut',
         data: { labels: ['Principal financed', 'Total interest'], datasets: [{ data: [Math.round(loan), Math.round(interest)], backgroundColor: ['#1B3A6B', '#F59E0B'], borderWidth: 0 }] },
         options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-soft)', font: { size: 13 } } } } }
