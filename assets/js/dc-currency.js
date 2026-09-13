@@ -11,21 +11,23 @@
   const DC = window.DC = window.DC || {};
 
   /* ---------- Currency configuration (centralized) ---------- */
+  /* All display currencies round to whole units (d: 0) — decimals made the
+     mobile amortization table and score cards hard to read. */
   const DC_CURR = [
-    { c: 'INR', s: '₹',   l: 'en-IN', name: 'Indian Rupee',      d: 2 },
-    { c: 'USD', s: '$',   l: 'en-US', name: 'US Dollar',         d: 2 },
-    { c: 'EUR', s: '€',   l: 'de-DE', name: 'Euro',              d: 2 },
-    { c: 'GBP', s: '£',   l: 'en-GB', name: 'British Pound',     d: 2 },
-    { c: 'AED', s: 'د.إ', l: 'en-AE', name: 'UAE Dirham',        d: 2 },
-    { c: 'CAD', s: 'C$',  l: 'en-CA', name: 'Canadian Dollar',   d: 2 },
-    { c: 'AUD', s: 'A$',  l: 'en-AU', name: 'Australian Dollar', d: 2 },
-    { c: 'SGD', s: 'S$',  l: 'en-SG', name: 'Singapore Dollar',  d: 2 },
+    { c: 'INR', s: '₹',   l: 'en-IN', name: 'Indian Rupee',      d: 0 },
+    { c: 'USD', s: '$',   l: 'en-US', name: 'US Dollar',         d: 0 },
+    { c: 'EUR', s: '€',   l: 'de-DE', name: 'Euro',              d: 0 },
+    { c: 'GBP', s: '£',   l: 'en-GB', name: 'British Pound',     d: 0 },
+    { c: 'AED', s: 'د.إ', l: 'en-AE', name: 'UAE Dirham',        d: 0 },
+    { c: 'CAD', s: 'C$',  l: 'en-CA', name: 'Canadian Dollar',   d: 0 },
+    { c: 'AUD', s: 'A$',  l: 'en-AU', name: 'Australian Dollar', d: 0 },
+    { c: 'SGD', s: 'S$',  l: 'en-SG', name: 'Singapore Dollar',  d: 0 },
     { c: 'JPY', s: '¥',   l: 'ja-JP', name: 'Japanese Yen',      d: 0 },
-    { c: 'CNY', s: '¥',   l: 'zh-CN', name: 'Chinese Yuan',      d: 2 },
-    { c: 'CHF', s: 'CHF', l: 'de-CH', name: 'Swiss Franc',       d: 2 },
-    { c: 'NZD', s: 'NZ$', l: 'en-NZ', name: 'New Zealand Dollar',d: 2 },
-    { c: 'ZAR', s: 'R',   l: 'en-ZA', name: 'South African Rand',d: 2 },
-    { c: 'SAR', s: '﷼',   l: 'ar-SA', name: 'Saudi Riyal',       d: 2 }
+    { c: 'CNY', s: '¥',   l: 'zh-CN', name: 'Chinese Yuan',      d: 0 },
+    { c: 'CHF', s: 'CHF', l: 'de-CH', name: 'Swiss Franc',       d: 0 },
+    { c: 'NZD', s: 'NZ$', l: 'en-NZ', name: 'New Zealand Dollar',d: 0 },
+    { c: 'ZAR', s: 'R',   l: 'en-ZA', name: 'South African Rand',d: 0 },
+    { c: 'SAR', s: '﷼',   l: 'ar-SA', name: 'Saudi Riyal',       d: 0 }
   ];
   const KEY = 'dc_currency';
   const BRAND = { primary: '1B3A6B', accent: '00C2A8', heading: '0F1533', muted: '7884A0', stripe: 'F5F7FA', border: 'E2E8F2' };
@@ -193,7 +195,7 @@
       }
     }
 
-    const CELL = 'padding:8px 12px;';
+    const CELL = 'padding:8px 12px;white-space:nowrap;';
     function rowTr(row) {
       const tr = document.createElement('tr');
       tr.style.borderBottom = '1px solid var(--border)';
@@ -205,6 +207,14 @@
         '<td style="' + CELL + 'text-align:right">' + f(row.interest) + '</td>' +
         '<td style="' + CELL + 'text-align:right;font-variant-numeric:tabular-nums">' + f(row.balance) + '</td>';
       return tr;
+    }
+
+    /* Mobile: never squeeze the columns into unreadable wrapped fragments —
+       the table keeps a readable minimum width and scrolls horizontally in
+       its overflow-x wrapper instead. */
+    if (table) {
+      table.style.minWidth = '560px';
+      table.querySelectorAll('th').forEach(function (th) { th.style.whiteSpace = 'nowrap'; });
     }
 
     rows.slice(0, PREVIEW).forEach(function (row, idx) {
