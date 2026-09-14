@@ -27,7 +27,8 @@
     { c: 'CHF', s: 'CHF', l: 'de-CH', name: 'Swiss Franc',       d: 0 },
     { c: 'NZD', s: 'NZ$', l: 'en-NZ', name: 'New Zealand Dollar',d: 0 },
     { c: 'ZAR', s: 'R',   l: 'en-ZA', name: 'South African Rand',d: 0 },
-    { c: 'SAR', s: '﷼',   l: 'ar-SA', name: 'Saudi Riyal',       d: 0 }
+    { c: 'SAR', s: '﷼',   l: 'ar-SA', name: 'Saudi Riyal',       d: 0 },
+    { c: 'MXN', s: 'Mex$', l: 'es-MX', name: 'Mexican Peso',     d: 0 }
   ];
   const KEY = 'dc_currency';
   const BRAND = { primary: '1B3A6B', accent: '00C2A8', heading: '0F1533', muted: '7884A0', stripe: 'F5F7FA', border: 'E2E8F2' };
