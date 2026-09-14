@@ -27,6 +27,7 @@
   <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/calculators/tip-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/tip-calculator">
   <link rel="stylesheet" href="/assets/css/main.css?v=20260913-7">
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -145,6 +146,7 @@
           <div class="result-stat"><div class="v" id="rTipPerson">—</div><div class="k">Tip per person</div></div>
           <div class="result-stat"><div class="v" id="rTax">—</div><div class="k">Tax added</div></div>
         </div>
+        <div class="chart-wrap"><canvas id="tipChart" aria-label="Chart showing the bill, tax and tip split"></canvas></div>
         <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
         <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Tipping snapshot</h4><p id="recoText">Enter your bill, pick a tip %, and split between any number of people. Switching country in travel mode applies the local tipping norm automatically.</p></div></div>
       </div>
@@ -283,8 +285,12 @@
         $('rTax').textContent = '—';
         $('recoTitle').textContent = 'Enter your bill';
         $('recoText').textContent = 'Type the bill amount above, pick a tip %, and the tip, total and per-person split appear here instantly — in any currency, for any country.';
+        const cw = document.querySelector('.result-panel .chart-wrap');
+        if (cw) cw.style.display = 'none';
         return;
       }
+      const cwShow = document.querySelector('.result-panel .chart-wrap');
+      if (cwShow) cwShow.style.display = '';
 
       const tax = bill * taxPct / 100;
       const tipBaseAmt = base === 'total' ? bill + tax : bill;
@@ -305,6 +311,19 @@
       $('rPerPerson').textContent = C.fmt(per);
       $('rTipPerson').textContent = C.fmt(tipPer);
       $('rTax').textContent = tax > 0 ? C.fmt(tax) : '—';
+
+      // bill vs tax vs tip doughnut — same chart style as the other calculators
+      const chartData = tax > 0
+        ? { labels: ['Bill', 'Tax', 'Tip'], data: [Math.round(bill), Math.round(tax), Math.round(tip)], colors: ['#1B3A6B', '#00C2A8', '#F59E0B'] }
+        : { labels: ['Bill', 'Tip'], data: [Math.round(bill), Math.round(tip)], colors: ['#1B3A6B', '#F59E0B'] };
+      DC.makeChart('tipChart', {
+        type: 'doughnut',
+        data: {
+          labels: chartData.labels,
+          datasets: [{ data: chartData.data, backgroundColor: chartData.colors, borderWidth: 0, hoverOffset: 6 }]
+        },
+        options: { cutout: '64%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + C.fmt(c.raw); } } } } }
+      });
 
       const c = $('tipCountry').value;
       const recoT = $('recoTitle'), recoX = $('recoText');
