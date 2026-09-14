@@ -27,6 +27,7 @@
   <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/calculators/tip-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/tip-calculator">
   <link rel="stylesheet" href="/assets/css/main.css?v=20260913-7">
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -133,7 +134,7 @@
             <input type="hidden" name="roundMode" value="none">
           </div>
 
-          <button class="btn btn-primary btn-block" id="resetBtn" type="button">Reset</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate tip</button>
         </div>
       </div>
 
@@ -145,6 +146,7 @@
           <div class="result-stat"><div class="v" id="rTipPerson">—</div><div class="k">Tip per person</div></div>
           <div class="result-stat"><div class="v" id="rTax">—</div><div class="k">Tax added</div></div>
         </div>
+        <div class="chart-wrap"><canvas id="tipChart" aria-label="Chart showing the bill, tax and tip split"></canvas></div>
         <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
         <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Tipping snapshot</h4><p id="recoText">Enter your bill, pick a tip %, and split between any number of people. Switching country in travel mode applies the local tipping norm automatically.</p></div></div>
       </div>
@@ -271,6 +273,25 @@
       const mode = document.querySelector('[name="roundMode"]').value;
       const taxPct = base === 'total' ? fnum('taxPct') : 0;
 
+      $('out-rate').textContent = pct + '%';
+      $('out-people').textContent = people + (people > 1 ? ' people' : ' person');
+
+      // Empty-bill state: show clean placeholders instead of ₹0 everywhere
+      if (!(bill > 0)) {
+        $('rMain').textContent = '—';
+        $('rTotal').textContent = '—';
+        $('rPerPerson').textContent = '—';
+        $('rTipPerson').textContent = '—';
+        $('rTax').textContent = '—';
+        $('recoTitle').textContent = 'Enter your bill';
+        $('recoText').textContent = 'Type the bill amount above, pick a tip %, and the tip, total and per-person split appear here instantly — in any currency, for any country.';
+        const cw = document.querySelector('.result-panel .chart-wrap');
+        if (cw) cw.style.display = 'none';
+        return;
+      }
+      const cwShow = document.querySelector('.result-panel .chart-wrap');
+      if (cwShow) cwShow.style.display = '';
+
       const tax = bill * taxPct / 100;
       const tipBaseAmt = base === 'total' ? bill + tax : bill;
       let tip = tipBaseAmt * pct / 100;
@@ -285,13 +306,24 @@
       const per = people > 0 ? total / people : total;
       const tipPer = people > 0 ? tip / people : tip;
 
-      $('out-rate').textContent = pct + '%';
-      $('out-people').textContent = people + (people > 1 ? ' people' : ' person');
       $('rMain').textContent = C.fmt(tip);
       $('rTotal').textContent = C.fmt(total);
       $('rPerPerson').textContent = C.fmt(per);
       $('rTipPerson').textContent = C.fmt(tipPer);
       $('rTax').textContent = tax > 0 ? C.fmt(tax) : '—';
+
+      // bill vs tax vs tip doughnut — same chart style as the other calculators
+      const chartData = tax > 0
+        ? { labels: ['Bill', 'Tax', 'Tip'], data: [Math.round(bill), Math.round(tax), Math.round(tip)], colors: ['#1B3A6B', '#00C2A8', '#F59E0B'] }
+        : { labels: ['Bill', 'Tip'], data: [Math.round(bill), Math.round(tip)], colors: ['#1B3A6B', '#F59E0B'] };
+      DC.makeChart('tipChart', {
+        type: 'doughnut',
+        data: {
+          labels: chartData.labels,
+          datasets: [{ data: chartData.data, backgroundColor: chartData.colors, borderWidth: 0, hoverOffset: 6 }]
+        },
+        options: { cutout: '64%', plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function (c) { return c.label + ': ' + C.fmt(c.raw); } } } } }
+      });
 
       const c = $('tipCountry').value;
       const recoT = $('recoTitle'), recoX = $('recoText');
@@ -355,22 +387,10 @@
       });
     });
 
-    // reset
-    $('resetBtn').addEventListener('click', function () {
-      $('billAmount').value = '';
-      $('customTip').value = '';
-      $('taxPct').value = '8';
-      $('peopleRange').value = '1';
-      DC.setRangeValue($('rate'), 20, false);
-      document.querySelector('[name="tipBase"]').value = 'subtotal';
-      document.querySelector('[name="roundMode"]').value = 'none';
-      document.querySelectorAll('.segmented').forEach(function (seg) {
-        const def = seg.getAttribute('data-target') === 'tipBase' ? 'subtotal' : 'none';
-        seg.querySelectorAll('button').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-val') === def); });
-      });
-      $('taxRow').style.display = 'none';
+    // calculate button (results are already live; this confirms the calculation)
+    $('calcBtn').addEventListener('click', function () {
       compute();
-      if (DC.toast) DC.toast('Reset to defaults', 'success');
+      if (!$('billAmount').value && DC.toast) DC.toast('Enter the bill amount to calculate the tip', 'error');
     });
 
     // cruise gratuity estimator
