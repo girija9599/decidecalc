@@ -133,7 +133,7 @@
             <input type="hidden" name="roundMode" value="none">
           </div>
 
-          <button class="btn btn-primary btn-block" id="resetBtn" type="button">Reset</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate tip</button>
         </div>
       </div>
 
@@ -271,6 +271,21 @@
       const mode = document.querySelector('[name="roundMode"]').value;
       const taxPct = base === 'total' ? fnum('taxPct') : 0;
 
+      $('out-rate').textContent = pct + '%';
+      $('out-people').textContent = people + (people > 1 ? ' people' : ' person');
+
+      // Empty-bill state: show clean placeholders instead of ₹0 everywhere
+      if (!(bill > 0)) {
+        $('rMain').textContent = '—';
+        $('rTotal').textContent = '—';
+        $('rPerPerson').textContent = '—';
+        $('rTipPerson').textContent = '—';
+        $('rTax').textContent = '—';
+        $('recoTitle').textContent = 'Enter your bill';
+        $('recoText').textContent = 'Type the bill amount above, pick a tip %, and the tip, total and per-person split appear here instantly — in any currency, for any country.';
+        return;
+      }
+
       const tax = bill * taxPct / 100;
       const tipBaseAmt = base === 'total' ? bill + tax : bill;
       let tip = tipBaseAmt * pct / 100;
@@ -285,8 +300,6 @@
       const per = people > 0 ? total / people : total;
       const tipPer = people > 0 ? tip / people : tip;
 
-      $('out-rate').textContent = pct + '%';
-      $('out-people').textContent = people + (people > 1 ? ' people' : ' person');
       $('rMain').textContent = C.fmt(tip);
       $('rTotal').textContent = C.fmt(total);
       $('rPerPerson').textContent = C.fmt(per);
@@ -355,22 +368,10 @@
       });
     });
 
-    // reset
-    $('resetBtn').addEventListener('click', function () {
-      $('billAmount').value = '';
-      $('customTip').value = '';
-      $('taxPct').value = '8';
-      $('peopleRange').value = '1';
-      DC.setRangeValue($('rate'), 20, false);
-      document.querySelector('[name="tipBase"]').value = 'subtotal';
-      document.querySelector('[name="roundMode"]').value = 'none';
-      document.querySelectorAll('.segmented').forEach(function (seg) {
-        const def = seg.getAttribute('data-target') === 'tipBase' ? 'subtotal' : 'none';
-        seg.querySelectorAll('button').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-val') === def); });
-      });
-      $('taxRow').style.display = 'none';
+    // calculate button (results are already live; this confirms the calculation)
+    $('calcBtn').addEventListener('click', function () {
       compute();
-      if (DC.toast) DC.toast('Reset to defaults', 'success');
+      if (!$('billAmount').value && DC.toast) DC.toast('Enter the bill amount to calculate the tip', 'error');
     });
 
     // cruise gratuity estimator
