@@ -276,29 +276,35 @@
       ms.value = String(m); ds.value = String(Math.min(d, parseInt(ds.options[ds.options.length - 1].value)));
     }
 function buildDayOptions(prefix) {
-      const y = parseInt($(prefix + 'Year').value), m = parseInt($(prefix + 'Month').value);
+      const y = parseInt($(prefix + 'Year').value) || 2080;
+      const m = parseInt($(prefix + 'Month').value) || 0;
       const ds = $(prefix + 'Day');
       let days = 31;
-      try { days = bsDaysInMonth(y, m); } catch (e) {}
-      const cur = parseInt(ds.value) || 1;
+      try { days = bsDaysInMonth(y, m); } catch (e) { days = 31; }
       ds.innerHTML = '';
-      for (let i = 1; i <= days; i++) { const o = document.createElement('option'); o.value = i; o.textContent = i; ds.appendChild(o); }
-      ds.value = String(Math.min(cur, days));
+      for (let i = 1; i <= days; i++) { 
+        const o = document.createElement('option'); 
+        o.value = String(i); 
+        o.textContent = String(i); 
+        ds.appendChild(o); 
+      }
     }
 
     /* ---------- populate selects ---------- */
     (function init() {
       const nowBS = new ND(new Date()).getBS();
       ['s', 'e'].forEach(function (p) {
-        const ys = $(p + 'Year'), ms = $(p + 'Month');
-        BS_YEARS.forEach(function (y) { const o = document.createElement('option'); o.value = y; o.textContent = y; ys.appendChild(o); });
-        BS_MONTHS.forEach(function (name, idx) { const o = document.createElement('option'); o.value = idx; o.textContent = name; ms.appendChild(o); });
+        const ys = $(p + 'Year'), ms = $(p + 'Month'), ds = $(p + 'Day');
+        BS_YEARS.forEach(function (y) { const o = document.createElement('option'); o.value = String(y); o.textContent = String(y); ys.appendChild(o); });
+        BS_MONTHS.forEach(function (name, idx) { const o = document.createElement('option'); o.value = String(idx); o.textContent = name; ms.appendChild(o); });
+        // Pre-populate days 1-31 initially (will rebuild on month change)
+        for (let i = 1; i <= 31; i++) { const o = document.createElement('option'); o.value = String(i); o.textContent = String(i); ds.appendChild(o); }
       });
       // defaults: start 15 Baisakh 2080, end today
       $('sYear').value = '2080'; $('sMonth').value = '0';
-      buildDayOptions('s'); $('sDay').value = '15';
+      $('sDay').value = '15';
       $('eYear').value = String(nowBS.year); $('eMonth').value = String(nowBS.month);
-      buildDayOptions('e'); $('eDay').value = String(nowBS.date);
+      $('eDay').value = String(nowBS.date);
     })();
 
     /* ---------- read current dates ---------- */
