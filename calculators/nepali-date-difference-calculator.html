@@ -27,6 +27,39 @@
   <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/calculators/nepali-date-difference-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/nepali-date-difference-calculator">
   <link rel="stylesheet" href="/assets/css/main.css?v=20260913-7">
+  <style>
+    /* Better select dropdown visibility */
+    .select {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234B5875' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 12px center !important;
+      background-size: 18px !important;
+      padding-right: 42px !important;
+    }
+    .select:focus {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F1533' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    }
+    /* Force dropdown arrow visibility in all browsers */
+    .select::-ms-expand { display: none; }
+    /* Ensure options have proper styling */
+    .select option {
+      background: #FFFFFF;
+      color: #0F1533;
+      padding: 8px 12px;
+    }
+    .select option:checked {
+      background: #3B82F6;
+      color: #FFFFFF;
+    }
+    /* Today/Swap button hover states */
+    #todayBtn:hover { background:#A7F3D0 !important; border-color:#6EE7B7 !important; transform:translateY(-1px); }
+    #swapBtn:hover { background:#FED7AA !important; border-color:#FDBA74 !important; transform:translateY(-1px); }
+    #todayBtn:active { background:#6EE7B7 !important; transform:translateY(0); }
+    #swapBtn:active { background:#FDBA74 !important; transform:translateY(0); }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -101,7 +134,7 @@
             <div id="startAD" class="field" style="display:none;margin-top:10px"><input class="input" id="sDateAD" type="date"></div>
           </div>
 
-          <div class="field"><label>End date <span style="float:right"><button type="button" class="btn btn-ghost btn-sm" id="todayBtn">Today</button> <button type="button" class="btn btn-ghost btn-sm" id="swapBtn" title="Swap start and end dates">Swap ↔</button></span></label>
+          <div class="field"><label>End date <span style="float:right"><button type="button" class="btn btn-sm" id="todayBtn" style="background:#D1FAE5;color:#065F46;border-color:#A7F3D0;">Today</button> <button type="button" class="btn btn-sm" id="swapBtn" title="Swap start and end dates" style="background:#FFEDD5;color:#9A3412;border-color:#FED7AA;">Swap ↔</button></span></label>
             <div id="endBS" class="field-row" style="grid-template-columns:1.1fr 1.3fr 0.8fr">
               <select class="select" id="eYear" aria-label="End year"></select>
               <select class="select" id="eMonth" aria-label="End month"></select>
