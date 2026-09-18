@@ -129,13 +129,13 @@
 
           <div class="field"><label>Start date</label>
             <div id="startBS" class="field-row" style="grid-template-columns:1.1fr 1.3fr 0.8fr">
-              <select class="select" id="sYear" aria-label="Start year"><option value="" disabled selected>Year (2000–2090)</option></select>
-              <select class="select" id="sMonth" aria-label="Start month"><option value="" disabled selected>Month</option></select>
-              <select class="select" id="sDay" aria-label="Start day"><option value="" disabled selected>Day</option></select>
+              <select class="select" id="sYear" aria-label="Start year"></select>
+              <select class="select" id="sMonth" aria-label="Start month"></select>
+              <select class="select" id="sDay" aria-label="Start day"></select>
             </div>
             <div class="hint" style="display:flex;gap:12px;margin-top:6px;font-size:.75rem;color:var(--muted)">
               <span style="flex:1.1;text-align:center">BS Year (e.g., 2081)</span>
-              <span style="flex:1.3;text-align:center">Nepali Month (Baisakh–Chaitra)</span>
+              <span style="flex:1.3;text-align:center">Nepali Month</span>
               <span style="flex:.8;text-align:center">Day (1–32)</span>
             </div>
             <div id="startAD" class="field" style="display:none;margin-top:10px"><input class="input" id="sDateAD" type="date"></div>
@@ -143,13 +143,13 @@
 
           <div class="field"><label>End date <span style="float:right"><button type="button" class="btn btn-sm" id="todayBtn" style="background:#D1FAE5;color:#065F46;border-color:#A7F3D0;">Today</button> <button type="button" class="btn btn-sm" id="swapBtn" title="Swap start and end dates" style="background:#FFEDD5;color:#9A3412;border-color:#FED7AA;">Swap ↔</button></span></label>
             <div id="endBS" class="field-row" style="grid-template-columns:1.1fr 1.3fr 0.8fr">
-              <select class="select" id="eYear" aria-label="End year"><option value="" disabled selected>Year (2000–2090)</option></select>
-              <select class="select" id="eMonth" aria-label="End month"><option value="" disabled selected>Month</option></select>
-              <select class="select" id="eDay" aria-label="End day"><option value="" disabled selected>Day</option></select>
+              <select class="select" id="eYear" aria-label="End year"></select>
+              <select class="select" id="eMonth" aria-label="End month"></select>
+              <select class="select" id="eDay" aria-label="End day"></select>
             </div>
             <div class="hint" style="display:flex;gap:12px;margin-top:6px;font-size:.75rem;color:var(--muted)">
               <span style="flex:1.1;text-align:center">BS Year (e.g., 2081)</span>
-              <span style="flex:1.3;text-align:center">Nepali Month (Baisakh–Chaitra)</span>
+              <span style="flex:1.3;text-align:center">Nepali Month</span>
               <span style="flex:.8;text-align:center">Day (1–32)</span>
             </div>
             <div id="endAD" class="field" style="display:none;margin-top:10px"><input class="input" id="eDateAD" type="date"></div>
@@ -281,10 +281,7 @@ function buildDayOptions(prefix) {
       let days = 31;
       try { days = bsDaysInMonth(y, m); } catch (e) {}
       const cur = parseInt(ds.value) || 1;
-      // Keep placeholder if exists
-      const placeholder = ds.querySelector('option[disabled][selected]');
       ds.innerHTML = '';
-      if (placeholder) ds.appendChild(placeholder);
       for (let i = 1; i <= days; i++) { const o = document.createElement('option'); o.value = i; o.textContent = i; ds.appendChild(o); }
       ds.value = String(Math.min(cur, days));
     }
