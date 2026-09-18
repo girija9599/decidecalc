@@ -28,16 +28,17 @@
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/nepali-date-difference-calculator">
   <link rel="stylesheet" href="/assets/css/main.css?v=20260913-7">
   <style>
-    /* Ensure dropdowns always visible */
+    /* Ensure dropdowns always visible and interactive */
     .select {
       width: 100%;
-      min-height: 42px;
-      padding: 13px 42px 13px 15px;
+      height: 44px;
+      min-height: 44px;
+      padding: 13px 15px;
       border: 1.5px solid var(--border-strong);
       border-radius: var(--radius-sm);
       background: var(--card-2);
       color: var(--text);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
     }
     .select:focus {
@@ -45,17 +46,6 @@
       box-shadow: 0 0 0 3px rgba(59,130,246,.22);
       background: var(--card);
       outline: none;
-    }
-    /* Custom arrow */
-    .select::after {
-      content: "▼";
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      font-size: 0.7rem;
-      pointer-events: none;
     }
     /* Today/Swap button hover states */
     #todayBtn:hover { background:#A7F3D0 !important; border-color:#6EE7B7 !important; transform:translateY(-1px); }
@@ -297,9 +287,11 @@ function buildDayOptions(prefix) {
       const nowBS = new ND(new Date()).getBS();
       ['s', 'e'].forEach(function (p) {
         const ys = $(p + 'Year'), ms = $(p + 'Month'), ds = $(p + 'Day');
+        // Populate Years
         BS_YEARS.forEach(function (y) { const o = document.createElement('option'); o.value = String(y); o.textContent = String(y); ys.appendChild(o); });
+        // Populate Months
         BS_MONTHS.forEach(function (name, idx) { const o = document.createElement('option'); o.value = String(idx); o.textContent = name; ms.appendChild(o); });
-        // Pre-populate days 1-31 initially (will rebuild on month change)
+        // Populate Days 1-31 (will rebuild on month change)
         for (let i = 1; i <= 31; i++) { const o = document.createElement('option'); o.value = String(i); o.textContent = String(i); ds.appendChild(o); }
       });
       // defaults: start 15 Baisakh 2080, end today
@@ -308,6 +300,12 @@ function buildDayOptions(prefix) {
       $('eYear').value = String(nowBS.year); $('eMonth').value = String(nowBS.month);
       $('eDay').value = String(nowBS.date);
     })();
+
+    // Rebuild days when month changes
+    ['s', 'e'].forEach(function (p) {
+      $(p + 'Year').addEventListener('change', function () { buildDayOptions(p); });
+      $(p + 'Month').addEventListener('change', function () { buildDayOptions(p); });
+    });
 
     /* ---------- read current dates ---------- */
     function readDate(prefix) {
