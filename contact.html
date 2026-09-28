@@ -32,17 +32,49 @@
       <h1>Contact</h1>
       <p class="lead mt-2">Found a bug, want a new calculator, or have feedback? We'd love to hear from you.</p>
 
+      <h2 class="mt-4">Direct support contact</h2>
+      <div class="note mt-2" style="display:flex;gap:12px;align-items:flex-start">
+        <span style="width:32px;height:32px;border-radius:9px;background:rgba(59,130,246,.16);display:grid;place-items:center;flex:0 0 auto;color:var(--accent)"></span>
+        <div><b>Email support:</b> <a href="mailto:support@decidecalc.com" style="color:var(--accent);font-weight:700">support@decidecalc.com</a><br><span style="color:var(--text-soft);font-size:.92rem">We endeavour to address all legitimate technical support, mathematical accuracy, and business inquiries within <b>24–48 business hours</b>.</span></div>
+      </div>
+      <p class="mt-2" style="color:var(--text-soft)">DecideCalc operates primarily as an online educational resource. General support and administrative inquiries are managed digitally via <a href="mailto:support@decidecalc.com" style="color:var(--accent)">support@decidecalc.com</a> across standard business operational hours.</p>
+
       <h2 class="mt-4">Report a bug or request a tool</h2>
       <p class="mt-2">Please include: the calculator name or URL, a short description of the issue, the inputs you used, the result you saw, and the result you expected.</p>
 
-      <div class="note mt-3" style="display:flex;gap:12px;align-items:flex-start">
-        <span style="width:32px;height:32px;border-radius:9px;background:rgba(59,130,246,.16);display:grid;place-items:center;flex:0 0 auto;color:var(--accent)"></span>
-        <div><b>Email:</b> <a href="mailto:contact@decidecalc.com" style="color:var(--accent);font-weight:700">contact@decidecalc.com</a><br><span style="color:var(--text-soft);font-size:.92rem">We aim to reply within 3–5 business days.</span></div>
-      </div>
+      <h2 class="mt-4">Inquiry form</h2>
+      <p class="mt-2">Fill this in and your email app will open with the message pre-filled — nothing is sent from the website itself.</p>
+      <form id="contactForm" style="margin-top:14px;display:grid;gap:14px" aria-label="Contact Form">
+        <div>
+          <label for="cf-name" style="font-weight:700;font-size:.92rem">Your name</label><br>
+          <input id="cf-name" name="name" type="text" required placeholder="Full name" style="width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft,#F5F7FA);color:var(--text)">
+        </div>
+        <div>
+          <label for="cf-email" style="font-weight:700;font-size:.92rem">Email address</label><br>
+          <input id="cf-email" name="email" type="email" required placeholder="name@example.com" style="width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft,#F5F7FA);color:var(--text)">
+        </div>
+        <div>
+          <label for="cf-topic" style="font-weight:700;font-size:.92rem">Topic / specific calculator</label><br>
+          <select id="cf-topic" name="topic" required style="width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft,#F5F7FA);color:var(--text)">
+            <option value="">-- Please select --</option>
+            <option value="General Support">General support</option>
+            <option value="Calculator Accuracy / Feedback">Calculator accuracy / feedback</option>
+            <option value="Educational Inquiry">Educational inquiry</option>
+            <option value="Privacy / Terms Inquiry">Privacy / terms inquiry</option>
+            <option value="Partnership / Advertising">Partnership / advertising</option>
+          </select>
+        </div>
+        <div>
+          <label for="cf-message" style="font-weight:700;font-size:.92rem">Message</label><br>
+          <textarea id="cf-message" name="message" rows="6" required placeholder="Describe your inquiry or feedback…" style="width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft,#F5F7FA);color:var(--text)"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send message</button>
+        <p id="cf-note" role="status" aria-live="polite" style="color:var(--text-soft);font-size:.88rem;min-height:1em"></p>
+      </form>
 
       <h2 class="mt-4">Before you write</h2>
       <ul style="margin:12px 0 0;padding-left:20px;color:var(--text-soft)">
-        <li><b>AdAccount/help questions</b> — we can't reset your account because we don't have one. All tools work without login.</li>
+        <li><b>Account/help questions</b> — we can't reset your account because we don't have one. All tools work without login.</li>
         <li><b>Lost data</b> — because inputs are never sent to our servers, we cannot recover a past calculation.</li>
         <li><b>Tax/financial advice</b> — we cannot provide personal advice. See our <a href="terms" style="color:var(--accent);font-weight:700">Terms</a> and consult a qualified professional.</li>
       </ul>
@@ -55,6 +87,20 @@
   <script src="assets/js/core.js?v=20260911-1"></script>
   <script src="assets/js/layout.js?v=20260911-1"></script>
   <script src="assets/js/tools.js?v=20260911-1"></script>
-  <script>DC.renderLayout(); setTimeout(function(){ DC.initReveal(); }, 0);</script>
+  <script>
+    DC.renderLayout(); setTimeout(function(){ DC.initReveal(); }, 0);
+    // Static-site contact form: compose a prefilled email in the visitor's mail app.
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('cf-name').value.trim();
+      var email = document.getElementById('cf-email').value.trim();
+      var topic = document.getElementById('cf-topic').value;
+      var message = document.getElementById('cf-message').value.trim();
+      var subject = 'DecideCalc inquiry: ' + topic;
+      var body = 'Name: ' + name + '\nEmail: ' + email + '\nTopic: ' + topic + '\n\n' + message;
+      window.location.href = 'mailto:support@decidecalc.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      document.getElementById('cf-note').textContent = 'Your email app should now open with the message pre-filled. If it does not, write to us directly at support@decidecalc.com.';
+    });
+  </script>
 </body>
 </html>
