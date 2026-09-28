@@ -105,7 +105,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Hashes are one-way</b> — no math exists to recover input from output (only brute force). Checksum equality proves two files match (with high probability for broken algorithms, near-certainty for SHA-256+).</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Where are MD5/SHA-1 still acceptable?</summary><div class="faq-a"><p>Checksums for accidental corruption (CDN integrity, file downloads where security isn't the goal). Cache keys (no attacker model). Non-adversarial deduplication. NEVER for passwords, signatures, or certificates.</p></div></details>
+      <details class="faq-static"><summary>Why don't you include bcrypt/scrypt/Argon2?</summary><div class="faq-a"><p>Those are PASSWORD-HASHING algorithms — deliberately slow with built-in salt + work factor. Web Crypto API doesn't expose them, and you shouldn't compute them in browsers anyway — password hashing happens on the server.</p></div></details>
+      <details class="faq-static"><summary>File hashing shows a different value than online tools?</summary><div class="faq-a"><p>Encoding! Text tools may add a trailing newline, or differ on EOL (\n vs \r\n). Files hash exactly their bytes. Most online tools hash UTF-8 of the visible text, which may differ from your file's actual encoding.</p></div></details>
+      <details class="faq-static"><summary>Salting + hashing — do I need it?</summary><div class="faq-a"><p>For password storage: YES, absolutely, use bcrypt/Argon2 (which integrate salt). For checksums / dedup: salt is pointless. For token uniqueness: use random tokens directly, not hashes.</p></div></details>
+    $5</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

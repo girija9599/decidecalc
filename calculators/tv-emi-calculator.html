@@ -34,8 +34,8 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>TV EMI Calculator</h1><div class="sub">smart TVs · home theater</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>TV price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="100" max="10000" step="50" value="800" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="5000" step="50" value="0" data-dec="0"></div>
+          <div class="field"><label>TV price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="15000" max="300000" step="1000" value="60000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="150000" step="1000" value="0" data-dec="0"></div>
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="16" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>EMI term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="36" step="6" value="12" data-dec="0"></div>
           
@@ -71,11 +71,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>Financing a TV</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Zero-interest offers:</b> many electronics stores offer 6–18 months interest-free; those are usually the best option.</li><li><b>BNPL apps:</b> 0% at checkout, but missed payments can trigger retroactive interest or fees.</li><li><b>Saving up:</b> a $800 TV at 18% over 24 months costs about $160 extra; in most cases waiting 2 months beats financing.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only — retailer offers vary widely.</div></div>
+      <h2>How TV EMI is calculated</h2>
+      <p class="mt-2">A 55-inch 4K TV in India spans ₹35,000 (Xiaomi/Thomson) to ₹1,00,000+ (Sony/Samsung/LG OLED) — and TV financing uses the same reducing-balance instalment formula as every other EMI:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (price − down payment − exchange value), r = monthly interest rate (annual ÷ 12 ÷ 100), n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹60,000 TV at 16% for 12 months</h3>
+      <p style="margin-top:8px">With P = ₹60,000, r = 0.013333 and n = 12, the EMI is ₹5,444 per month — ₹65,326 repaid in total, of which ₹5,326 is interest. On a 6-month no-cost EMI (0%), the same TV is ₹10,000/month with zero interest; over 24 months at 16%, the interest balloons to ₹10,651 — you'd have paid nearly ₹71,000 for a ₹60,000 TV that has already dropped a size class in price. The pattern is consistent: for TVs, timing the purchase to a sale beats choosing a longer tenure every time.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">TV financing in India: where the deals are</h3>
+      <p style="margin-top:8px">TVs are the classic Indian festive-season purchase, and the financing market reflects that. <strong>No-cost EMI windows</strong> (6–12 months) on Sony, Samsung, LG and Xiaomi TVs appear reliably during Diwali, Flipkart Big Billion Days and Amazon Great Indian Festival — bank cards from HDFC, ICICI, Axis and SBI dominate these offers. <strong>Zero-down-payment NBFC schemes</strong> at Croma, Vijay Sales, Reliance Digital and local dealers (Bajaj Finserv, HomeCredit) let you walk out with a TV paying nothing upfront — convenient, but check the interest beyond the no-cost window, and note that 18% GST applies on the interest component. <strong>Exchange value</strong> matters more for TVs than most gadgets: an old working TV fetches ₹3,000–₹15,000 in exchange depending on size and condition, directly shrinking the financed amount. Two traps to avoid: BNPL "pay in 3" apps at checkout that quietly carry 18–24% after the free window, and extended warranties (₹3,000–₹8,000 on a large TV) that get bundled into the financed amount by default — decide them separately.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before you finance a TV</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Buy in the sale window:</b> last year's flagship at Diwali pricing with no-cost EMI beats this year's mid-range on 24-month credit.</li>
+        <li><b>Exchange the old TV:</b> ₹3,000–₹15,000 off the principal is the cheapest "down payment" you'll get.</li>
+        <li><b>Keep tenure ≤ 12 months:</b> TV prices fall constantly — paying interest into year two means financing depreciation.</li>
+        <li><b>Check panel warranty vs extended warranty:</b> most brands include 1 year; panel-only extended coverage can often be added later if needed.</li>
+        <li><b>Budget the extras separately:</b> wall mount (₹500–₹1,500), installation, and a UPS/stabilizer in areas with voltage swings — don't let them ride silently into the EMI.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with an optional down payment and amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/appliance-emi-calculator">Appliance EMI Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/credit-card-payoff-calculator">Credit Card Payoff Calculator</a> · <a href="/calculators/debt-payoff-planner">Debt Payoff Planner</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much EMI for a ₹50,000 TV?</summary><div class="faq-a"><p>At 16% over 12 months, about ₹4,537/month (₹54,439 total). On a 6-month no-cost EMI, ₹8,334/month with zero interest; over 24 months at 16%, roughly ₹2,445/month but ₹8,690 in total interest. Use the sliders above for your exact numbers.</p></div></details>
+      <details class="faq-static"><summary>Is buying a TV on EMI a good idea?</summary><div class="faq-a"><p>On a genuine no-cost plan during a sale, yes — you keep your savings intact and pay the sticker price in instalments. On regular 16–24% interest, no: a ₹60,000 TV financed over 24 months costs ₹10,000+ extra while the same TV's price keeps falling. If there's no no-cost window, waiting 2–3 months to save up is almost always cheaper.</p></div></details>
+      <details class="faq-static"><summary>What is zero down payment TV financing?</summary><div class="faq-a"><p>Stores and NBFCs (Bajaj Finserv, HomeCredit, IDFC First) let you take a TV home with no upfront money, converting the full price into EMIs — often on Aadhaar + PAN KYC alone. The catch: beyond the advertised no-cost window, interest runs 16–28%, and processing fees of ₹200–₹500 may apply. It's convenient for genuine cash-flow crunches, expensive as a habit.</p></div></details>
+      <details class="faq-static"><summary>Does exchange value reduce my TV EMI?</summary><div class="faq-a"><p>Yes — the exchange credit is subtracted from the TV's price before financing, so it directly shrinks the principal and therefore every EMI. An old 32-inch working TV typically fetches ₹3,000–₹6,000; large 43–55-inch LED/LCD sets ₹8,000–₹15,000. Note some stores reduce the exchange bonus if you choose no-cost EMI, so compare the final invoice both ways.</p></div></details>
+      <details class="faq-static"><summary>What happens if I miss a TV EMI payment?</summary><div class="faq-a"><p>The auto-debit bounces (₹300–₹500 bank charge), the lender adds a late fee of 1.5–2% per month on the overdue amount, and after 30+ days the miss hits your CIBIL report. On NBFC consumer loans, repeated misses can lead to recovery agent calls and acceleration of the full balance. If a payment will fail, inform the lender in advance to request a revised debit date.</p></div></details>
+      <details class="faq-static"><summary>Can I prepay or foreclose a TV EMI early?</summary><div class="faq-a"><p>Yes — most lenders allow foreclosure after 3–6 EMIs with a charge of 2–5% of the outstanding principal plus GST. On no-cost plans, early closure can sometimes claw back the interest subsidy, making it cheaper to just continue — ask for both figures in writing before deciding. Regular high-interest plans are always worth foreclosing early.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +107,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'tv-emi-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'tv-emi-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

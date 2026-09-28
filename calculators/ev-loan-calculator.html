@@ -34,17 +34,17 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Electric Vehicle (EV) Loan Calculator</h1><div class="sub">EV loans & green financing</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>EV price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="10000" max="300000" step="1000" value="48000" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="150000" step="1000" value="6000" data-dec="0"></div>
-          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="6.5" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>EV price (on-road)</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="80000" max="2500000" step="10000" value="800000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="1250000" step="10000" value="160000" data-dec="0"></div>
+          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="9" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="96" step="6" value="60" data-dec="0"></div>
-          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
+          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (extras &amp; fees)</summary>
             <div class="field-row" style="margin-top:12px">
-              <div class="field"><label>Tax rate (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
-              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="50" value="0"></div>
+              <div class="field"><label>Charger &amp; extras to finance (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
+              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="500" value="0"></div>
             </div>
           </details>
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate EV payment</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate EV loan EMI</button>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
         </div>
         <div class="chart-wrap"><canvas id="chart"></canvas></div>
         <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
-        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">EV loan snapshot</h4><p id="recoText">Some lenders offer a 0.25–0.5% APR discount on EVs. Factor that plus any federal/state tax credit into your net cost before comparing loans.</p></div></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">EV loan snapshot</h4><p id="recoText">Many Indian banks offer a 0.25–0.5% green discount on EV loans, and state EV policies waive road tax — factor both into your net cost before comparing lenders.</p></div></div>
       </div>
     </div>
 
@@ -76,11 +76,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>EV financing considerations</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Green discounts:</b> many banks offer slightly lower APRs for EVs — ask before you accept the standard rate.</li><li><b>Tax credits:</b> a federal tax credit can effectively reduce the cost; because the credit arrives after purchase, it does not lower the loan but reduces net spend.</li><li><b>Higher price:</b> EVs still cost more upfront; a large down payment keeps the financed amount reasonable.</li><li><b>Home charger:</b> remember to budget for installation separately from the loan.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only — credit and incentive rules change; confirm details with your lender.</div></div>
+      <h2>How EV loan EMI is calculated</h2>
+      <p class="mt-2">EV loans in India — for electric cars, scooters or rickshaws — use the same reducing-balance formula as any vehicle loan, often with a small "green" rate discount:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (on-road price + charger/extras − down payment), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹8,00,000 electric car at 9% for 5 years</h3>
+      <p style="margin-top:8px">A Tata Punch EV or Tiago EV on-road at ₹8,00,000 with a 20% down payment of ₹1,60,000 leaves P = ₹6,40,000. At 9% for 60 months, the EMI is ₹13,285 per month — total repayment ₹7,97,121, of which ₹1,57,121 is interest. With a green-loan discount of 0.25% (8.75%), the EMI drops to ₹13,208 and total interest to ₹1,52,470 — saving ₹4,651 over the tenure. Now the running-cost flip side: charging at home costs roughly ₹1.2–₹1.5 per km versus ₹6–₹8 per km of petrol — on 1,200 km a month, that's ₹7,000–₹8,000 saved monthly, more than the interest cost itself.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">EV financing in India: incentives and reality</h3>
+      <p style="margin-top:8px">The subsidy landscape shifted recently: FAME-II closed in March 2024 and was replaced by the <strong>PM E-DRIVE scheme</strong> (₹10,900 crore, running to March 2026), which subsidises e-two-wheelers (up to ₹5,000), e-three-wheelers, e-buses and e-trucks — but <em>not electric cars</em>. Car buyers instead benefit from <strong>state EV policies</strong>: Delhi, Maharashtra, Tamil Nadu, Kerala and others waive or rebate road tax and registration (worth 4–10% of price) and some offer purchase incentives on cars too. On financing itself, SBI's Green Car Loan, plus HDFC, ICICI, Axis and Kotak EV products, typically discount 0.25–0.5% off the standard car rate — effective rates of 8.5–9.5% in 2026. Lenders fund up to 90–95% of the on-road price including the charger in many cases. Two India-specific cautions: the used-EV resale market is still thin, so an EV's residual value after 5 years is uncertain — keep tenure to 5 years rather than stretching to 7 to avoid financing an asset the market hasn't priced yet; and check whether the home charger plus installation (₹15,000–₹50,000 with wiring) is financed, because it's a genuine part of making the car usable.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before financing an EV</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Ask for the green discount by name:</b> it's not always advertised — SBI, HDFC and ICICI all have EV variants of their car loans.</li>
+        <li><b>Check your state's EV policy:</b> road-tax waiver plus registration refund can be worth ₹40,000–₹1,00,000+ on an ₹8 lakh car.</li>
+        <li><b>Finance the charger if offered:</b> ₹15,000–₹50,000 for a wall box and installation is part of the real cost of ownership.</li>
+        <li><b>Run the total-cost-of-ownership math:</b> fuel savings of ₹6,000–₹8,000/month at typical commutes usually outweigh the EV's price premium over 5 years.</li>
+        <li><b>Confirm battery warranty vs tenure:</b> 8-year battery warranties now standard — align loan tenure well inside it so you're never paying EMIs on a degraded pack.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with down payment, financed charger/extras and a full amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/car-loan-calculator">Car Loan Calculator</a> · <a href="/calculators/fuel-cost-calculator">Fuel Cost Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/savings-goal-calculator">Savings Goal Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for an ₹8 lakh electric car?</summary><div class="faq-a"><p>With a ₹1.6 lakh down payment (financing ₹6,40,000) at 9%: about ₹13,285/month over 5 years, or ₹20,352/month over 3 years. With a 0.25% green discount the 5-year EMI drops to ₹13,208. Use the sliders above for your exact model and tenure.</p></div></details>
+      <details class="faq-static"><summary>Do banks really offer lower interest rates on EVs?</summary><div class="faq-a"><p>Yes, typically 0.25–0.5% below the standard car-loan rate — SBI's Green Car Loan, HDFC, ICICI, Axis and Kotak all run EV variants. The saving looks small (₹4,000–₹5,000 over 5 years on a ₹6.4 lakh loan) but it's free money: ask for it explicitly when the rate is being quoted, since it isn't always surfaced by default.</p></div></details>
+      <details class="faq-static"><summary>Is there a government subsidy for electric cars in India?</summary><div class="faq-a"><p>Not at the national level any more — the PM E-DRIVE scheme (2024–2026) covers e-two-wheelers, e-three-wheelers, e-buses and e-trucks, but not electric cars. Car buyers benefit through state EV policies instead: road-tax and registration waivers in Delhi, Maharashtra, Tamil Nadu, Kerala, Telangana and others, worth 4–10% of the on-road price. Check your state's current transport department notification before purchase.</p></div></details>
+      <details class="faq-static"><summary>Can I get an income-tax deduction on EV loan interest?</summary><div class="faq-a"><p>Section 80EEB allowed a deduction of up to ₹1.5 lakh on EV loan interest, but only for loans sanctioned between 1 April 2019 and 31 March 2023 — it is no longer available for new loans. Current EV financing benefits are the lender's green discount and state-level road-tax waivers, not income-tax relief.</p></div></details>
+      <details class="faq-static"><summary>Should I finance an electric scooter or car for a longer tenure?</summary><div class="faq-a"><p>Keep it at 5 years or less. EV resale values in India are still uncertain (battery-condition-dependent, thin used market), so a 7-year loan risks owing more than the car is worth. Battery warranties of 8 years / 1,60,000 km are now standard — staying inside the warranty window for the whole loan is a sensible guardrail.</p></div></details>
+      <details class="faq-static"><summary>Does an EV loan cover the home charger and installation?</summary><div class="faq-a"><p>Often yes — many banks finance the charger and installation as part of the on-road package (typically ₹15,000–₹50,000 including wiring and a 7.2–7.4 kW wall box), and some manufacturers bundle a charger free with the car. If it's not included, adding roughly ₹25,000 to the loan raises the EMI by only about ₹520 over 5 years — usually worth it versus unsecured borrowing.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -90,7 +112,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'ev-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'ev-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

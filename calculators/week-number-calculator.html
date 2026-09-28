@@ -89,7 +89,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Payroll gotcha:</b> if you're paid weekly, your December payslip might show \"Week 53\" in some tax years — a different withholding calculation applies in those years.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Which one do Indian offices typically use?</summary><div class="faq-a"><p>ISO-8601 is the de-facto standard in Indian IT and multinational payrolls. Domestic small businesses often colloquially say "week N" meaning calendar-week-from-Monday but don't strictly track ISO.</p></div></details>
+      <details class="faq-static"><summary>Why does my calendar app show a different week number?</summary><div class="faq-a"><p>iPhone, Android and Windows let you pick the week-number convention. Default iOS uses US; default Google Calendar uses ISO. This tool tells you both so you always know which one you're looking at.</p></div></details>
+      <details class="faq-static"><summary>ISO year differs from calendar year — really?</summary><div class="faq-a"><p>Yes. ISO year starts on the Monday of the week containing the first Thursday. For 2026, ISO year Y=2026 starts Dec 29 2025. For 2020, ISO year ended Jan 3 2021. Edge effects are real and matter for payroll.</p></div></details>
+      <details class="faq-static"><summary>Are there 52 or 53 ISO weeks?</summary><div class="faq-a"><p>53 when Jan 1 falls on a Thursday, or on a Wednesday in a leap year. Otherwise 52. Recent 53-week years: 2015, 2020, 2026. Next: 2032, 2037, 2043. The extra week rarely changes payroll but does stretch schedule cycles.</p></div></details>
+    $5</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

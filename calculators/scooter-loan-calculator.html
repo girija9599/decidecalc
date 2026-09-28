@@ -34,12 +34,12 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Scooter Loan Calculator</h1><div class="sub">mopeds · entry-level mobility</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Scooter price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="500" max="12000" step="100" value="3500" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="6000" step="100" value="500" data-dec="0"></div>
+          <div class="field"><label>Scooter price (on-road)</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="70000" max="200000" step="1000" value="95000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="100000" step="1000" value="19000" data-dec="0"></div>
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="11" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="48" step="6" value="24" data-dec="0"></div>
-          
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate scooter payment</button>
+
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate scooter loan EMI</button>
         </div>
       </div>
 
@@ -71,11 +71,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>Scooter financing basics</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Lower amounts:</b> most scooters$500–$8,000, so loans are shorter (12–36 months).</li><li><b>Personal loans:</b> because some lenders do not offer dedicated scooter financing, a small personal loan is common.</li><li><b>Used scooters:</b> cheap enough that many buyers pay cash; if you do finance, keep the term short.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only. Actual rates depend on the lender and your credit.</div></div>
+      <h2>How scooter loan EMI is calculated</h2>
+      <p class="mt-2">India's best-selling scooters — Honda Activa, TVS Jupiter, Suzuki Access, Hero Pleasure — sit between ₹80,000 and ₹1,20,000 on-road, and their financing uses the standard reducing-balance formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (on-road price − down payment), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹95,000 Activa at 11% for 2 years</h3>
+      <p style="margin-top:8px">An Activa 6G on-road at ₹95,000 with a 20% down payment of ₹19,000 leaves P = ₹76,000. At 11% for 24 months, the EMI is ₹3,542 per month — total repayment ₹85,013, of which ₹9,013 is interest. Stretch the same loan to 36 months and the EMI eases to ₹2,488 but interest rises to ₹13,573. Now the reality check: that ₹9,013 interest on a 2-year loan is the price of convenience — while the scooter itself depreciates about ₹30,000 in the first year. If you can save for 4–5 months instead, a cash purchase is materially cheaper; if you need the scooter now (commute, deliveries), the EMI is doing real work for you.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Scooter financing in India: what to expect</h3>
+      <p style="margin-top:8px">Scooters are financed through the same two-wheeler lenders as bikes — TVS Credit, Hero FinCorp, Bajaj Auto Finance, IDFC First, Kotak, Shriram, and manufacturer tie-ups at every dealership. Rates run <strong>10–14% reducing balance</strong> for good profiles, 14–18% for entry-level buyers or flat-rate quotes (a "9% flat" quote really costs ~16–17% reducing — always ask). Lenders fund up to 90–100% of on-road value, but the add-ons decide the deal: processing fees of 2–3% (often ₹1,000–₹2,500), mandatory first-year insurance bundled at inflated dealer prices (compare with buying online — this alone can save ₹2,000–₹4,000), and accessories added into the loan. Watch for <strong>structured schemes</strong> with a balloon final instalment and for EMI "holidays" (pay 2 EMIs after 60 days) that quietly capitalise interest. For delivery workers and students, many NBFCs now approve on Aadhaar + PAN + bank statements without income proof — at a rate premium. Since scooters change hands cheaply on the used market, keep the tenure at 24–36 months; a 48-month loan outlives the ownership for most buyers.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before financing a scooter</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Compare the insurance line:</b> dealer-bundled first-year insurance often costs ₹2,000–₹4,000 more than the same policy bought online.</li>
+        <li><b>Ask "reducing or flat?"</b> and demand the total repayment figure — flat quotes on small loans hide the biggest relative premium.</li>
+        <li><b>Put down 20% if you can:</b> ₹19,000 down on this example cuts interest by roughly ₹5,000 versus zero-down.</li>
+        <li><b>Keep tenure ≤ 36 months:</b> scooters hold little resale after year three; don't pay interest into that window.</li>
+        <li><b>Check EMI vs your commute economics:</b> if the scooter replaces ₹3,000–₹5,000 of monthly cab/auto spend, the EMI can genuinely pay for itself.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian two-wheeler financiers, with an optional down payment and amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/motorcycle-loan-calculator">Motorcycle Loan Calculator</a> · <a href="/calculators/fuel-cost-calculator">Fuel Cost Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/ev-loan-calculator">EV Loan Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for a ₹1 lakh scooter?</summary><div class="faq-a"><p>With a ₹20,000 down payment (financing ₹80,000) at 11%: about ₹3,729/month over 2 years or ₹2,619/month over 3 years. At zero down payment, financing the full ₹1,00,000, expect ₹4,661/month over 2 years. Use the sliders above for your exact figures.</p></div></details>
+      <details class="faq-static"><summary>What credit score do I need for a scooter loan?</summary><div class="faq-a"><p>Many two-wheeler lenders approve small loans (under ₹1.5 lakh) with scores as low as 650, and some NBFCs approve first-time borrowers with no score at all using bank statements instead. A score above 720, though, unlocks 10–11% rates instead of 14–18% — on a ₹80,000 loan that difference is worth ₹3,000–₹6,000 over the tenure.</p></div></details>
+      <details class="faq-static"><summary>Can I get a scooter on EMI without income proof?</summary><div class="faq-a"><p>Yes. Options: NBFC schemes accepting 3–6 months of bank statements, a co-applicant or guarantor, a loan against a fixed deposit, or student schemes with a parent as co-borrower. Expect a rate premium or larger down payment for the flexibility. Delivery-platform workers can often use their platform earnings statements.</p></div></details>
+      <details class="faq-static"><summary>Is it worth financing a ₹90,000 scooter or better to save up?</summary><div class="faq-a"><p>If the scooter replaces daily auto/cab spend of ₹3,000+, financing makes sense from month one — the EMI is cheaper than the spend it replaces. If it's for occasional use, saving for 4–6 months avoids ₹8,000–₹14,000 of interest and depreciation. The middle path: a festive-season no-cost or low-cost EMI, which brands subsidise heavily on scooters.</p></div></details>
+      <details class="faq-static"><summary>Why is my dealership quoting a "flat" interest rate?</summary><div class="faq-a"><p>Flat-rate quoting is common in the two-wheeler segment because the number sounds small. It charges interest on the full principal for the entire tenure even as you repay. Convert before comparing: flat × 1.85 ≈ reducing equivalent (a 9% flat ≈ 16.5% reducing). Ask for the reducing-balance rate or the total repayment amount — both tell the true cost.</p></div></details>
+      <details class="faq-static"><summary>What extra costs should I budget beyond the EMI?</summary><div class="faq-a"><p>Processing fee (₹1,000–₹2,500) plus GST, first-year comprehensive insurance (₹4,000–₹8,000 at dealers), accessories if financed, and NACH/bounce charges if an auto-debit fails. Annual running costs — fuel, service (₹1,500–₹2,500/visit), insurance renewals — continue after the loan too. The Fuel Cost Calculator helps you estimate the monthly running part.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +107,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'scooter-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'scooter-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

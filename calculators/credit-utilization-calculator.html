@@ -99,10 +99,10 @@
         <div class="result-hero"><div class="big" id="rUtilization">20.0%</div><div class="lbl">Overall credit utilization</div></div>
         <div style="text-align:center;margin-top:10px"><span class="signal green" id="signal">LOW UTILIZATION</span></div>
         <div class="result-grid">
-          <div class="result-stat"><div class="v" id="rAvailable">$8,000</div><div class="k">Remaining available credit</div></div>
+          <div class="result-stat"><div class="v" id="rAvailable">₹80,000</div><div class="k">Remaining available credit</div></div>
           <div class="result-stat"><div class="v" id="rHighest">—</div><div class="k">Highest individual-card utilization</div></div>
           <div class="result-stat"><div class="v" id="rBand">Low</div><div class="k">Utilization band</div></div>
-          <div class="result-stat"><div class="v" id="rReported">$2,000</div><div class="k">Reported revolving balances</div></div>
+          <div class="result-stat"><div class="v" id="rReported">₹20,000</div><div class="k">Reported revolving balances</div></div>
         </div>
         <div class="chart-wrap"><canvas id="utilizationChart" aria-label="Doughnut chart showing used and available revolving credit" role="img"></canvas></div>
         <div class="result-actions">
@@ -118,7 +118,7 @@
 
     <section class="mt-4 card reveal" style="max-width:none">
       <h2>How credit utilization is calculated</h2>
-      <p class="mt-2"><b>Overall utilization = total reported revolving balances ÷ total revolving credit limits × 100.</b> For example, a $2,000 balance divided by a $10,000 total limit is 20% utilization. This calculator uses reported revolving balances and limits, such as credit cards and revolving credit lines.</p>
+      <p class="mt-2"><b>Overall utilization = total reported revolving balances ÷ total revolving credit limits × 100.</b> For example, a ₹20,000 balance divided by a ₹1,00,000 total limit is 20% utilization. This calculator uses reported revolving balances and limits, such as credit cards and revolving credit lines.</p>
       <div class="field-row" style="margin-top:16px">
         <div><h3 style="font-size:1.05rem">Overall vs. per-card utilization</h3><p style="color:var(--text-soft);margin-top:6px">A lender or score may consider both your total ratio and how much of each card is used. One card near its limit can matter even when the total ratio looks moderate. Enter optional card details above to find the highest individual ratio.</p></div>
         <div><h3 style="font-size:1.05rem">What is not included</h3><p style="color:var(--text-soft);margin-top:6px">Installment loans such as mortgages, auto loans, personal loans, and student loans generally are not part of this revolving-credit utilization formula. They can affect creditworthiness in other ways.</p></div>
@@ -136,7 +136,13 @@
       </div>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is credit utilization?</summary><div class="faq-a"><p>Credit utilization is the percentage of available revolving credit that appears as a reported balance: total revolving balances divided by total revolving credit limits, multiplied by 100. Credit cards and revolving lines are typical examples.</p></div></details>
+      <details class="faq-static"><summary>Does credit utilization include mortgages or other installment loans?</summary><div class="faq-a"><p>Usually no. The utilization ratio shown here is for revolving credit. Mortgages, auto loans, student loans, and other installment loans can affect a credit profile, but their remaining balance is not normally added to revolving utilization.</p></div></details>
+      <details class="faq-static"><summary>What is a good credit utilization ratio?</summary><div class="faq-a"><p>There is no ratio that guarantees a score outcome, and models differ. This tool labels 0–9% as excellent and 10–29% as low. In general, lower reported revolving utilization is often viewed more favorably than higher utilization.</p></div></details>
+      <details class="faq-static"><summary>Why does my highest individual card utilization matter?</summary><div class="faq-a"><p>Credit reports and scoring models may look at both total utilization and utilization on individual revolving accounts. A card carrying a large share of its own limit can be a concern even if your overall percentage is lower.</p></div></details>
+      <details class="faq-static"><summary>When should I pay a card balance to lower reported utilization?</summary><div class="faq-a"><p>Reporting dates vary by issuer and bureau. Paying before a statement closes may lower the balance that is reported, but confirm the issuer's reporting practice. Always make at least the required payment by its due date.</p></div></details>
+    $5</section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

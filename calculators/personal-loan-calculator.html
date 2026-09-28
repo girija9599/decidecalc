@@ -34,17 +34,17 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Personal Loan Calculator</h1><div class="sub">unsecured · fixed-payment loan</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Loan amount</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="1000" max="10000000" step="500" value="10000" data-dec="0"></div>
-          
+          <div class="field"><label>Loan amount</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="50000" max="4000000" step="10000" value="300000" data-dec="0"></div>
+
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="12" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="84" step="6" value="48" data-dec="0"></div>
-          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
+          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (fees)</summary>
             <div class="field-row" style="margin-top:12px">
-              <div class="field"><label>Tax rate (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
-              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="50" value="0"></div>
+              <div class="field"><label>Processing fee (%)</label><input class="input" id="tax" type="number" min="0" max="10" step="0.1" value="2"></div>
+              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="500" value="0"></div>
             </div>
           </details>
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate personal loan</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate personal loan EMI</button>
         </div>
       </div>
 
@@ -76,11 +76,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How personal loan payments work</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Unsecured:</b> no collateral required, so rates are higher than auto or home loans.</li><li><b>Fixed payment:</b> like a mortgage or auto loan, the payment stays the same every month.</li><li><b>Origination fee:</b> some lenders deduct 1–8% upfront; enter that under "fees" to see the real amount you receive.</li><li><b>Use wisely:</b> common uses are debt consolidation, medical bills, or home improvement.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimate only — your actual rate depends on credit, income, debt-to-income and the lender.</div></div>
+      <h2>How personal loan EMI is calculated</h2>
+      <p class="mt-2">Personal loans in India are unsecured — no collateral — so the rate prices your credit profile, and the EMI uses the standard reducing-balance formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = loan amount (+ processing fee if financed), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹3,00,000 personal loan at 12% for 4 years</h3>
+      <p style="margin-top:8px">With P = ₹3,00,000, r = 0.01 and n = 48, the EMI is ₹7,900 per month — total repayment ₹3,79,207, of which ₹79,207 is interest. Add the typical 2% processing fee (₹6,000) financed into the loan and the EMI becomes ₹8,058 with ₹80,791 in interest. Compare that against stretching the same loan to 5 years: the EMI eases to ₹6,673 but interest climbs to ₹1,00,400 — ₹21,000 more for ₹1,200/month of relief. Personal loans are the most expensive mainstream credit in India after credit cards, which is exactly why tenure discipline matters most here.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">What personal loans actually cost in India (2026)</h3>
+      <p style="margin-top:8px">Rates from HDFC, ICICI, Axis, Kotak, Bajaj Finserv and IDFC First run roughly <strong>10.5–16% per year</strong>: below 11% for salaried borrowers with a CIBIL score of 780+ at large employers, 12–14% for average profiles, and 16–24% for NBFC/fintech lending to thin-file borrowers. Digital lenders' "instant" loans at 24%+ should be treated as emergency credit. Beyond the rate, the fee stack matters: <strong>processing fees of 1–2.5% plus GST</strong>, documentation charges, bounce fees of ₹500–₹1,200, late penalties of 2–3% monthly, and <strong>foreclosure/prepayment charges of 2–5%</strong> (many banks now waive foreclosure after 12 EMIs — RBI has pushed for this). Your eligibility is driven by FOIR — banks want total EMIs under 50–55% of net income — and a CIBIL score above 750. Good uses: consolidating credit-card debt at 36–42% into a 12–14% loan (genuine arithmetic win), medical emergencies, family events. Poor uses: vacations, gadgets — anything that depreciates faster than the interest accrues or leaves nothing behind.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before taking a personal loan</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Compare the annual reducing rate, not the monthly EMI:</b> fintech ads quote "1.5% per month" — that's 18% a year (and ~32% in flat-rate terms).</li>
+        <li><b>Keep tenure ≤ 4 years:</b> unsecured money at 12%+ shouldn't outlive the purpose it funded.</li>
+        <li><b>Check the foreclosure clause:</b> prefer lenders charging zero foreclosure after 12 EMIs — bonuses and windfalls should be able to kill the loan.</li>
+        <li><b>Consolidate cards only with discipline:</b> consolidating ₹3 lakh of card debt works only if the cards then stay unused.</li>
+        <li><b>Ask for a rate match:</b> pre-approved offers from your own bank are usually 0.5–1.5% cheaper than market acquisition offers.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with an optional financed processing fee and a full amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/personal-loan-vs-car-loan">Personal loan vs car loan</a> · <a href="/calculators/credit-card-payoff-calculator">Credit Card Payoff Calculator</a> · <a href="/calculators/debt-payoff-planner">Debt Payoff Planner</a> · <a href="/calculators/emi-calculator">EMI Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for a ₹3 lakh personal loan?</summary><div class="faq-a"><p>At 12%: about ₹7,900/month over 4 years (₹79,207 total interest), ₹9,964/month over 3 years, or ₹6,673/month over 5 years (₹1,00,400 interest). At 16%, the 4-year EMI rises to about ₹8,502. Use the sliders above for your exact rate and tenure.</p></div></details>
+      <details class="faq-static"><summary>What is a good interest rate on a personal loan in India?</summary><div class="faq-a"><p>10.5–12% is excellent (CIBIL 780+, salaried at a reputed employer); 12–14% is typical; 15–18% means a weaker profile or an NBFC; anything above 20% should be reserved for genuine emergencies. Compare the annual reducing-balance rate plus processing fee across 2–3 lenders — the advertised "monthly rate" of 1.5% equals roughly 18% annually.</p></div></details>
+      <details class="faq-static"><summary>Should I use a personal loan to pay off credit card debt?</summary><div class="faq-a"><p>Usually yes, if the arithmetic works: card revolving debt costs 36–42% annually while a personal loan runs 10.5–16% — consolidating ₹3 lakh can save ₹60,000–₹90,000 over two years. The catch is behavioural: the consolidation only helps if the cleared cards are then used sparingly, not run up again. Balance-transfer offers at 0–1% for 3–6 months can be even cheaper if you can clear within the window.</p></div></details>
+      <details class="faq-static"><summary>How much personal loan am I eligible for?</summary><div class="faq-a"><p>Banks typically sanction up to 10–15× your monthly net income, subject to FOIR: total EMIs (including the new loan) should stay under 50–55% of net monthly income. A ₹1 lakh earner with no existing EMIs might qualify for ₹8–12 lakh at 12%; the same earner with ₹30,000 of existing EMIs would be capped far lower. Your pre-approved offers reflect the ceiling your bank has already computed.</p></div></details>
+      <details class="faq-static"><summary>Does a personal loan affect my CIBIL score?</summary><div class="faq-a"><p>Both ways. The hard enquiry and new account cause a small short-term dip; on-time EMIs over 12+ months build a strong payment history that lifts the score. Missing EMIs, meanwhile, cuts the score sharply and stays on the report for years. Closing the loan via foreclosure also gets recorded — some lenders prefer borrowers who complete tenures.</p></div></details>
+      <details class="faq-static"><summary>Can I prepay a personal loan early?</summary><div class="faq-a"><p>Yes, but check the charges: many banks charge 2–5% of the outstanding for foreclosure, with a lock-in of 6–12 EMIs, though several major banks now allow free foreclosure after 12 months and RBI pressure is pushing the industry that way. Part-prepayment is sometimes restricted entirely on fixed-rate unsecured loans. Read the loan agreement's prepayment clause before signing, not after the bonus arrives.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -90,7 +112,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'personal-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'personal-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('percent');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

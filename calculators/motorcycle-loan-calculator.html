@@ -34,17 +34,17 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Motorcycle Loan Calculator</h1><div class="sub">cruisers · sport bikes · touring</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Motorcycle price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="500" max="60000" step="250" value="12000" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="30000" step="250" value="1500" data-dec="0"></div>
-          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="10" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Motorcycle price (on-road)</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="60000" max="1000000" step="5000" value="220000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="500000" step="5000" value="44000" data-dec="0"></div>
+          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="9.5" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="72" step="6" value="36" data-dec="0"></div>
-          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
+          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (extras &amp; fees)</summary>
             <div class="field-row" style="margin-top:12px">
-              <div class="field"><label>Tax rate (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
-              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="50" value="0"></div>
+              <div class="field"><label>Extras to finance (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
+              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="500" value="0"></div>
             </div>
           </details>
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate motorcycle payment</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate motorcycle loan EMI</button>
         </div>
       </div>
 
@@ -76,11 +76,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How motorcycle financing works</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Higher rates:</b> bikes are riskier collateral — expect APRs 2–4% above an auto loan.</li><li><b>Shorter terms:</b> most lenders offer 24–60 months because motorcycles depreciate quickly.</li><li><b>Insurance matters:</b> full-coverage insurance is usually required while the bike is financed; budget for it separately.</li><li><b>Down payment:</b> 10–20% down helps offset rapid depreciation.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimate only — lenders price motorcycle loans by credit, bike type and model year.</div></div>
+      <h2>How motorcycle loan EMI is calculated</h2>
+      <p class="mt-2">Premium motorcycles in India — Royal Enfield, KTM, Triumph, Harley, Jawa — span ₹1.8 lakh to ₹10 lakh+, and their loans use the same reducing-balance formula as car loans, usually at slightly higher rates:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (on-road price + extras − down payment), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹2,20,000 Royal Enfield at 9.5% for 3 years</h3>
+      <p style="margin-top:8px">A Classic 350 on-road at ₹2,20,000 with a 20% down payment of ₹44,000 leaves P = ₹1,76,000. At 9.5% for 36 months, the EMI is ₹5,638 per month — total repayment ₹2,02,961 with ₹26,961 in interest. Stretch the same loan to 60 months and the EMI drops to ₹3,696, but interest climbs to ₹45,780 — more than double, for ₹1,900/month of breathing room. Since most buyers trade up or upgrade within 4–5 years, a 36-month tenure is the sweet spot for mid-size bikes.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Motorcycle financing in India: how it really works</h3>
+      <p style="margin-top:8px">Two-wheeler loans are the most commoditised credit product in India — available at the dealership itself from Bajaj Auto Finance, Hero FinCorp, TVS Credit, IDFC First, Kotak, HDFC and Shriram Finance. Rates for premium bikes (₹1.5 lakh+) run <strong>9–12% per year</strong> for good credit profiles; commuter bikes see 11–14% and NBFC zero-down schemes push 14–18%. Watch the flat-rate trap hard in this segment: dealers often quote "9% flat", which equals roughly <strong>16–17% reducing balance</strong> — always ask "reducing or flat?" before comparing. Lenders fund 85–100% of the on-road price, but processing fees (2–3% plus GST, sometimes capped ₹1,000–₹3,000), documentation charges and mandatory insurance add ₹5,000–₹15,000 at signing. Unlike cars, two-wheelers depreciate fast (25–30% in year one) and a financed commuter bike must carry comprehensive insurance until the loan closes. One more India-specific habit to know: many dealership "low EMI" offers are <em>structured</em> loans with a balloon final instalment — read the schedule, not just the EMI headline.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before financing a motorcycle</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Ask "reducing or flat rate?"</b> — a 10% flat quote is nearly double a 10% reducing quote in true cost.</li>
+        <li><b>Put down 15–20%:</b> bikes depreciate fastest of any vehicle; starting underwater is easy with zero-down schemes.</li>
+        <li><b>Cap tenure at 36–48 months:</b> a 5-year loan on a bike you'll sell in 4 means paying interest on someone else's motorcycle.</li>
+        <li><b>Time festive offers:</b> Diwali and Onam bring subvented interest and free insurance on Enfields, KTMs and commuters alike.</li>
+        <li><b>Check the last EMI:</b> ask whether the schedule has a balloon payment before you sign.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian two-wheeler financiers, with down payment, financed extras and a full amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/how-much-motorcycle-can-i-afford">How much motorcycle can I afford?</a> · <a href="/calculators/fuel-cost-calculator">Fuel Cost Calculator</a> · <a href="/calculators/car-loan-calculator">Car Loan Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for a ₹2 lakh bike loan?</summary><div class="faq-a"><p>With a ₹40,000 down payment (financing ₹1,60,000) at 9.5%: about ₹5,125/month over 3 years or ₹3,360/month over 5 years. At zero down payment, financing the full ₹2,00,000, expect roughly ₹6,407/month over 3 years. Use the sliders above for your exact price and tenure.</p></div></details>
+      <details class="faq-static"><summary>What interest rate do bike loans charge in India?</summary><div class="faq-a"><p>Premium bikes (₹1.5 lakh+): 9–12% reducing balance for good credit. Commuter bikes: 11–14%. NBFC zero-down or flat-rate schemes effectively cost 14–18%. Manufacturer financiers (Bajaj Auto Finance, Hero FinCorp, TVS Credit) undercut during festive subvention windows. Always convert any flat quote to reducing balance before comparing.</p></div></details>
+      <details class="faq-static"><summary>What does a flat interest rate really cost?</summary><div class="faq-a"><p>Roughly 1.8–1.9× the quoted number in reducing-balance terms: a "9% flat" 3-year loan costs about 16.5–17% reducing. That's because flat rates charge interest on the full principal every month even as you repay it. Ask the dealer for the reducing-balance equivalent or the total repayment figure — if they won't give either, that itself is an answer.</p></div></details>
+      <details class="faq-static"><summary>Can I get a bike loan without income proof?</summary><div class="faq-a"><p>Yes, several ways: a secured loan against an FD, a co-applicant with income, or NBFC schemes that accept 3–6 months of bank statements instead of salary slips. Some lenders approve small two-wheeler loans (under ₹1.5 lakh) on Aadhaar + PAN + bank statement alone. Expect slightly higher rates or a bigger down payment for the flexibility.</p></div></details>
+      <details class="faq-static"><summary>Should I take zero-down-payment bike finance?</summary><div class="faq-a"><p>Only if cash flow genuinely demands it. Zero-down schemes carry the highest rates (14–18% or flat-rate equivalents), and with bikes depreciating 25–30% in year one you start owing more than the bike is worth from day one. Even ₹20,000–₹40,000 down meaningfully cuts both the EMI and the total interest on a ₹2 lakh bike.</p></div></details>
+      <details class="faq-static"><summary>What happens to my bike loan if I sell the bike early?</summary><div class="faq-a"><p>The loan doesn't transfer with the bike — the hypothecation in the RC must be cleared first. You either foreclose the loan (pay the outstanding plus any foreclosure charge), get the buyer to pay the lender directly in a tri-party settlement, or pay off the balance from the sale proceeds. Only after the NOC and hypothecation removal at the RTO can the RC legally move to the buyer.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -90,7 +112,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'motorcycle-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'motorcycle-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

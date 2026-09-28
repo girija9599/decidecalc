@@ -34,8 +34,8 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Laptop EMI Calculator</h1><div class="sub">work · study · gaming laptops</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Laptop price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="200" max="6000" step="50" value="1200" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="3000" step="50" value="0" data-dec="0"></div>
+          <div class="field"><label>Laptop price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="30000" max="250000" step="1000" value="60000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="125000" step="1000" value="0" data-dec="0"></div>
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="16" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>EMI term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="36" step="6" value="12" data-dec="0"></div>
           
@@ -71,11 +71,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>Laptop financing tips</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Deferred-interest cards:</b> "no interest if paid in 12 months" deals are great only if you truly pay in time.</li><li><b>Student discounts:</b> Apple, Dell, Lenovo and Microsoft offer 5–10% education pricing — check before financing.</li><li><b>Long-term cost:</b> a $1,200 laptop at 18% APR for 24 months costs about $240 in interest.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only — confirm terms with the retailer or card issuer.</div></div>
+      <h2>How laptop EMI is calculated</h2>
+      <p class="mt-2">Laptop financing in India — whether card EMI from a ₹45,000 workhorse purchase or a 24-month NBFC plan on a ₹1,50,000 gaming machine — uses the standard reducing-balance instalment formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (price − down payment), r = monthly interest rate (annual ÷ 12 ÷ 100), n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹60,000 laptop at 16% for 12 months</h3>
+      <p style="margin-top:8px">With P = ₹60,000, r = 0.013333 and n = 12, the EMI is ₹5,444 per month — you repay ₹65,326 in total, so the interest costs ₹5,326. On a 6-month no-cost EMI (0%), the same laptop is ₹10,000/month with zero interest; on a 12-month no-cost plan, ₹5,000/month. Stretch the same ₹60,000 to 24 months at 16% and the interest more than doubles to ₹10,651 — the price of a free year of cloud storage, paid to the bank instead.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Financing a laptop in India: what the market actually offers</h3>
+      <p style="margin-top:8px">A laptop is a productivity tool first, which changes the financing logic from phones. <strong>Credit-card EMI</strong> at Croma, Vijay Sales, Reliance Digital or Flipkart/Amazon typically runs 3–18 months, with genuine no-cost windows during sales and on select models — banks like HDFC and ICICI subsidise these heavily. <strong>NBFC cardless finance</strong> (Bajaj Finserv is accepted at most large electronics stores) covers buyers without cards; no-cost tenures of 6–10 months are common, longer tenures carry 16–24% interest. <strong>Student purchases</strong> deserve a special note: Apple's education store discounts MacBooks by roughly ₹10,000, and brands like Dell, Lenovo and HP run student portals with 5–15% off plus EMI options — a discount beats any financing offer, so apply it before you calculate what to finance. Two charges people forget: 18% GST applies on the interest portion of each EMI, and a laptop bought on a personal loan or consumer-durable scheme may include processing fees of 1–2%. Match the tenure to the machine's useful life — 3–5 years for a quality laptop, which means a 24-month plan is the sensible ceiling.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before you finance a laptop</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Time it to a sale:</b> no-cost EMI on laptops peaks during Big Billion Days, Great Indian Festival and back-to-college season (June–August).</li>
+        <li><b>Take the education discount first:</b> ₹5,000–₹10,000 off upfront is worth more than any EMI structure.</li>
+        <li><b>Don't finance depreciation twice:</b> avoid 36-month plans — a ₹60,000 laptop at 16% for 36 months costs ₹2,080/month and ₹14,862 in interest.</li>
+        <li><b>Check the warranty overlap:</b> extended warranty adds 8–12% to price — decide separately, don't let it ride into the financed amount by default.</li>
+        <li><b>Consider last-gen models:</b> a previous-year Ryzen/MacBook Air at 20–30% off with a 6-month no-cost plan beats a new release on 24-month credit.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with an optional down payment and amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/iphone-emi-calculator">iPhone EMI Calculator</a> · <a href="/calculators/personal-loan-calculator">Personal Loan Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/credit-card-payoff-calculator">Credit Card Payoff Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much EMI will I pay on a ₹50,000 laptop?</summary><div class="faq-a"><p>At 16% over 12 months, about ₹4,537/month (₹54,439 total — ₹4,439 interest). On a 6-month no-cost EMI, ₹8,334/month; on a 12-month no-cost plan, ₹4,167/month. Use the sliders above for your exact price and tenure.</p></div></details>
+      <details class="faq-static"><summary>Is no-cost EMI on laptops genuinely interest-free?</summary><div class="faq-a"><p>The interest is paid by the retailer/brand as a marketing subsidy, so your invoice shows only the laptop's price in instalments. You may still pay 18% GST on the interest component and a small processing fee — typically ₹300–₹1,500 on a laptop purchase. Compare the grand total on the invoice with the sticker price to see the true cost.</p></div></details>
+      <details class="faq-static"><summary>Should I buy a laptop on EMI or wait and save?</summary><div class="faq-a"><p>If it's for work or studies that are starting now, a no-cost EMI is a fair trade — the income or course timeline justifies it. For a want or an upgrade, saving 2–3 months is cheaper: regular 16–24% interest turns a ₹60,000 laptop into a ₹65,000–₹70,000 one. Never finance at regular interest what you can wait for.</p></div></details>
+      <details class="faq-static"><summary>Can students get laptops on EMI without a credit card?</summary><div class="faq-a"><p>Yes. Bajaj Finserv's EMI Network Card, HomeCredit and store-financing desks approve students and first earners with Aadhaar + PAN + bank details, usually with a co-applicant if income is low. Education-focused NBFCs and some college tie-ups also offer deferred-payment schemes where repayment starts after course completion — check if your institution partners with one.</p></div></details>
+      <details class="faq-static"><summary>What tenure is best for a laptop EMI?</summary><div class="faq-a"><p>6–12 months if the offer is no-cost; 12 months at most if you're paying regular interest. Laptops lose value fast (about 30–40% in year one), and a 24–36 month plan means paying interest on a machine that's already outdated. The only exception: a high-end gaming or creator laptop you genuinely plan to use 4+ years.</p></div></details>
+      <details class="faq-static"><summary>Does laptop EMI affect my credit score?</summary><div class="faq-a"><p>Yes — consumer-durable loans and card EMIs are reported to CIBIL. Timely EMIs build a positive history; missed ones cut the score and can block future loan approvals. Also note that a running laptop EMI counts in your monthly obligations when a bank assesses your next big loan application (FOIR check).</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +107,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'laptop-emi-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'laptop-emi-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

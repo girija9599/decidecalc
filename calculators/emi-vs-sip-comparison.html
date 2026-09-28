@@ -210,7 +210,12 @@
     <!-- FAQ -->
     <section class="mt-4 reveal">
       <h2 style="margin-bottom:8px">Frequently asked questions</h2>
-      <div id="faqList" data-single="1"></div>
+      <details class="faq-static"><summary>Should I prepay my home loan or invest in SIP?</summary><div class="faq-a"><p>Compare your post-tax loan rate with the realistic, risk-adjusted return you can earn over your investment horizon. At 8.5–9% home-loan rates, equity SIPs at an expected 11–12% can win long term — but only if you stay invested through full market cycles. Keep emergency money aside first, and remember prepayment returns are guaranteed while SIP returns are not.</p></div></details>
+      <details class="faq-static"><summary>Which gives better returns — prepayment or SIP?</summary><div class="faq-a"><p>If your loan rate is higher than safe investment returns, prepayment wins outright: a loan at 12% (personal loan territory) beats any prudent SIP assumption. If SIP returns exceed the loan rate after tax, investing edges ahead mathematically. On a ₹20 lakh outstanding at 9%, one extra EMI a year saves roughly ₹5–6 lakh of interest over a 20-year tenure.</p></div></details>
+      <details class="faq-static"><summary>Can I do both — prepay and SIP?</summary><div class="faq-a"><p>Yes, and many financial planners recommend it: maintain a SIP for long-term wealth creation while making one or two partial prepayments a year from bonuses. The split depends on loan rate — above 10%, weight prepayment; at 8.5–9%, a 50/50 approach balances guaranteed savings with compounding growth.</p></div></details>
+      <details class="faq-static"><summary>Should I reduce EMI or tenure when prepaying a home loan?</summary><div class="faq-a"><p>Reduce tenure. Keeping the EMI unchanged and shortening the term saves far more total interest than lowering the EMI, which mainly reduces monthly outflow. On a ₹40 lakh loan at 8.5%, a ₹5 lakh prepayment cuts roughly 3–4 years off the tenure versus shaving ₹3,800 off the EMI.</p></div></details>
+      <details class="faq-static"><summary>Does prepaying a home loan attract penalties in India?</summary><div class="faq-a"><p>No for floating-rate loans to individuals — RBI bars prepayment charges on them, and most home loans since 2016 are repo-linked floating. Fixed-rate loans can carry charges of 2–4%, though many banks have dropped them. Always confirm your loan type and the clause before planning a prepayment strategy.</p></div></details>
+      <details class="faq-static"><summary>What about the tax angle — does Section 24 change the math?</summary><div class="faq-a"><p>Partly. Home-loan interest is deductible up to ₹2 lakh a year under Section 24(b) for a self-occupied property, which effectively subsidises keeping the loan: for a 30% slab borrower, a 9% loan costs about 6.3% after tax. That narrows — but doesn't eliminate — the case for prepayment, and only applies if you actually claim the old regime's deductions.</p></div></details>
     </section>
   </main>
 
@@ -223,11 +228,6 @@
   <script>
     DC.page = {
       slug: 'emi-vs-sip-comparison',
-      faqs: [
-        { q: 'Should I prepay my home loan or invest in SIP?', a: 'Compare your post-tax loan rate with the realistic, risk-adjusted return you can earn over your investment horizon. Keep emergency money aside first.' },
-        { q: 'Which gives better returns — prepayment or SIP?', a: 'If your loan rate is higher than safe investment returns, prepayment wins. If SIP returns exceed loan rate after tax, invest instead.' },
-        { q: 'Can I do both — prepay and SIP?', a: 'Yes, many financial planners recommend a balanced approach: maintain SIP for long-term wealth creation while making partial prepayments each year.' }
-      ]
     };
 
     // Comparison calculator logic

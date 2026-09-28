@@ -61,7 +61,7 @@
 
     <div class="calc-layout">
       <div class="calc-shell reveal">
-        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>401(k) Calculator</h1><div class="sub">Match · IRS cap · auto-escalation · traditional vs Roth</div></div></div>
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>401(k) Calculator</h1><div class="sub">US retirement · Match · IRS cap · auto-escalation · traditional vs Roth</div></div></div>
         <div class="calc-body">
           <div class="field-row">
             <div class="field"><label for="age">Current age</label><input class="input" id="age" type="number" min="18" max="75" step="1" value="30" inputmode="numeric"></div>
@@ -162,7 +162,16 @@
       </ul>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much should I contribute to my 401(k)?</summary><div class="faq-a"><p>The floor is whatever captures the full employer match — that is an instant 50–100% return with zero market risk. After that, many advisors suggest 10%–15% of income total (including the match), but even 1% more per year moves the needle substantially.</p></div></details>
+      <details class="faq-static"><summary>What is the 401(k) contribution limit for 2025?</summary><div class="faq-a"><p>Employee elective deferrals: $23,000 (under age 50). Catch-up: additional $7,500 at 50+. Under SECURE 2.0, ages 60–63 may add $11,250 (or 150% of the standard catch-up, whichever is greater). The combined employee + employer cap is $70,000 (plus catch-up).</p></div></details>
+      <details class="faq-static"><summary>What is the difference between a traditional and Roth 401(k)?</summary><div class="faq-a"><p>Traditional — contributions go in pre-tax now, you pay ordinary income tax on withdrawals in retirement. Roth — contributions are after-tax now, qualified withdrawals are tax-free. The right choice depends mainly on whether your tax rate is lower now or in retirement.</p></div></details>
+      <details class="faq-static"><summary>What is a 401(k) employer match and how does it work?</summary><div class="faq-a"><p>Your employer adds money when you contribute — typically 50% of what you put in up to 3% of salary, or 100% up to 3–6%. Capturing the full match is the single highest-return decision most employees can make; not taking it is leaving part of your compensation unclaimed.</p></div></details>
+      <details class="faq-static"><summary>When can I withdraw from my 401(k) without penalty?</summary><div class="faq-a"><p>Generally at age 59½ (penalty-free, still taxable if pre-tax). Early withdrawals usually add a 10% IRS penalty on top of income tax, with exceptions — disability, QDRO in divorce, substantially equal periodic payments (72(t)), certain medical expenses, and the Rule of 55 if you leave your job in or after the year you turn 55.</p></div></details>
+      <details class="faq-static"><summary>What is the Rule of 55?</summary><div class="faq-a"><p>If you leave your employer (quit, laid off, fired) in or after the calendar year you turn 55, you may take penalty-free distributions from &lt;i&gt;that&lt;/i&gt; employer's 401(k). It applies only to the current job's plan — not to IRAs, old 401(k)s you rolled over, or accounts from previous employers.</p></div></details>
+      <details class="faq-static"><summary>Should I roll my old 401(k) into an IRA?</summary><div class="faq-a"><p>Often yes — IRA fees are usually lower and fund choices far wider. But keep job flexibility in mind: the Rule of 55 penalty-free access requires money to stay in the current employer's plan, and large pre-tax balances complicate future backdoor Roth IRAs. Direct rollover to a traditional IRA is tax-free.</p></div></details>
+      <details class="faq-static"><summary>What happens to my 401(k) if I change jobs?</summary><div class="faq-a"><p>Four options: leave it behind (works if balance ≥ $5k–$7k, but fees vary), roll it to the new employer's 401(k), roll it to an IRA (usually the best), or cash out (often the worst — taxes + 10% penalty if under 59½, plus lost compounding).</p></div></details>
+    $5</section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

@@ -49,7 +49,7 @@
 
     <div class="calc-layout">
       <div class="calc-shell reveal">
-        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Student Loan Calculator</h1><div class="sub">Payment · payoff date · total interest · extra-payment impact</div></div></div>
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Student Loan Calculator</h1><div class="sub">US Payment · payoff date · total interest · extra-payment impact</div></div></div>
         <div class="calc-body">
           <div class="field-row">
             <div class="field">
@@ -176,7 +176,17 @@
       <div class="note mt-2"><span id="fIcon"></span><div><b>US federal vs private:</b> federal loans come with IDR, forbearance and forgiveness paths; private loans trade that flexibility for sometimes-lower rates. Treat them as different products with different payoff logic — federal flexibility has real financial value.</div></div>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How is my monthly student loan payment calculated?</summary><div class="faq-a"><p>We compute a standard amortizing payment: rate/12 × balance ÷ [1 − (1 + rate/12)^(-months)]. On a $32,000 balance at 6.53% APR with a 6-month grace and autopay cut, the effective balance becomes roughly $33,045 at 6.28% APR, which lands near $371/month over 10 years.</p></div></details>
+      <details class="faq-static"><summary>What is the difference between subsidized and unsubsidized federal loans?</summary><div class="faq-a"><p>Subsidized – the government pays the interest while you are in school, in grace, or in deferment. Unsubsidized – interest accrues from the day of disbursement. If you don't pay it as it accrues, it capitalizes (is added to the balance) at repayment, meaning you pay interest on interest.</p></div></details>
+      <details class="faq-static"><summary>Can I deduct student loan interest from my taxes?</summary><div class="faq-a"><p>Potentially up to 
+      ,500 a year in the US, if your income is below $95k (single) or $195k (married filing jointly) for 2025. The deduction shrinks linearly between $80k–$95k / $165k–$195k and is worth at most $550/year at a 22% marginal rate. This calculator models that phase-out.</p></div></details>
+      <details class="faq-static"><summary>What is income-driven repayment and should I use it?</summary><div class="faq-a"><p>IDR plans (like the current SAVE/RAP framework or older IBR) cap your payment at a percentage of discretionary income and forgive the remainder after 20–25 years, with forgiveness being taxable. Best for low-income or PSLF-track borrowers; on standard repayment you save on interest.</p></div></details>
+      <details class="faq-static"><summary>What is the difference between deferment and forbearance?</summary><div class="faq-a"><p>Deferment is for specific life events (back in school, active duty, hardship) and doesn't accrue interest on subsidized loans. Forbearance is a general pause that nearly always accrues interest on every loan. Both stop the payoff clock and usually lengthen your total cost.</p></div></details>
+      <details class="faq-static"><summary>Does the FAFSA affect my repayment terms?</summary><div class="faq-a"><p>No — FAFSA determines your aid eligibility. Repayment length, interest rate and extras are set by the loan type and your servicer. That said, keep your IDR recertification current; missing it can revert you to standard and sometimes capitalize interest.</p></div></details>
+      <details class="faq-static"><summary>Is Public Service Loan Forgiveness still available?</summary><div class="faq-a"><p>PSLF still exists: 120 qualifying payments while working full-time for a qualifying government or non-profit employer on an IDR plan, then tax-free forgiveness. Rules evolve — if PSLF is your plan, do not refinance those loans into private debt.</p></div></details>
+      <details class="faq-static"><summary>What happens if I miss a student loan payment?</summary><div class="faq-a"><p>You are delinquent after one day and typically enter default at 270 days. A late mark hits your credit, and default can trigger wage garnishment, tax-refund seizure and loss of IDR eligibility. Contact your servicer immediately — hardship forbearance or IDR recalculation is usually cheaper than the damage.</p></div></details>
+    $5</section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

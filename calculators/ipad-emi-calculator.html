@@ -34,8 +34,8 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>iPad EMI Calculator</h1><div class="sub">iPad and tablet installments</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>iPad price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="100" max="3500" step="25" value="700" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="1750" step="25" value="0" data-dec="0"></div>
+          <div class="field"><label>iPad price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="20000" max="200000" step="1000" value="45000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="100000" step="1000" value="0" data-dec="0"></div>
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="16" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>EMI term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="36" step="6" value="12" data-dec="0"></div>
           
@@ -71,11 +71,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>iPad financing notes</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Carrier deals:</b> a cellular iPad is often bundled with a monthly plan — check the total cost of the plan, not just the device EMI.</li><li><b>Refurbished:</b> Apple-certified refurbished iPads are a cheap way to skip financing altogether.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only; verify retailer terms.</div></div>
+      <h2>How iPad EMI is calculated</h2>
+      <p class="mt-2">iPads occupy a distinct slot in Indian gadget budgets — ₹30,000 for an iPad 11 to ₹1,20,000+ for a M4 iPad Pro — and every financing route uses the standard reducing-balance formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (price − down payment), r = monthly interest rate (annual ÷ 12 ÷ 100), n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹45,000 iPad at 16% for 12 months</h3>
+      <p style="margin-top:8px">With P = ₹45,000, r = 0.013333 and n = 12, the EMI is ₹4,083 per month — ₹48,995 repaid in total, of which ₹3,995 is interest. On a 9-month no-cost EMI (0%), the same iPad is ₹5,000/month with no interest at all. If you're buying an iPad for a student, check Apple's education store first: the ₹10,000-ish education discount plus a 6-month no-cost plan is materially cheaper than financing the full retail price at 16%.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tablet financing in India: the realistic options</h3>
+      <p style="margin-top:8px">iPads are financed through the same rails as phones, but the purchase pattern differs — buyers are disproportionately students, parents and creatives. <strong>Apple's education pricing</strong> applies to higher-education students, teachers and staff via UNiDAYS verification, and stacks with card EMI. <strong>Credit-card no-cost EMI</strong> on iPads runs 3–12 months at most large retailers (Croma, Vijay Sales, imagine, Unicorn) and on Flipkart/Amazon during sales. <strong>NBFC cardless finance</strong> covers everyone else, with 6–10 month no-cost windows and 16–24% beyond. A few India-specific cautions: cellular iPads tempt buyers into bundled carrier plans — price the data plan separately, because a ₹399/month 24-month data plan adds ₹9,576 that never shows in the device EMI; and AppleCare+ (₹6,000–₹16,000) is optional insurance, not a mandatory add-on — decide it separately so it doesn't silently inflate the financed amount. iPads hold resale value better than Android tablets but worse than iPhones; a 12-month tenure is the comfortable ceiling for most models.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before you finance an iPad</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Students: education store first.</b> The discount is bigger than any financing perk — apply it before choosing an EMI.</li>
+        <li><b>Price the Pencil and keyboard separately:</b> accessories add ₹10,000–₹30,000; include them in the calculator above only if the store finances them too.</li>
+        <li><b>Wi-Fi only unless you truly need cellular:</b> phone hotspot covers most use, and you skip both the ₹4,000 price premium and the data plan.</li>
+        <li><b>Refurbished or last-gen:</b> Apple-certified refurbished iPads carry a new battery, warranty, and typically 15–25% off — often no financing needed at all.</li>
+        <li><b>Cap the tenure at 12 months:</b> iPads update annually; a 24-month EMI outlives the product cycle.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with an optional down payment and amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/iphone-emi-calculator">iPhone EMI Calculator</a> · <a href="/calculators/laptop-emi-calculator">Laptop EMI Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/baby-cost-calculator">Baby Cost Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much is the EMI for an iPad in India?</summary><div class="faq-a"><p>A ₹45,000 iPad costs about ₹4,083/month over 12 months at 16% interest, or ₹5,000/month over 9 months on a no-cost EMI. The entry iPad 11 (₹34,900) works out to roughly ₹3,168/month at 16% over 12 months. Set the sliders above to your model's price.</p></div></details>
+      <details class="faq-static"><summary>Can I get a no-cost EMI on iPads?</summary><div class="faq-a"><p>Yes — most large electronics retailers and Flipkart/Amazon offer 3–9 month no-cost EMI on iPads via HDFC, ICICI, Axis, SBI and other major cards, especially during festive sales. Apple's own online store offers no-cost EMI through partner banks on tenures of 3–9 months. Longer tenures usually carry full interest of 14–20%.</p></div></details>
+      <details class="faq-static"><summary>Is there a student discount on iPads in India?</summary><div class="faq-a"><p>Yes. Apple's education store gives verified higher-education students, teachers and staff a discount of roughly ₹8,000–₹10,000 on iPads (deeper on Macs), plus occasional back-to-school bundle offers like free accessories. Verification runs through UNiDAYS with your institution ID. The discount applies before EMI, shrinking what you finance.</p></div></details>
+      <details class="faq-static"><summary>Should I buy a cellular iPad or Wi-Fi only?</summary><div class="faq-a"><p>For most users in India, Wi-Fi only is smarter: it saves ₹4,000–₹8,000 upfront plus a monthly data plan (₹399+ typical). Phone hotspots cover occasional use. Cellular makes sense mainly for delivery riders, field staff, or students commuting daily who can't hotspot reliably — and note the data plan cost never appears in the device EMI, so budget it separately.</p></div></details>
+      <details class="faq-static"><summary>What happens if I miss an iPad EMI?</summary><div class="faq-a"><p>Expect a bounce/late fee (₹300–₹500 plus 1.5–2% monthly on the overdue amount), a CIBIL report of the delay after 30 days, and possible suspension of further EMI eligibility on the card or NBFC account. On cardless NBFC finance, repeated misses can also trigger recovery calls and full-loan acceleration. Call the lender before the due date if a payment will bounce.</p></div></details>
+      <details class="faq-static"><summary>iPad on EMI vs refurbished outright — which is better?</summary><div class="faq-a"><p>For a budget-conscious buyer, Apple-certified refurbished (or last-generation new stock) often wins: 15–25% cheaper with a warranty, which usually removes the need to finance at all. EMI on a new iPad makes sense when you need the latest model for work/creative use and can get a genuinely no-cost plan of 9 months or less. Paying 16%+ interest over 24 months is the worst of both worlds.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +107,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'ipad-emi-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'ipad-emi-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

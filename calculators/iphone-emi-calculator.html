@@ -34,8 +34,8 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>iPhone EMI Calculator</h1><div class="sub">Apple iPhone monthly installments</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>iPhone price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="100" max="3000" step="50" value="1000" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="1500" step="50" value="0" data-dec="0"></div>
+          <div class="field"><label>iPhone price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="25000" max="200000" step="500" value="80000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="100000" step="500" value="0" data-dec="0"></div>
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="16" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>EMI term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="36" step="6" value="12" data-dec="0"></div>
           
@@ -71,11 +71,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How iPhone installment plans work</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>0% offers:</b> Apple and many carriers offer interest-free monthly installments if you qualify.</li><li><b>Credit card EMI:</b> if you finance on a credit card, use the card APR — it is usually 18–29%.</li><li><b>Down payment:</b> not always required, but even a small amount lowers your monthly installment.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only; confirm exact terms with Apple, your carrier or your card issuer.</div></div>
+      <h2>How iPhone EMI is calculated</h2>
+      <p class="mt-2">Every iPhone EMI — whether from a bank credit card, a cardless NBFC like Bajaj Finserv, or a retailer's financing desk — uses the same standard reducing-balance instalment formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (price − down payment), r = monthly interest rate (annual ÷ 12 ÷ 100), n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹79,990 iPhone at 16% for 12 months</h3>
+      <p style="margin-top:8px">With P = ₹79,990, r = 0.013333 and n = 12, the EMI comes to ₹7,258 per month. Over the year you pay ₹87,091 in total — ₹7,101 of it is interest. The same phone on a 9-month <em>no-cost</em> EMI (effective 0%) costs just ₹8,888 per month with zero interest, which is why no-cost offers during Flipkart Big Billion Days or Amazon Great Indian Festival sales are the cheapest way to finance an iPhone in India. Set the interest slider to 0% above to simulate a no-cost plan.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">What iPhone financing actually costs in India</h3>
+      <p style="margin-top:8px">Most iPhone purchases in India are financed one of three ways. <strong>Credit-card EMI</strong> (HDFC, ICICI, Axis, SBI Card) converts the purchase into 3–24 EMIs, typically at 12–18% — with no-cost subventions on select models during sales. <strong>Cardless NBFC finance</strong> (Bajaj Finserv, IDFC First, HDB Financial) is available at Apple Premium Stores and large retailers via Aadhaar KYC, usually 0% "no-cost" plans of 6–10 months where the interest is discounted because the retailer pays a commission. <strong>Apple's own instalment plans** are offered through partner banks and financiers at checkout. Remember two hidden charges: GST at 18% is charged <em>on the interest component</em> of every EMI (and on processing fees), and breaking a no-cost EMI early can forfeit the discount. A phone bought on EMI should be paid off within its ownership cycle — if you upgrade every 2 years, keep the tenure well under 24 months.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before you finance an iPhone</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Buy during festive sales:</b> no-cost EMI + bank cashback (₹3,000–₹8,000 typical) stack best during Big Billion Days / Great Indian Festival.</li>
+        <li><b>Use the education store</b> if you're a student or staff — Apple India discounts roughly ₹10,000 on Macs and iPads, less on iPhones, but always check.</li>
+        <li><b>Avoid 24–36 month NBFC plans at 16–20%:</b> you'd pay ₹15,000+ extra on a ₹80,000 phone — more than a mid-range Android costs.</li>
+        <li><b>Trade in your old phone:</b> exchange values of ₹5,000–₹35,000 cut the financed principal directly.</li>
+        <li><b>Check your card's no-cost tenure:</b> banks often offer no-cost only on specific 3/6/9-month windows; other tenures carry full interest.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with an optional down payment and amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/should-you-finance-a-phone">Should you finance a phone?</a> · <a href="/calculators/phone-emi-calculator">Phone EMI Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/credit-card-payoff-calculator">Credit Card Payoff Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much is the EMI for an iPhone in India?</summary><div class="faq-a"><p>For a ₹79,990 iPhone: about ₹7,258/month over 12 months at 16% interest, or ₹8,888/month over 9 months on a no-cost EMI (0%). Flagship Pro Max models around ₹1,50,000 work out to roughly ₹13,600/month over 12 months at 16%. Use the sliders above for your exact model price.</p></div></details>
+      <details class="faq-static"><summary>Is no-cost EMI on iPhones really free?</summary><div class="faq-a"><p>Almost. The lender still levies interest, but the retailer or bank discounts it upfront, so you pay only the phone's price in instalments. You do pay 18% GST on the interest amount (₹300–₹1,500 typically) and sometimes a ₹99–₹500 processing fee — and any exchange cashback may be reduced when you choose no-cost EMI, so compare the final invoice line by line.</p></div></details>
+      <details class="faq-static"><summary>Is it better to buy an iPhone outright or on EMI?</summary><div class="faq-a"><p>If you have the full amount, buying outright is simplest and avoids debt. EMI makes sense when it's genuinely no-cost (you keep your money earning in a FD or liquid fund instead) or when paying upfront would empty your emergency buffer. Never finance a phone at 16–24% regular interest for a want — that's ₹7,000–₹15,000 of pure extra cost. See <a href="/blog/should-you-finance-a-phone">our full guide to financing a phone</a>.</p></div></details>
+      <details class="faq-static"><summary>What happens if I miss an iPhone EMI payment?</summary><div class="faq-a"><p>The lender charges a late fee (often ₹300–₹500 per bounce plus 1.5–2% monthly penalty on the overdue amount), reports the delay to CIBIL after 30 days, and on a card EMI can block further conversions. A bounced NACH auto-debit also attracts bank charges. If a payment will bounce, call the lender before the due date.</p></div></details>
+      <details class="faq-static"><summary>Can I close my iPhone EMI early?</summary><div class="faq-a"><p>Yes — banks and NBFCs allow foreclosure, usually after 3–6 EMIs, charging 2–5% of the outstanding as a foreclosure fee plus GST. On a no-cost EMI, foreclosing early can retroactively remove the interest discount, so confirm the final payoff figure with the lender in writing before paying.</p></div></details>
+      <details class="faq-static"><summary>Does a phone EMI affect my CIBIL score?</summary><div class="faq-a"><p>Yes. Consumer-durable loans and card EMIs are reported like any loan: on-time payments build history, while misses reduce your score. A ₹80,000 phone EMI also adds to your monthly obligations (FOIR), which lenders count when you later apply for a bigger loan like a home loan.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +107,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'iphone-emi-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'iphone-emi-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

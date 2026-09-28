@@ -34,8 +34,8 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Phone / Smartphone EMI Calculator</h1><div class="sub">Android · iPhone · any smartphone</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Phone price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="50" max="4000" step="25" value="800" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="2000" step="25" value="0" data-dec="0"></div>
+          <div class="field"><label>Phone price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="5000" max="150000" step="500" value="25000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="75000" step="500" value="0" data-dec="0"></div>
           <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="16" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>EMI term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="36" step="6" value="12" data-dec="0"></div>
           
@@ -71,11 +71,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>Smartphone financing options</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Retail plans:</b> 0% installment plans from the store or brand are usually the cheapest way to finance a phone.</li><li><b>Credit card EMI:</b> converting a card purchase to an installment usually carries 12–27% APR — always compare.</li><li><b>Keep it short:</b> 12–24 months matches a phone's useful life much better than 36-month plans.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only; check the actual offer terms before signing.</div></div>
+      <h2>How phone EMI is calculated</h2>
+      <p class="mt-2">Whether you finance a ₹12,000 budget Android or a ₹1,00,000 flagship, every phone EMI in India uses the same reducing-balance instalment formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (phone price − down payment/exchange value), r = monthly interest rate (annual ÷ 12 ÷ 100), n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹25,000 phone at 16% for 9 months</h3>
+      <p style="margin-top:8px">With P = ₹25,000, r = 0.013333 and n = 9, the EMI is ₹2,966 per month — you repay ₹26,696 in total, of which ₹1,696 is interest. On a 9-month <em>no-cost</em> EMI (0%), the same phone costs just ₹2,778 per month with no interest at all. That ₹1,696 gap is real money on a budget phone: it's 7% of the purchase price, which is why cardless no-cost plans from Bajaj Finserv or your bank's festive offer usually beat regular card EMI for mid-range Androids.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Financing a budget or mid-range phone in India</h3>
+      <p style="margin-top:8px">In the ₹8,000–₹30,000 segment — where most Indian phones actually sell — financing comes from three places. <strong>Cardless consumer finance</strong> (Bajaj Finserv EMI Network Card, HomeCredit, IDFC First) needs only Aadhaar/PAN KYC and dominates offline stores; tenures run 6–24 months, with genuine no-cost windows of 6–10 months but 16–28% interest beyond them. <strong>Credit-card EMI</strong> works only if you already hold a card, and regular conversion costs 13–24% — worth it only when a no-cost offer applies. <strong>Rent-to-own apps</strong> (Rentomojo-style or newer phone-rental startups) quote attractive weekly rates but often cost more over 12–18 months than buying outright. One rule matters more than any offer here: a phone loses roughly 40–50% of its value in the first year, so if you're still paying EMIs in month 20 of a 24-month plan, you're paying interest on an asset worth a fraction of its price. Keep the tenure at or under 12 months on budget phones.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before you take a phone EMI</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Match tenure to resale:</b> budget phones depreciate fastest — 6–9 month plans fit them; 24-month plans suit only flagships you'll keep 3 years.</li>
+        <li><b>Stack exchange value:</b> an old-phone exchange of ₹4,000–₹10,000 directly shrinks the financed amount — always take it over a pure EMI.</li>
+        <li><b>Ask what "no-cost" excludes:</b> GST on interest (18%), processing fees up to ₹500, and reduced exchange bonuses can add back ₹500–₹1,500.</li>
+        <li><b>Check the NACH mandate:</b> cardless finance auto-debits your bank account — keep balance ready on the debit date to avoid ₹300–₹500 bounce fees.</li>
+        <li><b>Skip financing for sub-₹10,000 phones:</b> if you can't save that in 2 months, the phone is the wrong line item to EMI.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian NBFCs and banks, with optional down payment and a full amortization schedule. Everything runs in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/should-you-finance-a-phone">Should you finance a phone?</a> · <a href="/calculators/iphone-emi-calculator">iPhone EMI Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/personal-loan-calculator">Personal Loan Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How much EMI will I pay on a ₹20,000 phone?</summary><div class="faq-a"><p>At 16% interest over 9 months, about ₹2,373/month (₹21,357 total). On a 6-month no-cost EMI it's ₹3,334/month with zero interest, and over 12 months at 16% roughly ₹1,815/month. Set the sliders above to your exact price and tenure.</p></div></details>
+      <details class="faq-static"><summary>Can I buy a phone on EMI without a credit card in India?</summary><div class="faq-a"><p>Yes. Cardless options include the Bajaj Finserv EMI Network Card (available at 1 lakh+ partner stores), HomeCredit, IDFC First Bank's consumer finance, and store tie-ups via Pine Labs or ZestMoney-style platforms. You'll need Aadhaar, PAN and a bank account for auto-debit; approval is usually instant. Interest-free tenures of 6–10 months are common, but regular tenures can carry 16–28% interest.</p></div></details>
+      <details class="faq-static"><summary>Is no-cost EMI actually free?</summary><div class="faq-a"><p>The interest is discounted by the brand or retailer, so you pay only the phone's price — but you may still pay 18% GST on the interest component, a processing fee (₹99–₹500), and lose part of any exchange bonus. Read the final invoice; the effective cost of a "free" plan is usually ₹300–₹1,500, not zero.</p></div></details>
+      <details class="faq-static"><summary>What happens if I don't pay my phone EMI?</summary><div class="faq-a"><p>A missed NACH debit triggers bounce charges (₹300–₹500 from your bank, plus the lender's penalty), then late fees of 1.5–2% per month on the overdue amount. After 30+ days the miss is reported to CIBIL and hurts your score; after 90 days the account is classified as a written-off/NPA stage, which damages loan eligibility for years. Contact the lender before the due date if you'll miss one.</p></div></details>
+      <details class="faq-static"><summary>Phone on EMI vs buying outright — which is smarter?</summary><div class="faq-a"><p>Buy outright if the money isn't your emergency fund. Take EMI only when it's genuinely no-cost (your cash keeps earning while you pay monthly) or when paying upfront would drain your buffer. Financing a ₹15,000 phone at 20% for 12 months adds about ₹1,680 — money better kept in your pocket. See <a href="/blog/should-you-finance-a-phone">our guide on whether to finance a phone</a>.</p></div></details>
+      <details class="faq-static"><summary>Does a phone EMI build credit history?</summary><div class="faq-a"><p>Yes — consumer-durable loans are reported to CIBIL like any instalment loan. Paying 6–12 EMIs on time can help a thin credit file, but the amounts are small, so the score benefit is modest. The bigger risk is the opposite: one missed EMI on a ₹25,000 phone can dent the score you'll need for a ₹50 lakh home loan later.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +107,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'phone-emi-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'phone-emi-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

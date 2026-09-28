@@ -95,7 +95,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Past dates work too:</b> pick a date in the past (wedding anniversary, first job day) and the counter shows how long it has been — the \"days since\" form is useful for milestone celebrations.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Do leap years affect the count?</summary><div class="faq-a"><p>Yes — the calculation uses the exact millisecond difference, so Feb 29 is correctly included. Birthday countdowns spanning a leap year will show 1 extra day.</p></div></details>
+      <details class="faq-static"><summary>Why does my time zone matter?</summary><div class="faq-a"><p>The calculation uses your browser's local time zone. For an event in another time zone (e.g., a webinar in EST while you're in IST), choose the event time as if in YOUR local zone so the difference matches what you experience.</p></div></details>
+      <details class="faq-static"><summary>Can I save multiple events?</summary><div class="faq-a"><p>This calculator shows one event at a time to keep it fast. For multiple events use a spreadsheet or task app; or open multiple browser tabs each with a different target.</p></div></details>
+      <details class="faq-static"><summary>What happens when the date passes?</summary><div class="faq-a"><p>The counter flips to "X days since" — the digits continue ticking upward in negative form. Useful for tracking streaks and elapsed anniversaries.</p></div></details>
+    $5</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

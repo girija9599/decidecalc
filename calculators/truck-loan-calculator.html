@@ -34,17 +34,17 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Truck Loan Calculator</h1><div class="sub">pickup & commercial trucks</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Truck price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="5000" max="400000" step="1000" value="60000" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="2000000" step="1000" value="10000" data-dec="0"></div>
-          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="7.5" data-suffix="%" data-dec="2"></div>
-          <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="96" step="6" value="72" data-dec="0"></div>
-          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
+          <div class="field"><label>Truck price (on-road)</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="500000" max="6000000" step="25000" value="2500000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="3000000" step="25000" value="500000" data-dec="0"></div>
+          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="10.5" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="96" step="6" value="60" data-dec="0"></div>
+          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (extras &amp; fees)</summary>
             <div class="field-row" style="margin-top:12px">
-              <div class="field"><label>Tax rate (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
-              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="50" value="0"></div>
+              <div class="field"><label>Body &amp; extras to finance (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
+              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="500" value="0"></div>
             </div>
           </details>
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate truck payment</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate truck loan EMI</button>
         </div>
       </div>
 
@@ -76,11 +76,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How truck loan costs add up</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Higher prices:</b> the average new pickup now tops $50k, making term choice critical to a manageable payment.</li><li><b>Work truck?</b> If the truck is used for business you may be able to deduct depreciation — ask a tax professional.</li><li><b>Down payment:</b> 10–20% down is common and helps avoid being upside-down on the loan early on.</li><li><b>Shop term:</b> a 72- or 84-month loan reduces the monthly hit but can add thousands in total interest.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimates only — your APR and term depend on lender, credit profile and whether the truck is new or used.</div></div>
+      <h2>How truck loan EMI is calculated</h2>
+      <p class="mt-2">Commercial vehicle loans in India — from ₹8 lakh mini-trucks to ₹55 lakh multi-axle rigs — use the same reducing-balance formula as any vehicle loan, priced for a business asset:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (chassis + body + extras − down payment), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹25,00,000 truck with ₹5,00,000 down at 10.5%</h3>
+      <p style="margin-top:8px">An intermediate or heavy commercial vehicle on-road at ₹25,00,000 with a 20% down payment leaves P = ₹20,00,000. At 10.5% for 60 months, the EMI is ₹42,988 — total repayment ₹25,79,268, of which ₹5,79,268 is interest. Stretch to 72 months and the EMI eases to ₹37,558 but interest climbs to ₹7,04,172. The business test that matters: most operators clear 12–18 trips a month, and the EMI plus fuel, tolls, driver salary and maintenance should stay under about 70% of realistic monthly revenue — a truck bought on hope of full utilisation is the most common default story in CV finance.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How commercial vehicle financing works in India</h3>
+      <p style="margin-top:8px">CV lending is dominated by specialist NBFCs — Sundaram Finance, Cholamandalam, Mahindra Finance, Shriram, Tata Capital — who understand truck economics better than banks and price accordingly: <strong>10.5–14% per year</strong> for established operators with track record, 14–18% for first-time owners. The structure differs from car loans in three ways. <strong>Funding is unusual:</strong> lenders may finance 100% of the chassis but treat body fabrication (₹1.5–₹8 lakh for tipper/tanker bodies) as a separate financed line — enter it under "Body & extras %" above. <strong>Moratoriums exist:</strong> many lenders offer a 1–3 month EMI holiday at the start (useful for getting the vehicle on the road), but interest accrues throughout. <strong>The vehicle is the business:</strong> comprehensive insurance is mandatory for the full tenure, the RTO hypothecation sits with the lender, and national permits/fitness certificates must stay current. SME borrowers should also compare a <strong>balance transfer</strong> after 2–3 years of clean repayment — CV refinancing between NBFCs is common and can cut 1–2% off the rate.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before financing a truck</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Run the utilisation math first:</b> model EMI + fuel + tolls + salary + maintenance against realistic trip income at 60–70% utilisation, not 100%.</li>
+        <li><b>Compare specialist NBFCs and banks:</b> Sundaram, Chola and Mahindra quote differently for the same profile; even 1% is ₹1.2 lakh on this example.</li>
+        <li><b>Keep 15–20% margin money:</b> zero-down CV loans exist but push the EMI into dangerous territory during lean months.</li>
+        <li><b>Check the moratorium's true cost:</b> interest accrues during the holiday — ask for the EMI with and without it.</li>
+        <li><b>Budget the first year's insurance and permits upfront:</b> comprehensive cover plus fitness and permits can add ₹80,000–₹1,50,000 at signing.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian CV financiers, with down payment, financed body/extras and a full amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/fuel-cost-calculator">Fuel Cost Calculator</a> · <a href="/calculators/loan-refinance-calculator">Loan Refinance Calculator</a> · <a href="/calculators/car-loan-calculator">Car Loan Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for a ₹25 lakh truck?</summary><div class="faq-a"><p>With a ₹5 lakh down payment (financing ₹20 lakh) at 10.5%: about ₹42,988/month over 5 years, ₹51,207/month over 4 years, or ₹37,558/month over 6 years. Total interest ranges from ₹4.58 lakh (4 yr) to ₹7.04 lakh (6 yr). Use the sliders above for your exact vehicle and terms.</p></div></details>
+      <details class="faq-static"><summary>What credit score or track record do I need for a CV loan?</summary><div class="faq-a"><p>Established operators with 2–3 years of clean repayment history and a CIBIL score above 700 get the best rates (10.5–12%). First-time owners face 14–18%, bigger down payments (30–50%), or a guarantor. Many lenders also weigh fleet composition, route contracts and existing-vehicle performance — a documented trip ledger strengthens the application more than a credit card limit does.</p></div></details>
+      <details class="faq-static"><summary>Can I finance 100% of a truck's cost?</summary><div class="faq-a"><p>Some lenders advertise 100% chassis funding, but realistic total funding — chassis plus body, insurance and registration — usually lands at 85–95% for established operators and 60–75% for first-timers. The margin money requirement exists to keep the EMI within survivable utilisation: a truck financed to the brim leaves no buffer for the first slow month.</p></div></details>
+      <details class="faq-static"><summary>What is a moratorium period on a truck loan?</summary><div class="faq-a"><p>A grace window (1–3 months typical) before the first EMI, meant to let the vehicle start earning. Interest accrues at the full rate during it, so a 2-month moratorium on a ₹20 lakh loan adds roughly ₹35,000 of interest across the tenure. Take it only if the vehicle genuinely needs the ramp-up time; otherwise start EMIs immediately.</p></div></details>
+      <details class="faq-static"><summary>What happens if the truck earning drops and I miss EMIs?</summary><div class="faq-a"><p>CV lenders act fast because the vehicle is the collateral: late fees of 2–3% monthly, recovery-agent escalation within 60–90 days, and repossession of the vehicle — which destroys both the business and the credit file. If utilisation drops, engage the lender before defaulting: most NBFCs will restructure the tenure, offer a standstill month, or refinance rather than repossess a paying-in-full-history customer.</p></div></details>
+      <details class="faq-static"><summary>Can I refinance or transfer my truck loan to a cheaper lender?</summary><div class="faq-a"><p>Yes — balance transfer is well established in CV finance. After 12+ EMIs of clean payment, competitors (including banks entering the segment) will refinance the outstanding at 1–2% lower, charging a processing fee and RTO hypothecation-change costs. On a ₹15 lakh outstanding, a 1.5% saving is worth about ₹45,000 over the remaining tenure — worth the paperwork every time.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -90,7 +112,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'truck-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'truck-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

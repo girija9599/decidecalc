@@ -34,11 +34,11 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Loan Payment Calculator</h1><div class="sub">any fixed-rate loan</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Loan amount</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="500" max="50000000" step="500" value="15000" data-dec="0"></div>
-          
-          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="8" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Loan amount</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="10000" max="20000000" step="10000" value="500000" data-dec="0"></div>
+
+          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="11" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="120" step="6" value="48" data-dec="0"></div>
-          
+
           <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate loan payment</button>
         </div>
       </div>
@@ -71,11 +71,27 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How loan payments are computed</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Amortization:</b> every payment covers interest first, then principal. Early payments are mostly interest.</li><li><b>Formula:</b> M = P × [r(1+r)^n] ÷ [(1+r)^n − 1].</li><li><b>Prepayment:</b> extra principal early in the loan saves the most interest.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimate only — actual loan terms vary by lender.</div></div>
+      <h2>How any loan payment is calculated</h2>
+      <p class="mt-2">Home loans, car loans, personal loans, gold loans — every reducing-balance loan in India uses one formula, which is what makes this calculator universal:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> M = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = principal, r = monthly rate (annual ÷ 12 ÷ 100), n = number of monthly instalments.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹5,00,000 loan at 11% for 4 years</h3>
+      <p style="margin-top:8px">With P = ₹5,00,000, r = 0.009167 and n = 48, the monthly payment is ₹12,923 — total repayment ₹6,20,293, of which ₹1,20,293 is interest. If the same loan came from an NBFC at 12.5%, the payment rises to ₹13,290 and total interest to ₹1,37,920 — ₹17,627 more for the same ₹5 lakh. That is what two percentage points of rate actually cost, and why comparing lenders on the annual reducing rate (not the EMI) is the highest-value two minutes in borrowing.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Typical loan rates in India (2026)</h3>
+      <p style="margin-top:8px">Because this tool works for any loan type, here's the rate landscape you should be testing against: <strong>home loans</strong> 8.25–9.5% (the cheapest credit in the system, RBI repo-linked); <strong>loan against property</strong> 9–12%; <strong>gold loans</strong> 9–14%; <strong>new-car loans</strong> 8.5–11%; <strong>education loans</strong> 8.25–12%; <strong>used-car loans</strong> 12–16%; <strong>personal loans</strong> 10.5–16% at banks, 16–24% at NBFCs/fintechs; <strong>credit-card EMIs</strong> 13–24%; <strong>two-wheeler loans</strong> 9–18%. If a quote lands far above its band, either your credit profile is pricing it there or the lender is quoting a flat rate — a "9% flat" quote equals roughly 16–17% reducing, the classic two-wheeler trap. Enter the quoted numbers above and check the total interest line: it is the single number that makes loan offers comparable.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How amortization works inside every payment</h3>
+      <p style="margin-top:8px">Each EMI splits into interest and principal, and the split shifts over time: in month 1 of the ₹5 lakh example, ₹4,583 of your ₹12,923 is interest and only ₹8,340 is principal; by the final year the ratio has flipped almost entirely. This is why prepaying early saves far more interest than prepaying late — money prepaid in year 1 stops a full tenure's worth of interest accrual on that amount. It also explains the counterintuitive rule that a shorter tenure is almost always cheaper overall, even at a painful EMI: the same ₹5 lakh at 11% for 3 years costs ₹16,369/month but only ₹89,297 in total interest — ₹30,996 less than the 4-year version.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance amortization formula used by Indian banks and NBFCs, with a full month-by-month schedule you can expand and export to Excel or PDF. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/how-to-calculate-loan-interest">How to calculate loan interest</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/loan-refinance-calculator">Loan Refinance Calculator</a> · <a href="/calculators/simple-interest-calculator">Simple Interest Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How do I verify my bank's EMI quote is correct?</summary><div class="faq-a"><p>Enter the principal, the annual reducing-balance rate and the exact tenure (in months) above, and compare the EMI. Small differences (under 0.5%) come from rounding or day-count conventions; large differences usually mean the quoted rate is flat instead of reducing, or fees are financed into the loan. Ask the lender to state the annual reducing rate and the total repayment in writing.</p></div></details>
+      <details class="faq-static"><summary>What is the difference between flat rate and reducing balance?</summary><div class="faq-a"><p>Reducing balance (this calculator) charges interest only on the outstanding principal each month, so interest shrinks as you repay. Flat rate charges interest on the original principal for the whole tenure. A flat rate of 10% equals roughly 17–18% reducing balance — always convert before comparing offers, especially on two-wheeler and consumer-durable loans.</p></div></details>
+      <details class="faq-static"><summary>Why is the same loan amount more expensive at an NBFC?</summary><div class="faq-a"><p>NBFCs lend to riskier borrower segments and fund themselves slightly more expensively than banks, so their rates run 1–4% higher. They compensate with faster approvals and looser documentation. On a ₹5 lakh loan, a 12.5% NBFC rate versus an 11% bank rate costs about ₹17,600 extra over 4 years — sometimes worth it for speed, but know the price.</p></div></details>
+      <details class="faq-static"><summary>Does prepaying a loan really save interest?</summary><div class="faq-a"><p>Yes — most when done early. Prepaying ₹1 lakh in year 1 of the ₹5 lakh/11%/4-year example saves roughly ₹47,000 in interest over the remaining tenure; the same prepayment in year 3 saves only about ₹13,000. Check your agreement for prepayment penalties (RBI bars them on floating-rate individual loans) and always opt to reduce tenure rather than EMI when prepaying.</p></div></details>
+      <details class="faq-static"><summary>Is a longer tenure with small EMIs ever smart?</summary><div class="faq-a"><p>Only as cash-flow insurance, not as a plan. Taking the 5-year EMI (₹10,871 on this example) while voluntarily prepaying the 4-year amount whenever possible gives you flexibility: in tight months you pay the legal minimum, in good months you cut interest. But simply choosing the longest tenure and paying exactly it is the most expensive way to borrow.</p></div></details>
+      <details class="faq-static"><summary>What costs does this calculator not include?</summary><div class="faq-a"><p>Processing fees (0.4–2.5% typical), GST on fees and on interest for consumer loans, insurance premiums bundled into the loan, documentation charges, and any late/bounce penalties. Add financed fees to the loan amount manually if you want the all-in EMI — and compare lenders on total repayment, not just the rate.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -85,7 +101,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'loan-payment-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'loan-payment-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('percent');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

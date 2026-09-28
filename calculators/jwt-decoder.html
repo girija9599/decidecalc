@@ -100,7 +100,11 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Standard claims:</b> <code>sub</code> subject / <code>iss</code> issuer / <code>aud</code> audience / <code>exp</code> expiration / <code>iat</code> issued-at / <code>nbf</code> not-before / <code>jti</code> unique ID (for revocation).</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Is my JWT safe to paste here?</summary><div class="faq-a"><p>From a technical-privacy view: yes — everything runs in JS on your device, no network call is made. But from a security-hygiene view: no — never paste live production tokens into any website. Use only test tokens, or redacted versions.</p></div></details>
+      <details class="faq-static"><summary>The decoder says my token is valid but the server returns 401.</summary><div class="faq-a"><p>Decode tells you the FORMAT is valid. The server checks the SIGNATURE — which you cannot do attacker-side without the private key. Common reasons: wrong RS256 public key on server, expired exp claim, revoked jti, or aud/iss mismatch.</p></div></details>
+      <details class="faq-static"><summary>How long should JWTs live?</summary><div class="faq-a"><p>Access tokens: short (5-15 min), refreshed silently. Refresh tokens: longer (days, weeks), revocable server-side. Never make access tokens live hours or days — the whole point of JWT is statelessness, which conflicts with revocation.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

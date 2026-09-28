@@ -135,7 +135,13 @@
       </ul>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How is the required monthly saving calculated?</summary><div class="faq-a"><p>We invert the SIP future-value formula. Your target minus the grown value of current savings is divided by the annuity factor [((1+i)^n − 1) ÷ i], where i is the monthly return and n is the months to your deadline. At 0% return it is simple division: gap ÷ months.</p></div></details>
+      <details class="faq-static"><summary>What if my current savings already cover the goal?</summary><div class="faq-a"><p>Then you do not need to save anything more — the tool shows a required contribution of zero and confirms the goal is reachable even without new savings.</p></div></details>
+      <details class="faq-static"><summary>What does it mean when the tool says the goal is impossible?</summary><div class="faq-a"><p>Even with reasonable assumptions, some target/date/savings combinations require an unrealistic monthly amount. When the required saving exceeds 80% of the target per month of horizon, we flag it and suggest extending the deadline or raising contributions.</p></div></details>
+      <details class="faq-static"><summary>Should I use the date picker or years/months?</summary><div class="faq-a"><p>Either works. The date picker converts the deadline into whole months from today. If you type years or months, those override the date — useful for round horizons like "5 years".</p></div></details>
+      <details class="faq-static"><summary>What annual return should I assume?</summary><div class="faq-a"><p>Match it to where the money actually sits. High-yield cash: 0–5%; debt funds / fixed deposits: 5–8%; diversified equity funds: 10–12% for 5+ year horizons. Do not plan on above-market returns.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

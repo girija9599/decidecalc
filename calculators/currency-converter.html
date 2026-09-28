@@ -95,7 +95,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Rate time-stamp:</b> Refresh Live Rate fetches available Frankfurter mid-market rates and saves them in this browser. For currencies Frankfurter does not return, enter your own INR value; saved values remain available if refresh fails or you are offline.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Are these live exchange rates?</summary><div class="faq-a"><p>Tap Refresh Live Rate while online to request the latest available mid-market rates from the Frankfurter API. The response is saved only in your browser so the converter continues to work offline.</p></div></details>
+      <details class="faq-static"><summary>What happens when I am offline?</summary><div class="faq-a"><p>The converter never needs an account or API key. It uses your previously saved live or manually edited INR rates. If no rate is saved yet, it clearly asks you to refresh or enter one instead of inventing a rate.</p></div></details>
+      <details class="faq-static"><summary>How do I edit a rate?</summary><div class="faq-a"><p>Open Edit rates and enter how many INR equal one unit of the foreign currency — for example, enter the INR value for 1 USD. Select Save edited rates. The values stay in localStorage on this device.</p></div></details>
+      <details class="faq-static"><summary>Why does my bank give a different number?</summary><div class="faq-a"><p>Banks, card networks and remittance services can add a markup, fees or a separate buy/sell spread. The live API rate is an informational mid-market reference; always confirm the final provider quote for a transaction.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

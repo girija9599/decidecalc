@@ -35,6 +35,10 @@
     { "source": "/home", "destination": "/", "permanent": true },
     { "source": "/index", "destination": "/", "permanent": true },
     { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/calculators/auto-loan-calculator", "destination": "/calculators/car-loan-calculator", "permanent": true },
+    { "source": "/calculators/bike-loan-calculator", "destination": "/calculators/motorcycle-loan-calculator", "permanent": true },
+    { "source": "/calculators/fd-vs-mutual-fund-comparison", "destination": "/calculators/fd-vs-mutual-fund", "permanent": true },
+    { "source": "/calculators/rent-vs-buy-comparison", "destination": "/calculators/rent-vs-buy", "permanent": true },
     { "source": "/calculators/:slug.html", "destination": "/calculators/:slug", "permanent": true },
     { "source": "/blog/:slug.html", "destination": "/blog/:slug", "permanent": true }
   ]

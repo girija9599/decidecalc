@@ -34,17 +34,17 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Used Car Loan Calculator</h1><div class="sub">pre-owned financing · higher-rate ready</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Used car price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="1000" max="150000" step="500" value="18000" data-dec="0"></div>
-          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="75000" step="500" value="2500" data-dec="0"></div>
-          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="9.5" data-suffix="%" data-dec="2"></div>
-          <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="84" step="6" value="60" data-dec="0"></div>
-          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (taxes &amp; fees)</summary>
+          <div class="field"><label>Used car price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="150000" max="2000000" step="10000" value="500000" data-dec="0"></div>
+          <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="1000000" step="10000" value="100000" data-dec="0"></div>
+          <div class="field"><label>Annual interest rate (% per year)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="36" step="0.05" value="12.5" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="6" max="84" step="6" value="48" data-dec="0"></div>
+          <details class="field" style="background:var(--bg-soft);padding:12px 14px;border-radius:var(--radius)"><summary style="cursor:pointer;font-weight:700;color:var(--text)">Advanced options (extras &amp; fees)</summary>
             <div class="field-row" style="margin-top:12px">
-              <div class="field"><label>Tax rate (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
-              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="50" value="0"></div>
+              <div class="field"><label>Extras to finance (%)</label><input class="input" id="tax" type="number" min="0" max="30" step="0.1" value="0"></div>
+              <div class="field"><label>Fees &amp; other charges</label><input class="input" id="fees" type="number" min="0" step="500" value="0"></div>
             </div>
           </details>
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate used car payment</button>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate used-car loan EMI</button>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
         </div>
         <div class="chart-wrap"><canvas id="chart"></canvas></div>
         <div class="result-actions"><button class="btn btn-accent btn-sm" id="copyBtn" type="button">Copy result</button><button class="btn btn-ghost btn-sm" id="shareBtn" type="button">Share</button></div>
-        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Used-car loan snapshot</h4><p id="recoText">Used cars typically carry APRs 1–3% higher than new. Enter the dealer price, your down payment and the APR to see the true monthly cost.</p></div></div>
+        <div class="reco"><span class="ric" id="recoIc"></span><div><h4 id="recoTitle">Used-car loan snapshot</h4><p id="recoText">Used cars in India typically carry rates 3–5% higher than new. Enter the agreed price, your down payment and the lender's rate to see the true monthly cost.</p></div></div>
       </div>
     </div>
 
@@ -76,11 +76,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How used car financing differs</h2>
-      <div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Higher APR:</b> because a used vehicle has less collateral value, lenders typically charge 1–3% more than on new cars.</li><li><b>Shorter max terms:</b> many lenders cap used-car loans at 60–72 months, especially on older model years.</li><li><b>Lender age limits:</b> some banks will not finance cars over 10 years old or over 100k miles.</li><li><b>Tip:</b> a credit-union pre-approval protects you from inflated "buy-here-pay-here" rates.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimate only — actual financing terms vary by lender, vehicle age and your credit profile.</div></div>
+      <h2>How used-car loan EMI is calculated</h2>
+      <p class="mt-2">Used-car loans in India use the same reducing-balance formula as new-car loans — the difference is the rate, the funding limit and the paperwork:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (agreed price + extras + fees − down payment), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹5,00,000 used car at 12.5% for 4 years</h3>
+      <p style="margin-top:8px">A 3-year-old hatchback sedan agreed at ₹5,00,000 with a 20% down payment of ₹1,00,000 leaves P = ₹4,00,000. At 12.5% for 48 months (r = 0.010417, n = 48), the EMI is ₹10,632 per month — total repayment ₹5,10,336, of which ₹1,10,336 is interest. Compare the same ₹4,00,000 on a new-car rate of 9%: the EMI would be ₹9,954 and interest just ₹77,793 — the used-car premium costs ₹32,543 extra over 4 years. That's the price of buying a depreciated asset, and it's often still worthwhile: you avoided the 30–40% first-year depreciation a new car suffers.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">How used-car financing works in India</h3>
+      <p style="margin-top:8px">The used-car market has formalised fast: certified pre-owned channels (Maruti Suzuki True Value, Hyundai Promise, Honda Autoterrace, Mahindra First Choice) and online players (Spinny, Cars24, OLX Autostore) now sell most cars with warranty and financing tie-ups. Rates run <strong>12–16% per year</strong> at HDFC, Kotak, Axis and used-car NBFCs like Mahindra Finance and Cholamandalam — versus 8.5–11% on new. Three structural quirks matter. <strong>Funding is valuation-based:</strong> the lender's own valuator prices the car, and they'll fund 80–90% of <em>their</em> valuation, not necessarily your agreed price — the gap comes from your pocket. <strong>Age caps apply:</strong> most lenders want the car under 8–10 years old at the end of the tenure, which limits older cars to short loans. <strong>Paperwork is the real risk:</strong> insist on the RC transfer in your name, removal of the seller's hypothecation (NOC from their lender if the car was financed), insurance transfer, and a clean challan/RTO record — a car with a pending loan hypothecation is the most common trap in private-party deals. Budget ₹3,000–₹8,000 for transfer fees and ₹1,500–₹3,000 processing fee plus GST on the loan itself.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips before financing a used car</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Buy from a certified channel when possible:</b> warranty + clean paperwork + lender tie-ups beat private-party savings once risk is priced.</li>
+        <li><b>Get the car inspected independently:</b> ₹1,000–₹2,000 for a third-party inspection can catch flood/accident damage the valuation missed.</li>
+        <li><b>Keep tenure ≤ 4 years:</b> the car is already depreciated; a 6-year loan means paying 14% interest on a ₹2 lakh asset.</li>
+        <li><b>Negotiate the rate, not just the price:</b> used-car NBFC rates move 2–3% between lenders for the same profile — get 2–3 quotes.</li>
+        <li><b>Check insurance transfer:</b> a lapsed or non-transferable policy can invalidate claims from day one.</li>
+      </ul>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with down payment, financed extras and fees, plus a full amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/calculators/car-loan-calculator">Car Loan Calculator</a> · <a href="/blog/how-to-calculate-car-payment">How to calculate a car payment</a> · <a href="/calculators/emi-calculator">EMI Calculator</a> · <a href="/calculators/fuel-cost-calculator">Fuel Cost Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for a ₹5 lakh used-car loan?</summary><div class="faq-a"><p>With a ₹1 lakh down payment (financing ₹4,00,000) at 12.5%: about ₹10,632/month over 4 years or ₹13,381/month over 3 years. Without any down payment, add roughly ₹2,700–₹2,700+ per lakh financed. Use the sliders above for your exact deal.</p></div></details>
+      <details class="faq-static"><summary>Why are used-car loan interest rates higher?</summary><div class="faq-a"><p>Older cars are weaker collateral — they depreciate faster in absolute terms, are harder to repossess and resell, and carry higher fraud and maintenance risk. Lenders price that at 12–16% versus 8.5–11% for new cars. A strong CIBIL score (750+) and a younger used car (under 5 years) get the best used-car rates.</p></div></details>
+      <details class="faq-static"><summary>How old a car can I finance in India?</summary><div class="faq-a"><p>Most banks and NBFCs require the car to be under 8–10 years old at the <em>end</em> of the loan tenure. A 6-year-old car therefore typically qualifies for only 2–3 year loans. Certified pre-owned programmes usually stock cars under 5 years old specifically so they can offer 4–5 year financing.</p></div></details>
+      <details class="faq-static"><summary>What paperwork must I check when buying a used car on loan?</summary><div class="faq-a"><p>Non-negotiables: the Registration Certificate (RC) transferred to your name, a NOC and hypothecation termination if the seller's own loan is running, insurance transferred or freshly bought in your name, no pending traffic challans, and the original invoice. If the seller's lender hasn't released hypothecation, the RTO cannot transfer the RC — settle the loan closure first or buy through a dealer who handles it.</p></div></details>
+      <details class="faq-static"><summary>Can I get 100% funding on a used car?</summary><div class="faq-a"><p>Rarely, and usually not advantageously. Lenders fund 80–90% of their own valuator's figure — which often sits below the market price on older cars. A 15–20% down payment also cuts your EMI and interest meaningfully at used-car rates; on the ₹5 lakh example above, the ₹1 lakh down payment saves over ₹40,000 in interest versus full funding.</p></div></details>
+      <details class="faq-static"><summary>Is buying a used car on loan actually sensible?</summary><div class="faq-a"><p>Often, yes. A 3-year-old certified car costs 30–40% less than new and has already absorbed the steepest depreciation — even after paying 12–16% interest. The maths fails mainly on old, cheap cars (under ₹2 lakh) where short tenures and high rates make EMIs punishing relative to the car's remaining life. Compare the total interest against the new-car price difference before deciding.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -90,7 +112,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'used-car-loan-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'used-car-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

@@ -94,7 +94,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>India-friendly:</b> temperature in °C, fuel-distance in km/l — defaults tuned for everyday Indian use cases.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Are the factors accurate?</summary><div class="faq-a"><p>Yes — every factor is the exact SI-defined value (1 in = 2.54 cm, 1 lb = 0.45359237 kg, 1 mi = 1609.344 m). Temperature uses the real formulas, not multipliers.</p></div></details>
+      <details class="faq-static"><summary>Does temperature use a different logic?</summary><div class="faq-a"><p>Yes. Temperature conversions are formulas (°F = °C × 9/5 + 32), not simple factors, because the zero point differs between scales.</p></div></details>
+      <details class="faq-static"><summary>Is MB 1000 KB or 1024 KB?</summary><div class="faq-a"><p>This tool uses binary (IEC) values where 1 KB = 1024 bytes — matching how operating systems display file sizes.</p></div></details>
+      <details class="faq-static"><summary>Can I convert very large or small numbers?</summary><div class="faq-a"><p>Yes — scientific notation appears automatically beyond 9 digits so values stay accurate without losing readability.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

@@ -49,7 +49,7 @@
 
     <div class="calc-layout">
       <div class="calc-shell reveal">
-        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Paycheck Calculator</h1><div class="sub">Gross → net per pay period · state-by-state withholding</div></div></div>
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Paycheck Calculator</h1><div class="sub">US Gross → net per pay period · state-by-state withholding</div></div></div>
         <div class="calc-body">
           <div class="field-row">
             <div class="field"><label for="gross">Gross salary (per year)</label><div class="input-wrap"><span class="prefix">$</span><input class="input with-prefix" id="gross" type="number" min="0" step="any" value="90000" inputmode="decimal"></div></div>
@@ -172,7 +172,16 @@
       <div class="note mt-2"><span id="fIcon"></span><div><b>This is an estimate</b> for a W-2 employee withholding scenario only — self-employment taxes, local city/county taxes (Detroit, Philadelphia, NYC, more than a dozen CO municipalities), FICA on equity comp, supplemental wage withholding and one-off bonus checks all move the number in real life. Your actual paystub is the source of truth.</div></div>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What taxes are taken out of my paycheck?</summary><div class="faq-a"><p>Federal income tax, state income tax (most states), Social Security at 6.2% up to a wage cap, and Medicare at 1.45% on everything — plus 0.9% Additional Medicare Tax above $200k (single) or $250k (married). High earners may also see local taxes in a small set of cities and counties.</p></div></details>
+      <details class="faq-static"><summary>How do I calculate my biweekly paycheck from annual salary?</summary><div class="faq-a"><p>Divide gross salary by 26. Then subtract pre-tax deferrals (401k, HSA/FSA, premiums), then Social Security, Medicare, federal and state withholding computed on the reduced base. The calculator does all five steps automatically and shows the result per pay period.</p></div></details>
+      <details class="faq-static"><summary>What is the difference between bi-weekly and semi-monthly?</summary><div class="faq-a"><p>Bi-weekly means every two weeks — 26 paychecks a year, sometimes a magical 27th when January 1 lands right. Semi-monthly means twice a month on fixed dates (typically the 15th and last day) — always 24 paychecks. Bi-weekly checks are slightly smaller but the spendable-cash flow per month evens out.</p></div></details>
+      <details class="faq-static"><summary>How much social security tax do I pay?</summary><div class="faq-a"><p>6.2% of gross wages up to the 2025 wage base of $176,100 — a maximum of $10,918.20 per year. Once your year-to-date wages cross the cap, no more SS comes out. If you switch employers mid-year you may overpay, and the IRS will refund the excess at filing.</p></div></details>
+      <details class="faq-static"><summary>Why is my first paycheck of the year different from my last?</summary><div class="faq-a"><p>Mid-year caps. Social Security stops once you hit the wage base (roughly September on a $200k salary), and 401(k) deferrals stop when they hit the $23,000 IRS limit. Checks before the caps are smaller; after them, they grow.</p></div></details>
+      <details class="faq-static"><summary>How do pre-tax 401(k) contributions change my take-home?</summary><div class="faq-a"><p>Every dollar you defer cuts federal and state taxable wages (not Social Security/Medicare wages). At a 22% federal plus 5% state marginal rate, $100 into 401(k) shrinks take-home by about $73 — you bought $100 of savings for $73 of lifestyle. That asymmetry is the powerful lever.</p></div></details>
+      <details class="faq-static"><summary>Should I use weekly, bi-weekly, semi-monthly or monthly pay frequency?</summary><div class="faq-a"><p>It is set by your employer — you don't choose. Bi-weekly yields 26 slightly smaller checks (every year the calendar grants you a "bonus" third check in two months). Semi-monthly yields 24 larger checks that arrive on the same dates every month. The annual sum is identical.</p></div></details>
+      <details class="faq-static"><summary>I got a large refund — how do I fix my withholding?</summary><div class="faq-a"><p>A big refund means you over-withheld. File a new W-4 with Step 3 (claim dependents) and Step 4(b) (deductions) filled in to reduce withholding. Most employers let you update the W-4 electronically mid-year. Fixing it once makes every future paycheck larger.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

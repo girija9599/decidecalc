@@ -88,7 +88,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Error lines:</b> when validation fails, the status shows the parser's error position so you can jump straight to the problem.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Is my JSON uploaded anywhere?</summary><div class="faq-a"><p>No. Formatting uses your browser's built-in JSON parser — the data never leaves this page. Safe for API responses with tokens or personal data.</p></div></details>
+      <details class="faq-static"><summary>Why does my JSON fail even though it looks fine?</summary><div class="faq-a"><p>The usual culprits: trailing commas, single quotes, unquoted keys, or tab/newline characters pasted inside strings. The error status points you to the exact parser position.</p></div></details>
+      <details class="faq-static"><summary>What does Minify do?</summary><div class="faq-a"><p>Removes all whitespace and indentation, producing the smallest possible text — ideal for APIs and config files.</p></div></details>
+      <details class="faq-static"><summary>Can it format very large files?</summary><div class="faq-a"><p>Your device memory is the only limit. Multi-megabyte payloads format instantly on modern phones and laptops.</p></div></details>
+    $5</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

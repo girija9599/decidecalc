@@ -91,7 +91,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Not full GitHub-Flavoured Markdown:</b> this is a compact subset that covers ~95% of blog/article writing. For tables and footnotes use a full CommonMark library.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Is it safe to paste Markdown with embedded script tags?</summary><div class="faq-a"><p>Yes — every input character is HTML-escaped first, then Markdown syntax is rebuilt into a safe subset of tags. Any &lt;script&gt; you type renders as plain text, never executes.</p></div></details>
+      <details class="faq-static"><summary>Does it support tables?</summary><div class="faq-a"><p>Not in this lightweight version. For complex tables, write the HTML by hand in the input and the converter will pass it through (after escaping, so use the raw HTML textarea to copy it).</p></div></details>
+      <details class="faq-static"><summary>Can I use this for GitHub READMEs?</summary><div class="faq-a"><p>Yes for the common subset — headings, lists, code blocks, links and emphasis all match GitHub's rendering. Subtle differences exist in nested lists and task list checkboxes.</p></div></details>
+      <details class="faq-static"><summary>Where can I paste the output?</summary><div class="faq-a"><p>Anywhere that accepts HTML — WordPress Custom HTML block, Mailchimp source view, Jekyll/Hugo static sites, your own blog template. Skip if the destination only takes Markdown.</p></div></details>
+    $5</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

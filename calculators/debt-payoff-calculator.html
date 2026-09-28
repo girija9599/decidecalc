@@ -32,9 +32,9 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Debt Payoff Calculator</h1><div class="sub">payoff date · interest saved</div></div></div>
         <div class="calc-body" id="calcBody">
-          <div class="field"><label>Current balance</label><div class="input-wrap"><span class="prefix cur"></span><input class="input with-prefix" id="price" type="number" min="100" step="any" value="8000"></div></div>
-          <div class="field"><label>APR on the debt (%)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="40" step="0.1" value="22" data-suffix="%" data-dec="2"></div>
-          <div class="field"><label>Months to pay off</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="1" max="120" step="1" value="48" data-dec="0"></div>
+          <div class="field"><label>Current balance</label><div class="input-wrap"><span class="prefix cur"></span><input class="input with-prefix" id="price" type="number" min="100" step="any" value="150000"></div></div>
+          <div class="field"><label>APR on the debt (%)</label><div class="range-out"><span class="range-val" id="out-rate"></span></div><input type="range" id="rate" min="0" max="42" step="0.1" value="40" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Months to pay off</label><div class="range-out"><span class="range-val" id="out-term"></span></div><input type="range" id="term" min="1" max="120" step="1" value="24" data-dec="0"></div>
           
           <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate payoff</button>
         </div>
@@ -53,10 +53,31 @@
 
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How payoff schedules work</h2><div style="margin-top:10px;color:var(--text-soft)"><ul style="padding-left:18px"><li><b>Fixed months:</b> we find the payment that zeroes the balance in exactly your chosen number of months.</li><li><b>Extra payment effect:</b> adding even $50–100/month cuts months off the timeline and saves significant interest.</li><li><b>Avalanche vs snowball:</b> pay highest-rate debts first to minimize interest.</li></ul></div>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> Estimate only — does not account for fees or changing balances.</div></div>
+      <h2>How the payoff calculation works</h2>
+      <p class="mt-2">This calculator works backwards from a goal: you set the number of months, and it finds the fixed monthly payment that zeroes your balance exactly in that time, using the standard reducing-balance formula:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> M = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = current balance, r = monthly rate (APR ÷ 12 ÷ 100), n = your chosen months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹1,50,000 credit-card balance at 40%</h3>
+      <p style="margin-top:8px">Indian credit-card revolving APRs run 36–42%, so take a ₹1,50,000 balance at 40%. To clear it in 24 months you'd pay ₹9,178/month — ₹2,20,276 total, of which ₹70,276 is pure interest. Stretch it to 36 months and the payment drops to ₹7,217, but interest climbs to ₹1,09,795. Tighten to 18 months and it's ₹11,216/month with ₹51,887 interest. Now compare with the card's own minimum-payment schedule (typically 5% of the bill): at that rate the balance can linger 5+ years and cost ₹1.5 lakh+ in interest — the single most expensive way to carry a balance in India. That gap is what this calculator exists to show.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Choosing your payoff timeline</h3>
+      <p style="margin-top:8px">The right "months" value is the largest payment your budget genuinely sustains, not the smallest number that feels safe. Two principles help. First, <strong>interest cost is convex in time</strong>: at 40%, every extra year costs roughly ₹30,000–₹40,000 on this balance, so cutting 36 → 24 months saves ₹40,000 while raising the EMI by only ₹2,000. Second, <strong>the payment must survive bad months</strong> — if ₹9,178 fails the month your car needs repairs, choose 30 months at ₹8,067 and actually stay consistent rather than defaulting and restarting the penalty cycle. If you have multiple debts, this tool handles one balance at a time; the Debt Payoff Planner below compares avalanche and snowball ordering across all of them, and a balance transfer to a 12–14% personal loan may beat both if your card rate is above 36%.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips to pay off debt faster</h3>
+      <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
+        <li><b>Convert, don't revolve:</b> most Indian banks convert a card balance into 12–24 EMIs at 13–18% on request — a 20-point rate cut for one phone call.</li>
+        <li><b>Aim payments at statement dates, not due dates:</b> interest accrues daily on revolving balances; paying mid-cycle trims the average daily balance.</li>
+        <li><b>Throw windfalls at principal:</b> a ₹40,000 bonus prepaid on this example removes roughly ₹30,000 of future interest at 40%.</li>
+        <li><b>Stop the drip:</b> pause cards (or freeze them in a drawer) while paying off — new spends restart the cycle and make the timeline fictional.</li>
+        <li><b>Check the minimum-payment trap:</b> read your statement's "minimum due" vs "total due" — paying the former is how a ₹1.5 lakh balance becomes a decade of debt.</li>
+      </ul>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Estimate only:</b> the tool assumes a fixed rate and no fresh spends on the account. Card interest is charged daily at APR/365, so real statements can differ slightly.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>How long does it take to pay off ₹1 lakh of credit-card debt?</summary><div class="faq-a"><p>Depends entirely on the payment, not the card. At a typical 5% minimum (~₹5,000 initially), effectively 5+ years and ₹50,000+ in interest. At a fixed ₹10,000/month, about 11 months with ₹6,000–₹7,000 interest. The "Months" slider above shows the exact trade-off for your balance.</p></div></details>
+      <details class="faq-static"><summary>What is the minimum payment trap on credit cards?</summary><div class="faq-a"><p>Card minimums (usually 5% of the bill or a floor amount) are engineered to keep you revolving: nearly all of an early minimum payment goes to interest at 36–42% APR, and the rest of your unpaid bill keeps accruing. Paying only minimums on ₹1,50,000 can cost over ₹1 lakh in interest before the balance clears. Always fix a real payoff payment instead.</p></div></details>
+      <details class="faq-static"><summary>Is it better to pay off debt or invest while in debt?</summary><div class="faq-a"><p>Compare rates. Debt at 36–42% (cards) should be cleared before almost any investing — no mutual fund reliably beats 40%. Debt at 9% (home loan) can coexist with SIP investing at an expected 11–12%. The crossover sits roughly where the debt rate exceeds ~10–12%; use the EMI vs SIP comparison tool for the exact math on your numbers.</p></div></details>
+      <details class="faq-static"><summary>Does paying off debt improve my credit score?</summary><div class="faq-a"><p>Yes — utilisation (balance ÷ limit) is a major CIBIL factor, so bringing a card balance down lifts the score within 1–2 billing cycles. Keep the card open and use it lightly afterwards: closing it can shorten your credit history and nudge the score down. Consistent on-time payments during the payoff compound the benefit.</p></div></details>
+      <details class="faq-static"><summary>Should I use a balance transfer or a debt consolidation loan?</summary><div class="faq-a"><p>Both replace your rate, so compare the all-in costs: balance transfers offer 0–1% for 3–6 months then jump to card rates — good only if you can clear within the window. A 12–14% personal loan gives a fixed EMI over 24–48 months — better for larger balances needing structure. On a ₹1,50,000 balance, consolidation at 13% over 24 months costs about ₹7,133/month and ₹21,200 interest versus ₹70,000+ at card rates.</p></div></details>
+      <details class="faq-static"><summary>What if I can't afford any meaningful payoff payment?</summary><div class="faq-a"><p>Contact the lender before missing anything — banks restructure genuinely stressed accounts into EMI plans, tenure extensions or one-time settlements, and RBI's recovery norms protect borrowers who engage in good faith. Also check whether spending can be cut or income supplemented: at 40% interest, every month of delay costs ₹5,000 on a ₹1,50,000 balance — the most expensive month of anyone's financial year.</p></div></details>
+    </section>
   </main>
   <script src="/assets/js/core.js?v=20260911-1"></script>
   <script src="/assets/js/dc-currency.js?v=20260913-7"></script>
@@ -64,7 +85,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'debt-payoff-calculator', faqs: [{"q":"How is the monthly payment calculated?","a":"The monthly payment uses the standard amortization formula — M = P × [r(1+r)^n] ÷ [(1+r)^n − 1] — where P is the amount financed, r is the annual rate divided by 12, and n is the number of months. Each payment first covers that month's interest, then principal."},{"q":"Is this calculator result exact?","a":"It is a very close estimate. Your actual payment may differ slightly because lenders may round differently, add small fees, or use a slightly different day-count convention. Always confirm the final figure with your lender before signing."},{"q":"What happens if I choose a longer term?","a":"A longer term lowers the monthly payment but increases the total interest you pay over the life of the loan. For example, stretching from 36 to 60 months can add hundreds of dollars in interest on a typical loan."},{"q":"Can I use this tool for any currency?","a":"Yes. Use the currency selector at the top — INR, USD, EUR, GBP, AED, CAD, AUD, SGD, JPY, CNY, CHF, NZD, ZAR or SAR. The math is identical; only the symbol and number formatting change. The tool does not convert between currencies."},{"q":"Is my data saved or shared?","a":"No. Every calculation runs entirely in your browser — nothing you type is sent to any server, stored, or shared with anyone."}] };
+    DC.page = { slug: 'debt-payoff-calculator' };
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');

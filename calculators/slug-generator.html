@@ -91,7 +91,12 @@
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Indian twist:</b> rupee ₹, ®, ™ — non-Latin chars get stripped. "₹10 Lakh in 5 Years" becomes <code>10-lakh-in-5-years</code>.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Should I include a date (2026) in the slug?</summary><div class="faq-a"><p>If the content is time-sensitive (news, deals, tax years, deadlines) then yes — it signals freshness to both readers and Google. Evergreen how-to guides rank better without years.</p></div></details>
+      <details class="faq-static"><summary>Is HTTPS wherever the slug matters?</summary><div class="faq-a"><p>Slugs are just path segments — they work in WordPress, Ghost, Webflow, Shopify, custom backends anywhere. Case may matter on Linux/Nginx servers, so keep everything lowercase.</p></div></details>
+      <details class="faq-static"><summary>Can I use a slug with override uppercase?</summary><div class="faq-a"><p>Technically yes, but avoid it. Search engines may see /Blog-Post and /blog-post as two different pages, splitting rank.</p></div></details>
+      <details class="faq-static"><summary>Why no underscores?</summary><div class="faq-a"><p>Google's own Matt Cutts confirmed hyphens are word separators, underscores aren't. "best_cms" reads as one word to the crawler.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

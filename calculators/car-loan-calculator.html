@@ -5,11 +5,11 @@
   <meta name="google-adsense-account" content="ca-pub-3027138458482943">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Car Loan Calculator — Monthly Payment, Total Interest & Amortization | DecideCalc</title>
-  <meta name="description" content="Free car loan calculator: enter loan amount, interest rate and term to get your exact monthly payment, total interest paid and full amortization. Works for auto loans, used-car loans and truck financing.">
+  <meta name="description" content="Free car loan EMI calculator for India: enter on-road price, down payment, interest rate and tenure to get your exact monthly EMI, total interest and full amortization schedule. Works for new-car, used-car and exchange deals.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="DecideCalc">
   <meta property="og:title" content="Car Loan Calculator — Monthly Payment, Total Interest & Amortization | DecideCalc">
-  <meta property="og:description" content="Free car loan calculator: enter loan amount, interest rate and term to get your exact monthly payment, total interest paid and full amortization. Works for auto loans, used-car loans and truck financing.">
+  <meta property="og:description" content="Free car loan EMI calculator for India: enter on-road price, down payment, interest rate and tenure to get your exact monthly EMI, total interest and full amortization schedule. Works for new-car, used-car and exchange deals.">
   <meta property="og:url" content="https://www.decidecalc.com/calculators/car-loan-calculator">
   <meta property="og:image" content="https://www.decidecalc.com/assets/img/og.png">
   <meta property="og:image:width" content="1200">
@@ -17,7 +17,7 @@
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Car Loan Calculator — Monthly Payment, Total Interest & Amortization | DecideCalc">
-  <meta name="twitter:description" content="Free car loan calculator: enter loan amount, interest rate and term to get your exact monthly payment, total interest paid and full amortization. Works for auto loans, used-car loans and truck financing.">
+  <meta name="twitter:description" content="Free car loan EMI calculator for India: enter on-road price, down payment, interest rate and tenure to get your exact monthly EMI, total interest and full amortization schedule. Works for new-car, used-car and exchange deals.">
   <meta name="twitter:image" content="https://www.decidecalc.com/assets/img/og.png">
 
   <link rel="canonical" href="https://www.decidecalc.com/calculators/car-loan-calculator">
@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="/assets/css/main.css?v=20260913-7">
   <!-- Google tag (gtag.js) -->
     <!-- SEO Structured Data -->
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Car Loan Calculator — Monthly Payment, Total Interest & Amortization | DecideCalc","url":"https://www.decidecalc.com/calculators/car-loan-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free car loan calculator: enter loan amount, interest rate and term to get your exact monthly payment, total interest paid and full amortization. Works for auto loans, used-car loans and truck financing.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Car Loan Calculator — Monthly Payment, Total Interest & Amortization | DecideCalc","url":"https://www.decidecalc.com/calculators/car-loan-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free car loan EMI calculator for India: enter on-road price, down payment, interest rate and tenure to get your exact monthly EMI, total interest and full amortization schedule. Works for new-car, used-car and exchange deals.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en-IN"}</script>
 <link rel="alternate" hreflang="en-IN" href="https://www.decidecalc.com/calculators/car-loan-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.decidecalc.com/calculators/car-loan-calculator">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X2R2ZXN4Z"></script>
@@ -51,18 +51,19 @@
       <div class="calc-shell reveal">
         <div class="calc-header"><span class="ic" id="ic"></span><div><h1>Car Loan Calculator</h1><div class="sub">Monthly payment · total interest · amortization</div></div></div>
         <div class="calc-body">
-          <div class="field"><label>Vehicle price</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="1000" max="2000000" step="500" value="35000" data-dec="0"></div>
+          <div class="field"><label>Vehicle price (on-road)</label><div class="range-out"><span class="range-val" id="out-price"></span></div><input type="range" id="price" min="200000" max="5000000" step="10000" value="800000" data-dec="0"></div>
           <div class="field-row">
-            <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="50000" step="500" value="5000" data-dec="0"></div>
-            <div class="field"><label>Down payment %</label><div class="range-out"><span class="range-val" id="out-downpct">14.3%</span></div></div>
+            <div class="field"><label>Down payment</label><div class="range-out"><span class="range-val" id="out-down"></span></div><input type="range" id="down" min="0" max="2500000" step="10000" value="160000" data-dec="0"></div>
+            <div class="field"><label>Down payment %</label><div class="range-out"><span class="range-val" id="out-downpct">20.0%</span></div></div>
           </div>
-          <div class="field"><label>Annual interest rate (%)</label><div class="range-out"><span class="range-val" id="out-rate">7.0%</span></div><input type="range" id="rate" min="0" max="30" step="0.05" value="7" data-suffix="%" data-dec="2"></div>
+          <div class="field"><label>Annual interest rate (%)</label><div class="range-out"><span class="range-val" id="out-rate">9.00%</span></div><input type="range" id="rate" min="0" max="30" step="0.05" value="9" data-suffix="%" data-dec="2"></div>
           <div class="field"><label>Loan term</label><div class="range-out"><span class="range-val" id="out-term">60 months (5 yr)</span></div><input type="range" id="term" min="12" max="96" step="12" value="60" data-dec="0"></div>
           <div class="field-row">
-            <div class="field"><label>Trade-in value</label><div class="input-wrap"><span class="prefix cur-prefix"></span><input class="input with-prefix" id="tradein" type="number" min="0" step="500" value="0"></div></div>
-            <div class="field"><label>Sales tax rate (%)</label><input class="input" id="salestax" type="number" min="0" max="15" step="0.1" value="0"></div>
+            <div class="field"><label>Exchange / trade-in value</label><div class="input-wrap"><span class="prefix cur-prefix"></span><input class="input with-prefix" id="tradein" type="number" min="0" step="5000" value="0"></div></div>
+            <div class="field"><label>Extras to finance (%)</label><input class="input" id="salestax" type="number" min="0" max="15" step="0.1" value="0"></div>
           </div>
-          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate car payment</button>
+          <p style="font-size:.8rem;color:var(--text-soft);margin:2px 0 8px">"Extras %" adds insurance, extended warranty or accessories on top of the vehicle price. In India, road tax is usually already inside the on-road price the dealer quotes.</p>
+          <button class="btn btn-primary btn-block" id="calcBtn" type="button">Calculate car loan EMI</button>
         </div>
       </div>
 
@@ -95,17 +96,33 @@
     <section class="mt-4 reveal"><h3 style="margin-bottom:16px">Related tools</h3><div class="related-mini" id="relatedTools"></div></section>
 
     <section class="mt-4 card reveal" style="max-width:none">
-      <h2>How auto loan payments are calculated</h2>
+      <h2>How car loan EMI is calculated</h2>
+      <p class="mt-2">Indian banks and NBFCs price car loans on the standard reducing-balance method — interest each month is charged only on the outstanding balance:</p>
+      <div class="note mt-2"><span id="fIcon"></span><div><b>Formula:</b> EMI = P × r × (1+r)ⁿ ÷ ((1+r)ⁿ − 1), where P = amount financed (on-road price + extras − down payment − exchange), r = monthly rate (annual ÷ 12 ÷ 100), n = months.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">Worked example: ₹8,00,000 car at 9% for 5 years</h3>
+      <p style="margin-top:8px">With P = ₹8,00,000 (after a 20% down payment of ₹1,60,000), r = 0.0075 and n = 60, the EMI is ₹16,607 per month. Over 5 years you repay ₹9,96,401 — the interest costs ₹1,96,401, about a quarter of the loan. Shorten the same loan to 3 years and the EMI rises to ₹25,439 but total interest drops to ₹1,15,811 — a saving of ₹80,590. That trade-off between monthly comfort and total cost is the single most important decision in car financing; use the sliders above to find your balance point.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">What car loans actually cost in India (2026)</h3>
+      <p style="margin-top:8px">New-car loans from SBI, HDFC, ICICI, Axis, Kotak and captive financiers typically run <strong>8.5–11% per year</strong> for salaried borrowers with a CIBIL score above 750; self-employed buyers and lower scores see 11–14%. Used-car loans are costlier — 12–16% — and NBFCs charge more than banks. Beyond the rate, budget for: a <strong>processing fee</strong> of 0.4–0.5% of the loan plus GST (₹3,500–₹6,000 typical), <strong>documentation charges</strong>, and — if you skip EMIs — bounce fees plus 2–3% monthly penalties. Lenders fund 85–100% of the on-road price, but a bigger down payment directly shrinks the interest bill: every ₹1 lakh you put down on this example saves roughly ₹24,500 in interest over 5 years. Watch for <strong>"0% interest" or subvented schemes</strong> offered by manufacturers — the subsidy is real but sometimes comes with a smaller exchange bonus or mandatory accessories; compare the final on-road invoice both ways before signing. And since a car depreciates 15–20% a year, keep the tenure at 5 years or less — a 7-year loan regularly goes underwater, owing more than the car is worth.</p>
+      <h3 class="mt-3" style="font-size:1.2rem">Tips to cut your car loan cost</h3>
       <ul style="margin-top:10px;padding-left:18px;color:var(--text-soft)">
-        <li><b>Monthly payment formula:</b> M = P × [r(1+r)^n] ÷ [(1+r)^n − 1], where P = loan amount, r = monthly rate (APR ÷ 12), n = number of months.</li>
-        <li><b>Loan amount:</b> vehicle price + sales tax − down payment − trade-in value.</li>
-        <li><b>APR vs interest rate:</b> APR (Annual Percentage Rate) includes fees; the interest rate does not. Always compare APRs across lenders, not just the stated rate.</li>
-        <li><b>Loan term trade-off:</b> A longer term lowers monthly payments but significantly increases total interest paid. A 72-month loan on a $30,000 vehicle at 7% costs roughly $3,000 more in interest than a 48-month loan.</li>
-        <li><b>Good APR benchmark (2026):</b> New-car buyers with excellent credit (720+) typically see 5–7% APR. Used-car rates run 1–3% higher. Rates above 10% add up quickly — consider a bigger down payment or a shorter term.</li>
+        <li><b>Get pre-approved before the showroom:</b> a sanctioned offer from your bank gives you a benchmark — dealers' tied-up financiers often quote more.</li>
+        <li><b>Keep tenure ≤ 5 years:</b> the 2-year EMI saving of a 7-year loan costs over ₹1 lakh in extra interest on this example.</li>
+        <li><b>Put down 20%+:</b> it lowers the EMI, the interest, and the risk of negative equity when you sell.</li>
+        <li><b>Take the exchange:</b> dealer exchange values (₹50,000–₹3,00,000) cut the principal directly — compare with selling on OLX/Spinny first.</li>
+        <li><b>Prepay one extra EMI a year:</b> on a ₹8 lakh loan it can cut the tenure by 6–9 months.</li>
       </ul>
-      <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> Getting pre-approved by your bank or credit union before visiting the dealership gives you a rate benchmark and negotiating power. Dealers often mark up the rate they offer even if you qualify for a lower one.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">How this calculator works</h3>
+      <p style="margin-top:8px;color:var(--text-soft)">This tool applies the standard reducing-balance EMI formula used by Indian banks and NBFCs, with down payment, exchange value, financed extras and a full amortization schedule. Everything is computed in your browser — no login, no data stored. Content reviewed and updated for 2026.</p>
+      <p style="margin-top:8px"><strong>Related guides:</strong> <a href="/blog/how-to-calculate-car-payment">How to calculate a car payment</a> · <a href="/blog/personal-loan-vs-car-loan">Personal loan vs car loan</a> · <a href="/calculators/used-car-loan-calculator">Used Car Loan Calculator</a> · <a href="/calculators/emi-calculator">EMI Calculator</a></p>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the EMI for a ₹8 lakh car loan?</summary><div class="faq-a"><p>At 9% interest: about ₹16,607/month over 5 years (60 EMIs), ₹20,433/month over 4 years, or ₹25,439/month over 3 years. Total interest ranges from ₹1,15,811 (3 yr) to ₹1,96,401 (5 yr). Use the sliders above for your exact price, rate and tenure.</p></div></details>
+      <details class="faq-static"><summary>What is a good car loan interest rate in India?</summary><div class="faq-a"><p>For new cars in 2026: 8.5–10% is good for salaried borrowers with a CIBIL score of 750+; 10–11% is average; above 12% deserves shopping around. Used-car rates run 12–16%, and NBFC quotes typically sit 0.5–1.5% above banks. Always compare the annual rate plus processing fee across 2–3 lenders before accepting the showroom's tied-up financier.</p></div></details>
+      <details class="faq-static"><summary>How much down payment should I make on a car?</summary><div class="faq-a"><p>Aim for at least 20% of the on-road price, plus enough to cover insurance and accessories the lender won't finance well. Lenders may offer 90–100% funding, but every rupee borrowed at 9–11% costs ~25% more over 5 years. A ₹1,60,000 down payment on a ₹8,00,000 car saves roughly ₹24,500 in interest versus zero-down.</p></div></details>
+      <details class="faq-static"><summary>Is a 7-year car loan a good idea?</summary><div class="faq-a"><p>Usually not. A 7-year term cuts the EMI on a ₹8 lakh loan from ₹16,607 to ₹12,614, but total interest jumps from ₹1,96,401 to ₹2,59,577 — and Indian cars depreciate 15–20% yearly, so for most of the tenure you owe more than the car is worth. Choose 7 years only if cash flow genuinely demands it, and prepay when you can.</p></div></details>
+      <details class="faq-static"><summary>Can I prepay or foreclose my car loan early?</summary><div class="faq-a"><p>Yes. RBI rules bar prepayment penalties on floating-rate loans to individuals, and many banks have dropped them on fixed-rate car loans too — but NBFC fixed-rate loans often charge 2–5% of the outstanding, so check your agreement. Foreclosing a ₹8 lakh loan 2 years early on this example saves roughly ₹80,000 in remaining interest.</p></div></details>
+      <details class="faq-static"><summary>Are 0% interest car loans actually free?</summary><div class="faq-a"><p>Sometimes. In a subvented scheme the manufacturer pays the financier's interest as a sales subsidy — genuinely useful. But compare the total on-road invoice with and without the scheme: dealers sometimes shrink the exchange bonus, bundle accessories, or forgo a corporate discount on "0%" deals. Also note 18% GST applies on processing fees, and zero-down variants can include hidden charges.</p></div></details>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -115,13 +132,7 @@
   <script src="/assets/js/tools.js?v=20260911-1"></script>
   <script src="/assets/js/calc-page.js?v=20260911-1"></script>
   <script>
-    DC.page = { slug: 'car-loan-calculator', faqs: [
-      { q: 'What is a good interest rate for a car loan?', a: 'In 2026, buyers with excellent credit (720+ FICO) typically qualify for 5–7% APR on new cars and 7–9% on used vehicles. Credit scores below 660 often push rates above 12%. Always get pre-approved at your bank or credit union to have a baseline before the dealer presents financing.' },
-      { q: 'Is a 72-month car loan a bad idea?', a: 'A 72-month loan lowers your monthly payment but significantly increases total interest. On a $30,000 loan at 7%, a 72-month term costs about $6,600 in interest; a 48-month term costs about $4,400. You also risk being "underwater" — owing more than the car is worth — for the first 3–4 years.' },
-      { q: 'How does a trade-in reduce my loan?', a: 'The trade-in value is subtracted from the vehicle price before the loan is calculated. A $5,000 trade-in on a $35,000 car reduces your loan to $30,000 (minus any down payment), saving you both principal and the interest that would have accrued on that $5,000.' },
-      { q: 'Should I put more money down?', a: 'A larger down payment reduces the loan principal, which lowers both the monthly payment and total interest. It also reduces the risk of negative equity. Generally, 10–20% down on a new car and 10–15% on a used car is a healthy starting point.' },
-      { q: 'Does the calculator include sales tax?', a: 'Yes — enter your state\'s sales tax rate and the calculator adds it to the vehicle price before computing the loan. Most states charge 4–10% on vehicle purchases; a few states have no sales tax at all.' }
-    ]};
+    DC.page = { slug: 'car-loan-calculator'};
     DC.initCalcPage();
     document.getElementById('ic').innerHTML = DC.icon('zap');
     document.getElementById('recoIc').innerHTML = DC.icon('check');
@@ -184,7 +195,7 @@
       const interestRatio = loan > 0 ? totalInterest / loan : 0;
       if (annualRate > 10) {
         title.textContent = 'High interest rate — shop around';
-        txt.textContent = 'At ' + annualRate.toFixed(2) + '% APR you pay ' + C.fmt(totalInterest) + ' in interest on this loan. Getting pre-approved by a bank or credit union before visiting the dealer can often cut 2–4% off the rate.';
+        txt.textContent = 'At ' + annualRate.toFixed(2) + '% you pay ' + C.fmt(totalInterest) + ' in interest on this loan. A pre-approved offer from your own bank before visiting the showroom can often cut 1–2% off the dealer-financier rate.';
       } else if (months > 60) {
         title.textContent = 'Long term increases your interest cost';
         txt.textContent = 'A ' + months + '-month loan keeps the payment low but adds up to ' + C.fmt(totalInterest) + ' in interest. Shortening to 48–60 months would save significantly — use extra-payment options if you can afford it.';

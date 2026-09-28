@@ -80,7 +80,12 @@
       <p class="mt-2">Both the start and end date are included in the calendar-day count. Every date that falls on a Saturday or Sunday is removed to get the business-day total. If the end date is before the start date, the result shows how many business days have already passed.</p>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Tip for SLAs:</b> "delivery in 5 business days" means Mon–Fri only. A Friday evening promise usually lands mid-next-week — count the business days here to pin the real date.</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Does this include public holidays?</summary><div class="faq-a"><p>No. Public holidays differ by state and employer, so this tool only removes Saturdays and Sundays. Subtract your holiday list manually for exact company deadlines.</p></div></details>
+      <details class="faq-static"><summary>Is the start date counted?</summary><div class="faq-a"><p>Yes, both start and end dates are included if they are weekdays. If both fall on the same Monday, the answer is 1 business day.</p></div></details>
+      <details class="faq-static"><summary>What if the end date is earlier than the start date?</summary><div class="faq-a"><p>The calculator shows a negative count, which reads as "N business days ago/passed". The calendar and weekend counts are absolute totals between the two dates.</p></div></details>
+      <details class="faq-static"><summary>How do I find the date N business days from now?</summary><div class="faq-a"><p>Enter today as the start date and keep moving the end date until the business-days result equals N — the end date is your target date.</p></div></details>
+    </section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

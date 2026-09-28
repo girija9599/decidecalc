@@ -49,7 +49,7 @@
 
     <div class="calc-layout">
       <div class="calc-shell reveal">
-        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>IRA Calculator</h1><div class="sub">Roth vs traditional · growth at retirement · eligibility check</div></div></div>
+        <div class="calc-header"><span class="ic" id="ic"></span><div><h1>IRA Calculator</h1><div class="sub">US Roth vs traditional · growth at retirement · eligibility check</div></div></div>
         <div class="calc-body">
           <div class="field-row">
             <div class="field"><label for="age">Current age</label><input class="input" id="age" type="number" min="18" max="72" step="1" value="30" inputmode="numeric"></div>
@@ -120,7 +120,16 @@
       <p class="mt-2">Traditional IRAs (and 401(k)s eventually rolled to IRA) start Required Minimum Distributions at age 73 under SECURE 2.0, rising to 75 for those born after 1960. Failure to withdraw costs up to 25% of the shortfall. Roth IRAs have no RMDs for the original owner — a quiet but powerful difference.</p>
     </section>
 
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>What is the IRA contribution limit for 2025?</summary><div class="faq-a"><p>$7,000 if you are under 50 or $8,000 if you are 50 or older. The limit applies to the combined total across all your traditional and Roth IRAs. 2025 numbers are the latest the IRS has published for the current tax year.</p></div></details>
+      <details class="faq-static"><summary>What is the difference between a traditional and Roth IRA?</summary><div class="faq-a"><p>Traditional — usually pre-tax now, taxed when withdrawn in retirement. Roth — after-tax now, qualified withdrawals are tax-free. The one that pays the lower known tax rate wins. Use our comparison above with your own marginal rates.</p></div></details>
+      <details class="faq-static"><summary>Can I contribute to an IRA if I have a 401(k)?</summary><div class="faq-a"><p>Yes — but your traditional-IRA deduction may be limited if your income exceeds $89k (single) or $146k (married) for 2025 when the workplace plan covers you. Roth contribution handles its own separate $150k/$165k (single) phase-out. Learn your door before you walk in.</p></div></details>
+      <details class="faq-static"><summary>What is a backdoor Roth IRA?</summary><div class="faq-a"><p>A legal two-step: make a non-deductible traditional IRA contribution, then convert it to Roth. IRS Form 8606 tracks the after-tax basis so you aren't taxed twice. It is the standard workaround when income is above the Roth contribution phase-out.</p></div></details>
+      <details class="faq-static"><summary>When can I withdraw from an IRA without penalty?</summary><div class="faq-a"><p>At age 59½ for the account balance. First-time homebuyers ($10,000 lifetime), birth/adoption ($5,000), disability, and a few hardship categories waive the 10% early-penalty. Traditional withdrawals are still taxed; Roth contributions (not earnings) can always come out tax- and penalty-free.</p></div></details>
+      <details class="faq-static"><summary>Can I contribute to both a traditional and Roth IRA in the same year?</summary><div class="faq-a"><p>Yes, as long as combined contributions stay under the annual limit across both accounts. The contribution eligibility rules differ, so many people split to hedge their tax-rate bet.</p></div></details>
+      <details class="faq-static"><summary>Do IRA contributions reduce my taxes this year?</summary><div class="faq-a"><p>Traditional IRA: usually yes, if you qualify for the deduction under the workplace-plan phase-out rules. Roth IRA: no — contributions are after-tax and the tax-free benefit shows up later, in retirement. The calculator shows both scenarios side-by-side.</p></div></details>
+      <details class="faq-static"><summary>What are Required Minimum Distributions (RMDs)?</summary><div class="faq-a"><p>Starting at age 73 (75 for those born after 1960), the IRS forces annual withdrawals from traditional IRAs and 401(k)s. The withdrawal amount is the balance divided by an IRS life-expectancy factor. Roth IRAs have no RMDs for the original owner, which is part of why high-earners prize them.</p></div></details>
+    $5</section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

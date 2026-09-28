@@ -90,7 +90,10 @@
       <p class="mt-2"><b>Exclusive:</b> time between two events (e.g., Jan 1 to Jan 10 = 9 days). <b>Inclusive:</b> count both endpoints (e.g., leave from Jan 1 to Jan 10 = 10 days of leave).</p>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Tip:</b> For interest accrual and legal deadlines, confirm whether the relevant convention is exclusive (most banking) or inclusive (rent, leave).</div></div>
     </section>
-    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2><div id="faqList" data-single="1"></div></section>
+    <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
+      <details class="faq-static"><summary>Does this handle leap years?</summary><div class="faq-a"><p>Yes — JavaScript's Date object is the source and correctly accounts for leap-year Feb 29. So Jan 1 2024 → Jan 1 2025 = 366 days.</p></div></details>
+      <details class="faq-static"><summary>Why do hours/minutes matter for date inputs?</summary><div class="faq-a"><p>Date fields resolve to local midnight. For precise intervals use a time-difference calculator instead — this one is for calendar days.</p></div></details>
+    $5</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>
