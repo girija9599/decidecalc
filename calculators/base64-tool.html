@@ -100,7 +100,7 @@
       <details class="faq-static"><summary>Is Base64 safe for passwords?</summary><div class="faq-a"><p>Absolutely not. Base64 is reversible by anyone without any key. It's an encoding — like writing in a different alphabet — not encryption. For password hashing use bcrypt/argon2.</p></div></details>
       <details class="faq-static"><summary>Why is the output about 33% longer?</summary><div class="faq-a"><p>Base64 packs every 3 bytes into 4 printable characters. That 1.33× markup is the price paid to move binary data through text-only channels like JSON or email.</p></div></details>
       <details class="faq-static"><summary>Difference between Base64 and Base64URL?</summary><div class="faq-a"><p>Base64URL replaces + with - and / with _ and drops trailing = padding so the result can safely appear inside a URL without additional percent-encoding.</p></div></details>
-    $5</section>
+</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

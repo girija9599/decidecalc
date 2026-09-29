@@ -110,7 +110,7 @@
       <details class="faq-static"><summary>Why don't you include bcrypt/scrypt/Argon2?</summary><div class="faq-a"><p>Those are PASSWORD-HASHING algorithms — deliberately slow with built-in salt + work factor. Web Crypto API doesn't expose them, and you shouldn't compute them in browsers anyway — password hashing happens on the server.</p></div></details>
       <details class="faq-static"><summary>File hashing shows a different value than online tools?</summary><div class="faq-a"><p>Encoding! Text tools may add a trailing newline, or differ on EOL (\n vs \r\n). Files hash exactly their bytes. Most online tools hash UTF-8 of the visible text, which may differ from your file's actual encoding.</p></div></details>
       <details class="faq-static"><summary>Salting + hashing — do I need it?</summary><div class="faq-a"><p>For password storage: YES, absolutely, use bcrypt/Argon2 (which integrate salt). For checksums / dedup: salt is pointless. For token uniqueness: use random tokens directly, not hashes.</p></div></details>
-    $5</section>
+</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

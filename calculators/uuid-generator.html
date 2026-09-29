@@ -94,7 +94,7 @@
       <details class="faq-static"><summary>Can I use UUIDs as primary key in my database?</summary><div class="faq-a"><p>Yes — PostgreSQL has a native uuid type, MySQL has UUID(). But sequential v4 UUIDs hurt InnoDB index performance due to random inserts. For MySQL/MariaDB use UUID_TO_BIN(id, 1) (time-ordered) or the newer UUIDv7 which has timestamp prefix.</p></div></details>
       <details class="faq-static"><summary>Are these UUIDs valid offline?</summary><div class="faq-a"><p>Yes — UUIDs need no central authority. Anyone, anywhere, anytime can generate v4 UUIDs and trust they'll collide with some other UUID with probability smaller than winning a lottery every day for your entire life.</p></div></details>
       <details class="faq-static"><summary>Why 36 characters?</summary><div class="faq-a"><p>32 hex digits + 4 dashes. The dashes are purely cosmetic, breaking the ID into 8-4-4-4-12 segments. Strip or uppercase freely — the underlying 16 bytes are the same.</p></div></details>
-    $5</section>
+</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>

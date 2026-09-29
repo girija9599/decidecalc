@@ -91,11 +91,16 @@
         <li><b>Workouts & study:</b> total focused time minus rest intervals.</li>
       </ul>
       <div class="note mt-2"><span id="fIcon"></span><div><b>Decimal shortcut:</b> minutes ÷ 60. 45 min = 0.75 hr, 30 min = 0.5 hr, 15 min = 0.25 hr, 6 min = 0.1 hr.</div></div>
+      <h3 class="mt-3" style="font-size:1.2rem">How payroll actually uses these numbers</h3>
+      <p style="margin-top:8px">Indian shift jobs and gig work log time in exactly this format, so knowing the conversion matters beyond curiosity. A 9-hour shift logged as "09:00 to 18:30 with 30 min lunch" is <b>9.0 paid hours</b> — at a ₹200/hour contract rate that's ₹1,800 for the day. Overtime rules commonly kick in past 8–9 hours a day or 48 hours a week (Factories Act norms), and delivery-platform or freelance hourly billing almost always uses decimal hours (6.5, not 6:30) multiplied by the hourly rate — rounding disputes at month-end are among the most common payment complaints on gig platforms. Keeping a simple start/end/break log for each shift, then converting weekly with this tool, gives you a defensible record if a payment needs to be disputed. For multi-day durations (project timelines, leave spans), use the Date Difference calculator instead.</p>
     </section>
     <section class="mt-4 reveal"><h2 style="margin-bottom:8px">Frequently asked questions</h2>
       <details class="faq-static"><summary>What if I have multiple breaks?</summary><div class="faq-a"><p>Add all break minutes together into the single break field — 15 min coffee + 45 min lunch = 60 min total.</p></div></details>
       <details class="faq-static"><summary>What about seconds?</summary><div class="faq-a"><p>The input is hours/minutes only — that's what 99% of shift logs need. Second-second differences belong in the Date Difference calculator.</p></div></details>
-    $5</section>
+      <details class="faq-static"><summary>How do I convert the result to decimal hours for billing?</summary><div class="faq-a"><p>Divide the minutes by 60: 7 hours 45 minutes = 7.75 hours. Most payroll systems and freelance invoices want decimals, not colons — the calculator shows both formats so you can copy whichever your employer or client expects.</p></div></details>
+      <details class="faq-static"><summary>Does the calculator handle shifts past midnight?</summary><div class="faq-a"><p>Yes — use the "next day" toggle. A 22:00 → 06:00 night shift is treated as 8 hours across midnight, not a negative result. This covers factory B-shifts, security guards, call-centre night shifts and late-night delivery windows.</p></div></details>
+      <details class="faq-static"><summary>Can I use this to track billable freelance hours?</summary><div class="faq-a"><p>Yes. Log each task's start time, end time and breaks, note the decimal result, and sum the week. It's a lightweight alternative to time-tracking apps when you bill a handful of entries — and since nothing is uploaded, your client-billing notes stay on your device.</p></div></details>
+</section>
   </main>
 
   <script src="/assets/js/core.js?v=20260911-1"></script>
