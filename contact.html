@@ -155,13 +155,19 @@
             _autoresponse: 'Thank you for contacting DecideCalc! We have received your message and will reply within 24-48 business hours. — The DecideCalc team'
           })
         }).then(function (r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.json();
+          return r.json().then(function (data) {
+            var ok = data && (data.success === true || data.success === 'true');
+            if (!r.ok || !ok) {
+              var why = data && data.message ? String(data.message) : ('HTTP ' + r.status);
+              if (window.console && console.warn) console.warn('FormSubmit delivery failed:', why);
+              throw new Error(why);
+            }
+          });
         }).then(function () {
           form.reset();
           show('ok', '<b>Thank you, ' + esc(name.split(' ')[0]) + '! Your message has been sent to our team.</b><br>We aim to reply within 24–48 business hours. A confirmation copy has also been sent to your email address.');
-        }).catch(function () {
-          show('err', 'Sorry — the message could not be sent right now. Please email us directly at <a href="mailto:contact@decidecalc.com" style="color:inherit;font-weight:700">contact@decidecalc.com</a>.');
+        }).catch(function (err) {
+          show('err', 'Sorry — your message could not be delivered right now. Please email us directly at <a href="mailto:contact@decidecalc.com" style="color:inherit;font-weight:700">contact@decidecalc.com</a> and we will get back to you within 24–48 business hours.');
         }).then(function () {
           btn.disabled = false;
           btn.innerHTML = btnHTML;
