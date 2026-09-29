@@ -113,10 +113,11 @@
   <script src="assets/js/tools.js?v=20260911-1"></script>
   <script>
     DC.renderLayout(); setTimeout(function(){ DC.initReveal(); }, 0);
-    // Contact form delivery: FormSubmit AJAX relays the submission to the team
-    // inbox (girija.rjb95@gmail.com). The very first send triggers a one-time
-    // activation email there; once confirmed, all messages arrive directly.
+    // Contact form delivery: Web3Forms relays the submission to the team inbox
+    // (girija.rjb95@gmail.com). The access key is created once at web3forms.com
+    // with that email; deliveries need no further activation.
     (function () {
+      var WEB3FORMS_ACCESS_KEY = ''; /* <- paste your Web3Forms access key here */
       var form = document.getElementById('contactForm');
       var status = document.getElementById('cf-status');
       var btn = document.getElementById('cf-submit');
@@ -141,18 +142,25 @@
         btn.textContent = 'Sending…';
         status.className = 'cf-full';
         status.style.display = 'none';
-        fetch('https://formsubmit.co/ajax/girija.rjb95@gmail.com', {
+        if (!WEB3FORMS_ACCESS_KEY) {
+          console.warn('Web3Forms access key is not configured yet.');
+          show('err', 'Our email service is being set up. Please email us directly at <a href="mailto:contact@decidecalc.com" style="color:inherit;font-weight:700">contact@decidecalc.com</a> — we reply within 24–48 business hours.');
+          btn.disabled = false;
+          btn.innerHTML = btnHTML;
+          return;
+        }
+        fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
             name: name,
             email: email,
             topic: topic,
             message: message,
-            _subject: 'DecideCalc inquiry: ' + topic,
-            _template: 'table',
-            _captcha: 'false',
-            _autoresponse: 'Thank you for contacting DecideCalc! We have received your message and will reply within 24-48 business hours. — The DecideCalc team'
+            subject: 'DecideCalc inquiry: ' + topic,
+            from_name: 'DecideCalc Website',
+            botcheck: ''
           })
         }).then(function (r) {
           return r.json().then(function (data) {
